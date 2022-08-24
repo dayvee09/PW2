@@ -34,7 +34,7 @@ class Cellier extends Modele
 						b.millesime, 
 						b.id,
 						b.nom, 
-						b.type, 
+						b.vino__type_id, 
 						b.image, 
 						b.code_saq, 
 						b.url_saq, 
@@ -43,7 +43,7 @@ class Cellier extends Modele
 						t.type 
 						from vino__cellier c 
 						INNER JOIN vino__bouteille b ON c.id = b.id
-						INNER JOIN vino__type t ON t.id = b.type
+						INNER JOIN vino__type t ON t.id = b.vino__type_id
 						';
         if (($res = $this->_db->query($requete)) ==     true) {
             if ($res->num_rows) {
