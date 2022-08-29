@@ -39,11 +39,11 @@ const Appli = () => {
 
   async function fetchVins() {
     await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/" +
+      "http://localhost/PW2/cellier-projet/api-php" +
         "/" +
-        "user_id" +
+        "cellier" +
         "/" +
-        id +
+        "15" +
         "/" +
         "vins"
     )
@@ -114,6 +114,7 @@ const Appli = () => {
       <Authenticator>
         {({ signOut, user }) => (
           <div>
+            <h1>Hello {user.attributes.email}</h1>
             <Utilisateur
               utilisateurs={utilisateurs}
               setUtilisateurs={setUtilisateurs}
@@ -130,13 +131,13 @@ const Appli = () => {
                 </NavLink>
               </div>
               <div>
-                <NavLink exact to={`/user_id/${id}/vins`}>
+                <NavLink exact to={`/cellier/15/vins`}>
                   <button>Voir mes bouteilles</button>
                 </NavLink>
               </div>
               <Routes>
                 <Route
-                  path={`/user_id/${id}/vins`}
+                  path={`/cellier/15/vins`}
                   exact
                   element={
                     <ListeBouteilles
