@@ -9,17 +9,27 @@ import {
 import { generateRandomString } from "@aws-amplify/core";
 
 export default function Cellier(props) {
-  useEffect(() => {
-    props.setCellier(props.id);
-  }, [test]);
-  function test() {}
-  console.log(props.cellier);
+  // useEffect(() => {
+  //   if (props.id == "1") {
+  //     props.setCellier("1");
+  //     console.log(props.id);
+  //   }
+  // }, [test]);
+  function test(id) {
+    props.setCellier(id);
+    console.log(id);
+  }
+
   return (
     <>
       <div className="cellier" data-quantite="">
         <div className="description">
           <div className="description-originale">
-            <NavLink onClick={test} exact to={`/cellier/${props.id}/vins`}>
+            <NavLink
+              onClick={test(props.id)}
+              exact
+              to={`/cellier/${props.id}/vins`}
+            >
               <p className="id">ID : {props.id} </p>
             </NavLink>
             <p className="nom">Nom : {props.nom}</p>

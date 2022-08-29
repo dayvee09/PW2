@@ -19,7 +19,6 @@ function ListeCelliers(props) {
               key={cellier.id}
               {...cellier}
               fetchVins={props.fetchVins}
-              gererCellier={props.gererCellier}
               cellier={props.cellier}
               setCellier={props.setCellier}
               celliers={props.celliers}
