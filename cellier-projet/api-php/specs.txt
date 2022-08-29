@@ -1,0 +1,15 @@
+API (REST) Restaurant Leila
+---------------------------
+
+Entités : Plat et Vin
+Opérations : CRUD
+
+Requêtes (Endpoints) : 
+1) GET /plats Collection de Plat 
+        Retourne :  a) Statut (HTTP Status Header) : 200
+                    b) Body : document JSON représentant une collection de plats
+2) GET /vins ...
+
+3) GET /plats/{id}
+        Retourne :  a) Statut (HTTP Status Header) : 200
+                    b) Body : document JSON représentant un plat

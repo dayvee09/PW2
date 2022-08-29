@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cellierreactapp-dev-120444-authRole",
+      "UnauthRoleArn": "arn:aws:iam::550015104023:role/amplify-cellierreactapp-dev-120444-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::550015104023:role/amplify-cellierreactapp-dev-120444-authRole",
+      "Region": "ca-central-1",
+      "DeploymentBucketName": "amplify-cellierreactapp-dev-120444-deployment",
+      "UnauthRoleName": "amplify-cellierreactapp-dev-120444-unauthRole",
+      "StackName": "amplify-cellierreactapp-dev-120444",
+      "StackId": "arn:aws:cloudformation:ca-central-1:550015104023:stack/amplify-cellierreactapp-dev-120444/f9435870-2621-11ed-947a-02606b1762d2",
+      "AmplifyAppId": "d34898wyfk7uvf"
+    },
+    "categories": {
+      "auth": {
+        "cellierreactappf10f3a82": {}
+      }
+    }
+  }
+}
