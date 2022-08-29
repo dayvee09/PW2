@@ -33,15 +33,11 @@ const Appli = () => {
     setEmailUtilisateur(emailUtilisateur);
   });
 
-  // Change la valeur du filtre des tâches
-  function gererCellier(idCellier) {
-    setCellier(idCellier);
-  }
-
   console.log(celliers);
   console.log(emailUtilisateur);
   console.log(id);
   console.log(cellier);
+  console.log(bouteilles);
   console.log(utilisateurs);
 
   async function fetchVins() {
@@ -61,7 +57,6 @@ const Appli = () => {
       })
       .then((data) => {
         setBouteilles(data);
-        // setCellier(data[0].id);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -160,11 +155,13 @@ const Appli = () => {
                   exact
                   element={
                     <ListeCelliers
+                      cellier={cellier}
+                      setCellier={setCellier}
                       celliers={celliers}
                       setCelliers={setCelliers}
                       fetchCelliers={fetchCelliers}
+                      fetchVins={fetchVins}
                       id={id}
-                      gererCellier={gererCellier}
                     />
                   }
                 />

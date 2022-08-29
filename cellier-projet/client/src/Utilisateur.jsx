@@ -1,4 +1,3 @@
-import "./Cellier.scss";
 import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,

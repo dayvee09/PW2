@@ -18,9 +18,11 @@ function ListeCelliers(props) {
             <Cellier
               key={cellier.id}
               {...cellier}
-              setCellier={props.setCellier}
-              cellier={props.cellier}
+              fetchVins={props.fetchVins}
               gererCellier={props.gererCellier}
+              cellier={props.cellier}
+              setCellier={props.setCellier}
+              celliers={props.celliers}
             />
           </div>
         ))}
