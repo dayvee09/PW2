@@ -9,27 +9,21 @@ function ListeCelliers(props) {
   useEffect(() => {
     props.fetchCelliers();
   }, []);
-
-  if (props.celliers.length > 1) {
+  console.log(props);
+  if (props.celliers.length > 0) {
     return (
       <div className="ListeCelliers">
-        {props.celliers["celliers"].map((cellier) => (
+        {props.celliers.map((cellier) => (
           <div className="Cellier">
-            <Cellier key={cellier.id} {...cellier} idUtil={props.id} />
+            <Cellier
+              key={cellier.id}
+              {...cellier}
+              setCellier={props.setCellier}
+              cellier={props.cellier}
+              gererCellier={props.gererCellier}
+            />
           </div>
         ))}
-      </div>
-    );
-  } else if (props.celliers.length > 0) {
-    return (
-      <div className="ListeCelliers">
-        <div className="Cellier">
-          <Cellier
-            key={props.celliers.id}
-            {...props.celliers}
-            idUtil={props.id}
-          />
-        </div>
       </div>
     );
   }

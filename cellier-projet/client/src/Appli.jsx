@@ -22,6 +22,7 @@ const Appli = () => {
   const [bouteilles, setBouteilles] = useState([]);
   const [emailUtilisateur, setEmailUtilisateur] = useState([]);
   const [id, setId] = useState([]);
+  const [cellier, setCellier] = useState([]);
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [celliers, setCelliers] = useState([]);
   const [errorMessages, setErrorMessages] = useState({});
@@ -32,18 +33,23 @@ const Appli = () => {
     setEmailUtilisateur(emailUtilisateur);
   });
 
+  // Change la valeur du filtre des tâches
+  function gererCellier(idCellier) {
+    setCellier(idCellier);
+  }
+
   console.log(celliers);
   console.log(emailUtilisateur);
   console.log(id);
+  console.log(cellier);
   console.log(utilisateurs);
 
   async function fetchVins() {
     await fetch(
-      "http://localhost/PW2/cellier-projet/api-php" +
-        "/" +
+      "http://localhost/PW2/cellier-projet/api-php/" +
         "cellier" +
         "/" +
-        "15" +
+        cellier +
         "/" +
         "vins"
     )
@@ -55,6 +61,7 @@ const Appli = () => {
       })
       .then((data) => {
         setBouteilles(data);
+        // setCellier(data[0].id);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -63,7 +70,8 @@ const Appli = () => {
   }
   async function fetchUtilisateur() {
     await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/email" +
+      "http://localhost/PW2/cellier-projet/api-php/" +
+        "email" +
         "/" +
         emailUtilisateur +
         "/" +
@@ -76,7 +84,7 @@ const Appli = () => {
         throw response;
       })
       .then((data) => {
-        setUtilisateurs(data);
+        setUtilisateurs(data[0]);
         setId(data[0].id);
       })
       .catch((error) => {
@@ -131,13 +139,13 @@ const Appli = () => {
                 </NavLink>
               </div>
               <div>
-                <NavLink exact to={`/cellier/15/vins`}>
+                <NavLink exact to={`/cellier/${cellier}/vins`}>
                   <button>Voir mes bouteilles</button>
                 </NavLink>
               </div>
               <Routes>
                 <Route
-                  path={`/cellier/15/vins`}
+                  path={`/cellier/${cellier}/vins`}
                   exact
                   element={
                     <ListeBouteilles
@@ -156,6 +164,7 @@ const Appli = () => {
                       setCelliers={setCelliers}
                       fetchCelliers={fetchCelliers}
                       id={id}
+                      gererCellier={gererCellier}
                     />
                   }
                 />
