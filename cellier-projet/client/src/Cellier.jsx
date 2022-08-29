@@ -17,7 +17,7 @@ export default function Cellier(props) {
       <div className="cellier" data-quantite="">
         <div className="description">
           <div className="description-originale">
-            <NavLink exact to={`/user_id/${props.idUtil}/vins`}>
+            <NavLink exact to={`/cellier/${props[0].id}/vins`}>
               <p className="id">ID : {props[0].id} </p>
             </NavLink>
             <p className="nom">Nom : {props[0].nom}</p>
