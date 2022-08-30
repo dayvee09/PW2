@@ -25,6 +25,7 @@ const Appli = () => {
   const [emailUtilisateur, setEmailUtilisateur] = useState([]);
   const [id, setId] = useState([]);
   const [cellier, setCellier] = useState([]);
+  const [utilisateur, setUtilisateur] = useState([]);
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [celliers, setCelliers] = useState([]);
   const [errorMessages, setErrorMessages] = useState({});
@@ -50,6 +51,28 @@ const Appli = () => {
   console.log(bouteilles);
   console.log(utilisateurs);
 
+  async function createUser() {
+    let user = await Auth.currentAuthenticatedUser();
+    const { attributes } = user;
+    let bool = false
+    utilisateurs.forEach(utilisateur => {
+        if (utilisateur['email'] === user.attributes.email && bool === false) {
+            bool = true
+        }
+    });
+    if (!bool) {
+      let reponse = await fetch(
+        "http://localhost/PW2/cellier-projet/api-php/admin/ajout/utilisateurs",
+          {
+              method: 'POST',
+              body: JSON.stringify({email: user.attributes.email})
+          }
+        )
+      let reponseJson = await reponse.json();
+      fetchUtilisateur();
+    }
+  }
+
   async function fetchVins() {
     await fetch(
       "http://localhost/PW2/cellier-projet/api-php/" +
@@ -73,6 +96,30 @@ const Appli = () => {
         setError(error);
       });
   }
+
+  async function fetchUtilisateurs() {
+    await fetch(
+      "http://localhost/PW2/cellier-projet/api-php/admin" +
+      "/" +
+      emailUtilisateur +
+      "/" +
+      "utilisateurs"
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setUtilisateurs(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      });
+  }
+
   async function fetchUtilisateur() {
     await fetch(
       "http://localhost/PW2/cellier-projet/api-php/" +
@@ -89,7 +136,7 @@ const Appli = () => {
         throw response;
       })
       .then((data) => {
-        setUtilisateurs(data[0]);
+        setUtilisateur(data[0]);
         setId(data[0].id);
       })
       .catch((error) => {
@@ -129,12 +176,16 @@ const Appli = () => {
           <div>
             <h1>Hello {user.attributes.email}</h1>
             <Utilisateur
+              utilisateur={utilisateur}
+              setUtilisateur={setUtilisateur}
               utilisateurs={utilisateurs}
               setUtilisateurs={setUtilisateurs}
               id={id}
               setId={setId}
               emailUtilisateur={emailUtilisateur}
+              fetchUtilisateurs={fetchUtilisateurs}
               fetchUtilisateur={fetchUtilisateur}
+              createUser={createUser}
             />
             <button onClick={signOut}>Sign Out</button>
             <Router>
