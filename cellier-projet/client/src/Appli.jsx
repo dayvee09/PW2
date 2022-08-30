@@ -6,6 +6,7 @@ import {
   NavLink,
   useParams,
   Navigate,
+  useNavigate,
 } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Authenticator } from "@aws-amplify/ui-react";
@@ -34,10 +35,12 @@ const Appli = () => {
     setEmailUtilisateur(emailUtilisateur);
   });
 
-  // Change la valeur du filtre des tâches
-  function gererCellier(id) {
-    console.log("gererCellierAppli");
-    setCellier(id);
+  useEffect(() => {
+    fetchVins();
+  }, [cellier]);
+
+  function gererCellier(idCellier) {
+    setCellier(idCellier);
   }
 
   console.log(celliers);
