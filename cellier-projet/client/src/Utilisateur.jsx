@@ -6,12 +6,22 @@ import {
   NavLink,
 } from "react-router-dom";
 
+let DATA;
+
 export default function Utilisateur(props) {
   useEffect(() => {
     props.fetchUtilisateur();
-    props.createUser();
     props.fetchUtilisateurs();
   }, [props.emailUtilisateur]);
-  console.log(props);
+
+  useEffect(() => {
+    if (DATA !== undefined) {
+      return;
+    }
+    props.createUser();
+    DATA = true;
+  }, [props.emailUtilisateur]);
+
   return <div></div>;
 }
+
