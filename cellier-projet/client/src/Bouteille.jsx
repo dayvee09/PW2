@@ -10,7 +10,6 @@ export default function Bouteille(props) {
    * Gère la modification d'une bouteille
    */
   function gererModifier() {}
-  console.log(props);
   return (
     <>
       <div className="bouteille" data-quantite="">

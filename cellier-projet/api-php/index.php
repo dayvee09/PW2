@@ -58,7 +58,7 @@ class Routeur
 
         if (count($partiesRoute) > 6 && trim(urldecode($partiesRoute[6])) != '') {
             $collection = trim(urldecode($partiesRoute[6]));
-            $params = [$partiesRoute[4] => $partiesRoute[5]];
+            $params = [$partiesRoute[4] => trim(urldecode($partiesRoute[5]))];
             //print_r($params);
             if (count($partiesRoute) > 7 && trim(urldecode($partiesRoute[7])) != '') {
                 $idEntite = [$partiesRoute[7] => trim(urldecode($partiesRoute[8]))];
@@ -72,7 +72,7 @@ class Routeur
             $controleur = new $nomControleur($nomModele);
             switch ($this->methode) {
                 case 'GET':
-                    if (is_numeric($idEntite)) {
+                    if ($idEntite) {
                         $controleur->un($idEntite);
                     } else {
                         $controleur->tout($params);
