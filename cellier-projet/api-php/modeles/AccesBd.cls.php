@@ -9,7 +9,7 @@ class AccesBd
         if (!$this->pdo) {
             $options = [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ];
             $this->pdo = new PDO(
-                "mysql:host=localhost; dbname=Pw2; charset=utf8",
+                "mysql:host=localhost; dbname=pw2; charset=utf8",
                 'root',
                 '',
                 $options
