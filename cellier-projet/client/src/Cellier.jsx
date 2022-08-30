@@ -10,32 +10,36 @@ import { generateRandomString } from "@aws-amplify/core";
 
 export default function Cellier(props) {
   const [cellier, setCellier] = useState([]);
+  const [selection, setSelection] = useState("fond-normal");
 
   useEffect(() => {
-    gererTest();
+    props.gererCellier(cellier);
   }, [cellier]);
 
   const handleChange = () => {
     setCellier(props.id);
+    if (selection === "fond-normal") {
+      setSelection("fond-selection");
+    } else {
+      setSelection("fond-normal");
+    }
   };
-
-  function gererTest() {
-    props.gererCellier(cellier);
-  }
 
   console.log(props);
   return (
     <>
-      <div className="cellier" data-quantite="">
+      <div
+        onClick={handleChange}
+        className={
+          selection == "fond-selection"
+            ? "cellier fond-selection"
+            : "cellier fond-normal"
+        }
+        data-quantite=""
+      >
         <div className="description">
           <div className="description-originale">
-            <NavLink
-              onClick={handleChange}
-              exact
-              to={`/cellier/${props.id}/vins`}
-            >
-              <p className="id">ID : {props.id}</p>
-            </NavLink>
+            <p className="id">ID : {props.id}</p>
             <p className="nom">Nom : {props.nom}</p>
             <p className="vino__utilisateur_id">
               Id Utilisateur : {props.vino__utilisateur_id}
