@@ -9,7 +9,6 @@ function ListeCelliers(props) {
   useEffect(() => {
     props.fetchCelliers();
   }, []);
-  console.log(props);
   if (props.celliers.length > 0) {
     return (
       <div className="ListeCelliers">

@@ -54,20 +54,20 @@ const Appli = () => {
   async function createUser() {
     let user = await Auth.currentAuthenticatedUser();
     const { attributes } = user;
-    let bool = false
-    utilisateurs.forEach(utilisateur => {
-        if (utilisateur['email'] === user.attributes.email && bool === false) {
-            bool = true
-        }
+    let bool = false;
+    utilisateurs.forEach((utilisateur) => {
+      if (utilisateur["email"] === user.attributes.email && bool === false) {
+        bool = true;
+      }
     });
     if (!bool) {
       let reponse = await fetch(
         "http://localhost/PW2/cellier-projet/api-php/admin/ajout/utilisateurs",
-          {
-              method: 'POST',
-              body: JSON.stringify({email: user.attributes.email})
-          }
-        )
+        {
+          method: "POST",
+          body: JSON.stringify({ email: user.attributes.email }),
+        }
+      );
       let reponseJson = await reponse.json();
       fetchUtilisateur();
     }
@@ -97,13 +97,37 @@ const Appli = () => {
       });
   }
 
+  async function fetchVin() {
+    await fetch(
+      "http://localhost/PW2/cellier-projet/api-php/" +
+        "cellier" +
+        "/" +
+        cellier +
+        "/" +
+        "vins"
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setBouteilles(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      });
+  }
+
   async function fetchUtilisateurs() {
     await fetch(
       "http://localhost/PW2/cellier-projet/api-php/admin" +
-      "/" +
-      emailUtilisateur +
-      "/" +
-      "utilisateurs"
+        "/" +
+        emailUtilisateur +
+        "/" +
+        "utilisateurs"
     )
       .then((response) => {
         if (response.ok) {
