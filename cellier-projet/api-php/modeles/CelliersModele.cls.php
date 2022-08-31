@@ -6,9 +6,9 @@ class CelliersModele extends AccesBd
         return $this->lire("SELECT vino__cellier.id, vino__cellier.nom, vino__utilisateur_id FROM vino__cellier JOIN vino__utilisateur ON vino__utilisateur.id =vino__cellier.vino__utilisateur_id where vino__cellier.vino__utilisateur_id =:user_id", ['user_id' => $params['user_id']]);
     }
 
-    public function un($id)
+    public function un($params, $idEntite)
     {
-        return $this->lireUn("SELECT vino__cellier.id, vino__cellier.nom, vino__utilisateur_id FROM vino__cellier JOIN vino__utilisateur ON vino__utilisateur.id =vino__cellier.vino__utilisateur_id where vino__cellier.id =:cellier_id", ['cellier_id' => $id["cellier"]]);
+        return $this->lireUn("SELECT vino__cellier.id, vino__cellier.nom, vino__utilisateur_id FROM vino__cellier JOIN vino__utilisateur ON vino__utilisateur.id =vino__cellier.vino__utilisateur_id where vino__cellier.id =:cellier_id", ['cellier_id' => $idEntite["cellier"]]);
     }
 
     public function ajouter($cellier)

@@ -18,6 +18,7 @@ import ListeCelliers from "./ListeCelliers";
 import Utilisateur from "./Utilisateur.jsx";
 import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
+import Bouteille from "./Bouteille";
 
 const Appli = () => {
   const [error, setError] = useState([]);
@@ -25,6 +26,7 @@ const Appli = () => {
   const [emailUtilisateur, setEmailUtilisateur] = useState([]);
   const [id, setId] = useState([]);
   const [cellier, setCellier] = useState([]);
+  const [bouteille, setBouteille] = useState([]);
   const [utilisateur, setUtilisateur] = useState([]);
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [celliers, setCelliers] = useState([]);
@@ -40,16 +42,12 @@ const Appli = () => {
     fetchVins();
   }, [cellier]);
 
+  function gererBouteille(idBouteille) {
+    setBouteille(idBouteille);
+  }
   function gererCellier(idCellier) {
     setCellier(idCellier);
   }
-
-  console.log(celliers);
-  console.log(emailUtilisateur);
-  console.log(id);
-  console.log(cellier);
-  console.log(bouteilles);
-  console.log(utilisateurs);
 
   async function createUser() {
     let user = await Auth.currentAuthenticatedUser();
@@ -104,7 +102,11 @@ const Appli = () => {
         "/" +
         cellier +
         "/" +
-        "vins"
+        "vins" +
+        "/" +
+        "bouteille" +
+        "/" +
+        bouteille
     )
       .then((response) => {
         if (response.ok) {
@@ -113,7 +115,7 @@ const Appli = () => {
         throw response;
       })
       .then((data) => {
-        setBouteilles(data);
+        setBouteille(data);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -223,6 +225,14 @@ const Appli = () => {
                   <button>Voir mes bouteilles</button>
                 </NavLink>
               </div>
+              <div>
+                <NavLink
+                  exact
+                  to={`/cellier/${cellier}/vins/bouteille/${bouteille}`}
+                >
+                  <button>Voir la bouteille</button>
+                </NavLink>
+              </div>
               <Routes>
                 <Route
                   path={`/cellier/${cellier}/vins`}
@@ -231,7 +241,11 @@ const Appli = () => {
                     <ListeBouteilles
                       bouteilles={bouteilles}
                       setBouteilles={setBouteilles}
+                      bouteille={bouteille}
+                      setBouteille={setBouteille}
                       fetchVins={fetchVins}
+                      fetchVin={fetchVin}
+                      gererBouteille={gererBouteille}
                     />
                   }
                 />
@@ -249,6 +263,24 @@ const Appli = () => {
                       id={id}
                       emailUtilisateur={emailUtilisateur}
                       gererCellier={gererCellier}
+                    />
+                  }
+                />
+                <Route
+                  path={`/cellier/${cellier}/vins/bouteille/${bouteille}`}
+                  exact
+                  element={
+                    <Bouteille
+                      celliers={celliers}
+                      setCelliers={setCelliers}
+                      cellier={cellier}
+                      setCellier={setCellier}
+                      fetchCelliers={fetchCelliers}
+                      fetchVin={fetchVin}
+                      id={id}
+                      emailUtilisateur={emailUtilisateur}
+                      gererCellier={gererCellier}
+                      gererBouteille={gererBouteille}
                     />
                   }
                 />
