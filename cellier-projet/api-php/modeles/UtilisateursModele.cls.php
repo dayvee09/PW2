@@ -22,9 +22,9 @@ class UtilisateursModele extends AccesBd
         return $last_insert_id;
     }
 
-    public function retirer($id)
+    public function retirer($params)
     {
-        return $this->supprimer("DELETE FROM vino__utilisateur WHERE vino__utilisateur.id=:id", ['id' => $id]);
+        return $this->supprimer("DELETE FROM vino__utilisateur WHERE vino__utilisateur.email=:email", ['email' => $params['email']]);
     }
 
     public function remplacer($id, $cellier)

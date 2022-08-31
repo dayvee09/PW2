@@ -99,7 +99,7 @@ class Routeur
                     if (is_numeric($idEntite)) {
                         $controleur->retirer($idEntite);
                     } else {
-                        // Erreur : A compléter...
+                        $controleur->retirer($params);
                     }
                     break;
             }
