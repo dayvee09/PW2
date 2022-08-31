@@ -49,7 +49,7 @@ const Appli = () => {
     setCellier(idCellier);
   }
 
-  // console.log(bouteille);
+  console.log(bouteille);
 
   async function createUser() {
     let user = await Auth.currentAuthenticatedUser();
@@ -62,7 +62,7 @@ const Appli = () => {
     });
     if (!bool) {
       let reponse = await fetch(
-        "http://localhost:8888/PW2/cellier-projet/api-php/admin/ajout/utilisateurs",
+        "http://localhost:/PW2/cellier-projet/api-php/admin/ajout/utilisateurs",
         {
           method: "POST",
           body: JSON.stringify({ email: user.attributes.email }),
@@ -75,7 +75,7 @@ const Appli = () => {
 
   async function fetchVins() {
     await fetch(
-      "http://localhost:8888/PW2/cellier-projet/api-php/" +
+      "http://localhost:/PW2/cellier-projet/api-php/" +
         "cellier" +
         "/" +
         cellier +
@@ -99,7 +99,7 @@ const Appli = () => {
 
   async function fetchVin() {
     await fetch(
-      "http://localhost:8888/PW2/cellier-projet/api-php/" +
+      "http://localhost:/PW2/cellier-projet/api-php/" +
         "cellier" +
         "/" +
         cellier +
@@ -127,7 +127,7 @@ const Appli = () => {
 
   async function fetchUtilisateurs() {
     await fetch(
-      "http://localhost:8888/PW2/cellier-projet/api-php/admin" +
+      "http://localhost:/PW2/cellier-projet/api-php/admin" +
         "/" +
         emailUtilisateur +
         "/" +
@@ -150,7 +150,7 @@ const Appli = () => {
 
   async function fetchUtilisateur() {
     await fetch(
-      "http://localhost:8888/PW2/cellier-projet/api-php/" +
+      "http://localhost:/PW2/cellier-projet/api-php/" +
         "email" +
         "/" +
         emailUtilisateur +
@@ -175,7 +175,7 @@ const Appli = () => {
 
   async function fetchCelliers() {
     await fetch(
-      "http://localhost:8888/PW2/cellier-projet/api-php/" +
+      "http://localhost:/PW2/cellier-projet/api-php/" +
         "user_id" +
         "/" +
         id +
@@ -202,22 +202,22 @@ const Appli = () => {
       const result = await Auth.deleteUser();
       console.log(result);
     } catch (error) {
-      console.log('Error deleting user', error);
+      console.log("Error deleting user", error);
     }
     let reponse = await fetch(
-      "http://localhost:8888/PW2/cellier-projet/api-php/" +
-      "email" +
-      "/" +
-      emailUtilisateur +
-      "/" +
-      "utilisateurs",
-      { method: 'DELETE' }
+      "http://localhost:/PW2/cellier-projet/api-php/" +
+        "email" +
+        "/" +
+        emailUtilisateur +
+        "/" +
+        "utilisateurs",
+      { method: "DELETE" }
     );
     let reponseJson = await reponse.json();
   }
 
-  function handleDelete(){
-    deleteUser()
+  function handleDelete() {
+    deleteUser();
   }
 
   return (
