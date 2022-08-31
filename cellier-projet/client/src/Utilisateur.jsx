@@ -24,4 +24,3 @@ export default function Utilisateur(props) {
 
   return <div></div>;
 }
-

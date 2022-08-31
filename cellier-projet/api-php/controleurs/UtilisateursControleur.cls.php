@@ -8,10 +8,10 @@ class UtilisateursControleur extends Controleur
         $this->reponse['corps'] = $this->modele->tout($params);
     }
 
-    public function un($id)
+    public function un($params, $idEntite)
     {
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
-        $this->reponse['corps'] = $this->modele->un($id);
+        $this->reponse['corps'] = $this->modele->un($params, $idEntite);
     }
 
     public function ajouter($utilisateur)

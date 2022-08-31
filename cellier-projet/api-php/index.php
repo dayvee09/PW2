@@ -73,7 +73,7 @@ class Routeur
             switch ($this->methode) {
                 case 'GET':
                     if ($idEntite) {
-                        $controleur->un($idEntite);
+                        $controleur->un($params, $idEntite);
                     } else {
                         $controleur->tout($params);
                     }
