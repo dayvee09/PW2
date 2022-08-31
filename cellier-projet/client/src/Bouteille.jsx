@@ -1,15 +1,78 @@
 import "./Bouteille.scss";
 import { useState } from "react";
+import FrmBouteille from "./FrmBouteille";
+import { useEffect } from "react";
 export default function Bouteille(props) {
+ 
   /**
-   * Gère la suppresssion d'une bouteille
-   */
-  function gererSupprimer() {}
+    *  État de la quantité 
+    */
+   const [quantite, setQuantite] = useState(props.quantite);
 
-  /**
-   * Gère la modification d'une bouteille
+   useEffect(()=>{
+     console.log("ok");
+    fetchVinUn();
+    
+   
+  }, [quantite]);
+ 
+   /**
+   *  État du formulaire de modification
    */
-  function gererModifier() {}
+ 
+ 
+   const [frmOuvert, setFrmOuvert] = useState(false);
+   /**
+    * Gère la suppresssion d'une bouteille
+    */
+   function gererSupprimer() { }
+ 
+   /**
+    * Gère la modification d'une bouteille
+    */
+   function gererModifier() {
+     setQuantite(props.quantite);
+     setFrmOuvert(true);
+    
+   }
+ 
+   /**
+    *  Modifier la bouteille //  gererActionBouteille(bouteille_id, cellier_id, quantite);
+    */
+   function modifierBouteille(NouveauQuantite) {
+    
+     let objetDonnees = {
+       quantite: NouveauQuantite,
+       date_achat: props.date_achat,
+       garde_jusqua: props.garde_jusqua,
+       notes: props.notes
+     };
+     var reg = /^[1-9]+[0-9]*]*$/;
+     if (reg.test(NouveauQuantite)) {
+       fetchPutVinUn(objetDonnees);
+     
+     }
+   }
+ 
+   async function fetchPutVinUn(objetDonnees) {
+     //route: ocalhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
+     let reponse = await fetch(
+       "http://localhost/PW2/cellier-projet/api-php/" + "user_id" + "/" +props.user_id + "/" + "celliers" + "/" + props.vino__cellier_id + "/" + "vins" + "/" + props.id,
+       {
+         method: 'PUT',
+         body: JSON.stringify(objetDonnees)
+       });
+     let reponseJson = await reponse.json();
+   }
+   async function fetchVinUn() {
+     //route: ocalhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
+     let reponse = await fetch(
+       "http://localhost/PW2/cellier-projet/api-php/" + "user_id" + "/" + props.user_id + "/" + "celliers" + "/" + props.vino__cellier_id + "/" + "vins" + "/" + props.id,
+     );
+     let reponseJson = await reponse.json();
+ 
+   }
+ 
   return (
     <>
       <div className="bouteille" data-quantite="">
@@ -33,10 +96,21 @@ export default function Bouteille(props) {
           </div>
         </div>
         <div className="options" data-id="{id_bouteille_cellier}">
-          <button>Modifier</button>
+          <button onClick={gererModifier}>Modifier</button>
           <button className="btnAjouter">Ajouter</button>
           <button className="btnBoire">Boire</button>
         </div>
+        <FrmBouteille
+          frmOuvert={frmOuvert}
+          setFrmOuvert={setFrmOuvert}
+          bouteille_id={props.id}
+          cellier_id={props.vino__cellier_id}
+          bouteille_nom={props.nom}
+          bouteille_image={props.image}
+          bouteille_quantite_p={props.quantite}
+          quantite={quantite}
+          setQuantite={setQuantite}
+          modifierBouteille={modifierBouteille} />
       </div>
     </>
   );
