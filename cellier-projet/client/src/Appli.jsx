@@ -49,6 +49,8 @@ const Appli = () => {
     setCellier(idCellier);
   }
 
+  // console.log(bouteille);
+
   async function createUser() {
     let user = await Auth.currentAuthenticatedUser();
     const { attributes } = user;
@@ -115,7 +117,7 @@ const Appli = () => {
         throw response;
       })
       .then((data) => {
-        setBouteille(data);
+        setBouteille(data.id);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);

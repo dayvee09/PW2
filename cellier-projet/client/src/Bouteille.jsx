@@ -8,10 +8,6 @@ export default function Bouteille(props) {
     props.gererBouteille(bouteille);
   }, [bouteille]);
 
-  useEffect(() => {
-    props.fetchVin();
-  }, []);
-
   const handleChange = () => {
     setBouteille(props.id);
     console.log(bouteille);

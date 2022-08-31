@@ -9,7 +9,7 @@ import {
 import { generateRandomString } from "@aws-amplify/core";
 
 export default function Cellier(props) {
-  const [cellier, setCellier] = useState([]);
+  const [cellier, setCellier] = useState([props.id]);
   const [selection, setSelection] = useState("fond-normal");
 
   useEffect(() => {
@@ -25,7 +25,6 @@ export default function Cellier(props) {
     }
   };
 
-  console.log(props);
   return (
     <>
       <div
