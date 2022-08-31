@@ -7,10 +7,10 @@ class VinsCelliersModele extends AccesBd
         return $this->lire("SELECT  vino__cellier.vino__utilisateur_id as user_id, vino__bouteille.id, vino__bouteille.nom, vino__cellier_id, quantite, date_achat, garde_jusqua, notes FROM vino__bouteille JOIN vino__bouteille_has_vino__cellier ON vino__bouteille.id=vino__bouteille_has_vino__cellier.vino__bouteille_id JOIN vino__type ON vino__bouteille.vino__type_id=vino__type.id JOIN vino__cellier ON vino__cellier.id =vino__bouteille_has_vino__cellier.vino__cellier_id where vino__cellier.vino__utilisateur_id =:user_id ORDER BY vino__bouteille.id ASC", ['user_id' => $params['user_id']]);
     }
 
-    public function un($id)
+    public function un($params, $idEntite)
     {
-        $id_vin = intval($id['vins']);
-        $id_cellier = intval($id['celliers']);
+        $id_vin = intval($idEntite['vins']);
+        $id_cellier = intval($idEntite['celliers']);
         return $this->lireUn("SELECT nom, `image`, code_saq, pays, `description`, prix_saq, url_saq, url_img, `format`, vino__type_id, millesime,personnalise, vino__cellier_id, quantite, date_achat, garde_jusqua, notes FROM vino__bouteille JOIN vino__bouteille_has_vino__cellier ON vino__bouteille.id=vino__bouteille_has_vino__cellier.vino__bouteille_id WHERE vino__bouteille.id=:vin_id and vino__bouteille_has_vino__cellier.vino__cellier_id=:cellier_id", ['vin_id' => $id_vin, 'cellier_id' => $id_cellier]);
     }
 

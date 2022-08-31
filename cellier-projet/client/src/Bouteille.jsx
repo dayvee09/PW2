@@ -1,7 +1,5 @@
 import "./Bouteille.scss";
-import { useState } from "react";
 import FrmBouteille from "./FrmBouteille";
-import { useEffect } from "react";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 export default function Bouteille(props) {
@@ -33,8 +31,6 @@ export default function Bouteille(props) {
   useEffect(() => {
     console.log("ok");
     fetchVinUn();
-
-
   }, [quantite]);
 
   /**
