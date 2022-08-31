@@ -195,6 +195,29 @@ const Appli = () => {
       });
   }
 
+  async function deleteUser() {
+    try {
+      const result = await Auth.deleteUser();
+      console.log(result);
+    } catch (error) {
+      console.log('Error deleting user', error);
+    }
+    let reponse = await fetch(
+      "http://localhost/PW2/cellier-projet/api-php/" +
+      "email" +
+      "/" +
+      emailUtilisateur +
+      "/" +
+      "utilisateurs",
+      { method: 'DELETE' }
+    );
+    let reponseJson = await reponse.json();
+  }
+
+  function handleDelete(){
+    deleteUser()
+  }
+
   return (
     <div>
       <Authenticator>
@@ -214,6 +237,7 @@ const Appli = () => {
               createUser={createUser}
             />
             <button onClick={signOut}>Sign Out</button>
+            <button onClick={handleDelete}>Supprimer votre compte</button>
             <Router>
               <div>
                 <NavLink exact to={`/user_id/${id}/celliers`}>
