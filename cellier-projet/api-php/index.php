@@ -82,7 +82,7 @@ class Routeur
             switch ($this->methode) {
                 case 'GET':
                     if ($idEntite) {
-                        $controleur->un($idEntite);
+                        $controleur->un($params, $idEntite);
                     } else {
                         $controleur->tout($params);
                     }
@@ -108,7 +108,7 @@ class Routeur
                     if (is_numeric($idEntite)) {
                         $controleur->retirer($idEntite);
                     } else {
-                        // Erreur : A compléter...
+                        $controleur->retirer($params);
                     }
                     break;
             }

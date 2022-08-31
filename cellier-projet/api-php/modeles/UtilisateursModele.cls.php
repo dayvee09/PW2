@@ -16,15 +16,15 @@ class UtilisateursModele extends AccesBd
     }
 
     public function ajouter($utilisateur)
-    {  
+    {
         $last_insert_id = $this->creer("INSERT INTO vino__utilisateur (vino__utilisateur.email) VALUES (?)", [$utilisateur->email]);
         $last_insert_id = $this->creer("INSERT INTO vino__cellier (vino__cellier.nom, vino__utilisateur_id) VALUES (?, ?)", ["Coucou", $last_insert_id]);
         return $last_insert_id;
     }
-    
-    public function retirer($id)
+
+    public function retirer($params)
     {
-        return $this->supprimer("DELETE FROM vino__utilisateur WHERE vino__utilisateur.id=:id", ['id' => $id]);
+        return $this->supprimer("DELETE FROM vino__utilisateur WHERE vino__utilisateur.email=:email", ['email' => $params['email']]);
     }
 
     public function remplacer($id, $cellier)

@@ -18,6 +18,7 @@ import ListeCelliers from "./ListeCelliers";
 import Utilisateur from "./Utilisateur.jsx";
 import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
+import Bouteille from "./Bouteille";
 
 const Appli = () => {
   const [error, setError] = useState([]);
@@ -25,6 +26,7 @@ const Appli = () => {
   const [emailUtilisateur, setEmailUtilisateur] = useState([]);
   const [id, setId] = useState([]);
   const [cellier, setCellier] = useState([]);
+  const [bouteille, setBouteille] = useState([]);
   const [utilisateur, setUtilisateur] = useState([]);
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [celliers, setCelliers] = useState([]);
@@ -40,16 +42,12 @@ const Appli = () => {
     fetchVins();
   }, [cellier]);
 
+  function gererBouteille(idBouteille) {
+    setBouteille(idBouteille);
+  }
   function gererCellier(idCellier) {
     setCellier(idCellier);
   }
-
-  console.log(celliers);
-  console.log(emailUtilisateur);
-  console.log(id);
-  console.log(cellier);
-  console.log(bouteilles);
-  console.log(utilisateurs);
 
   async function createUser() {
     let user = await Auth.currentAuthenticatedUser();
@@ -62,7 +60,7 @@ const Appli = () => {
     });
     if (!bool) {
       let reponse = await fetch(
-        "http://localhost/PW2/cellier-projet/api-php/admin/ajout/utilisateurs",
+        "http://localhost:8888/PW2/cellier-projet/api-php/admin/ajout/utilisateurs",
         {
           method: "POST",
           body: JSON.stringify({ email: user.attributes.email }),
@@ -75,7 +73,7 @@ const Appli = () => {
 
   async function fetchVins() {
     await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/" +
+      "http://localhost:8888/PW2/cellier-projet/api-php/" +
         "cellier" +
         "/" +
         cellier +
@@ -99,12 +97,16 @@ const Appli = () => {
 
   async function fetchVin() {
     await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/" +
+      "http://localhost:8888/PW2/cellier-projet/api-php/" +
         "cellier" +
         "/" +
         cellier +
         "/" +
-        "vins"
+        "vins" +
+        "/" +
+        "bouteille" +
+        "/" +
+        bouteille
     )
       .then((response) => {
         if (response.ok) {
@@ -113,7 +115,7 @@ const Appli = () => {
         throw response;
       })
       .then((data) => {
-        setBouteilles(data);
+        setBouteille(data);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -123,7 +125,7 @@ const Appli = () => {
 
   async function fetchUtilisateurs() {
     await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/admin" +
+      "http://localhost:8888/PW2/cellier-projet/api-php/admin" +
         "/" +
         emailUtilisateur +
         "/" +
@@ -146,7 +148,7 @@ const Appli = () => {
 
   async function fetchUtilisateur() {
     await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/" +
+      "http://localhost:8888/PW2/cellier-projet/api-php/" +
         "email" +
         "/" +
         emailUtilisateur +
@@ -171,7 +173,7 @@ const Appli = () => {
 
   async function fetchCelliers() {
     await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/" +
+      "http://localhost:8888/PW2/cellier-projet/api-php/" +
         "user_id" +
         "/" +
         id +
@@ -193,6 +195,29 @@ const Appli = () => {
       });
   }
 
+  async function deleteUser() {
+    try {
+      const result = await Auth.deleteUser();
+      console.log(result);
+    } catch (error) {
+      console.log('Error deleting user', error);
+    }
+    let reponse = await fetch(
+      "http://localhost:8888/PW2/cellier-projet/api-php/" +
+      "email" +
+      "/" +
+      emailUtilisateur +
+      "/" +
+      "utilisateurs",
+      { method: 'DELETE' }
+    );
+    let reponseJson = await reponse.json();
+  }
+
+  function handleDelete(){
+    deleteUser()
+  }
+
   return (
     <div>
       <Authenticator>
@@ -212,6 +237,7 @@ const Appli = () => {
               createUser={createUser}
             />
             <button onClick={signOut}>Sign Out</button>
+            <button onClick={handleDelete}>Supprimer votre compte</button>
             <Router>
               <div>
                 <NavLink exact to={`/user_id/${id}/celliers`}>
@@ -223,6 +249,14 @@ const Appli = () => {
                   <button>Voir mes bouteilles</button>
                 </NavLink>
               </div>
+              <div>
+                <NavLink
+                  exact
+                  to={`/cellier/${cellier}/vins/bouteille/${bouteille}`}
+                >
+                  <button>Voir la bouteille</button>
+                </NavLink>
+              </div>
               <Routes>
                 <Route
                   path={`/cellier/${cellier}/vins`}
@@ -231,7 +265,11 @@ const Appli = () => {
                     <ListeBouteilles
                       bouteilles={bouteilles}
                       setBouteilles={setBouteilles}
+                      bouteille={bouteille}
+                      setBouteille={setBouteille}
                       fetchVins={fetchVins}
+                      fetchVin={fetchVin}
+                      gererBouteille={gererBouteille}
                     />
                   }
                 />
@@ -249,6 +287,24 @@ const Appli = () => {
                       id={id}
                       emailUtilisateur={emailUtilisateur}
                       gererCellier={gererCellier}
+                    />
+                  }
+                />
+                <Route
+                  path={`/cellier/${cellier}/vins/bouteille/${bouteille}`}
+                  exact
+                  element={
+                    <Bouteille
+                      celliers={celliers}
+                      setCelliers={setCelliers}
+                      cellier={cellier}
+                      setCellier={setCellier}
+                      fetchCelliers={fetchCelliers}
+                      fetchVin={fetchVin}
+                      id={id}
+                      emailUtilisateur={emailUtilisateur}
+                      gererCellier={gererCellier}
+                      gererBouteille={gererBouteille}
                     />
                   }
                 />
