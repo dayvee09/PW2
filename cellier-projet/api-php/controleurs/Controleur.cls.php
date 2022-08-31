@@ -16,7 +16,7 @@ abstract class Controleur
 
     // Contrat pour les méthodes spécifiques de chaque contrôleur concret
     public abstract function tout($params);
-    public abstract function un($id);
+    public abstract function un($params, $idEntite);
     public abstract function ajouter($entite);
     public abstract function remplacer($id, $entite);
     public abstract function changer($id, $fragmentEntite);

@@ -25,6 +25,7 @@ export default function Cellier(props) {
     }
   };
 
+  console.log(props);
   return (
     <>
       <div
