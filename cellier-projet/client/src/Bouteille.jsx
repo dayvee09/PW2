@@ -8,19 +8,22 @@ export default function Bouteille(props) {
     props.gererBouteille(bouteille);
   }, [bouteille]);
 
-  const handleChange = () => {
-    setBouteille(props.id);
-    console.log(bouteille);
-    if (selection === "fond-normal") {
-      setSelection("fond-selection");
-    } else {
-      setSelection("fond-normal");
+  const handleChange = (event) => {
+    if (event.target.value === props.id) {
+      console.log(bouteille);
+      if (selection === "fond-normal") {
+        setSelection("fond-selection");
+      } else {
+        setSelection("fond-normal");
+      }
     }
   };
+  console.log(bouteille);
   return (
     <>
       <div
         onClick={handleChange}
+        value={props.id}
         className={
           selection == "fond-selection"
             ? "cellier fond-selection"
