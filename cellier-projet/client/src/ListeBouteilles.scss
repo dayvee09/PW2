@@ -1,7 +1,8 @@
 .ListeBouteilles {
-    display: flex;
-    list-style: none;
-    padding: 0.75rem 1.25rem;
-    justify-content: center;
-    flex-wrap: wrap;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  list-style: none;
+  padding: 0.75rem 1.25rem;
 }
