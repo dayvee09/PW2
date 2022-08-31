@@ -21,6 +21,7 @@ function ListeBouteilles(props) {
                 key={bouteille.id}
                 {...bouteille}
                 gererBouteille={props.gererBouteille}
+                gererBouteilles={props.gererBouteilles}
                 bouteilles={props.bouteilles}
                 setBouteilles={props.setBouteilles}
                 cellier={props.cellier}
@@ -46,6 +47,7 @@ function ListeBouteilles(props) {
               emailUtilisateur={props.emailUtilisateur}
               gererCellier={props.gererCellier}
               gererBouteille={props.gererBouteille}
+              gererBouteilles={props.gererBouteilles}
               bouteilles={props.bouteilles}
               setBouteilles={props.setBouteilles}
               bouteille={props.bouteille}
