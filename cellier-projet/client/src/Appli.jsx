@@ -33,6 +33,8 @@ const Appli = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [isLogged, setIsLogged] = useState(false);
 
+  // ------------------------------- fonctions de gestion des états ----------------------------
+
   email().then((email) => {
     const emailUtilisateur = email;
     setEmailUtilisateur(emailUtilisateur);
@@ -45,6 +47,9 @@ const Appli = () => {
   function gererBouteille(idBouteille) {
     setBouteille(idBouteille);
   }
+  function gererBouteilles(idBouteilles) {
+    setBouteille(idBouteilles);
+  }
   function gererCellier(idCellier) {
     setCellier(idCellier);
   }
@@ -52,6 +57,10 @@ const Appli = () => {
   console.log(cellier);
   console.log(bouteille);
   console.log(bouteilles);
+
+  // -------------------------- Requêtes Fetch ------------------------------------------------------
+
+  // ----------------------- Gestion des utilisateurs ------------------------------------------------
 
   async function createUser() {
     let user = await Auth.currentAuthenticatedUser();
@@ -79,6 +88,106 @@ const Appli = () => {
       fetchUtilisateur();
     }
   }
+
+  async function fetchUtilisateurs() {
+    await fetch(
+      "http://localhost/PW2/cellier-projet/api-php/admin" +
+        "/" +
+        emailUtilisateur +
+        "/" +
+        "utilisateurs"
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setUtilisateurs(data);
+        console.log("test");
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      });
+  }
+
+  async function fetchUtilisateur() {
+    await fetch(
+      "http://localhost/PW2/cellier-projet/api-php/email" +
+        "/" +
+        emailUtilisateur +
+        "/" +
+        "utilisateurs"
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        console.log(data);
+        setUtilisateur(data[0]);
+        setId(data[0].id);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      });
+  }
+
+  async function deleteUser() {
+    try {
+      const result = await Auth.deleteUser();
+      console.log(result);
+    } catch (error) {
+      console.log("Error deleting user", error);
+    }
+    let reponse = await fetch(
+      "http://localhost/PW2/cellier-projet/api-php/" +
+        "email" +
+        "/" +
+        emailUtilisateur +
+        "/" +
+        "utilisateurs",
+      { method: "DELETE" }
+    );
+    let reponseJson = await reponse.json();
+  }
+
+  function handleDelete() {
+    deleteUser();
+  }
+
+  // ---------------------------------- Gestion des celliers -----------------------------
+
+  async function fetchCelliers() {
+    await fetch(
+      "http://localhost/PW2/cellier-projet/api-php/" +
+        "user_id" +
+        "/" +
+        id +
+        "/" +
+        "celliers"
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setCelliers(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      });
+  }
+
+  // --------------------------------- Gestion des bouteilles ------------------------------------
 
   async function fetchVins() {
     await fetch(
@@ -132,101 +241,7 @@ const Appli = () => {
       });
   }
 
-  async function fetchUtilisateurs() {
-    await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/admin" +
-        "/" +
-        emailUtilisateur +
-        "/" +
-        "utilisateurs"
-    )
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        setUtilisateurs(data);
-        console.log("test");
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        setError(error);
-      });
-  }
-
-  async function fetchUtilisateur() {
-    await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/email" +
-        "/" +
-        emailUtilisateur +
-        "/" +
-        "utilisateurs"
-    )
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        console.log(data);
-        setUtilisateur(data[0]);
-        setId(data[0].id);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        setError(error);
-      });
-  }
-
-  async function fetchCelliers() {
-    await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/" +
-        "user_id" +
-        "/" +
-        id +
-        "/" +
-        "celliers"
-    )
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        setCelliers(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        setError(error);
-      });
-  }
-
-  async function deleteUser() {
-    try {
-      const result = await Auth.deleteUser();
-      console.log(result);
-    } catch (error) {
-      console.log("Error deleting user", error);
-    }
-    let reponse = await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/" +
-        "email" +
-        "/" +
-        emailUtilisateur +
-        "/" +
-        "utilisateurs",
-      { method: "DELETE" }
-    );
-    let reponseJson = await reponse.json();
-  }
-
-  function handleDelete() {
-    deleteUser();
-  }
+  // ---------------------------------- Rendering -----------------------------------------
 
   return (
     <div>
@@ -248,6 +263,9 @@ const Appli = () => {
             />
             <button onClick={signOut}>Sign Out</button>
             <button onClick={handleDelete}>Supprimer votre compte</button>
+
+            {/*-------------------------------- Menu de navigation --------------------------*/}
+
             <Router>
               <div>
                 <NavLink exact to={`/user_id/${id}/celliers`}>
@@ -267,6 +285,9 @@ const Appli = () => {
                   <button>Voir la bouteille</button>
                 </NavLink>
               </div>
+
+              {/* ------------------------------ Routes --------------------------------*/}
+
               <Routes>
                 <Route
                   path={`/cellier/${cellier}/vins`}
@@ -277,6 +298,7 @@ const Appli = () => {
                       setBouteilles={setBouteilles}
                       fetchVins={fetchVins}
                       gererBouteille={gererBouteille}
+                      gererBouteilles={gererBouteilles}
                       cellier={cellier}
                       bouteille={bouteille}
                     />

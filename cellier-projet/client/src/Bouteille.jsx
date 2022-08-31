@@ -3,20 +3,23 @@ import FrmBouteille from "./FrmBouteille";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 export default function Bouteille(props) {
-  const [bouteille, setBouteille] = useState(props.id);
-  const [bouteilles, setBouteilles] = useState(props.bouteilles);
+  const [bouteille, setBouteille] = useState([]);
+  const [bouteilles, setBouteilles] = useState([]);
   const [selection, setSelection] = useState("fond-normal");
   useEffect(() => {
     props.gererBouteille(bouteille);
   }, [bouteille]);
+
+  useEffect(() => {
+    props.gererBouteilles(bouteilles);
+  }, [bouteilles]);
 
   const handleChange = (event) => {
     setBouteille(props.id);
     console.log(props.cellier);
     console.log(props.id);
     console.log(bouteilles.filter((test) => test.id === props.id));
-    setBouteille(props.id);
-    props.setBouteilles(bouteilles.filter((test) => test.id === props.id));
+    setBouteilles(bouteilles.filter((test) => test.id === props.id));
     if (selection === "fond-normal") {
       setSelection("fond-selection");
     } else {
