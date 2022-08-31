@@ -49,7 +49,9 @@ const Appli = () => {
     setCellier(idCellier);
   }
 
+  console.log(cellier);
   console.log(bouteille);
+  console.log(bouteilles);
 
   async function createUser() {
     let user = await Auth.currentAuthenticatedUser();
@@ -97,7 +99,7 @@ const Appli = () => {
       });
   }
 
-  async function fetchVin() {
+  async function fetchVin(bouteille) {
     await fetch(
       "http://localhost:/PW2/cellier-projet/api-php/" +
         "cellier" +
@@ -117,7 +119,7 @@ const Appli = () => {
         throw response;
       })
       .then((data) => {
-        setBouteille(data.id);
+        setBouteilles(data.id);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -267,11 +269,10 @@ const Appli = () => {
                     <ListeBouteilles
                       bouteilles={bouteilles}
                       setBouteilles={setBouteilles}
-                      bouteille={bouteille}
-                      setBouteille={setBouteille}
                       fetchVins={fetchVins}
-                      fetchVin={fetchVin}
                       gererBouteille={gererBouteille}
+                      cellier={cellier}
+                      bouteille={bouteille}
                     />
                   }
                 />
@@ -297,16 +298,8 @@ const Appli = () => {
                   exact
                   element={
                     <Bouteille
-                      celliers={celliers}
-                      setCelliers={setCelliers}
-                      cellier={cellier}
-                      setCellier={setCellier}
-                      fetchCelliers={fetchCelliers}
-                      fetchVin={fetchVin}
-                      id={id}
-                      emailUtilisateur={emailUtilisateur}
-                      gererCellier={gererCellier}
-                      gererBouteille={gererBouteille}
+                      bouteilles={bouteilles}
+                      setBouteilles={setBouteilles}
                     />
                   }
                 />

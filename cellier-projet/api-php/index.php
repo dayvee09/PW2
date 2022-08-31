@@ -50,11 +50,11 @@ class Routeur
 
         $partiesRoute = explode('/', $this->route);
 
-        // print_r($partiesRoute);
-        // echo '<hr>';
-        // echo 'Paramètres (querystring) : ' . $this->params;
-        // echo '<hr>';
-        // echo 'Méthod HTTP : ' . $this->methode;
+        print_r($partiesRoute);
+        echo '<hr>';
+        echo 'Paramètres (querystring) : ' . $this->params;
+        echo '<hr>';
+        echo 'Méthod HTTP : ' . $this->methode;
 
         if (count($partiesRoute) > 6 && trim(urldecode($partiesRoute[6])) != '') {
             $collection = trim(urldecode($partiesRoute[6]));

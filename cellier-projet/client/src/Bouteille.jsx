@@ -3,27 +3,30 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 export default function Bouteille(props) {
   const [bouteille, setBouteille] = useState(props.id);
+  const [bouteilles, setBouteilles] = useState(props.bouteilles);
   const [selection, setSelection] = useState("fond-normal");
   useEffect(() => {
     props.gererBouteille(bouteille);
   }, [bouteille]);
 
   const handleChange = (event) => {
-    if (event.target.value === props.id) {
-      console.log(bouteille);
-      if (selection === "fond-normal") {
-        setSelection("fond-selection");
-      } else {
-        setSelection("fond-normal");
-      }
+    setBouteille(props.id);
+    console.log(props.cellier);
+    console.log(props.id);
+    console.log(bouteilles.filter((test) => test.id === props.id));
+    setBouteille(props.id);
+    props.setBouteilles(bouteilles.filter((test) => test.id === props.id));
+    if (selection === "fond-normal") {
+      setSelection("fond-selection");
+    } else {
+      setSelection("fond-normal");
     }
   };
-  console.log(bouteille);
+  console.log(props.bouteilles);
   return (
     <>
       <div
         onClick={handleChange}
-        value={props.id}
         className={
           selection == "fond-selection"
             ? "cellier fond-selection"
