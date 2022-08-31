@@ -53,6 +53,10 @@ const Appli = () => {
     let user = await Auth.currentAuthenticatedUser();
     const { attributes } = user;
     let bool = false;
+    // var u = utilisateurs.find(function (curr) {
+    //   return curr.email === user.attributes.email
+    // })
+    // console.log(setId(u.id));
     utilisateurs.forEach((utilisateur) => {
       if (utilisateur["email"] === user.attributes.email && bool === false) {
         bool = true;
@@ -60,7 +64,7 @@ const Appli = () => {
     });
     if (!bool) {
       let reponse = await fetch(
-        "http://localhost:8888/PW2/cellier-projet/api-php/admin/ajout/utilisateurs",
+        "http://localhost/PW2/cellier-projet/api-php/admin/ajout/utilisateurs",
         {
           method: "POST",
           body: JSON.stringify({ email: user.attributes.email }),
@@ -73,12 +77,12 @@ const Appli = () => {
 
   async function fetchVins() {
     await fetch(
-      "http://localhost:8888/PW2/cellier-projet/api-php/" +
-        "cellier" +
-        "/" +
-        cellier +
-        "/" +
-        "vins"
+      "http://localhost/PW2/cellier-projet/api-php/" +
+      "cellier" +
+      "/" +
+      cellier +
+      "/" +
+      "vins"
     )
       .then((response) => {
         if (response.ok) {
@@ -97,16 +101,16 @@ const Appli = () => {
 
   async function fetchVin() {
     await fetch(
-      "http://localhost:8888/PW2/cellier-projet/api-php/" +
-        "cellier" +
-        "/" +
-        cellier +
-        "/" +
-        "vins" +
-        "/" +
-        "bouteille" +
-        "/" +
-        bouteille
+      "http://localhost/PW2/cellier-projet/api-php/" +
+      "cellier" +
+      "/" +
+      cellier +
+      "/" +
+      "vins" +
+      "/" +
+      "bouteille" +
+      "/" +
+      bouteille
     )
       .then((response) => {
         if (response.ok) {
@@ -125,11 +129,11 @@ const Appli = () => {
 
   async function fetchUtilisateurs() {
     await fetch(
-      "http://localhost:8888/PW2/cellier-projet/api-php/admin" +
-        "/" +
-        emailUtilisateur +
-        "/" +
-        "utilisateurs"
+      "http://localhost/PW2/cellier-projet/api-php/admin" +
+      "/" +
+      emailUtilisateur +
+      "/" +
+      "utilisateurs"
     )
       .then((response) => {
         if (response.ok) {
@@ -139,6 +143,7 @@ const Appli = () => {
       })
       .then((data) => {
         setUtilisateurs(data);
+        console.log('test')
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -148,12 +153,11 @@ const Appli = () => {
 
   async function fetchUtilisateur() {
     await fetch(
-      "http://localhost:8888/PW2/cellier-projet/api-php/" +
-        "email" +
-        "/" +
-        emailUtilisateur +
-        "/" +
-        "utilisateurs"
+      "http://localhost/PW2/cellier-projet/api-php/email" +
+      "/" +
+      emailUtilisateur +
+      "/" +
+      "utilisateurs"
     )
       .then((response) => {
         if (response.ok) {
@@ -162,8 +166,10 @@ const Appli = () => {
         throw response;
       })
       .then((data) => {
+        console.log(data);
         setUtilisateur(data[0]);
         setId(data[0].id);
+
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -173,12 +179,12 @@ const Appli = () => {
 
   async function fetchCelliers() {
     await fetch(
-      "http://localhost:8888/PW2/cellier-projet/api-php/" +
-        "user_id" +
-        "/" +
-        id +
-        "/" +
-        "celliers"
+      "http://localhost/PW2/cellier-projet/api-php/" +
+      "user_id" +
+      "/" +
+      id +
+      "/" +
+      "celliers"
     )
       .then((response) => {
         if (response.ok) {
@@ -203,7 +209,7 @@ const Appli = () => {
       console.log('Error deleting user', error);
     }
     let reponse = await fetch(
-      "http://localhost:8888/PW2/cellier-projet/api-php/" +
+      "http://localhost/PW2/cellier-projet/api-php/" +
       "email" +
       "/" +
       emailUtilisateur +
@@ -214,7 +220,7 @@ const Appli = () => {
     let reponseJson = await reponse.json();
   }
 
-  function handleDelete(){
+  function handleDelete() {
     deleteUser()
   }
 
