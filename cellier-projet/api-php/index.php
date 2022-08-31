@@ -63,6 +63,15 @@ class Routeur
             if (count($partiesRoute) > 7 && trim(urldecode($partiesRoute[7])) != '') {
                 $idEntite = [$partiesRoute[7] => trim(urldecode($partiesRoute[8]))];
             }
+            
+            // //http://localhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
+            // if (count($partiesRoute) > 9 && trim(urldecode($partiesRoute[9])) != '') {
+            //     //$collection = VinsCelliers
+            //     $collection = trim(urldecode($partiesRoute[8])).trim(urldecode($partiesRoute[6]));
+            //     // idEntite = ['celliers'=>6, 'vins'=>'7']
+            //     $idEntite = [$partiesRoute[6] => trim(urldecode($partiesRoute[7])), 
+            //                  $partiesRoute[8] => trim(urldecode($partiesRoute[9]))];
+            // }
         }
 
         $nomControleur = ucfirst($collection) . 'Controleur';
@@ -82,14 +91,14 @@ class Routeur
                     $controleur->ajouter(file_get_contents('php://input'));
                     break;
                 case 'PUT':
-                    if (is_numeric($idEntite)) {
+                    if ($idEntite) {
                         $controleur->remplacer($idEntite, file_get_contents('php://input'));
                     } else {
                         // Erreur : A compléter...
                     }
                     break;
                 case 'PATCH':
-                    if (is_numeric($idEntite)) {
+                    if ($idEntite) {
                         $controleur->changer($idEntite, file_get_contents('php://input'));
                     } else {
                         // Erreur : A compléter...
