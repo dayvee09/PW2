@@ -230,11 +230,6 @@ const Appli = () => {
                       <button>Voir mes Celliers</button>
                     </NavLink>
                   </div>
-                  <div>
-                    <NavLink exact to={`/cellier/${cellier}/vins`}>
-                      <button>Voir mes bouteilles</button>
-                    </NavLink>
-                  </div>
                 </div>
                 <div className="menu-compte">
                   <div>

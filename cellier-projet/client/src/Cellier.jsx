@@ -38,11 +38,24 @@ export default function Cellier(props) {
       >
         <div className="description">
           <div className="description-originale">
-            <p className="id">ID : {props.id}</p>
-            <p className="nom">Nom : {props.nom}</p>
-            <p className="vino__utilisateur_id">
-              Id Utilisateur : {props.vino__utilisateur_id}
-            </p>
+            {selection == "fond-selection" ? (
+              <div className="btn-cellier">
+                <NavLink exact to={`/cellier/${cellier}/vins`}>
+                  <button>Voir mes bouteilles</button>
+                </NavLink>
+                <div>
+                  <button>Modifier mon cellier</button>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <p className="id">ID : {props.id}</p>
+                <p className="nom">Nom : {props.nom}</p>
+                <p className="vino__utilisateur_id">
+                  Id Utilisateur : {props.vino__utilisateur_id}
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
