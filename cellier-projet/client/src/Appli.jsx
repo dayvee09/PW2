@@ -34,15 +34,20 @@ const Appli = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [isLogged, setIsLogged] = useState(false);
   const ENV = "dev";
-  const [URI, setURI] = useState("http://localhost/PW2/cellier-projet/api-php");
+  const [URI, setURI] = useState(
+    "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
+  );
 
   useEffect(() => {
-    setURI("https://e2195277.webdev.cmaisonneuve.qc.ca/api-php");
     if (ENV == "prod") {
+      console.log(URI);
       setURI(
-        "https://e2195277.webdev.cmaisonneuve.qc.ca/pw2/cellier-projet/api-php"
+        "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
       );
-    } else setURI("http://localhost/PW2/cellier-projet/api-php");
+    } else {
+      console.log(URI);
+      setURI("http://localhost/PW2/cellier-projet/api-php");
+    }
   }, []);
 
   I18n.setLanguage("fr");
@@ -79,6 +84,11 @@ const Appli = () => {
     setCellier(idCellier);
   }
 
+  function gererSignout() {
+    // setId([]);
+    Auth.signOut();
+  }
+
   // -------------------------- Requêtes Fetch ------------------------------------------------------
 
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
@@ -95,7 +105,7 @@ const Appli = () => {
       }
     });
     if (!bool) {
-      let reponse = await fetch(URI + "admin/ajout/utilisateurs", {
+      let reponse = await fetch(URI + "/admin/ajout/utilisateurs", {
         method: "POST",
         body: JSON.stringify({ email: user.attributes.email }),
       });
@@ -198,11 +208,11 @@ const Appli = () => {
   }
 
   // ---------------------------------- Rendering -----------------------------------------
-
+  console.log(id);
   return (
     <div className="Appli">
       <img className="logo" src={Logo} alt="logo-mon-vino"></img>
-      <Authenticator>
+      <Authenticator className="Authenticator">
         {({ signOut, user }) => (
           <div>
             <h1>Hello {user.attributes.email}</h1>
@@ -231,9 +241,11 @@ const Appli = () => {
                   </div>
                 </div>
                 <div className="menu-compte">
-                  <div>
-                    <button onClick={signOut}>Sign Out</button>
-                  </div>
+                  <NavLink exact to="/">
+                    <div>
+                      <button onClick={gererSignout}>Sign Out</button>
+                    </div>
+                  </NavLink>
                   <div>
                     <button onClick={handleDelete}>
                       Supprimer votre compte
@@ -261,6 +273,24 @@ const Appli = () => {
                 />
                 <Route
                   path={`/user_id/${id}/celliers`}
+                  exact
+                  element={
+                    <ListeCelliers
+                      celliers={celliers}
+                      setCelliers={setCelliers}
+                      cellier={cellier}
+                      setCellier={setCellier}
+                      fetchCelliers={fetchCelliers}
+                      fetchVins={fetchVins}
+                      id={id}
+                      emailUtilisateur={emailUtilisateur}
+                      gererCellier={gererCellier}
+                      URI={URI}
+                    />
+                  }
+                />
+                <Route
+                  path="/"
                   exact
                   element={
                     <ListeCelliers
