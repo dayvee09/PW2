@@ -16,9 +16,8 @@ function ListeBouteilles(props) {
       return (
         <div className="ListeBouteilles">
           {bouteilles.map((bouteille) => (
-            <div className="Bouteille">
+            <div key={bouteille.id} className="Bouteille">
               <Bouteille
-                key={bouteille.id}
                 {...bouteille}
                 gererBouteille={props.gererBouteille}
                 gererBouteilles={props.gererBouteilles}
@@ -48,6 +47,7 @@ function ListeBouteilles(props) {
               gererBouteilles={props.gererBouteilles}
               bouteilles={props.bouteilles}
               setBouteilles={props.setBouteilles}
+              URI={props.URI}
             />
           </div>
         </div>

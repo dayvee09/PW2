@@ -31,6 +31,17 @@ const Appli = () => {
   const [celliers, setCelliers] = useState([]);
   const [errorMessages, setErrorMessages] = useState({});
   const [isLogged, setIsLogged] = useState(false);
+  const ENV = "dev";
+  const [URI, setURI] = useState("http://localhost/PW2/cellier-projet/api-php");
+
+  useEffect(() => {
+    setURI("https://e2195277.webdev.cmaisonneuve.qc.ca/api-php");
+    if (ENV == "prod") {
+      setURI(
+        "https://e2195277.webdev.cmaisonneuve.qc.ca/pw2/cellier-projet/api-php"
+      );
+    } else setURI("http://localhost/PW2/cellier-projet/api-php");
+  }, []);
 
   // ------------------------------- fonctions de gestion des états ----------------------------
 
@@ -53,7 +64,6 @@ const Appli = () => {
   // -------------------------- Requêtes Fetch ------------------------------------------------------
 
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
-
   async function createUser() {
     let user = await Auth.currentAuthenticatedUser();
     const { attributes } = user;
@@ -67,26 +77,19 @@ const Appli = () => {
       }
     });
     if (!bool) {
-      let reponse = await fetch(
-        "http://localhost/PW2/cellier-projet/api-php/admin/ajout/utilisateurs",
-
-        {
-          method: "POST",
-          body: JSON.stringify({ email: user.attributes.email }),
-        }
-      );
+      let reponse = await fetch(URI + "admin/ajout/utilisateurs", {
+        method: "POST",
+        body: JSON.stringify({ email: user.attributes.email }),
+      });
       let reponseJson = await reponse.json();
       fetchUtilisateur();
     }
   }
 
   async function fetchUtilisateurs() {
+    console.log(URI);
     await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/admin" +
-        "/" +
-        emailUtilisateur +
-        "/" +
-        "utilisateurs"
+      URI + "/" + "admin" + "/" + emailUtilisateur + "/" + "utilisateurs"
     )
       .then((response) => {
         if (response.ok) {
@@ -105,11 +108,7 @@ const Appli = () => {
 
   async function fetchUtilisateur() {
     await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/email" +
-        "/" +
-        emailUtilisateur +
-        "/" +
-        "utilisateurs"
+      URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs"
     )
       .then((response) => {
         if (response.ok) {
@@ -132,12 +131,7 @@ const Appli = () => {
       const result = await Auth.deleteUser();
     } catch (error) {}
     let reponse = await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/" +
-        "email" +
-        "/" +
-        emailUtilisateur +
-        "/" +
-        "utilisateurs",
+      URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
       { method: "DELETE" }
     );
     let reponseJson = await reponse.json();
@@ -150,14 +144,7 @@ const Appli = () => {
   // ---------------------------------- Gestion des celliers -----------------------------
 
   async function fetchCelliers() {
-    await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/" +
-        "user_id" +
-        "/" +
-        id +
-        "/" +
-        "celliers"
-    )
+    await fetch(URI + "/" + "user_id" + "/" + id + "/" + "celliers")
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -176,14 +163,7 @@ const Appli = () => {
   // --------------------------------- Gestion des bouteilles ------------------------------------
 
   async function fetchVins() {
-    await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/" +
-        "cellier" +
-        "/" +
-        cellier +
-        "/" +
-        "vins"
-    )
+    await fetch(URI + "/" + "cellier" + "/" + cellier + "/" + "vins")
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -256,6 +236,7 @@ const Appli = () => {
                       fetchVins={fetchVins}
                       gererBouteilles={gererBouteilles}
                       cellier={cellier}
+                      URI={URI}
                     />
                   }
                 />
@@ -273,6 +254,7 @@ const Appli = () => {
                       id={id}
                       emailUtilisateur={emailUtilisateur}
                       gererCellier={gererCellier}
+                      URI={URI}
                     />
                   }
                 />

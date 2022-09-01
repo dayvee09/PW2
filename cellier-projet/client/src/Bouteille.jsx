@@ -59,7 +59,8 @@ export default function Bouteille(props) {
   async function fetchPutVinUn(objetDonnees) {
     //route: ocalhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
     let reponse = await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/" +
+      props.URI +
+        "/" +
         "cellier" +
         "/" +
         props.vino__cellier_id +
@@ -79,7 +80,8 @@ export default function Bouteille(props) {
   async function fetchVinUn() {
     //route: ocalhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
     let reponse = await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/" +
+      props.URI +
+        "/" +
         "cellier" +
         "/" +
         props.vino__cellier_id +

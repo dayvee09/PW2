@@ -14,9 +14,8 @@ function ListeCelliers(props) {
     return (
       <div className="ListeCelliers">
         {props.celliers.map((cellier) => (
-          <div className="Cellier">
+          <div key={cellier.id} className="Cellier">
             <Cellier
-              key={cellier.id}
               {...cellier}
               fetchVins={props.fetchVins}
               celliers={props.celliers}
@@ -24,6 +23,7 @@ function ListeCelliers(props) {
               setCellier={props.setCellier}
               emailUtilisateur={props.emailUtilisateur}
               gererCellier={props.gererCellier}
+              URI={props.URI}
             />
           </div>
         ))}
