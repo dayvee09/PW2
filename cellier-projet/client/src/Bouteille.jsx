@@ -61,7 +61,6 @@ export default function Bouteille(props) {
    * Gère la modification d'une bouteille
    */
   function gererModifier() {
-    setQuantite(props.quantite);
     setFrmOuvert(true);
   }
 
@@ -82,7 +81,7 @@ export default function Bouteille(props) {
     };
     var reg = /^[1-9]+[0-9]*]*$/;
     if (reg.test(NouveauQuantite)) {
-      fetchPutVinUn(objetDonnees);
+      setQuantite(NouveauQuantite);
     }
   }
 
@@ -106,7 +105,6 @@ export default function Bouteille(props) {
       }
     );
     let reponseJson = await reponse.json();
-    console.log(reponseJson);
   }
   async function fetchVinUn() {
     //route: ocalhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
@@ -161,6 +159,8 @@ export default function Bouteille(props) {
           quantite={quantite}
           setQuantite={setQuantite}
           modifierBouteille={modifierBouteille}
+          voirFiche={voirFiche}
+          setVoirFiche={setVoirFiche}
         />
       </div>
     </>
