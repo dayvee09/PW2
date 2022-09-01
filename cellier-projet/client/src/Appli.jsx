@@ -202,7 +202,7 @@ const Appli = () => {
   return (
     <div className="Appli">
       <img className="logo" src={Logo} alt="logo-mon-vino"></img>
-      <Authenticator>
+      <Authenticator className="Authenticator">
         {({ signOut, user }) => (
           <div>
             <h1>Hello {user.attributes.email}</h1>
