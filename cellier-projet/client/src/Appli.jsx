@@ -33,7 +33,7 @@ const Appli = () => {
   const [celliers, setCelliers] = useState([]);
   const [errorMessages, setErrorMessages] = useState({});
   const [isLogged, setIsLogged] = useState(false);
-  const ENV = "dev";
+  const ENV = "prod";
   const [URI, setURI] = useState(
     "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
   );
@@ -82,11 +82,6 @@ const Appli = () => {
   }
   function gererCellier(idCellier) {
     setCellier(idCellier);
-  }
-
-  function gererSignout() {
-    // setId([]);
-    Auth.signOut();
   }
 
   // -------------------------- Requêtes Fetch ------------------------------------------------------
@@ -209,11 +204,13 @@ const Appli = () => {
 
   // ---------------------------------- Rendering -----------------------------------------
   console.log(id);
-
   return (
     <div className="Appli">
-      <img className="logo" src={Logo} alt="logo-mon-vino"></img>
-      <p className="text">Commencez dès maintenant votre collection de vin !</p>
+      <img
+        className="logo"
+        src="https://cdn-icons-png.flaticon.com/512/763/763072.png"
+        alt="logo-mon-vino"
+      ></img>
       <Authenticator className="Authenticator">
         {({ signOut, user }) => (
           <div>
@@ -245,7 +242,7 @@ const Appli = () => {
                 <div className="menu-compte">
                   <NavLink exact to="/">
                     <div>
-                      <button onClick={gererSignout}>Sign Out</button>
+                      <button onClick={signOut}>Sign Out</button>
                     </div>
                   </NavLink>
                   <div>
@@ -291,7 +288,7 @@ const Appli = () => {
                     />
                   }
                 />
-                <Route
+                {/* <Route
                   path="/"
                   exact
                   element={
@@ -308,12 +305,13 @@ const Appli = () => {
                       URI={URI}
                     />
                   }
-                />
+                /> */}
               </Routes>
             </Router>
           </div>
         )}
       </Authenticator>
+      <p className="text">Commencez dès maintenant votre collection de vin !</p>
       <small className="">© Mon Vino 2022, Tous droits réservés</small>
     </div>
   );
