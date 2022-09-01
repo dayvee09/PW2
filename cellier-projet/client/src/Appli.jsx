@@ -19,7 +19,7 @@ import Utilisateur from "./Utilisateur.jsx";
 import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
-import { I18n } from "aws-amplify";
+import { I18n, userHasAuthenticated } from "aws-amplify";
 import Logo from "./img/logo-rouge.png";
 
 const Appli = () => {
@@ -202,15 +202,16 @@ const Appli = () => {
       });
   }
 
+  async function handleLogout() {
+    await Auth.signOut();
+    userHasAuthenticated(false);
+  }
+
   // ---------------------------------- Rendering -----------------------------------------
   console.log(id);
   return (
     <div className="Appli">
-      <img
-        className="logo"
-        src="https://cdn-icons-png.flaticon.com/512/763/763072.png"
-        alt="logo-mon-vino"
-      ></img>
+      <img className="logo" src={Logo} alt="logo-mon-vino"></img>
       <Authenticator className="Authenticator">
         {({ signOut, user }) => (
           <div>
@@ -242,7 +243,7 @@ const Appli = () => {
                 <div className="menu-compte">
                   <NavLink exact to="/">
                     <div>
-                      <button onClick={signOut}>Sign Out</button>
+                      <button onClick={handleLogout}>Sign Out</button>
                     </div>
                   </NavLink>
                   <div>
