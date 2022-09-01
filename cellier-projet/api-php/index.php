@@ -99,7 +99,7 @@ class Routeur
                     break;
                 case 'PATCH':
                     if ($idEntite) {
-                        $controleur->changer($idEntite, file_get_contents('php://input'));
+                        $controleur->changer($params, $idEntite, file_get_contents('php://input'));
                     } else {
                         // Erreur : A compléter...
                     }

@@ -213,34 +213,6 @@ const Appli = () => {
       });
   }
 
-  async function fetchVin(bouteille) {
-    await fetch(
-      "http://localhost/PW2/cellier-projet/api-php/" +
-        "cellier" +
-        "/" +
-        cellier +
-        "/" +
-        "vins" +
-        "/" +
-        "bouteille" +
-        "/" +
-        bouteille
-    )
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        setBouteilles(data.id);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        setError(error);
-      });
-  }
-
   // ---------------------------------- Rendering -----------------------------------------
 
   return (

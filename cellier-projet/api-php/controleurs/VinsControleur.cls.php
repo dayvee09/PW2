@@ -26,10 +26,10 @@ class VinsControleur extends Controleur
         $this->reponse['corps'] = $this->modele->remplacer($id, json_decode($vin));
     }
 
-    public function changer($id, $fragmentVin)
+    public function changer($params, $idEntite, $fragmentVin)
     {
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
-        $this->reponse['corps'] = $this->modele->changer($id);
+        $this->reponse['corps'] = $this->modele->changer($params, $idEntite, json_decode($fragmentVin));
     }
 
     public function retirer($id)

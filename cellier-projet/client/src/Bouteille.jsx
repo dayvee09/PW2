@@ -39,7 +39,7 @@ export default function Bouteille(props) {
 
   useEffect(() => {
     console.log("ok");
-    fetchPutVinUn();
+    fetchPutVinUn(quantite);
   }, [quantite]);
 
   useEffect(() => {
@@ -79,9 +79,6 @@ export default function Bouteille(props) {
   function modifierBouteille(NouveauQuantite) {
     let objetDonnees = {
       quantite: NouveauQuantite,
-      date_achat: props.date_achat,
-      garde_jusqua: props.garde_jusqua,
-      notes: props.notes,
     };
     var reg = /^[1-9]+[0-9]*]*$/;
     if (reg.test(NouveauQuantite)) {
@@ -89,14 +86,8 @@ export default function Bouteille(props) {
     }
   }
 
-  /**
-   *  Voir les caractéristiques de la bouteille
-   */
-  function voirBouteille() {
-    fetchVinUn();
-  }
-
   async function fetchPutVinUn(objetDonnees) {
+    console.log(JSON.stringify({ quantite: objetDonnees }));
     //route: ocalhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
     let reponse = await fetch(
       "http://localhost/PW2/cellier-projet/api-php/" +
@@ -107,13 +98,15 @@ export default function Bouteille(props) {
         "vins" +
         "/" +
         "bouteille" +
+        "/" +
         props.id,
       {
-        method: "PUT",
-        body: JSON.stringify(objetDonnees),
+        method: "PATCH",
+        body: JSON.stringify({ quantite: objetDonnees }),
       }
     );
     let reponseJson = await reponse.json();
+    console.log(reponseJson);
   }
   async function fetchVinUn() {
     //route: ocalhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
