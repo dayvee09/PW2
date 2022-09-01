@@ -209,9 +209,11 @@ const Appli = () => {
 
   // ---------------------------------- Rendering -----------------------------------------
   console.log(id);
+
   return (
     <div className="Appli">
       <img className="logo" src={Logo} alt="logo-mon-vino"></img>
+      <p className="text">Commencez dès maintenant votre collection de vin !</p>
       <Authenticator className="Authenticator">
         {({ signOut, user }) => (
           <div>
@@ -312,7 +314,6 @@ const Appli = () => {
           </div>
         )}
       </Authenticator>
-      <p className="text">Commencez dès maintenant votre collection de vin !</p>
       <small className="">© Mon Vino 2022, Tous droits réservés</small>
     </div>
   );
