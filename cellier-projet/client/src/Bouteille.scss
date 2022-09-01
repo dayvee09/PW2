@@ -4,18 +4,14 @@
     padding: 40px;
     .img {
       img {
-        width: 180px;
-        height: 180px;
+        width: 200px;
+        height: 200px;
         object-fit: contain;
       }
     }
+    .options {
+      display: flex;
+      justify-content: space-between;
+    }
   }
-}
-
-.fond-selection {
-  background-color: rgb(230, 234, 235);
-}
-
-.fond-normal {
-  background-color: white;
 }

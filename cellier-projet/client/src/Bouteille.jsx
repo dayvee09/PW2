@@ -4,54 +4,25 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 export default function Bouteille(props) {
-  const [bouteille, setBouteille] = useState([]);
-  const [bouteilles, setBouteilles] = useState([]);
-  const [selection, setSelection] = useState("fond-normal");
-  useEffect(() => {
-    props.gererBouteille(bouteille);
-  }, [bouteille]);
-
-  useEffect(() => {
-    props.gererBouteilles(bouteilles);
-  }, [bouteilles]);
-
-  const handleChange = (event) => {
-    // setBouteille(props.id);
-    // console.log(props.cellier);
-    // console.log(props.id);
-    // console.log(bouteilles.filter((test) => test.id === props.id));
-    // setBouteilles(bouteilles.filter((test) => test.id === props.id));
-    fetchVinUn();
-    if (selection === "fond-normal") {
-      setSelection("fond-selection");
-    } else {
-      setSelection("fond-normal");
-    }
-  };
-
-  console.log(props.bouteilles);
-
   /**
    *  État de la quantité
    */
   const [voirFiche, setVoirFiche] = useState(false);
   const [quantite, setQuantite] = useState(props.quantite);
-
-  useEffect(() => {
-    console.log("ok");
-    fetchPutVinUn(quantite);
-  }, [quantite]);
-
-  useEffect(() => {
-    console.log("ok");
-    fetchVinUn();
-  }, [voirFiche]);
-
   /**
    *  État du formulaire de modification
    */
 
   const [frmOuvert, setFrmOuvert] = useState(false);
+
+  useEffect(() => {
+    fetchPutVinUn(quantite);
+  }, [quantite]);
+
+  useEffect(() => {
+    fetchVinUn();
+  }, [voirFiche]);
+
   /**
    * Gère la suppresssion d'une bouteille
    */
@@ -86,7 +57,6 @@ export default function Bouteille(props) {
   }
 
   async function fetchPutVinUn(objetDonnees) {
-    console.log(JSON.stringify({ quantite: objetDonnees }));
     //route: ocalhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
     let reponse = await fetch(
       "http://localhost/PW2/cellier-projet/api-php/" +

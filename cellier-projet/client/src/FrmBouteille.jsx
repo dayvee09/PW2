@@ -6,6 +6,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useState, useEffect } from "react";
 import FrmBouteilleInput from "./FrmBouteilleInput";
+import "./FrmBouteille.scss";
 
 export default function FrmBouteille({
   bouteille_id,
@@ -38,17 +39,19 @@ export default function FrmBouteille({
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
-    console.log(quantite);
     if (quantite !== bouteille_quantite_p && quantite >= 0) {
       modifierBouteille(quantite);
     }
     setFrmOuvert(false);
   }
-  console.log(voirFiche);
   return (
     <div>
       <Dialog open={frmOuvert} onClose={viderFermerFrm}>
-        <DialogTitle> Modifier la quantité de la bouteille</DialogTitle>
+        {voirFiche === false ? (
+          <DialogTitle> Modifier la quantité de la bouteille</DialogTitle>
+        ) : (
+          <DialogTitle> {bouteille_nom}</DialogTitle>
+        )}
         <DialogContent>
           <div className="img">
             <img src={bouteille_image} alt="bouteille" />

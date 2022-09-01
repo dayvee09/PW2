@@ -26,7 +26,6 @@ const Appli = () => {
   const [emailUtilisateur, setEmailUtilisateur] = useState([]);
   const [id, setId] = useState([]);
   const [cellier, setCellier] = useState([]);
-  const [bouteille, setBouteille] = useState([]);
   const [utilisateur, setUtilisateur] = useState([]);
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [celliers, setCelliers] = useState([]);
@@ -44,19 +43,12 @@ const Appli = () => {
     fetchVins();
   }, [cellier]);
 
-  function gererBouteille(idBouteille) {
-    setBouteille(idBouteille);
-  }
   function gererBouteilles(idBouteilles) {
-    setBouteille(idBouteilles);
+    setBouteilles(idBouteilles);
   }
   function gererCellier(idCellier) {
     setCellier(idCellier);
   }
-
-  console.log(cellier);
-  console.log(bouteille);
-  console.log(bouteilles);
 
   // -------------------------- Requêtes Fetch ------------------------------------------------------
 
@@ -69,7 +61,6 @@ const Appli = () => {
     // var u = utilisateurs.find(function (curr) {
     //   return curr.email === user.attributes.email
     // })
-    // console.log(setId(u.id));
     utilisateurs.forEach((utilisateur) => {
       if (utilisateur["email"] === user.attributes.email && bool === false) {
         bool = true;
@@ -105,7 +96,6 @@ const Appli = () => {
       })
       .then((data) => {
         setUtilisateurs(data);
-        console.log("test");
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -128,7 +118,6 @@ const Appli = () => {
         throw response;
       })
       .then((data) => {
-        console.log(data);
         setUtilisateur(data[0]);
         setId(data[0].id);
       })
@@ -141,10 +130,7 @@ const Appli = () => {
   async function deleteUser() {
     try {
       const result = await Auth.deleteUser();
-      console.log(result);
-    } catch (error) {
-      console.log("Error deleting user", error);
-    }
+    } catch (error) {}
     let reponse = await fetch(
       "http://localhost/PW2/cellier-projet/api-php/" +
         "email" +
@@ -233,21 +219,33 @@ const Appli = () => {
               fetchUtilisateur={fetchUtilisateur}
               createUser={createUser}
             />
-            <button onClick={signOut}>Sign Out</button>
-            <button onClick={handleDelete}>Supprimer votre compte</button>
 
             {/*-------------------------------- Menu de navigation --------------------------*/}
 
             <Router>
-              <div>
-                <NavLink exact to={`/user_id/${id}/celliers`}>
-                  <button>Voir mes Celliers</button>
-                </NavLink>
-              </div>
-              <div>
-                <NavLink exact to={`/cellier/${cellier}/vins`}>
-                  <button>Voir mes bouteilles</button>
-                </NavLink>
+              <div className="navigation">
+                <div className="menu-celliers">
+                  <div>
+                    <NavLink exact to={`/user_id/${id}/celliers`}>
+                      <button>Voir mes Celliers</button>
+                    </NavLink>
+                  </div>
+                  <div>
+                    <NavLink exact to={`/cellier/${cellier}/vins`}>
+                      <button>Voir mes bouteilles</button>
+                    </NavLink>
+                  </div>
+                </div>
+                <div className="menu-compte">
+                  <div>
+                    <button onClick={signOut}>Sign Out</button>
+                  </div>
+                  <div>
+                    <button onClick={handleDelete}>
+                      Supprimer votre compte
+                    </button>
+                  </div>
+                </div>
               </div>
 
               {/* ------------------------------ Routes --------------------------------*/}
@@ -261,10 +259,8 @@ const Appli = () => {
                       bouteilles={bouteilles}
                       setBouteilles={setBouteilles}
                       fetchVins={fetchVins}
-                      gererBouteille={gererBouteille}
                       gererBouteilles={gererBouteilles}
                       cellier={cellier}
-                      bouteille={bouteille}
                     />
                   }
                 />
@@ -282,16 +278,6 @@ const Appli = () => {
                       id={id}
                       emailUtilisateur={emailUtilisateur}
                       gererCellier={gererCellier}
-                    />
-                  }
-                />
-                <Route
-                  path={`/cellier/${cellier}/vins/bouteille/${bouteille}`}
-                  exact
-                  element={
-                    <Bouteille
-                      bouteilles={bouteilles}
-                      setBouteilles={setBouteilles}
                     />
                   }
                 />
