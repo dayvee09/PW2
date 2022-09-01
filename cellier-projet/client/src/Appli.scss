@@ -1,75 +1,73 @@
 .Appli {
-	background-color: #f1ab50;;
-	color: #152440;
-	font-family: 'Urbanist';
-	font-weight: 300;
-	padding-top: 125px;
-	padding-bottom: 125px;
-	text-align: center;
+  background-color: #f1ab50;
+  color: #152440;
+  font-family: "Urbanist";
+  font-weight: 300;
+  padding-top: 125px;
+  padding-bottom: 125px;
+  text-align: center;
 
-	
-	.logo {
-		width: 250px;
-		height: 100px;
-	}
+  .logo {
+    width: 250px;
+    height: 100px;
+  }
 
-	.text {
-		padding-bottom: 50px;
-		font-weight: 500;
-	}
+  .text {
+    padding-bottom: 50px;
+    font-weight: 500;
+  }
 
-	small {
-		font-size: 0.7em;
-	}
+  small {
+    font-size: 0.7em;
+  }
 
-	.Authentificator {
-		padding-top: 75px;
-		padding-bottom: 75px;
+  .Authentificator {
+    padding-top: 75px;
+    padding-bottom: 75px;
 
-		div {
-			background-color: #f3f5eb;
-		}
+    div {
+      background-color: #f3f5eb;
+    }
 
-		input  {
-			text-align: left;
-		}
-		
-		.amplify-button--primary {
-			background-color : #cc4240;
-			color: #f3f5eb;
-			font-weight: 400;
-			
-			&:hover {
-				background-color: #152440;
-				color: #f1ab50;
-			}
-		}
+    input {
+      text-align: left;
+    }
 
-		.amplify-button--link {
-			color:#152440;
+    .amplify-button--primary {
+      background-color: #cc4240;
+      color: #f3f5eb;
+      font-weight: 400;
 
-			&:hover {
-				background-color: #f3f5eb;
-				color: #cc4240;
-			}
-		}
-		
-		.amplify-tabs-item {
-			background-color : #f3f5eb;
-			color: #cc4240;
-			font-weight: 400;
+      &:hover {
+        background-color: #152440;
+        color: #f1ab50;
+      }
+    }
 
-		}
+    .amplify-button--link {
+      color: #152440;
 
-		button[data-state="inactive"]{
-			background-color : #f3f5eb86;
-			color: #152440;
-		}
+      &:hover {
+        background-color: #f3f5eb;
+        color: #cc4240;
+      }
+    }
 
-		button[data-state="active"]{
-			border-color : #cc4240;
-		}
-	}
+    .amplify-tabs-item {
+      background-color: #f3f5eb;
+      color: #cc4240;
+      font-weight: 400;
+    }
+
+    button[data-state="inactive"] {
+      background-color: #f3f5eb86;
+      color: #152440;
+    }
+
+    button[data-state="active"] {
+      border-color: #cc4240;
+    }
+  }
 }
 
 .navigation {

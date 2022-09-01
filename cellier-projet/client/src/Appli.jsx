@@ -19,7 +19,7 @@ import Utilisateur from "./Utilisateur.jsx";
 import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
-import { I18n } from 'aws-amplify';
+import { I18n } from "aws-amplify";
 import Logo from "./img/logo-rouge.png";
 
 const Appli = () => {
@@ -45,19 +45,19 @@ const Appli = () => {
     } else setURI("http://localhost/PW2/cellier-projet/api-php");
   }, []);
 
-  I18n.setLanguage('fr');
+  I18n.setLanguage("fr");
   const dict = {
-	'fr': {
-		'Sign In': "Connexion",
-		'Sign in': "Se connecter",
-		'Create Account': "S'inscrire",
-		'Forgot your password?' : "Mot de passe oublié ?",
-		'Reset your password' : "Réinitialiser votre mot de passe",
-		'Send code' : "Envoyer le code",
-		'Back to Sign In' : "Retour à la connexion",
-		'Signing in' : "Veuillez patientez",
-	  }
-	};
+    fr: {
+      "Sign In": "Connexion",
+      "Sign in": "Se connecter",
+      "Create Account": "S'inscrire",
+      "Forgot your password?": "Mot de passe oublié ?",
+      "Reset your password": "Réinitialiser votre mot de passe",
+      "Send code": "Envoyer le code",
+      "Back to Sign In": "Retour à la connexion",
+      "Signing in": "Veuillez patientez",
+    },
+  };
 
   I18n.putVocabularies(dict);
 
@@ -200,8 +200,8 @@ const Appli = () => {
   // ---------------------------------- Rendering -----------------------------------------
 
   return (
-    <div>
-	  <img className="logo" src={Logo} alt="logo-mon-vino"></img>
+    <div className="Appli">
+      <img className="logo" src={Logo} alt="logo-mon-vino"></img>
       <Authenticator>
         {({ signOut, user }) => (
           <div>
@@ -282,8 +282,8 @@ const Appli = () => {
           </div>
         )}
       </Authenticator>
-	  <p className="text">Commencez dès maintenant votre collection de vin !</p>
-	  <small className="">© Mon Vino 2022, Tous droits réservés</small>
+      <p className="text">Commencez dès maintenant votre collection de vin !</p>
+      <small className="">© Mon Vino 2022, Tous droits réservés</small>
     </div>
   );
 };
