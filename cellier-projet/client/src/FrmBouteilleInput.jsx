@@ -13,7 +13,7 @@ export default function FrmBouteilleInput(props) {
         type={"number"}
         min={0}
         inputProps={{ min: 0 }}
-        defaultValue={props.bouteille_quantite_p}
+        defaultValue={props.quantite}
       />
     </div>
   );

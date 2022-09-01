@@ -4,7 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FrmBouteilleInput from "./FrmBouteilleInput";
 
 export default function FrmBouteille({
@@ -24,13 +24,15 @@ export default function FrmBouteille({
   bouteille_date_achat,
   bouteille_description,
   bouteille_url_saq,
+  voirFiche,
+  setVoirFiche,
 }) {
   /**
    *  Gère l'action d'annuler
    */
   function viderFermerFrm() {
-    setQuantite(bouteille_quantite_p);
     setFrmOuvert(false);
+    setVoirFiche(false);
   }
   /**
    * Gère l'action de soumettre
@@ -42,7 +44,7 @@ export default function FrmBouteille({
     }
     setFrmOuvert(false);
   }
-
+  console.log(voirFiche);
   return (
     <div>
       <Dialog open={frmOuvert} onClose={viderFermerFrm}>
@@ -53,7 +55,7 @@ export default function FrmBouteille({
           </div>
           <div className="description">
             <p className="nom">Nom : {bouteille_nom} </p>
-            <p className="quantite">Quantité : {bouteille_quantite_p}</p>
+            <p className="quantite">Quantité : {quantite}</p>
             <p className="pays">Pays : {bouteille_pays}</p>
             <p className="type">Type : {bouteille_vino__type_id}</p>
             <p className="millesime">Millesime : {bouteille_millesime}</p>
@@ -63,16 +65,24 @@ export default function FrmBouteille({
             <p className="date_achat">Date achat : {bouteille_date_achat}</p>
             <p className="description">Description : {bouteille_description}</p>
           </div>
-
-          <FrmBouteilleInput
-            bouteille_quantite_p={bouteille_quantite_p}
-            setQuantite={setQuantite}
-          />
+          {voirFiche === false && (
+            <FrmBouteilleInput
+              bouteille_quantite_p={bouteille_quantite_p}
+              setQuantite={setQuantite}
+              quantite={quantite}
+            />
+          )}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={viderFermerFrm}>Annuler</Button>
-          <Button onClick={gererSoumettre}>Soumettre</Button>
-        </DialogActions>
+        {voirFiche === false ? (
+          <DialogActions>
+            <Button onClick={viderFermerFrm}>Annuler</Button>
+            <Button onClick={gererSoumettre}>Soumettre</Button>
+          </DialogActions>
+        ) : (
+          <DialogActions>
+            <Button onClick={viderFermerFrm}>OK</Button>
+          </DialogActions>
+        )}
       </Dialog>
     </div>
   );
