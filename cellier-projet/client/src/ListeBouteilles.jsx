@@ -13,7 +13,6 @@ function ListeBouteilles(props) {
   }, []);
   if (props.bouteilles) {
     if (props.bouteilles.length > 1) {
-      console.log("plus qu'une bouteille");
       return (
         <div className="ListeBouteilles">
           {bouteilles.map((bouteille) => (
@@ -33,7 +32,6 @@ function ListeBouteilles(props) {
         </div>
       );
     } else {
-      console.log("1 seule bouteille");
       return (
         <div className="ListeBouteilles">
           <div className="Bouteille">
@@ -47,12 +45,9 @@ function ListeBouteilles(props) {
               setCellier={props.setCellier}
               emailUtilisateur={props.emailUtilisateur}
               gererCellier={props.gererCellier}
-              gererBouteille={props.gererBouteille}
               gererBouteilles={props.gererBouteilles}
               bouteilles={props.bouteilles}
               setBouteilles={props.setBouteilles}
-              bouteille={props.bouteille}
-              setBouteille={props.setBouteille}
             />
           </div>
         </div>

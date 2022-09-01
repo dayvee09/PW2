@@ -1,8 +1,8 @@
 .ListeBouteilles {
+  margin-top: 30px;
   display: grid;
   width: 100%;
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
   list-style: none;
-  padding: 0.75rem 1.25rem;
 }

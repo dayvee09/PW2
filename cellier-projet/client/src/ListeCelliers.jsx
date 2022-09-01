@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import Cellier from "./Cellier";
+import "./ListeCelliers.scss";
 import { useNavigate, useParams } from "react-router-dom";
 
 function ListeCelliers(props) {
