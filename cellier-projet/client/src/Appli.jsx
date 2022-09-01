@@ -33,7 +33,7 @@ const Appli = () => {
   const [celliers, setCelliers] = useState([]);
   const [errorMessages, setErrorMessages] = useState({});
   const [isLogged, setIsLogged] = useState(false);
-  const ENV = "prod";
+  const ENV = "dev";
   const [URI, setURI] = useState(
     "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
   );
