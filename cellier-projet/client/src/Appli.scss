@@ -13,16 +13,22 @@
   }
 
   .text {
+	padding-top: 50px;
     padding-bottom: 50px;
-    font-weight: 500;
+    font-weight: 600;
+	font-size: 15px;
   }
 
   small {
-    font-size: 0.7em;
+    font-size: 0.9em;
   }
 
   .Authenticator {
+<<<<<<< HEAD
     padding-top: 75px;
+=======
+    // padding-top: 75px;
+>>>>>>> e8bcdcceb6706fcdd9ccbdb9099d089c8a855f4e
     padding-bottom: 75px;
 
     div {
