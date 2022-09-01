@@ -25,6 +25,8 @@ class VinsModele extends AccesBd
         return $this->supprimer("DELETE FROM vino__bouteille WHERE vino__bouteille.id=:vin_id", ['vin_id' => $id]);
     }
 
+    // Gère la modification de l'ensemble des colonnes pour une bouteille donnée. Dans le cas d'une bouteille créée par un utilisateur, le paramètre admin est a false. Pour une bouteille provenant de la Saq, le paramètre admin doit être à true (condition if)
+
     public function remplacer($id, $vin)
     {
         $this->modifier("UPDATE vino__bouteille_has_vino__cellier SET 	
@@ -49,5 +51,13 @@ class VinsModele extends AccesBd
             $vin->personnalise,
             $id
         ]);
+    }
+
+    // Cette requête peut gérer seulement la modification des colonnes: quantité, date_achat et garde_jusqua pour une bouteille importée de la Saq ou crée par l'usager. Pour pouvoir changer l'ensemble des colonnes pour une bouteille, le faire avec la méthode remplacer (PUT). 
+
+    public function changer($params, $idEntite, $fragmentVin)
+    {
+        $this->modifier("UPDATE vino__bouteille_has_vino__cellier SET 	
+        quantite=:fragment_vin WHERE vino__bouteille_id=:vin_id AND vino__cellier_id=:cellier_id",  ['cellier_id' => $params["cellier"], 'vin_id' => $idEntite["bouteille"], 'fragment_vin' => $fragmentVin->quantite]);
     }
 }

@@ -26,10 +26,10 @@ class UtilisateursControleur extends Controleur
         $this->reponse['corps'] = $this->modele->remplacer($id, json_decode($utilisateur));
     }
 
-    public function changer($id, $fragmentVin)
+    public function changer($params, $idEntite, $fragmentEntite)
     {
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
-        $this->reponse['corps'] = $this->modele->changer($id);
+        $this->reponse['corps'] = $this->modele->changer($params, $idEntite, json_decode($fragmentEntite));
     }
 
     public function retirer($id)

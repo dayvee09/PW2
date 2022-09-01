@@ -19,7 +19,7 @@ abstract class Controleur
     public abstract function un($params, $idEntite);
     public abstract function ajouter($entite);
     public abstract function remplacer($id, $entite);
-    public abstract function changer($id, $fragmentEntite);
+    public abstract function changer($params, $idEntite, $fragmentEntite);
     public abstract function retirer($id);
 
     private function produireReponse()
