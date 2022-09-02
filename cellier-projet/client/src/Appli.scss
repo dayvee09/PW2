@@ -78,12 +78,12 @@
   justify-content: space-between;
 }
 
-.menu-compte {
-  padding: 20px;
+.menu-compte,
+.menu-celliers {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 100%;
+  justify-content: space-evenly;
+  width: 75%;
   button {
     width: 100px;
     height: 40px;
