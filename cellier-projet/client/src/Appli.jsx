@@ -34,9 +34,7 @@ const Appli = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [isLogged, setIsLogged] = useState(false);
   const ENV = "dev";
-  const [URI, setURI] = useState(
-    "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
-  );
+  const [URI, setURI] = useState([]);
 
   useEffect(() => {
     if (ENV == "prod") {
@@ -166,8 +164,16 @@ const Appli = () => {
 
   async function handleSignOut() {
     await Auth.signOut()
+
       .then(() => {
         setId([]);
+      })
+      .catch((err) => console.log("Erreur lors de la déconnexion", err))
+      .then(() => {
+        setId("");
+        setUtilisateur("");
+        setBouteilles("");
+        setCelliers("");
       })
       .catch((err) => console.log("Erreur lors de la déconnexion", err));
   }
