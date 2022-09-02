@@ -46,7 +46,7 @@ const Appli = () => {
         "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
       );
     } else {
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
