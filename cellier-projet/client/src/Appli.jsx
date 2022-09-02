@@ -46,7 +46,7 @@ const Appli = () => {
         "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
       );
     } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -75,9 +75,15 @@ const Appli = () => {
     if (DATA !== undefined) {
       return;
     }
-    createUser();
+    createUser(emailUtilisateur);
     DATA = true;
   });
+
+  useEffect(() => {
+    console.log("fetchUtilisateur dans le use effect initial");
+    fetchUtilisateur();
+    fetchUtilisateurs();
+  }, [emailUtilisateur]);
 
   useEffect(() => {
     console.log("fetchCelliers dans le use effect initial");
@@ -98,25 +104,24 @@ const Appli = () => {
   // -------------------------- Requêtes Fetch ------------------------------------------------------
 
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
-  async function createUser() {
-    let user = await Auth.currentAuthenticatedUser();
-    const { attributes } = user;
+  async function createUser(emailUtilisateur) {
     let bool = false;
     // var u = utilisateurs.find(function (curr) {
     //   return curr.email === user.attributes.email
     // })
     utilisateurs.forEach((utilisateur) => {
-      if (utilisateur["email"] === user.attributes.email && bool === false) {
+      if (utilisateur["email"] === emailUtilisateur && bool === false) {
         bool = true;
       }
     });
     if (!bool) {
       let reponse = await fetch(URI + "/admin/ajout/utilisateurs", {
         method: "POST",
-        body: JSON.stringify({ email: user.attributes.email }),
+        body: JSON.stringify({ email: emailUtilisateur }),
       });
       let reponseJson = await reponse.json();
-      fetchUtilisateur();
+      // setId(reponseJson['id']);
+      // fetchUtilisateur();
     }
   }
 
@@ -243,7 +248,6 @@ const Appli = () => {
               emailUtilisateur={emailUtilisateur}
               fetchUtilisateurs={fetchUtilisateurs}
               fetchUtilisateur={fetchUtilisateur}
-              createUser={createUser}
             />
 
             {/*-------------------------------- Menu de navigation --------------------------*/}
