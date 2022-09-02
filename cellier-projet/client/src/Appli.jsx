@@ -22,6 +22,8 @@ import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
 import Logo from "./img/logo-rouge.png";
 
+let DATA 
+
 const Appli = () => {
   const [error, setError] = useState([]);
   const [bouteilles, setBouteilles] = useState([]);
@@ -42,7 +44,7 @@ const Appli = () => {
         "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
       );
     } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -66,7 +68,13 @@ const Appli = () => {
 
   email().then((email) => {
     const emailUtilisateur = email;
+    console.log(emailUtilisateur);
     setEmailUtilisateur(emailUtilisateur);
+    if (DATA !== undefined) {
+      return;
+    }
+    createUser();
+    DATA = true;
   });
 
   useEffect(() => {
@@ -167,14 +175,12 @@ const Appli = () => {
   async function handleSignOut() {
     await Auth.signOut()
       .then(() => {
-        setId([]);
-      })
-      .catch((err) => console.log("Erreur lors de la déconnexion", err))
-      .then(() => {
         setId("");
         setUtilisateur("");
         setBouteilles("");
         setCelliers("");
+        setEmailUtilisateur("");
+        DATA = undefined;
       })
       .catch((err) => console.log("Erreur lors de la déconnexion", err));
   }
