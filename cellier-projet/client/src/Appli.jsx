@@ -22,6 +22,8 @@ import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
 import Logo from "./img/logo-rouge.png";
 
+let DATA 
+
 const Appli = () => {
   const [error, setError] = useState([]);
   const [bouteilles, setBouteilles] = useState([]);
@@ -38,12 +40,10 @@ const Appli = () => {
 
   useEffect(() => {
     if (ENV == "prod") {
-      console.log(URI);
       setURI(
         "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
       );
     } else {
-      console.log(URI);
       setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
@@ -68,8 +68,19 @@ const Appli = () => {
 
   email().then((email) => {
     const emailUtilisateur = email;
+    console.log(emailUtilisateur);
     setEmailUtilisateur(emailUtilisateur);
+    if (DATA !== undefined) {
+      return;
+    }
+    createUser();
+    DATA = true;
   });
+
+  useEffect(() => {
+    console.log("fetchCelliers dans le use effect initial");
+    fetchCelliers();
+  }, [id]);
 
   useEffect(() => {
     fetchVins();
@@ -108,7 +119,6 @@ const Appli = () => {
   }
 
   async function fetchUtilisateurs() {
-    console.log(URI);
     await fetch(
       URI + "/" + "admin" + "/" + emailUtilisateur + "/" + "utilisateurs"
     )
@@ -164,18 +174,21 @@ const Appli = () => {
 
   async function handleSignOut() {
     await Auth.signOut()
-    .then(() => {
-      setId("");
-      setUtilisateur("");
-      setBouteilles("");
-      setCelliers("");
-    })
-    .catch(err => console.log('Erreur lors de la déconnexion', err))
+      .then(() => {
+        setId("");
+        setUtilisateur("");
+        setBouteilles("");
+        setCelliers("");
+        setEmailUtilisateur("");
+        DATA = undefined;
+      })
+      .catch((err) => console.log("Erreur lors de la déconnexion", err));
   }
 
   // ---------------------------------- Gestion des celliers -----------------------------
 
   async function fetchCelliers() {
+    console.log("fetchCelliers: ", id);
     await fetch(URI + "/" + "user_id" + "/" + id + "/" + "celliers")
       .then((response) => {
         if (response.ok) {
@@ -210,9 +223,9 @@ const Appli = () => {
         setError(error);
       });
   }
-
-  // ---------------------------------- Rendering -----------------------------------------
   console.log(id);
+  console.log(celliers);
+  // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className="Appli">
       <img className="logo" src={Logo} alt="logo-mon-vino"></img>
@@ -239,13 +252,13 @@ const Appli = () => {
               <div className="navigation">
                 <div className="menu-celliers">
                   <div>
-                    <NavLink exact to={`/user_id/${id}/celliers`}>
+                    <NavLink to={`/`}>
                       <button>Voir mes Celliers</button>
                     </NavLink>
                   </div>
                 </div>
                 <div className="menu-compte">
-                  <NavLink exact to="/">
+                  <NavLink to="/">
                     <div>
                       <button onClick={handleSignOut}>Sign Out</button>
                     </div>
@@ -263,7 +276,6 @@ const Appli = () => {
               <Routes>
                 <Route
                   path={`/cellier/${cellier}/vins`}
-                  exact
                   element={
                     <ListeBouteilles
                       bouteilles={bouteilles}
@@ -276,8 +288,7 @@ const Appli = () => {
                   }
                 />
                 <Route
-                  path={`/user_id/${id}/celliers`}
-                  exact
+                  path={`/`}
                   element={
                     <ListeCelliers
                       celliers={celliers}
@@ -293,24 +304,6 @@ const Appli = () => {
                     />
                   }
                 />
-                {/* /<Route
-                  path="/"
-                  exact
-                  element={
-                    <ListeCelliers
-                      celliers={celliers}
-                      setCelliers={setCelliers}
-                      cellier={cellier}
-                      setCellier={setCellier}
-                      fetchCelliers={fetchCelliers}
-                      fetchVins={fetchVins}
-                      id={id}
-                      emailUtilisateur={emailUtilisateur}
-                      gererCellier={gererCellier}
-                      URI={URI}
-                    />
-                  }
-                /> */}
               </Routes>
             </Router>
           </div>

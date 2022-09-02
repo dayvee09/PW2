@@ -40,7 +40,7 @@ export default function Cellier(props) {
           <div className="description-originale">
             {selection == "fond-selection" ? (
               <div className="btn-cellier">
-                <NavLink exact to={`/cellier/${cellier}/vins`}>
+                <NavLink to={`/cellier/${cellier}/vins`}>
                   <button>Voir mes bouteilles</button>
                 </NavLink>
                 <div>
