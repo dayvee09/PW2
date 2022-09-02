@@ -46,7 +46,7 @@ const Appli = () => {
       );
     } else {
       console.log(URI);
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -164,6 +164,14 @@ const Appli = () => {
     deleteUser();
   }
 
+  async function handleSignOut() {
+    await Auth.signOut()
+    .then(() => {
+      setId([]);
+    })
+    .catch(err => console.log('Erreur lors de la déconnexion', err))
+  }
+
   // ---------------------------------- Gestion des celliers -----------------------------
 
   async function fetchCelliers() {
@@ -202,11 +210,6 @@ const Appli = () => {
       });
   }
 
-  async function handleLogout() {
-    await Auth.signOut();
-    userHasAuthenticated(false);
-  }
-
   // ---------------------------------- Rendering -----------------------------------------
   console.log(id);
   return (
@@ -243,7 +246,7 @@ const Appli = () => {
                 <div className="menu-compte">
                   <NavLink exact to="/">
                     <div>
-                      <button onClick={handleLogout}>Sign Out</button>
+                      <button onClick={handleSignOut}>Sign Out</button>
                     </div>
                   </NavLink>
                   <div>
@@ -289,7 +292,7 @@ const Appli = () => {
                     />
                   }
                 />
-                {/* <Route
+                {/* /<Route
                   path="/"
                   exact
                   element={
