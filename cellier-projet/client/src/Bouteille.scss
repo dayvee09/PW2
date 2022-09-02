@@ -12,6 +12,12 @@
     .options {
       display: flex;
       justify-content: space-between;
+      position: relative;
+    }
+    .snackbar-wrapper {
+      position: absolute;
+      top: 0;
+      right:0;
     }
   }
 }
