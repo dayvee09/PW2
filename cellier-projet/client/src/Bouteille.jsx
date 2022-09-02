@@ -38,12 +38,7 @@ export default function Bouteille(props) {
 
   useEffect(() => {
     fetchPutVinUn(quantite);
-  }, []);
-
-  /**
-   * Gère la suppresssion de la quantité de bouteille
-   */
-  function gererSupprimer() { }
+  }, [quantite]);
 
   /**
    * Gère la modification de la quantité de bouteille
@@ -126,7 +121,7 @@ export default function Bouteille(props) {
     );
     let reponseJson = await reponse.json();
   }
- 
+
   return (
     <>
       <div className="bouteille" data-quantite="">
