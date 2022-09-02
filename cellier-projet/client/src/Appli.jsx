@@ -7,6 +7,7 @@ import {
   useParams,
   Navigate,
   useNavigate,
+  useLocation,
 } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Authenticator } from "@aws-amplify/ui-react";
@@ -22,7 +23,7 @@ import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
 import Logo from "./img/logo-rouge.png";
 
-let DATA 
+let DATA;
 
 const Appli = () => {
   const [error, setError] = useState([]);
@@ -37,6 +38,7 @@ const Appli = () => {
   const [isLogged, setIsLogged] = useState(false);
   const ENV = "dev";
   const [URI, setURI] = useState([]);
+  let location = window.location.pathname;
 
   useEffect(() => {
     if (ENV == "prod") {
@@ -44,7 +46,7 @@ const Appli = () => {
         "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
       );
     } else {
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -223,8 +225,6 @@ const Appli = () => {
         setError(error);
       });
   }
-  console.log(id);
-  console.log(celliers);
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className="Appli">
@@ -247,15 +247,16 @@ const Appli = () => {
             />
 
             {/*-------------------------------- Menu de navigation --------------------------*/}
-
             <Router>
               <div className="navigation">
                 <div className="menu-celliers">
-                  <div>
-                    <NavLink to={`/`}>
-                      <button>Voir mes Celliers</button>
-                    </NavLink>
-                  </div>
+                  {location !== "/" && (
+                    <div>
+                      <NavLink to={`/`}>
+                        <button>Retour aux Celliers</button>
+                      </NavLink>
+                    </div>
+                  )}
                 </div>
                 <div className="menu-compte">
                   <NavLink to="/">
