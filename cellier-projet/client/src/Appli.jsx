@@ -80,6 +80,16 @@ const Appli = () => {
   });
 
   useEffect(() => {
+<<<<<<< HEAD
+=======
+    console.log("fetchUtilisateur dans le use effect initial");
+    fetchUtilisateur();
+    fetchUtilisateurs();
+  }, [emailUtilisateur]);
+
+  useEffect(() => {
+    console.log("fetchCelliers dans le use effect initial");
+>>>>>>> 9bc7bf0166ddbfa64f2dc7c3ed617b5b78726afa
     fetchCelliers();
   }, [id]);
 
@@ -113,7 +123,8 @@ const Appli = () => {
         body: JSON.stringify({ email: emailUtilisateur }),
       });
       let reponseJson = await reponse.json();
-      fetchUtilisateur();
+      // setId(reponseJson['id']);
+      // fetchUtilisateur();
     }
   }
 
@@ -239,7 +250,6 @@ const Appli = () => {
               emailUtilisateur={emailUtilisateur}
               fetchUtilisateurs={fetchUtilisateurs}
               fetchUtilisateur={fetchUtilisateur}
-              createUser={createUser}
             />
 
             {/*-------------------------------- Menu de navigation --------------------------*/}

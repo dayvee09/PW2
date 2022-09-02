@@ -26,24 +26,26 @@ export default function Bouteille(props) {
   const [voirFiche, setVoirFiche] = useState(false);
 
   /**
-   *  État de la quantité
+   *  État de la quantité et la quantité précédente
    */
 
   const [quantite, setQuantite] = useState(props.quantite);
+  const [quantite_p, setQuantite_p] = useState(quantite);
   /**
    *  État du formulaire de modification
    */
 
   const [frmOuvert, setFrmOuvert] = useState(false);
 
-  useEffect(() => {
-    fetchPutVinUn(quantite);
-  }, [quantite]);
+  // useEffect(() => {
+  //   fetchPutVinUn(quantite);
+  // }, []);
 
   /**
    * Gère la modification de la quantité de bouteille
    */
   function gererModifier() {
+    setQuantite_p(quantite);
     setFrmOuvert(true);
   }
 
@@ -60,6 +62,7 @@ export default function Bouteille(props) {
    */
   function gererAjouter() {
     setQuantite(parseInt(quantite) + 1);
+    fetchPutVinUn(quantite);
   }
 
   /**
@@ -71,6 +74,7 @@ export default function Bouteille(props) {
     else
 
       setOpenAlert(true);
+      fetchPutVinUn(quantite);
   }
   /**
    *  Modifier la bouteille //  gererActionBouteille(bouteille_id, cellier_id, quantite);
@@ -80,6 +84,7 @@ export default function Bouteille(props) {
     if (reg.test(NouveauQuantite)) {
       setQuantite(NouveauQuantite);
     }
+    fetchPutVinUn(quantite);
   }
 
   async function fetchPutVinUn(NouveauQuantite) {
@@ -121,7 +126,6 @@ export default function Bouteille(props) {
     );
     let reponseJson = await reponse.json();
   }
-
   return (
     <>
       <div className="bouteille" data-quantite="">
@@ -156,7 +160,7 @@ export default function Bouteille(props) {
           cellier_id={props.vino__cellier_id}
           bouteille_nom={props.nom}
           bouteille_image={props.image}
-          bouteille_quantite_p={props.quantite}
+          quantite_p={quantite_p}
           bouteille_pays={props.pays}
           bouteille_vino__type_id={props.vino__type_id}
           bouteille_millesime={props.millesime}
