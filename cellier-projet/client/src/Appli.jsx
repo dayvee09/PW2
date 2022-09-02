@@ -167,7 +167,10 @@ const Appli = () => {
   async function handleSignOut() {
     await Auth.signOut()
     .then(() => {
-      setId([]);
+      setId("");
+      setUtilisateur("");
+      setBouteilles("");
+      setCelliers("");
     })
     .catch(err => console.log('Erreur lors de la déconnexion', err))
   }
