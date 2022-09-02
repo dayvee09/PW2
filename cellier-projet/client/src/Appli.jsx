@@ -244,6 +244,13 @@ const Appli = () => {
 
             <Router>
               <div className="navigation">
+                <div className="menu-celliers">
+                  <div>
+                    <NavLink to={`/`}>
+                      <button>Voir mes Celliers</button>
+                    </NavLink>
+                  </div>
+                </div>
                 <div className="menu-compte">
                   <NavLink to="/">
                     <div>
