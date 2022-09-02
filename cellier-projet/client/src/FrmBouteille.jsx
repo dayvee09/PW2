@@ -17,7 +17,7 @@ export default function FrmBouteille({
   cellier_id,
   bouteille_nom,
   bouteille_image,
-  bouteille_quantite_p,
+  quantite_p,
   quantite,
   setQuantite,
   frmOuvert,
@@ -42,17 +42,18 @@ export default function FrmBouteille({
   function viderFermerFrm() {
     setFrmOuvert(false);
     setVoirFiche(false);
-    setQuantite(bouteille_quantite_p);
+    setQuantite(quantite_p);
   }
   /**
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
-     if (quantite !== bouteille_quantite_p && quantite >= 0) {
+     if (quantite >= 0) {
         modifierBouteille(quantite);
         setFrmOuvert(false);
       }
     else {
+      if(quantite < 0)
       setOpenErr(true);
     }
   }
@@ -99,7 +100,7 @@ export default function FrmBouteille({
           </div>
           {voirFiche === false && (
             <FrmBouteilleInput
-              bouteille_quantite_p={bouteille_quantite_p}
+              quantite_p={quantite_p}
               setQuantite={setQuantite}
               quantite={quantite}
             />
