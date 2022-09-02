@@ -80,6 +80,8 @@ const Appli = () => {
   });
 
   useEffect(() => {
+<<<<<<< HEAD
+=======
     console.log("fetchUtilisateur dans le use effect initial");
     fetchUtilisateur();
     fetchUtilisateurs();
@@ -87,6 +89,7 @@ const Appli = () => {
 
   useEffect(() => {
     console.log("fetchCelliers dans le use effect initial");
+>>>>>>> 9bc7bf0166ddbfa64f2dc7c3ed617b5b78726afa
     fetchCelliers();
   }, [id]);
 
@@ -156,7 +159,6 @@ const Appli = () => {
       })
       .then((data) => {
         setUtilisateur(data[0]);
-        setId(data[0].id);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
