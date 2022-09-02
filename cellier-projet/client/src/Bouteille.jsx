@@ -94,9 +94,6 @@ export default function Bouteille(props) {
     );
     let reponseJson = await reponse.json();
   }
-  console.log(props.vino__cellier_id);
-  console.log(quantite);
-  console.log(props.id);
   return (
     <>
       <div className="bouteille" data-quantite="">
