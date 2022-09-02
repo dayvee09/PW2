@@ -75,12 +75,11 @@ const Appli = () => {
     if (DATA !== undefined) {
       return;
     }
-    createUser();
+    createUser(emailUtilisateur);
     DATA = true;
   });
 
   useEffect(() => {
-    console.log("fetchCelliers dans le use effect initial");
     fetchCelliers();
   }, [id]);
 
@@ -98,22 +97,20 @@ const Appli = () => {
   // -------------------------- Requêtes Fetch ------------------------------------------------------
 
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
-  async function createUser() {
-    let user = await Auth.currentAuthenticatedUser();
-    const { attributes } = user;
+  async function createUser(emailUtilisateur) {
     let bool = false;
     // var u = utilisateurs.find(function (curr) {
     //   return curr.email === user.attributes.email
     // })
     utilisateurs.forEach((utilisateur) => {
-      if (utilisateur["email"] === user.attributes.email && bool === false) {
+      if (utilisateur["email"] === emailUtilisateur && bool === false) {
         bool = true;
       }
     });
     if (!bool) {
       let reponse = await fetch(URI + "/admin/ajout/utilisateurs", {
         method: "POST",
-        body: JSON.stringify({ email: user.attributes.email }),
+        body: JSON.stringify({ email: emailUtilisateur }),
       });
       let reponseJson = await reponse.json();
       fetchUtilisateur();
@@ -151,7 +148,6 @@ const Appli = () => {
       })
       .then((data) => {
         setUtilisateur(data[0]);
-        setId(data[0].id);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
