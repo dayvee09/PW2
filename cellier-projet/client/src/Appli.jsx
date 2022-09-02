@@ -72,7 +72,9 @@ const Appli = () => {
   });
 
   useEffect(() => {
-    fetchVins();
+    if (cellier !== []) {
+      fetchVins();
+    }
   }, [cellier]);
 
   function gererBouteilles(idBouteilles) {
