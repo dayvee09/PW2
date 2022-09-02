@@ -7,6 +7,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useState, useEffect } from "react";
 import FrmBouteilleInput from "./FrmBouteilleInput";
 import "./FrmBouteille.scss";
+import Alert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
+import Collapse from '@mui/material/Collapse';
 
 export default function FrmBouteille({
   bouteille_id,
@@ -29,20 +33,28 @@ export default function FrmBouteille({
   setVoirFiche,
 }) {
   /**
+   * L‘état d'erreur
+   */
+  const [openErr, setOpenErr] = React.useState(false);
+  /**
    *  Gère l'action d'annuler
    */
   function viderFermerFrm() {
     setFrmOuvert(false);
     setVoirFiche(false);
+    setQuantite(bouteille_quantite_p);
   }
   /**
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
-    if (quantite !== bouteille_quantite_p && quantite >= 0) {
-      modifierBouteille(quantite);
+     if (quantite !== bouteille_quantite_p && quantite >= 0) {
+        modifierBouteille(quantite);
+        setFrmOuvert(false);
+      }
+    else {
+      setOpenErr(true);
     }
-    setFrmOuvert(false);
   }
   return (
     <div>
@@ -67,6 +79,23 @@ export default function FrmBouteille({
             </p>
             <p className="date_achat">Date achat : {bouteille_date_achat}</p>
             <p className="description">Description : {bouteille_description}</p>
+            <Dialog open={openErr}>
+              <Alert severity="error"
+                action={
+                  <IconButton
+                    aria-label="close"
+                    size="small"
+                    onClick={() => {
+                      setOpenErr(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+              >
+                Invalid!
+              </Alert>
+            </Dialog>
           </div>
           {voirFiche === false && (
             <FrmBouteilleInput
