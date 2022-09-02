@@ -7,6 +7,7 @@ import {
   useParams,
   Navigate,
   useNavigate,
+  useLocation,
 } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Authenticator } from "@aws-amplify/ui-react";
@@ -22,7 +23,7 @@ import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
 import Logo from "./img/logo-rouge.png";
 
-let DATA 
+let DATA;
 
 const Appli = () => {
   const [error, setError] = useState([]);
@@ -37,6 +38,7 @@ const Appli = () => {
   const [isLogged, setIsLogged] = useState(false);
   const ENV = "dev";
   const [URI, setURI] = useState([]);
+  let location = window.location.pathname;
 
   useEffect(() => {
     if (ENV == "prod") {
@@ -73,9 +75,15 @@ const Appli = () => {
     if (DATA !== undefined) {
       return;
     }
-    createUser();
+    createUser(emailUtilisateur);
     DATA = true;
   });
+
+  useEffect(() => {
+    console.log("fetchUtilisateur dans le use effect initial");
+    fetchUtilisateur();
+    fetchUtilisateurs();
+  }, [emailUtilisateur]);
 
   useEffect(() => {
     console.log("fetchCelliers dans le use effect initial");
@@ -96,25 +104,24 @@ const Appli = () => {
   // -------------------------- Requêtes Fetch ------------------------------------------------------
 
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
-  async function createUser() {
-    let user = await Auth.currentAuthenticatedUser();
-    const { attributes } = user;
+  async function createUser(emailUtilisateur) {
     let bool = false;
     // var u = utilisateurs.find(function (curr) {
     //   return curr.email === user.attributes.email
     // })
     utilisateurs.forEach((utilisateur) => {
-      if (utilisateur["email"] === user.attributes.email && bool === false) {
+      if (utilisateur["email"] === emailUtilisateur && bool === false) {
         bool = true;
       }
     });
     if (!bool) {
       let reponse = await fetch(URI + "/admin/ajout/utilisateurs", {
         method: "POST",
-        body: JSON.stringify({ email: user.attributes.email }),
+        body: JSON.stringify({ email: emailUtilisateur }),
       });
       let reponseJson = await reponse.json();
-      fetchUtilisateur();
+      // setId(reponseJson['id']);
+      // fetchUtilisateur();
     }
   }
 
@@ -223,8 +230,6 @@ const Appli = () => {
         setError(error);
       });
   }
-  console.log(id);
-  console.log(celliers);
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className="Appli">
@@ -243,19 +248,19 @@ const Appli = () => {
               emailUtilisateur={emailUtilisateur}
               fetchUtilisateurs={fetchUtilisateurs}
               fetchUtilisateur={fetchUtilisateur}
-              createUser={createUser}
             />
 
             {/*-------------------------------- Menu de navigation --------------------------*/}
-
             <Router>
               <div className="navigation">
                 <div className="menu-celliers">
-                  <div>
-                    <NavLink to={`/`}>
-                      <button>Voir mes Celliers</button>
-                    </NavLink>
-                  </div>
+                  {location !== "/" && (
+                    <div>
+                      <NavLink to={`/`}>
+                        <button>Retour aux Celliers</button>
+                      </NavLink>
+                    </div>
+                  )}
                 </div>
                 <div className="menu-compte">
                   <NavLink to="/">

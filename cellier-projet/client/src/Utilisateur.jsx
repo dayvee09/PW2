@@ -9,7 +9,7 @@ import {
 export default function Utilisateur(props) {
   useEffect(() => {
     props.fetchUtilisateurs();
-    props.fetchUtilisateur();
+    // props.fetchUtilisateur();
   }, [props.emailUtilisateur]);
 
   return <div></div>;
