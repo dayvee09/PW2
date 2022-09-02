@@ -15,7 +15,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "5.0.1",
+    "redux": "^4.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -44,5 +45,6 @@
     ]
   },
   "homepage-info": "Avant de déployer sur GitHub Pages vous devez configurer correctement la propriété homepage ci-dessous : 1) retirer le suffixe '-inactif' de l'étiquette, et 2) remplacer 'code-utilisateur' par le nom de votre compte GitHub et 'nom-de-depot-github' par le nom de votre dépôt GitHub dans la valeur de la propriété.",
-  "homepage-inactif": "https://code-utilisateur.github.io/nom-de-depot-github/"
+  "homepage-inactif": "https://code-utilisateur.github.io/nom-de-depot-github/",
+  "homepage-off": "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/index.html"
 }

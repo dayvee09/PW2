@@ -10,8 +10,8 @@ let DATA;
 
 export default function Utilisateur(props) {
   useEffect(() => {
-    props.fetchUtilisateur();
     props.fetchUtilisateurs();
+    props.fetchUtilisateur();
   }, [props.emailUtilisateur]);
 
   useEffect(() => {

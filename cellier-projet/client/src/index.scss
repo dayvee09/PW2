@@ -1,6 +1,4 @@
 body {
-  width: 600px;
-  margin: 0px;
   text-align: center;
   font-size: 0.7rem;
   margin: auto;
@@ -10,4 +8,10 @@ body {
   height: 100px;
   text-align: center;
   padding: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+    body  {
+        width: 600px;
+    }
 }

@@ -90,8 +90,8 @@ export default function Bouteille(props) {
   async function fetchPutVinUn(NouveauQuantite) {
     //route: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7
     let reponse = await fetch(
-      "http://localhost/PW2/cellier-projet/api-php" +
-      // props.URI +
+      // "http://localhost/PW2/cellier-projet/api-php" +
+     props.URI +
       "/" +
       "cellier" +
       "/" +
@@ -112,22 +112,21 @@ export default function Bouteille(props) {
   async function fetchVinUn() {
     //route: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7
     let reponse = await fetch(
-      // props.URI +
-      "http://localhost/PW2/cellier-projet/api-php" +
-      "/" +
-      "cellier" +
-      "/" +
-      props.vino__cellier_id +
-      "/" +
-      "vins" +
-      "/" +
-      "bouteille" +
-      props.id
+      props.URI +
+        "/" +
+        "cellier" +
+        "/" +
+        props.vino__cellier_id +
+        "/" +
+        "vins" +
+        "/" +
+        "bouteille" +
+        "/" +
+        props.id
     );
     let reponseJson = await reponse.json();
-    console.log(reponseJson)
   }
-
+ 
   return (
     <>
       <div className="bouteille" data-quantite="">
