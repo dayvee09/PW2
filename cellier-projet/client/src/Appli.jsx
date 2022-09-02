@@ -46,7 +46,7 @@ const Appli = () => {
       );
     } else {
       console.log(URI);
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -166,10 +166,10 @@ const Appli = () => {
 
   async function handleSignOut() {
     await Auth.signOut()
-    .then(() => {
-      setId([]);
-    })
-    .catch(err => console.log('Erreur lors de la déconnexion', err))
+      .then(() => {
+        setId([]);
+      })
+      .catch((err) => console.log("Erreur lors de la déconnexion", err));
   }
 
   // ---------------------------------- Gestion des celliers -----------------------------
