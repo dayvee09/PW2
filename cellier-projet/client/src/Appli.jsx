@@ -34,9 +34,7 @@ const Appli = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [isLogged, setIsLogged] = useState(false);
   const ENV = "dev";
-  const [URI, setURI] = useState(
-    "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
-  );
+  const [URI, setURI] = useState([]);
 
   useEffect(() => {
     if (ENV == "prod") {
