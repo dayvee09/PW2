@@ -7,9 +7,6 @@ import { useNavigate, useParams } from "react-router-dom";
 function ListeCelliers(props) {
   let history = useNavigate();
 
-  useEffect(() => {
-    props.fetchCelliers();
-  }, []);
   if (props.celliers.length > 0) {
     return (
       <div className="ListeCelliers">
