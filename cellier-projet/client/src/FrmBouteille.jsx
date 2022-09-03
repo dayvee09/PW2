@@ -24,13 +24,15 @@ export default function FrmBouteille({
   setFrmOuvert,
   modifierBouteille,
   bouteille_pays,
-  bouteille_vino__type_id,
+  bouteille_type,
   bouteille_millesime,
   bouteille_date_achat,
+  bouteille_date_jusqua,
   bouteille_description,
   bouteille_url_saq,
   voirFiche,
   setVoirFiche,
+  bouteille
 }) {
   /**
    * L‘état d'erreur
@@ -57,6 +59,7 @@ export default function FrmBouteille({
       setOpenErr(true);
     }
   }
+
   return (
     <div>
       <Dialog open={frmOuvert} onClose={viderFermerFrm}>
@@ -73,12 +76,13 @@ export default function FrmBouteille({
             <p className="nom">Nom : {bouteille_nom} </p>
             <p className="quantite">Quantité : {quantite}</p>
             <p className="pays">Pays : {bouteille_pays}</p>
-            <p className="type">Type : {bouteille_vino__type_id}</p>
+            <p className="type">Type : {bouteille_type}</p>
             <p className="millesime">Millesime : {bouteille_millesime}</p>
             <p>
               <a href={bouteille_url_saq}>Voir SAQ</a>
             </p>
             <p className="date_achat">Date achat : {bouteille_date_achat}</p>
+            <p className="date_achat">Date jusqu'à : {bouteille_date_jusqua}</p>
             <p className="description">Description : {bouteille_description}</p>
             <Dialog open={openErr}>
               <Alert severity="error"

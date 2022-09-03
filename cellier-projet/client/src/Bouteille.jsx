@@ -42,7 +42,7 @@ export default function Bouteille(props) {
   // }, []);
 
   /**
-   * Gère la modification de la quantité de bouteille
+   * Gère l'affichage du formulaire quand click du bouton "Modifier"
    */
   function gererModifier() {
     setQuantite_p(quantite);
@@ -50,7 +50,7 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Gère l'affichage d'un formulaire de modification de la quantité 
+   * Gère l'affichage du formulaire quand click du bouton "Fiche"
    */
   function gererVoir() {
     setVoirFiche(true);
@@ -58,7 +58,7 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Gère l'ajout de la quantité de bouteille
+   * Gère le bouton 'ajouter'
    */
   function gererAjouter() {
     setQuantite(parseInt(quantite) + 1);
@@ -66,7 +66,7 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Gère la suppression de la quantité de bouteille
+   * Gère le bouton 'Boire'
    */
   function gererBoire() {
     if (quantite > 0)
@@ -74,10 +74,12 @@ export default function Bouteille(props) {
     else
 
       setOpenAlert(true);
-      fetchPutVinUn(quantite);
+    fetchPutVinUn(quantite);
   }
+
   /**
-   *  Modifier la bouteille //  gererActionBouteille(bouteille_id, cellier_id, quantite);
+   * Gère la modification de la quantité de bouteille
+   * @param {*} NouveauQuantite 
    */
   function modifierBouteille(NouveauQuantite) {
     var reg = /^[1-9]+[0-9]*]*$/;
@@ -86,12 +88,15 @@ export default function Bouteille(props) {
     }
     fetchPutVinUn(quantite);
   }
-
+  /**
+   * Actualiser la quantité du DB
+   * @param {*} NouveauQuantite 
+   */
   async function fetchPutVinUn(NouveauQuantite) {
     //route: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7
     let reponse = await fetch(
       // "http://localhost/PW2/cellier-projet/api-php" +
-     props.URI +
+      props.URI +
       "/" +
       "cellier" +
       "/" +
@@ -109,23 +114,23 @@ export default function Bouteille(props) {
     );
     // let reponseJson = await reponse.json();
   }
-  async function fetchVinUn() {
-    //route: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7
-    let reponse = await fetch(
-      props.URI +
-        "/" +
-        "cellier" +
-        "/" +
-        props.vino__cellier_id +
-        "/" +
-        "vins" +
-        "/" +
-        "bouteille" +
-        "/" +
-        props.id
-    );
-    let reponseJson = await reponse.json();
-  }
+  // async function fetchVinUn() {
+  //   //route: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7
+  //   let reponse = await fetch(
+  //     props.URI +
+  //     "/" +
+  //     "cellier" +
+  //     "/" +
+  //     props.vino__cellier_id +
+  //     "/" +
+  //     "vins" +
+  //     "/" +
+  //     "bouteille" +
+  //     "/" +
+  //     props.id
+  //   );
+  //   let reponseJson = await reponse.json();
+  // }
   return (
     <>
       <div className="bouteille" data-quantite="">
@@ -146,7 +151,7 @@ export default function Bouteille(props) {
           <button onClick={gererBoire} className="btnBoire">Boire</button>
         </div>
         <Snackbar sx={{ height: '100%' }} anchorOrigin={{
-          vertical: "center",
+          vertical: "top",
           horizontal: "center"
         }} open={openAlert} autoHideDuration={1000} onClose={handleCloseAlert}>
           <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '100%' }}>
@@ -162,9 +167,10 @@ export default function Bouteille(props) {
           bouteille_image={props.image}
           quantite_p={quantite_p}
           bouteille_pays={props.pays}
-          bouteille_vino__type_id={props.vino__type_id}
+          bouteille_type={props.type}
           bouteille_millesime={props.millesime}
           bouteille_date_achat={props.date_achat}
+          bouteille_date_jusqua={props.garde_jusqua}
           bouteille_description={props.description}
           bouteille_url_saq={props.url_saq}
           quantite={quantite}
