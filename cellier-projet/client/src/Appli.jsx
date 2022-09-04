@@ -82,16 +82,6 @@ const Appli = () => {
   });
 
   useEffect(() => {
-<<<<<<< HEAD
-=======
-    console.log("fetchUtilisateur dans le use effect initial");
-    fetchUtilisateur();
-    fetchUtilisateurs();
-  }, [emailUtilisateur]);
-
-  useEffect(() => {
-    console.log("fetchCelliers dans le use effect initial");
->>>>>>> 9bc7bf0166ddbfa64f2dc7c3ed617b5b78726afa
     fetchCelliers();
   }, [id]);
 
