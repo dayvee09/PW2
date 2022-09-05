@@ -34,7 +34,7 @@ const Appli = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [isLogged, setIsLogged] = useState(false);
   const ENV = "dev";
-  const [URI, setURI] = useState("http://localhost:3001/PW2/cellier-projet/api-php");
+  const [URI, setURI] = useState("http://localhost/PW2/cellier-projet/api-php");
 
   useEffect(() => {
     setURI("https://e2195277.webdev.cmaisonneuve.qc.ca/api-php");
@@ -42,7 +42,7 @@ const Appli = () => {
       setURI(
         "https://e2195277.webdev.cmaisonneuve.qc.ca/pw2/cellier-projet/api-php"
       );
-    } else setURI("http://localhost:3001/PW2/cellier-projet/api-php");
+    } else setURI("http://localhost/PW2/cellier-projet/api-php");
   }, []);
 
   I18n.setLanguage("fr");
