@@ -80,6 +80,13 @@
 	  border: 1px solid #e2e2e273;
     }
 
+	.amplify-alert--error {
+		background-color: #f3f5eb;
+		color: #cc4240;
+		font-weight: 500;
+		border: 1px solid #cc4240;
+	  }
+
     button[data-state="inactive"] {
       background-color: #f3f5eb86;
       color: #152440;
