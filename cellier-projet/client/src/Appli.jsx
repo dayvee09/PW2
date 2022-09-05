@@ -7,6 +7,7 @@ import {
   useParams,
   Navigate,
   useNavigate,
+  useLocation,
 } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Authenticator } from "@aws-amplify/ui-react";
@@ -19,8 +20,11 @@ import Utilisateur from "./Utilisateur.jsx";
 import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
-import { I18n } from "aws-amplify";
+import { I18n, userHasAuthenticated } from "aws-amplify";
 import Logo from "./img/png/logo-jaune.png";
+
+
+let DATA;
 
 const Appli = () => {
   const [error, setError] = useState([]);
@@ -34,15 +38,17 @@ const Appli = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [isLogged, setIsLogged] = useState(false);
   const ENV = "dev";
-  const [URI, setURI] = useState("http://localhost/PW2/cellier-projet/api-php");
+  const [URI, setURI] = useState([]);
+  let location = window.location.pathname;
 
   useEffect(() => {
-    setURI("https://e2195277.webdev.cmaisonneuve.qc.ca/api-php");
     if (ENV == "prod") {
       setURI(
-        "https://e2195277.webdev.cmaisonneuve.qc.ca/pw2/cellier-projet/api-php"
+        "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
       );
-    } else setURI("http://localhost/PW2/cellier-projet/api-php");
+    } else {
+      setURI("http://localhost/PW2/cellier-projet/api-php");
+    }
   }, []);
 
   I18n.setLanguage("fr");
@@ -65,8 +71,18 @@ const Appli = () => {
 
   email().then((email) => {
     const emailUtilisateur = email;
+    console.log(emailUtilisateur);
     setEmailUtilisateur(emailUtilisateur);
+    if (DATA !== undefined) {
+      return;
+    }
+    createUser(emailUtilisateur);
+    DATA = true;
   });
+
+  useEffect(() => {
+    fetchCelliers();
+  }, [id]);
 
   useEffect(() => {
     fetchVins();
@@ -82,30 +98,28 @@ const Appli = () => {
   // -------------------------- Requêtes Fetch ------------------------------------------------------
 
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
-  async function createUser() {
-    let user = await Auth.currentAuthenticatedUser();
-    const { attributes } = user;
+  async function createUser(emailUtilisateur) {
     let bool = false;
     // var u = utilisateurs.find(function (curr) {
     //   return curr.email === user.attributes.email
     // })
     utilisateurs.forEach((utilisateur) => {
-      if (utilisateur["email"] === user.attributes.email && bool === false) {
+      if (utilisateur["email"] === emailUtilisateur && bool === false) {
         bool = true;
       }
     });
     if (!bool) {
-      let reponse = await fetch(URI + "admin/ajout/utilisateurs", {
+      let reponse = await fetch(URI + "/admin/ajout/utilisateurs", {
         method: "POST",
-        body: JSON.stringify({ email: user.attributes.email }),
+        body: JSON.stringify({ email: emailUtilisateur }),
       });
       let reponseJson = await reponse.json();
-      fetchUtilisateur();
+      // setId(reponseJson['id']);
+      // fetchUtilisateur();
     }
   }
 
   async function fetchUtilisateurs() {
-    console.log(URI);
     await fetch(
       URI + "/" + "admin" + "/" + emailUtilisateur + "/" + "utilisateurs"
     )
@@ -136,7 +150,6 @@ const Appli = () => {
       })
       .then((data) => {
         setUtilisateur(data[0]);
-        setId(data[0].id);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -159,9 +172,23 @@ const Appli = () => {
     deleteUser();
   }
 
+  async function handleSignOut() {
+    await Auth.signOut()
+      .then(() => {
+        setId("");
+        setUtilisateur("");
+        setBouteilles("");
+        setCelliers("");
+        setEmailUtilisateur("");
+        DATA = undefined;
+      })
+      .catch((err) => console.log("Erreur lors de la déconnexion", err));
+  }
+
   // ---------------------------------- Gestion des celliers -----------------------------
 
   async function fetchCelliers() {
+    console.log("fetchCelliers: ", id);
     await fetch(URI + "/" + "user_id" + "/" + id + "/" + "celliers")
       .then((response) => {
         if (response.ok) {
@@ -196,11 +223,9 @@ const Appli = () => {
         setError(error);
       });
   }
-
   // ---------------------------------- Rendering -----------------------------------------
-  
   return (
-	<div className="Appli">
+	  <div className="Appli">
       <img className="logo" src={Logo} alt="logo-mon-vino"></img>
       <Authenticator className="Authenticator">
         {({ signOut, user }) => (
@@ -220,20 +245,23 @@ const Appli = () => {
 			  />
 
             {/*-------------------------------- Menu de navigation --------------------------*/}
-
             <Router>
               <div className="navigation">
                 <div className="menu-celliers">
-                  <div>
-                    <NavLink exact to={`/user_id/${id}/celliers`}>
-                      <button>Voir mes Celliers</button>
-                    </NavLink>
-                  </div>
+                  {location !== "/" && (
+                    <div>
+                      <NavLink to={`/`}>
+                        <button>Retour aux Celliers</button>
+                      </NavLink>
+                    </div>
+                  )}
                 </div>
                 <div className="menu-compte">
-                  <div>
-                    <button onClick={signOut}>Sign Out</button>
-                  </div>
+                  <NavLink to="/">
+                    <div>
+                      <button onClick={handleSignOut}>Sign Out</button>
+                    </div>
+                  </NavLink>
                   <div>
                     <button onClick={handleDelete}>
                       Supprimer votre compte
@@ -247,7 +275,6 @@ const Appli = () => {
               <Routes>
                 <Route
                   path={`/cellier/${cellier}/vins`}
-                  exact
                   element={
 					  <ListeBouteilles
                       bouteilles={bouteilles}
@@ -260,8 +287,7 @@ const Appli = () => {
 					}
                 />
                 <Route
-                  path={`/user_id/${id}/celliers`}
-                  exact
+                  path={`/`}
                   element={
 					  <ListeCelliers
                       celliers={celliers}
@@ -282,7 +308,7 @@ const Appli = () => {
           </div>
         )}
       </Authenticator>
-	  <p className="Auth-sub-title">Commencez dès maintenant votre collection de vin !</p>
+	    <p className="Auth-sub-title">Commencez dès maintenant votre collection de vin !</p>
       <small className="">© Mon Vino 2022, Tous droits réservés</small>
     </div>
   );

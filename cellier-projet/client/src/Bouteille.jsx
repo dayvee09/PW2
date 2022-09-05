@@ -1,42 +1,56 @@
+import * as React from "react";
 import "./Bouteille.scss";
 import FrmBouteille from "./FrmBouteille";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 export default function Bouteille(props) {
   /**
-   *  État de la quantité
+   *  API MUI https://mui.com/material-ui/react-snackbar/
    */
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlert(false);
+  };
+  /**
+  *  État d'affichage de la fiche de bouteille
+  */
   const [voirFiche, setVoirFiche] = useState(false);
+
+  /**
+   *  État de la quantité et la quantité précédente
+   */
+
   const [quantite, setQuantite] = useState(props.quantite);
+  const [quantite_p, setQuantite_p] = useState(quantite);
   /**
    *  État du formulaire de modification
    */
 
   const [frmOuvert, setFrmOuvert] = useState(false);
 
-  useEffect(() => {
-    fetchPutVinUn(quantite);
-  }, [quantite]);
-
-  useEffect(() => {
-    fetchVinUn();
-  }, [voirFiche]);
+  // useEffect(() => {
+  //   fetchPutVinUn(quantite);
+  // }, []);
 
   /**
-   * Gère la suppresssion d'une bouteille
-   */
-  function gererSupprimer() {}
-
-  /**
-   * Gère la modification d'une bouteille
+   * Gère la modification de la quantité de bouteille
    */
   function gererModifier() {
+    setQuantite_p(quantite);
     setFrmOuvert(true);
   }
 
   /**
-   * Gère la modification d'une bouteille
+   * Gère l'affichage d'un formulaire de modification de la quantité 
    */
   function gererVoir() {
     setVoirFiche(true);
@@ -44,41 +58,59 @@ export default function Bouteille(props) {
   }
 
   /**
+   * Gère l'ajout de la quantité de bouteille
+   */
+  function gererAjouter() {
+    setQuantite(parseInt(quantite) + 1);
+    fetchPutVinUn(quantite);
+  }
+
+  /**
+   * Gère la suppression de la quantité de bouteille
+   */
+  function gererBoire() {
+    if (quantite > 0)
+      setQuantite(parseInt(quantite) - 1);
+    else
+
+      setOpenAlert(true);
+      fetchPutVinUn(quantite);
+  }
+  /**
    *  Modifier la bouteille //  gererActionBouteille(bouteille_id, cellier_id, quantite);
    */
   function modifierBouteille(NouveauQuantite) {
-    let objetDonnees = {
-      quantite: NouveauQuantite,
-    };
     var reg = /^[1-9]+[0-9]*]*$/;
     if (reg.test(NouveauQuantite)) {
       setQuantite(NouveauQuantite);
     }
+    fetchPutVinUn(quantite);
   }
 
-  async function fetchPutVinUn(objetDonnees) {
-    //route: ocalhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
+  async function fetchPutVinUn(NouveauQuantite) {
+    //route: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7
     let reponse = await fetch(
-      props.URI +
-        "/" +
-        "cellier" +
-        "/" +
-        props.vino__cellier_id +
-        "/" +
-        "vins" +
-        "/" +
-        "bouteille" +
-        "/" +
-        props.id,
+      // "http://localhost/PW2/cellier-projet/api-php" +
+     props.URI +
+      "/" +
+      "cellier" +
+      "/" +
+      props.vino__cellier_id +
+      "/" +
+      "vins" +
+      "/" +
+      "bouteille" +
+      "/" +
+      props.id,
       {
         method: "PATCH",
-        body: JSON.stringify({ quantite: objetDonnees }),
+        body: JSON.stringify({ quantite: NouveauQuantite }),
       }
     );
-    let reponseJson = await reponse.json();
+    // let reponseJson = await reponse.json();
   }
   async function fetchVinUn() {
-    //route: ocalhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
+    //route: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7
     let reponse = await fetch(
       props.URI +
         "/" +
@@ -89,11 +121,11 @@ export default function Bouteille(props) {
         "vins" +
         "/" +
         "bouteille" +
+        "/" +
         props.id
     );
     let reponseJson = await reponse.json();
   }
-
   return (
     <>
       <div className="bouteille" data-quantite="">
@@ -110,10 +142,17 @@ export default function Bouteille(props) {
         <div className="options" data-id="{id_bouteille_cellier}">
           <button onClick={gererModifier}>Modifier</button>
           <button onClick={gererVoir}>Fiche</button>
-          <button className="btnAjouter">Ajouter</button>
-          <button className="btnBoire">Boire</button>
+          <button onClick={gererAjouter} className="btnAjouter">Ajouter</button>
+          <button onClick={gererBoire} className="btnBoire">Boire</button>
         </div>
-
+        <Snackbar sx={{ height: '100%' }} anchorOrigin={{
+          vertical: "center",
+          horizontal: "center"
+        }} open={openAlert} autoHideDuration={1000} onClose={handleCloseAlert}>
+          <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '100%' }}>
+            En rupture de stock!
+          </Alert>
+        </Snackbar>
         <FrmBouteille
           frmOuvert={frmOuvert}
           setFrmOuvert={setFrmOuvert}
@@ -121,7 +160,7 @@ export default function Bouteille(props) {
           cellier_id={props.vino__cellier_id}
           bouteille_nom={props.nom}
           bouteille_image={props.image}
-          bouteille_quantite_p={props.quantite}
+          quantite_p={quantite_p}
           bouteille_pays={props.pays}
           bouteille_vino__type_id={props.vino__type_id}
           bouteille_millesime={props.millesime}

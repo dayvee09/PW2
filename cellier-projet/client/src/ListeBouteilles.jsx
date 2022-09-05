@@ -25,12 +25,13 @@ function ListeBouteilles(props) {
                 setBouteilles={props.setBouteilles}
                 cellier={props.cellier}
                 bouteille={props.bouteille}
+                URI={props.URI}
               />
             </div>
           ))}
         </div>
       );
-    } else {
+    } else if (props.bouteilles.length > 0) {
       return (
         <div className="ListeBouteilles">
           <div className="Bouteille">
@@ -51,6 +52,10 @@ function ListeBouteilles(props) {
             />
           </div>
         </div>
+      );
+    } else {
+      return (
+        <h1 className="aucune-bouteille">Pas de bouteilles dans ce cellier</h1>
       );
     }
   }
