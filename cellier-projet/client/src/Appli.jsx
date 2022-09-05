@@ -20,7 +20,7 @@ import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
 import { I18n } from "aws-amplify";
-import Logo from "./img/logo-rouge.png";
+import Logo from "./img/png/logo-jaune.png";
 
 const Appli = () => {
   const [error, setError] = useState([]);
@@ -34,7 +34,7 @@ const Appli = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [isLogged, setIsLogged] = useState(false);
   const ENV = "dev";
-  const [URI, setURI] = useState("http://localhost/PW2/cellier-projet/api-php");
+  const [URI, setURI] = useState("http://localhost:3001/PW2/cellier-projet/api-php");
 
   useEffect(() => {
     setURI("https://e2195277.webdev.cmaisonneuve.qc.ca/api-php");
@@ -42,7 +42,7 @@ const Appli = () => {
       setURI(
         "https://e2195277.webdev.cmaisonneuve.qc.ca/pw2/cellier-projet/api-php"
       );
-    } else setURI("http://localhost/PW2/cellier-projet/api-php");
+    } else setURI("http://localhost:3001/PW2/cellier-projet/api-php");
   }, []);
 
   I18n.setLanguage("fr");
@@ -50,7 +50,7 @@ const Appli = () => {
     fr: {
       "Sign In": "Connexion",
       "Sign in": "Se connecter",
-      "Create Account": "S'inscrire",
+      "Create Account": "Inscription",
       "Forgot your password?": "Mot de passe oublié ?",
       "Reset your password": "Réinitialiser votre mot de passe",
       "Send code": "Envoyer le code",
@@ -200,12 +200,11 @@ const Appli = () => {
   // ---------------------------------- Rendering -----------------------------------------
   
   return (
-	  <div className="Appli">
+	<div className="Appli">
       <img className="logo" src={Logo} alt="logo-mon-vino"></img>
-	  <p className="text">Commencez dès maintenant votre collection de vin !</p>
       <Authenticator className="Authenticator">
         {({ signOut, user }) => (
-          <div>
+			<div>
             <h1>Hello {user.attributes.email}</h1>
             <Utilisateur
               utilisateur={utilisateur}
@@ -218,7 +217,7 @@ const Appli = () => {
               fetchUtilisateurs={fetchUtilisateurs}
               fetchUtilisateur={fetchUtilisateur}
               createUser={createUser}
-            />
+			  />
 
             {/*-------------------------------- Menu de navigation --------------------------*/}
 
@@ -250,21 +249,21 @@ const Appli = () => {
                   path={`/cellier/${cellier}/vins`}
                   exact
                   element={
-                    <ListeBouteilles
+					  <ListeBouteilles
                       bouteilles={bouteilles}
                       setBouteilles={setBouteilles}
                       fetchVins={fetchVins}
                       gererBouteilles={gererBouteilles}
                       cellier={cellier}
                       URI={URI}
-                    />
-                  }
+					  />
+					}
                 />
                 <Route
                   path={`/user_id/${id}/celliers`}
                   exact
                   element={
-                    <ListeCelliers
+					  <ListeCelliers
                       celliers={celliers}
                       setCelliers={setCelliers}
                       cellier={cellier}
@@ -275,14 +274,15 @@ const Appli = () => {
                       emailUtilisateur={emailUtilisateur}
                       gererCellier={gererCellier}
                       URI={URI}
-                    />
-                  }
+					  />
+					}
                 />
               </Routes>
             </Router>
           </div>
         )}
       </Authenticator>
+	  <p className="Auth-sub-title">Commencez dès maintenant votre collection de vin !</p>
       <small className="">© Mon Vino 2022, Tous droits réservés</small>
     </div>
   );
