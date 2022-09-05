@@ -21,7 +21,8 @@ import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
-import Logo from "./img/logo-rouge.png";
+import Logo from "./img/png/logo-jaune.png";
+
 
 let DATA;
 
@@ -55,7 +56,7 @@ const Appli = () => {
     fr: {
       "Sign In": "Connexion",
       "Sign in": "Se connecter",
-      "Create Account": "S'inscrire",
+      "Create Account": "Inscription",
       "Forgot your password?": "Mot de passe oublié ?",
       "Reset your password": "Réinitialiser votre mot de passe",
       "Send code": "Envoyer le code",
@@ -224,11 +225,11 @@ const Appli = () => {
   }
   // ---------------------------------- Rendering -----------------------------------------
   return (
-    <div className="Appli">
+	  <div className="Appli">
       <img className="logo" src={Logo} alt="logo-mon-vino"></img>
       <Authenticator className="Authenticator">
         {({ signOut, user }) => (
-          <div>
+			<div>
             <h1>Hello {user.attributes.email}</h1>
             <Utilisateur
               utilisateur={utilisateur}
@@ -240,7 +241,8 @@ const Appli = () => {
               emailUtilisateur={emailUtilisateur}
               fetchUtilisateurs={fetchUtilisateurs}
               fetchUtilisateur={fetchUtilisateur}
-            />
+              createUser={createUser}
+			  />
 
             {/*-------------------------------- Menu de navigation --------------------------*/}
             <Router>
@@ -274,20 +276,20 @@ const Appli = () => {
                 <Route
                   path={`/cellier/${cellier}/vins`}
                   element={
-                    <ListeBouteilles
+					  <ListeBouteilles
                       bouteilles={bouteilles}
                       setBouteilles={setBouteilles}
                       fetchVins={fetchVins}
                       gererBouteilles={gererBouteilles}
                       cellier={cellier}
                       URI={URI}
-                    />
-                  }
+					  />
+					}
                 />
                 <Route
                   path={`/`}
                   element={
-                    <ListeCelliers
+					  <ListeCelliers
                       celliers={celliers}
                       setCelliers={setCelliers}
                       cellier={cellier}
@@ -298,15 +300,15 @@ const Appli = () => {
                       emailUtilisateur={emailUtilisateur}
                       gererCellier={gererCellier}
                       URI={URI}
-                    />
-                  }
+					  />
+					}
                 />
               </Routes>
             </Router>
           </div>
         )}
       </Authenticator>
-      <p className="text">Commencez dès maintenant votre collection de vin !</p>
+	    <p className="Auth-sub-title">Commencez dès maintenant votre collection de vin !</p>
       <small className="">© Mon Vino 2022, Tous droits réservés</small>
     </div>
   );
