@@ -44,9 +44,7 @@ const Appli = () => {
 
   useEffect(() => {
     if (ENV == "prod") {
-      setURI(
-        "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
-      );
+      setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
       setURI("http://localhost/PW2/cellier-projet/api-php");
     }

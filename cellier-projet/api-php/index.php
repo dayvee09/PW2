@@ -50,11 +50,27 @@ class Routeur
 
         $partiesRoute = explode('/', $this->route);
 
+        // Debugging du routeur:
+
         // print_r($partiesRoute);
         // echo '<hr>';
         // echo 'Paramètres (querystring) : ' . $this->params;
         // echo '<hr>';
         // echo 'Méthod HTTP : ' . $this->methode;
+
+
+        // Routeur pour le serveur de développement:
+
+        // if (count($partiesRoute) > 7 && trim(urldecode($partiesRoute[7])) != '') {
+        //     $collection = trim(urldecode($partiesRoute[7]));
+        //     $params = [$partiesRoute[5] => trim(urldecode($partiesRoute[6]))];
+        //     //print_r($params);
+        //     if (count($partiesRoute) > 8 && trim(urldecode($partiesRoute[8])) != '') {
+        //         $idEntite = [$partiesRoute[8] => trim(urldecode($partiesRoute[9]))];
+        //     }
+        // }
+
+        // Routeur en localhost:
 
         if (count($partiesRoute) > 6 && trim(urldecode($partiesRoute[6])) != '') {
             $collection = trim(urldecode($partiesRoute[6]));
@@ -63,16 +79,20 @@ class Routeur
             if (count($partiesRoute) > 7 && trim(urldecode($partiesRoute[7])) != '') {
                 $idEntite = [$partiesRoute[7] => trim(urldecode($partiesRoute[8]))];
             }
-
-            // //http://localhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
-            // if (count($partiesRoute) > 9 && trim(urldecode($partiesRoute[9])) != '') {
-            //     //$collection = VinsCelliers
-            //     $collection = trim(urldecode($partiesRoute[8])).trim(urldecode($partiesRoute[6]));
-            //     // idEntite = ['celliers'=>6, 'vins'=>'7']
-            //     $idEntite = [$partiesRoute[6] => trim(urldecode($partiesRoute[7])), 
-            //                  $partiesRoute[8] => trim(urldecode($partiesRoute[9]))];
-            // }
         }
+
+
+
+        // Alternative de modèle de routeur:
+
+        // //http://localhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
+        // if (count($partiesRoute) > 9 && trim(urldecode($partiesRoute[9])) != '') {
+        //     //$collection = VinsCelliers
+        //     $collection = trim(urldecode($partiesRoute[8])).trim(urldecode($partiesRoute[6]));
+        //     // idEntite = ['celliers'=>6, 'vins'=>'7']
+        //     $idEntite = [$partiesRoute[6] => trim(urldecode($partiesRoute[7])), 
+        //                  $partiesRoute[8] => trim(urldecode($partiesRoute[9]))];
+        // }
 
         $nomControleur = ucfirst($collection) . 'Controleur';
         $nomModele = ucfirst($collection) . 'Modele';
