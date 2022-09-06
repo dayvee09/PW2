@@ -29,7 +29,7 @@ class UtilisateursControleur extends Controleur
     public function changer($params, $idEntite, $fragmentEntite)
     {
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
-        $this->reponse['corps'] = $this->modele->changer($params, $idEntite, json_decode($fragmentEntite));
+        $this->reponse['corps'] = $this->modele->changer($params, json_decode($fragmentEntite));
     }
 
     public function retirer($id)

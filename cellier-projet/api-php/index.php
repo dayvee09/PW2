@@ -91,17 +91,17 @@ class Routeur
                     $controleur->ajouter(file_get_contents('php://input'));
                     break;
                 case 'PUT':
-                    if ($idEntite) {
+                    if (isset($idEntite)) {
                         $controleur->remplacer($idEntite, file_get_contents('php://input'));
                     } else {
-                        // Erreur : A compléter...
+                        $controleur->changer($params, file_get_contents('php://input'));
                     }
                     break;
                 case 'PATCH':
-                    if ($idEntite) {
+                    if (isset($idEntite)) {
                         $controleur->changer($params, $idEntite, file_get_contents('php://input'));
                     } else {
-                        // Erreur : A compléter...
+                        $controleur->changer($params, file_get_contents('php://input'));
                     }
                     break;
                 case 'DELETE':
