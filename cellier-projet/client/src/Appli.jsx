@@ -80,7 +80,11 @@ const Appli = () => {
 	  "Username cannot be empty": "Veuillez entrer votre adresse courriel",
 	  "Custom auth lambda trigger is not configured for the user pool.": "Adresse courriel ou mot de passe incorrecte",
 	  "Password cannot be empty": "Veuillez entrer votre mot de passe",
-	  "Creating Account": "Création du compte"
+	  "Creating Account": "Création du compte",
+	  "Confirm": "Confirmer",
+	  "We Emailed You": "Courriel envoyé",
+	  "Your code is on the way. To log in, enter the code we emailed to": "Votre code a été envoyé à votre adresse ",
+	  "It may take a minute to arrive.": "Cela pourrait prendre quelque minutes",
     },
   };
 
@@ -125,7 +129,7 @@ const Appli = () => {
 		labelHidden: true,
 		placeholder: I18n.get("Confirmation mot de passe")
 
-	  },
+	  }
 	}
   };
 
