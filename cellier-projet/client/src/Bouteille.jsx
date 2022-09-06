@@ -28,9 +28,19 @@ export default function Bouteille(props) {
   /**
    *  État de la quantité et la quantité précédente
    */
-
   const [quantite, setQuantite] = useState(props.quantite);
   const [quantite_p, setQuantite_p] = useState(quantite);
+  /**
+   * État de la date d'achat et la date précédente
+   */
+   const [dateAchat, setDateAchat] = useState(props.date_achat);
+   const [dateAchat_p, setDateAchat_p] = useState(dateAchat);
+  /**
+   * État de la date de garde et la date de garde précédente
+   */
+   const [dateGarde, setDateGarde] = useState(props.date_jusqua);
+   const [dateGarde_p, setDateGarde_p] = useState(dateGarde);
+
   /**
    *  État du formulaire de modification
    */
@@ -131,6 +141,7 @@ export default function Bouteille(props) {
   //   );
   //   let reponseJson = await reponse.json();
   // }
+  console.log(props);
   return (
     <>
       <div className="bouteille" data-quantite="">
@@ -168,6 +179,8 @@ export default function Bouteille(props) {
           quantite_p={quantite_p}
           bouteille_pays={props.pays}
           bouteille_type={props.type}
+          bouteille_format={props.format}
+          bouteille_prix={props.prix_saq}
           bouteille_millesime={props.millesime}
           bouteille_date_achat={props.date_achat}
           bouteille_date_jusqua={props.garde_jusqua}
@@ -175,6 +188,12 @@ export default function Bouteille(props) {
           bouteille_url_saq={props.url_saq}
           quantite={quantite}
           setQuantite={setQuantite}
+          dateAchat={dateAchat}
+          setDateAchat={setDateAchat}
+          dateAchat_p={dateAchat_p}
+          dateGarde={dateGarde}
+          setDateGarde={setDateGarde}
+          dateGarde_p={dateGarde_p}
           modifierBouteille={modifierBouteille}
           voirFiche={voirFiche}
           setVoirFiche={setVoirFiche}

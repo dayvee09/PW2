@@ -1,8 +1,11 @@
 .FrmBouteille {
+  img {
+    object-fit: contain;
+    width: 200px;
+    height: 200px;
+  }
 }
 
-img {
-  object-fit: contain;
-  width: 200px;
-  height: 200px;
+.hidden {
+  display: none;
 }
