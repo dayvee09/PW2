@@ -1,0 +1,23 @@
+.Profil {
+    .Profil {
+      border: 1px dotted black;
+      padding: 40px;
+      .img {
+        img {
+          width: 200px;
+          height: 200px;
+          object-fit: contain;
+        }
+      }
+      .options {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+      }
+      .snackbar-wrapper {
+        position: absolute;
+        top: 0;
+        right:0;
+      }
+    }
+  }
