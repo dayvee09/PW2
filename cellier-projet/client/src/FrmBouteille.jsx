@@ -12,6 +12,10 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Collapse from '@mui/material/Collapse';
 
+import DateSelecteur from "./DateSelecteur";
+import DateSelecteurAnnee from "./DateSelecteurAnnee";
+
+
 export default function FrmBouteille({
   bouteille_id,
   cellier_id,
@@ -20,11 +24,19 @@ export default function FrmBouteille({
   quantite_p,
   quantite,
   setQuantite,
+  dateAchat,
+  setDateAchat,
+  dateAchat_p,
+  dateGarde,
+  setDateGarde,
+  dateGarde_p,
   frmOuvert,
   setFrmOuvert,
   modifierBouteille,
   bouteille_pays,
   bouteille_type,
+  bouteille_format,
+  bouteille_prix,
   bouteille_millesime,
   bouteille_date_achat,
   bouteille_date_jusqua,
@@ -34,6 +46,7 @@ export default function FrmBouteille({
   setVoirFiche,
   bouteille
 }) {
+
   /**
    * L‘état d'erreur
    */
@@ -50,40 +63,43 @@ export default function FrmBouteille({
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
-     if (quantite >= 0) {
-        modifierBouteille(quantite);
-        setFrmOuvert(false);
-      }
+    if (quantite >= 0) {
+      modifierBouteille(quantite);
+      setFrmOuvert(false);
+    }
     else {
-      if(quantite < 0)
-      setOpenErr(true);
+      if (quantite < 0)
+        setOpenErr(true);
     }
   }
 
   return (
     <div>
       <Dialog open={frmOuvert} onClose={viderFermerFrm}>
-        {voirFiche === false ? (
+        {/* {voirFiche === false ? (
           <DialogTitle> Modifier la quantité de la bouteille</DialogTitle>
         ) : (
           <DialogTitle> {bouteille_nom}</DialogTitle>
-        )}
+        )} */}
         <DialogContent>
           <div className="img">
             <img src={bouteille_image} alt="bouteille" />
           </div>
           <div className="description">
-            <p className="nom">Nom : {bouteille_nom} </p>
-            <p className="quantite">Quantité : {quantite}</p>
-            <p className="pays">Pays : {bouteille_pays}</p>
-            <p className="type">Type : {bouteille_type}</p>
+            <h2 className="nom">{bouteille_nom} </h2>
+            <p className="type">{bouteille_type} - {bouteille_format} - {bouteille_pays}</p>
+            <hr />
+            <p className="description">Description : {bouteille_description}</p>
             <p className="millesime">Millesime : {bouteille_millesime}</p>
+            <p className="millesime">Prix : {bouteille_prix}.00$</p>
             <p>
               <a href={bouteille_url_saq}>Voir SAQ</a>
             </p>
-            <p className="date_achat">Date achat : {bouteille_date_achat}</p>
-            <p className="date_achat">Date jusqu'à : {bouteille_date_jusqua}</p>
-            <p className="description">Description : {bouteille_description}</p>
+            <div className={voirFiche === false? "hidden" : ""}>
+              <p className="quantite">Quantité : {quantite}</p>
+              <p className="date_achat">Date achat : {bouteille_date_achat}</p>
+              <p className="date_achat">Date jusqu'à : {bouteille_date_jusqua}</p>
+            </div>
             <Dialog open={openErr}>
               <Alert severity="error"
                 action={
@@ -102,13 +118,23 @@ export default function FrmBouteille({
               </Alert>
             </Dialog>
           </div>
-          {voirFiche === false && (
-            <FrmBouteilleInput
-              quantite_p={quantite_p}
-              setQuantite={setQuantite}
-              quantite={quantite}
-            />
-          )}
+          <FrmBouteilleInput
+            voirFiche={voirFiche}
+            quantite_p={quantite_p}
+            setQuantite={setQuantite}
+            quantite={quantite} />
+          <DateSelecteur
+            voirFiche={voirFiche}
+            dateAchat={dateAchat}
+            setDateAchat={setDateAchat}
+            dateAchat_p={dateAchat_p}
+          />
+          <DateSelecteurAnnee
+            voirFiche={voirFiche}
+            dateGarde={dateGarde}
+            setDateGarde={setDateGarde}
+            dateGarde_p={dateGarde_p}
+          />
         </DialogContent>
         {voirFiche === false ? (
           <DialogActions>
