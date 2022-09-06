@@ -19,11 +19,13 @@ import "./Appli.scss";
 import ListeBouteilles from "./ListeBouteilles";
 import ListeCelliers from "./ListeCelliers";
 import Utilisateur from "./Utilisateur.jsx";
+import Profil from "./Profil.jsx";
 import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
-import Logo from "./img/logo-rouge.png";
+import Logo from "./img/png/logo-jaune.png";
+
 
 let DATA;
 
@@ -46,22 +48,86 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
+
+// ------------------------------- Traduction du formulaire d'authentification ---------------------------- 
 
   I18n.setLanguage("fr");
   const dict = {
     fr: {
       "Sign In": "Connexion",
       "Sign in": "Se connecter",
-      "Create Account": "S'inscrire",
+      "Create Account": "Inscription",
       "Forgot your password?": "Mot de passe oublié ?",
       "Reset your password": "Réinitialiser votre mot de passe",
       "Send code": "Envoyer le code",
+	  "Resend Code": "Renvoyer le code",
+	  "Submit": "Envoyer",
+	  "Submitting": "Envoi en cours...",
+	  "Sending": "Envoi en cours...",
       "Back to Sign In": "Retour à la connexion",
       "Signing in": "Veuillez patientez",
+	  "User does not exist.": "Adresse courriel ou mot de passe incorrecte",
+	  "Incorrect username or password.": "Adresse courriel ou mot de passe incorrecte",
+	  "Username/client id combination not found.": "Adresse courriel invalide",
+	  "Attempt limit exceeded, please try after some time.": "Trop de tentatives, veuillez réessayer plus tard",
+	  "Cannot reset password for the user as there is no registered/verified email or phone_number": "Adresse courriel invalide",
+	  "Password must have at least 8 characters": "Le mot de passe doit contenir au moins 8 caractère",
+	  "Your passwords must match": "Vos mots de passe doivent être identiques",
+	  "An account with the given email already exists.": "Adresse courriel invalide",
+	  "Invalid verification code provided, please try again.": "Code invalide, veuillez réessayer",
+	  "Username cannot be empty": "Veuillez entrer votre adresse courriel",
+	  "Custom auth lambda trigger is not configured for the user pool.": "Adresse courriel ou mot de passe incorrecte",
+	  "Password cannot be empty": "Veuillez entrer votre mot de passe",
+	  "Creating Account": "Création du compte"
     },
+  };
+
+  const formFields = {
+    signIn: {
+      username: {
+        labelHidden: true,
+        placeholder: I18n.get("Adresse courriel")
+      },
+      password: {
+        labelHidden: true,
+        placeholder: I18n.get("Mot de passe")
+      }
+    },
+	signUp: {
+	  email: {
+		labelHidden: true,
+		placeholder: I18n.get("Adresse courriel")
+	  },
+	  password: {
+		labelHidden: true,
+		placeholder: I18n.get("Mot de passe")
+
+	  },
+	  confirm_password: {
+		labelHidden: true,
+		placeholder: I18n.get("Confirmation mot de passe")
+	  },
+	},
+	resetPassword: {
+	  username: {
+		labelHidden: true,
+		placeholder: I18n.get("Adresse courriel")
+	  },
+	},
+	confirmResetPassword: {
+	  password: {
+		labelHidden: true,
+		placeholder: I18n.get("Mot de passe")
+	  },
+	  confirm_password: {
+		labelHidden: true,
+		placeholder: I18n.get("Confirmation mot de passe")
+
+	  },
+	}
   };
 
   I18n.putVocabularies(dict);
@@ -156,21 +222,6 @@ const Appli = () => {
       });
   }
 
-  async function deleteUser() {
-    try {
-      const result = await Auth.deleteUser();
-    } catch (error) {}
-    let reponse = await fetch(
-      URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
-      { method: "DELETE" }
-    );
-    let reponseJson = await reponse.json();
-  }
-
-  function handleDelete() {
-    deleteUser();
-  }
-
   async function handleSignOut() {
     await Auth.signOut()
       .then(() => {
@@ -224,11 +275,11 @@ const Appli = () => {
   }
   // ---------------------------------- Rendering -----------------------------------------
   return (
-    <div className="Appli">
+	  <div className="Appli">
       <img className="logo" src={Logo} alt="logo-mon-vino"></img>
-      <Authenticator className="Authenticator">
+      <Authenticator className="Authenticator" formFields={formFields}>
         {({ signOut, user }) => (
-          <div>
+			<div>
             <h1>Hello {user.attributes.email}</h1>
             <Utilisateur
               utilisateur={utilisateur}
@@ -240,7 +291,8 @@ const Appli = () => {
               emailUtilisateur={emailUtilisateur}
               fetchUtilisateurs={fetchUtilisateurs}
               fetchUtilisateur={fetchUtilisateur}
-            />
+              createUser={createUser}
+			  />
 
             {/*-------------------------------- Menu de navigation --------------------------*/}
             <Router>
@@ -260,11 +312,13 @@ const Appli = () => {
                       <button onClick={handleSignOut}>Sign Out</button>
                     </div>
                   </NavLink>
-                  <div>
-                    <button onClick={handleDelete}>
-                      Supprimer votre compte
-                    </button>
-                  </div>
+                  {location !== "/" && (
+                     <div>
+                      <NavLink to={`/profil/${emailUtilisateur}`}>
+                          <button>Profil</button>
+                      </NavLink>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -272,15 +326,27 @@ const Appli = () => {
 
               <Routes>
                 <Route
+                    path={`/profil/${emailUtilisateur}`}
+                    element={
+                      <Profil
+                        emailUtilisateur={emailUtilisateur}
+                        setEmailUtilisateur={setEmailUtilisateur}
+                        utilisateur={utilisateur}
+                        setUtilisateur={setUtilisateur}
+                        URI={URI}
+                      />
+                    }
+                  />
+                <Route
                   path={`/cellier/${cellier}/vins`}
                   element={
                     <ListeBouteilles
-                      bouteilles={bouteilles}
-                      setBouteilles={setBouteilles}
-                      fetchVins={fetchVins}
-                      gererBouteilles={gererBouteilles}
-                      cellier={cellier}
-                      URI={URI}
+                              bouteilles={bouteilles}
+                              setBouteilles={setBouteilles}
+                              fetchVins={fetchVins}
+                              gererBouteilles={gererBouteilles}
+                              cellier={cellier}
+                              URI={URI}
                     />
                   }
                 />
@@ -288,16 +354,16 @@ const Appli = () => {
                   path={`/`}
                   element={
                     <ListeCelliers
-                      celliers={celliers}
-                      setCelliers={setCelliers}
-                      cellier={cellier}
-                      setCellier={setCellier}
-                      fetchCelliers={fetchCelliers}
-                      fetchVins={fetchVins}
-                      id={id}
-                      emailUtilisateur={emailUtilisateur}
-                      gererCellier={gererCellier}
-                      URI={URI}
+                              celliers={celliers}
+                              setCelliers={setCelliers}
+                              cellier={cellier}
+                              setCellier={setCellier}
+                              fetchCelliers={fetchCelliers}
+                              fetchVins={fetchVins}
+                              id={id}
+                              emailUtilisateur={emailUtilisateur}
+                              gererCellier={gererCellier}
+                              URI={URI}
                     />
                   }
                 />
@@ -306,7 +372,7 @@ const Appli = () => {
           </div>
         )}
       </Authenticator>
-      <p className="text">Commencez dès maintenant votre collection de vin !</p>
+	    <p className="Auth-sub-title">Commencez dès maintenant votre collection de vin !</p>
       <small className="">© Mon Vino 2022, Tous droits réservés</small>
     </div>
   );
