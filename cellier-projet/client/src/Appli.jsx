@@ -16,7 +16,7 @@ import Axios from "axios";
 import "./Appli.scss";
 import ListeBouteilles from "./ListeBouteilles";
 import ListeCelliers from "./ListeCelliers";
-import Utilisateur from "./Utilisateur.jsx";
+import Utilisateur, { user } from "./Utilisateur.jsx";
 import Profil from "./Profil.jsx";
 import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
@@ -33,6 +33,7 @@ const Appli = () => {
   const [emailUtilisateur, setEmailUtilisateur] = useState([]);
   const [id, setId] = useState([]);
   const [cellier, setCellier] = useState([]);
+  const [username, setUsername] = useState([]);
   const [utilisateur, setUtilisateur] = useState([]);
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [celliers, setCelliers] = useState([]);
@@ -98,17 +99,16 @@ const Appli = () => {
     },
 	signUp: {
 	  email: {
-		labelHidden: true,
-		placeholder: I18n.get("Adresse courriel")
+      labelHidden: true,
+      placeholder: I18n.get("Adresse courriel")
 	  },
 	  password: {
-		labelHidden: true,
-		placeholder: I18n.get("Mot de passe")
-
+      labelHidden: true,
+      placeholder: I18n.get("Mot de passe")
 	  },
 	  confirm_password: {
-		labelHidden: true,
-		placeholder: I18n.get("Confirmation mot de passe")
+      labelHidden: true,
+      placeholder: I18n.get("Confirmation mot de passe")
 	  },
 	},
 	resetPassword: {
@@ -165,9 +165,6 @@ const Appli = () => {
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
   async function createUser(emailUtilisateur) {
     let bool = false;
-    // var u = utilisateurs.find(function (curr) {
-    //   return curr.email === user.attributes.email
-    // })
     utilisateurs.forEach((utilisateur) => {
       if (utilisateur["email"] === emailUtilisateur && bool === false) {
         bool = true;
@@ -179,8 +176,6 @@ const Appli = () => {
         body: JSON.stringify({ email: emailUtilisateur }),
       });
       let reponseJson = await reponse.json();
-      // setId(reponseJson['id']);
-      // fetchUtilisateur();
     }
   }
 
@@ -312,7 +307,7 @@ const Appli = () => {
                       <button onClick={handleSignOut}>Sign Out</button>
                     </div>
                   </NavLink>
-                  {location !== "/" && (
+                  {location === "/" && (
                      <div>
                       <NavLink to={`/profil/${emailUtilisateur}`}>
                           <button>Profil</button>
