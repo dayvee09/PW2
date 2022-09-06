@@ -42,7 +42,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-cellierreactapp-dev-120444-deployment/amplify-cfn-templates/auth/cellierreactappf10f3a82-cloudformation-template.json",
         "logicalId": "authcellierreactappf10f3a82"
       },
-      "lastPushTimeStamp": "2022-08-27T16:11:17.491Z",
+      "lastPushTimeStamp": "2022-09-06T15:16:07.595Z",
       "output": {
         "UserPoolId": "ca-central-1_hktzNtdqX",
         "AppClientIDWeb": "7qfb8nrr1go4htdpkv6j6fri9f",

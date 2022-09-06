@@ -46,5 +46,6 @@
   },
   "homepage-info": "Avant de déployer sur GitHub Pages vous devez configurer correctement la propriété homepage ci-dessous : 1) retirer le suffixe '-inactif' de l'étiquette, et 2) remplacer 'code-utilisateur' par le nom de votre compte GitHub et 'nom-de-depot-github' par le nom de votre dépôt GitHub dans la valeur de la propriété.",
   "homepage-inactif": "https://code-utilisateur.github.io/nom-de-depot-github/",
-  "homepage": "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet"
+  "homepage-webdev": "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet",
+  "homepage": "http://100.26.239.127/PW2/cellier-projet"
 }

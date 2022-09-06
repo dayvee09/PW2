@@ -1,3 +1,5 @@
+// Début des modifications
+
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -16,13 +18,13 @@ import Axios from "axios";
 import "./Appli.scss";
 import ListeBouteilles from "./ListeBouteilles";
 import ListeCelliers from "./ListeCelliers";
-import Utilisateur from "./Utilisateur.jsx";
+import Utilisateur, { user } from "./Utilisateur.jsx";
+import Profil from "./Profil.jsx";
 import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
 import Logo from "./img/png/logo-jaune.png";
-
 
 let DATA;
 
@@ -32,6 +34,7 @@ const Appli = () => {
   const [emailUtilisateur, setEmailUtilisateur] = useState([]);
   const [id, setId] = useState([]);
   const [cellier, setCellier] = useState([]);
+  const [username, setUsername] = useState([]);
   const [utilisateur, setUtilisateur] = useState([]);
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [celliers, setCelliers] = useState([]);
@@ -43,15 +46,13 @@ const Appli = () => {
 
   useEffect(() => {
     if (ENV == "prod") {
-      setURI(
-        "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
-      );
+      setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
       setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
-// ------------------------------- Traduction du formulaire d'authentification ---------------------------- 
+  // ------------------------------- Traduction du formulaire d'authentification ----------------------------
 
   I18n.setLanguage("fr");
   const dict = {
@@ -62,10 +63,10 @@ const Appli = () => {
       "Forgot your password?": "Mot de passe oublié ?",
       "Reset your password": "Réinitialiser votre mot de passe",
       "Send code": "Envoyer le code",
-	  "Resend Code": "Renvoyer le code",
-	  "Submit": "Envoyer",
-	  "Submitting": "Envoi en cours...",
-	  "Sending": "Envoi en cours...",
+      "Resend Code": "Renvoyer le code",
+      Submit: "Envoyer",
+      Submitting: "Envoi en cours...",
+      Sending: "Envoi en cours...",
       "Back to Sign In": "Retour à la connexion",
       "Signing in": "Veuillez patientez",
 	  "User does not exist.": "Adresse courriel ou mot de passe incorrecte",
@@ -84,7 +85,7 @@ const Appli = () => {
 	  "Confirm": "Confirmer",
 	  "We Emailed You": "Courriel envoyé",
 	  "Your code is on the way. To log in, enter the code we emailed to": "Votre code a été envoyé à votre adresse ",
-	  "It may take a minute to arrive.": "Cela pourrait prendre quelque minutes",
+	  "It may take a minute to arrive.": "Cela pourrait prendre quelque minutes"
     },
   };
 
@@ -92,12 +93,72 @@ const Appli = () => {
     signIn: {
       username: {
         labelHidden: true,
-        placeholder: I18n.get("Adresse courriel")
+        placeholder: I18n.get("Adresse courriel"),
       },
       password: {
         labelHidden: true,
-        placeholder: I18n.get("Mot de passe")
-      }
+        placeholder: I18n.get("Mot de passe"),
+      },
+    },
+    signUp: {
+      email: {
+        labelHidden: true,
+        placeholder: I18n.get("Adresse courriel"),
+      },
+      password: {
+        labelHidden: true,
+        placeholder: I18n.get("Mot de passe"),
+      },
+      confirm_password: {
+        labelHidden: true,
+        placeholder: I18n.get("Confirmation mot de passe"),
+      },
+    },
+    resetPassword: {
+      username: {
+        labelHidden: true,
+        placeholder: I18n.get("Adresse courriel"),
+      },
+    },
+    confirmResetPassword: {
+      password: {
+        labelHidden: true,
+        placeholder: I18n.get("Mot de passe"),
+      },
+      confirm_password: {
+        labelHidden: true,
+        placeholder: I18n.get("Confirmation mot de passe"),
+      },
+    },
+    signUp: {
+      email: {
+        labelHidden: true,
+        placeholder: I18n.get("Adresse courriel"),
+      },
+      password: {
+        labelHidden: true,
+        placeholder: I18n.get("Mot de passe"),
+      },
+      confirm_password: {
+        labelHidden: true,
+        placeholder: I18n.get("Confirmation mot de passe"),
+      },
+    },
+    resetPassword: {
+      username: {
+        labelHidden: true,
+        placeholder: I18n.get("Adresse courriel"),
+      },
+    },
+    confirmResetPassword: {
+      password: {
+        labelHidden: true,
+        placeholder: I18n.get("Mot de passe"),
+      },
+      confirm_password: {
+        labelHidden: true,
+        placeholder: I18n.get("Confirmation mot de passe"),
+      },
     },
 	signUp: {
 	  email: {
@@ -168,9 +229,6 @@ const Appli = () => {
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
   async function createUser(emailUtilisateur) {
     let bool = false;
-    // var u = utilisateurs.find(function (curr) {
-    //   return curr.email === user.attributes.email
-    // })
     utilisateurs.forEach((utilisateur) => {
       if (utilisateur["email"] === emailUtilisateur && bool === false) {
         bool = true;
@@ -182,8 +240,6 @@ const Appli = () => {
         body: JSON.stringify({ email: emailUtilisateur }),
       });
       let reponseJson = await reponse.json();
-      // setId(reponseJson['id']);
-      // fetchUtilisateur();
     }
   }
 
@@ -223,21 +279,6 @@ const Appli = () => {
         console.error("Error fetching data: ", error);
         setError(error);
       });
-  }
-
-  async function deleteUser() {
-    try {
-      const result = await Auth.deleteUser();
-    } catch (error) {}
-    let reponse = await fetch(
-      URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
-      { method: "DELETE" }
-    );
-    let reponseJson = await reponse.json();
-  }
-
-  function handleDelete() {
-    deleteUser();
   }
 
   async function handleSignOut() {
@@ -293,11 +334,11 @@ const Appli = () => {
   }
   // ---------------------------------- Rendering -----------------------------------------
   return (
-	  <div className="Appli">
+    <div className={Auth.user ? "Appli" : "Login"}>
       <img className="logo" src={Logo} alt="logo-mon-vino"></img>
       <Authenticator className="Authenticator" formFields={formFields}>
         {({ signOut, user }) => (
-			<div>
+          <div>
             <h1>Hello {user.attributes.email}</h1>
             <Utilisateur
               utilisateur={utilisateur}
@@ -310,7 +351,7 @@ const Appli = () => {
               fetchUtilisateurs={fetchUtilisateurs}
               fetchUtilisateur={fetchUtilisateur}
               createUser={createUser}
-			  />
+            />
 
             {/*-------------------------------- Menu de navigation --------------------------*/}
             <Router>
@@ -330,11 +371,13 @@ const Appli = () => {
                       <button onClick={handleSignOut}>Sign Out</button>
                     </div>
                   </NavLink>
-                  <div>
-                    <button onClick={handleDelete}>
-                      Supprimer votre compte
-                    </button>
-                  </div>
+                  {location === "/" && (
+                    <div>
+                      <NavLink to={`/profil/${emailUtilisateur}`}>
+                        <button>Profil</button>
+                      </NavLink>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -342,22 +385,34 @@ const Appli = () => {
 
               <Routes>
                 <Route
+                  path={`/profil/${emailUtilisateur}`}
+                  element={
+                    <Profil
+                      emailUtilisateur={emailUtilisateur}
+                      setEmailUtilisateur={setEmailUtilisateur}
+                      utilisateur={utilisateur}
+                      setUtilisateur={setUtilisateur}
+                      URI={URI}
+                    />
+                  }
+                />
+                <Route
                   path={`/cellier/${cellier}/vins`}
                   element={
-					  <ListeBouteilles
+                    <ListeBouteilles
                       bouteilles={bouteilles}
                       setBouteilles={setBouteilles}
                       fetchVins={fetchVins}
                       gererBouteilles={gererBouteilles}
                       cellier={cellier}
                       URI={URI}
-					  />
-					}
+                    />
+                  }
                 />
                 <Route
                   path={`/`}
                   element={
-					  <ListeCelliers
+                    <ListeCelliers
                       celliers={celliers}
                       setCelliers={setCelliers}
                       cellier={cellier}
@@ -368,15 +423,17 @@ const Appli = () => {
                       emailUtilisateur={emailUtilisateur}
                       gererCellier={gererCellier}
                       URI={URI}
-					  />
-					}
+                    />
+                  }
                 />
               </Routes>
             </Router>
           </div>
         )}
       </Authenticator>
-	    <p className="Auth-sub-title">Commencez dès maintenant votre collection de vin !</p>
+      <p className="Auth-sub-title">
+        Commencez dès maintenant votre collection de vin !
+      </p>
       <small className="">© Mon Vino 2022, Tous droits réservés</small>
     </div>
   );

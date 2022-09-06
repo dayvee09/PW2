@@ -6,14 +6,29 @@ class AccesBd
 
     function __construct()
     {
-        if (!$this->pdo) {
-            $options = [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ];
+        try {
+            $options = [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION];
+            // Connection au serveur de développement
+
+            // $this->pdo = new PDO(
+            //     "mysql:host=monvino.c2i48shq0eku.us-east-1.rds.amazonaws.com; port=3306; dbname=monvino; charset=utf8",
+            //     'e2195277',
+            //     '3fRPgQeQgFf2w5jC3Bcg',
+            //     $options
+            // );
+
+            // Connection en localhost
+
             $this->pdo = new PDO(
                 "mysql:host=localhost; dbname=pw2; charset=utf8",
                 'root',
                 '',
                 $options
             );
+        } catch (Exception $e) {
+            echo 'Unable to connect to the database';
+            echo $e->getMessage();
+            exit;
         }
     }
 
