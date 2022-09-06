@@ -24,14 +24,14 @@ class UtilisateursModele extends AccesBd
 
     public function retirer($params)
     {
-        return $this->supprimer("DELETE FROM vino__utilisateur WHERE vino__utilisateur.email=:email", ['email' => $params['email']]);
+        return $this->supprimer("DELETE FROM vino__utilisateur WHERE vino__utilisateur.email=:email", ['email' => $params["email"]]);
     }
 
-    public function remplacer($id, $cellier)
+    public function changer($params, $fragmentUtilisateur)
     {
-        return $this->modifier("UPDATE vino__cellier SET vino__cellier.nom=? WHERE id=?", [
-            $cellier->nom,
-            $id
+        return $this->modifier("UPDATE vino__utilisateur SET vino__utilisateur.email=:fragment_utilisateur WHERE vino__utilisateur.email=:email ", [
+            'email' => $params["email"],
+            'fragment_utilisateur' => $fragmentUtilisateur->email
         ]);
     }
 }
