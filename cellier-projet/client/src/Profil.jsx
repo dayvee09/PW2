@@ -117,6 +117,7 @@ export default function Profil(props) {
       );
       let reponseJson = await reponse.json();
     }
+    props.setEmailUtilisateur(NouvelEmailUtilisateur)
   }
 
   return (
