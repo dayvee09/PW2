@@ -17,6 +17,7 @@ import "./Appli.scss";
 import ListeBouteilles from "./ListeBouteilles";
 import ListeCelliers from "./ListeCelliers";
 import Utilisateur from "./Utilisateur.jsx";
+import Profil from "./Profil.jsx";
 import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
@@ -47,7 +48,7 @@ const Appli = () => {
         "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet/api-php"
       );
     } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -221,21 +222,6 @@ const Appli = () => {
       });
   }
 
-  async function deleteUser() {
-    try {
-      const result = await Auth.deleteUser();
-    } catch (error) {}
-    let reponse = await fetch(
-      URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
-      { method: "DELETE" }
-    );
-    let reponseJson = await reponse.json();
-  }
-
-  function handleDelete() {
-    deleteUser();
-  }
-
   async function handleSignOut() {
     await Auth.signOut()
       .then(() => {
@@ -326,11 +312,13 @@ const Appli = () => {
                       <button onClick={handleSignOut}>Sign Out</button>
                     </div>
                   </NavLink>
-                  <div>
-                    <button onClick={handleDelete}>
-                      Supprimer votre compte
-                    </button>
-                  </div>
+                  {location !== "/" && (
+                     <div>
+                      <NavLink to={`/profil/${emailUtilisateur}`}>
+                          <button>Profil</button>
+                      </NavLink>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -338,34 +326,46 @@ const Appli = () => {
 
               <Routes>
                 <Route
+                    path={`/profil/${emailUtilisateur}`}
+                    element={
+                      <Profil
+                        emailUtilisateur={emailUtilisateur}
+                        setEmailUtilisateur={setEmailUtilisateur}
+                        utilisateur={utilisateur}
+                        setUtilisateur={setUtilisateur}
+                        URI={URI}
+                      />
+                    }
+                  />
+                <Route
                   path={`/cellier/${cellier}/vins`}
                   element={
-					  <ListeBouteilles
-                      bouteilles={bouteilles}
-                      setBouteilles={setBouteilles}
-                      fetchVins={fetchVins}
-                      gererBouteilles={gererBouteilles}
-                      cellier={cellier}
-                      URI={URI}
-					  />
-					}
+                    <ListeBouteilles
+                              bouteilles={bouteilles}
+                              setBouteilles={setBouteilles}
+                              fetchVins={fetchVins}
+                              gererBouteilles={gererBouteilles}
+                              cellier={cellier}
+                              URI={URI}
+                    />
+                  }
                 />
                 <Route
                   path={`/`}
                   element={
-					  <ListeCelliers
-                      celliers={celliers}
-                      setCelliers={setCelliers}
-                      cellier={cellier}
-                      setCellier={setCellier}
-                      fetchCelliers={fetchCelliers}
-                      fetchVins={fetchVins}
-                      id={id}
-                      emailUtilisateur={emailUtilisateur}
-                      gererCellier={gererCellier}
-                      URI={URI}
-					  />
-					}
+                    <ListeCelliers
+                              celliers={celliers}
+                              setCelliers={setCelliers}
+                              cellier={cellier}
+                              setCellier={setCellier}
+                              fetchCelliers={fetchCelliers}
+                              fetchVins={fetchVins}
+                              id={id}
+                              emailUtilisateur={emailUtilisateur}
+                              gererCellier={gererCellier}
+                              URI={URI}
+                    />
+                  }
                 />
               </Routes>
             </Router>
