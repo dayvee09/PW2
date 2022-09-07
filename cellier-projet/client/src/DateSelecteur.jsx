@@ -16,10 +16,11 @@ export default function DateSelecteur(props) {
                     <Stack spacing={3}>
 
                         <DatePicker
+                           dateFormat="yyyy-MM-"
                             views={['day']}
                             value={props.dateAchat}
                             onChange={(newValue) => {
-                                props.setDateAchat(newValue);
+                                props.setDateAchat(newValue.format("YYYY-MM-DD"));
                             }}
                             renderInput={(params) => <TextField fullWidth size="small" {...params} helperText={null} />}
                         />
