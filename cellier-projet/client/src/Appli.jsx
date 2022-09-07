@@ -25,6 +25,8 @@ import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
 import Logo from "./img/png/logo-jaune.png";
+import NavMobile from "./NavMobile";
+
 
 let DATA;
 
@@ -64,9 +66,10 @@ const Appli = () => {
       "Reset your password": "Réinitialiser votre mot de passe",
       "Send code": "Envoyer le code",
       "Resend Code": "Renvoyer le code",
-      Submit: "Envoyer",
-      Submitting: "Envoi en cours...",
-      Sending: "Envoi en cours...",
+      "Submit": "Envoyer",
+      "Submitting": "Envoi en cours...",
+      "Sending": "Envoi en cours...",
+	  "Confirming": "Confirmation en cours...",
       "Back to Sign In": "Retour à la connexion",
       "Signing in": "Veuillez patientez",
 	  "User does not exist.": "Adresse courriel ou mot de passe incorrecte",
@@ -85,7 +88,9 @@ const Appli = () => {
 	  "Confirm": "Confirmer",
 	  "We Emailed You": "Courriel envoyé",
 	  "Your code is on the way. To log in, enter the code we emailed to": "Votre code a été envoyé à votre adresse ",
-	  "It may take a minute to arrive.": "Cela pourrait prendre quelque minutes"
+	  "It may take a minute to arrive.": "Cela pourrait prendre quelque minutes",
+	  "We Sent A Code": "Code Envoyé",
+	  "Your code is on the way. To log in, enter the code we sent you. It may take a minute to arrive.": "Votre code a été envoyé à votre adresse. Cela pourrait prendre quelque minutes",
     },
   };
 
@@ -129,69 +134,7 @@ const Appli = () => {
         labelHidden: true,
         placeholder: I18n.get("Confirmation mot de passe"),
       },
-    },
-    signUp: {
-      email: {
-        labelHidden: true,
-        placeholder: I18n.get("Adresse courriel"),
-      },
-      password: {
-        labelHidden: true,
-        placeholder: I18n.get("Mot de passe"),
-      },
-      confirm_password: {
-        labelHidden: true,
-        placeholder: I18n.get("Confirmation mot de passe"),
-      },
-    },
-    resetPassword: {
-      username: {
-        labelHidden: true,
-        placeholder: I18n.get("Adresse courriel"),
-      },
-    },
-    confirmResetPassword: {
-      password: {
-        labelHidden: true,
-        placeholder: I18n.get("Mot de passe"),
-      },
-      confirm_password: {
-        labelHidden: true,
-        placeholder: I18n.get("Confirmation mot de passe"),
-      },
-    },
-	signUp: {
-	  email: {
-		labelHidden: true,
-		placeholder: I18n.get("Adresse courriel")
-	  },
-	  password: {
-		labelHidden: true,
-		placeholder: I18n.get("Mot de passe")
-
-	  },
-	  confirm_password: {
-		labelHidden: true,
-		placeholder: I18n.get("Confirmation mot de passe")
-	  },
-	},
-	resetPassword: {
-	  username: {
-		labelHidden: true,
-		placeholder: I18n.get("Adresse courriel")
-	  },
-	},
-	confirmResetPassword: {
-	  password: {
-		labelHidden: true,
-		placeholder: I18n.get("Mot de passe")
-	  },
-	  confirm_password: {
-		labelHidden: true,
-		placeholder: I18n.get("Confirmation mot de passe")
-
-	  }
-	}
+    }
   };
 
   I18n.putVocabularies(dict);
@@ -335,7 +278,7 @@ const Appli = () => {
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
-      <img className="logo" src={Logo} alt="logo-mon-vino"></img>
+      <img className={Auth.user ? "Hidden" : "logo"} src={Logo} alt="logo-mon-vino"></img>
       <Authenticator className="Authenticator" formFields={formFields}>
         {({ signOut, user }) => (
           <div>
@@ -382,7 +325,6 @@ const Appli = () => {
               </div>
 
               {/* ------------------------------ Routes --------------------------------*/}
-
               <Routes>
                 <Route
                   path={`/profil/${emailUtilisateur}`}
@@ -426,15 +368,18 @@ const Appli = () => {
                     />
                   }
                 />
+
               </Routes>
             </Router>
           </div>
         )}
       </Authenticator>
-      <p className="Auth-sub-title">
+      <p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
         Commencez dès maintenant votre collection de vin !
       </p>
       <small className="">© Mon Vino 2022, Tous droits réservés</small>
+	  <NavMobile Auth={Auth}/>
+	  
     </div>
   );
 };

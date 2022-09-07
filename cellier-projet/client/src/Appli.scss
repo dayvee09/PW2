@@ -1,135 +1,125 @@
 .Appli {
-  .logo {
-    width: 100px;
-  }
 
-  .Authenticator {
-    padding-bottom: 25px;
-  }
+	.navigation {
+		display: flex;
+		justify-content: space-between;
+	}
+	  
+	.menu-compte,
+	.menu-celliers {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-evenly;
+		width: 75%;
+		button {
+		  width: 100px;
+		  height: 40px;
+		}
+	}
 }
 
 .Login {
-  background-position: top;
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: #152440;
-  font-family: "Raleway", sans-serif;
-  font-weight: 200;
-  padding-top: 15px;
-  padding-bottom: 25px;
-  text-align: center;
-  background-image: linear-gradient(
-      to bottom,
-      rgba(16, 30, 51, 0.95) 0% 50%,
-      rgb(204, 66, 64) 50% 100%
-    ),
-    url(./img/jpg/background-accueil.jpg);
+	background-position: top;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: #152440;
+	font-family: "Raleway", sans-serif;
+	font-weight: 200;
+	padding-top:25px;
+	padding-bottom:25px;
+	text-align: center;
+	background-image: linear-gradient(
+		to bottom,
+		rgba(16, 30, 51, 0.95) 0% 50%,
+		rgb(204, 66, 64) 50% 100%
+	),
+	url(./img/jpg/background-accueil.jpg);
 
-  //   * {
-  // 	border: 1px dashed red;
-  //   }
+	.logo {
+		width: 200px;
+		padding-bottom: 25px;
+	}
 
-  .logo {
-    width: 200px;
-  }
+	.Auth-sub-title {
+		padding-bottom: 25px;
+		font-weight: 200;
+		font-size: 12px;
+		color: #f3f5eb;
+	}
 
-  .Auth-sub-title {
-    padding-bottom: 25px;
-    font-weight: 200;
-    font-size: 12px;
-    color: #f3f5eb;
-  }
+	small {
+		font-size: 0.9em;
+		color: #f3f5eb;
+	}
 
-  small {
-    font-size: 0.9em;
-    color: #f3f5eb;
-  }
+	.Authenticator {
+		padding-bottom: 25px;
 
-  .Authenticator {
-    padding-bottom: 25px;
+		.amplify-heading {
+			font-size: 15px;
+		}
 
-    .amplify-heading {
-      font-size: 15px;
-    }
+		div:first-child {
+			background-color: #f3f5eb;
+			width: 100%;
+		}
 
-    div:first-child {
-      background-color: #f3f5eb;
-      width: 100%;
-    }
+		input {
+			text-align: left;
+		}
 
-    input {
-      text-align: left;
-    }
+		.amplify-button--primary {
+			background-color: #f1ab50;
+			color: #101e33;
+			font-weight: 200;
 
-    .amplify-button--primary {
-      background-color: #f1ab50;
-      color: #101e33;
-      font-weight: 200;
+			&:hover {
+			background-color: #152440;
+			color: #f3f5eb;
+			}
+		}
 
-      &:hover {
-        background-color: #152440;
-        color: #f3f5eb;
-      }
-    }
+		.amplify-button--link {
+			color: #152440;
 
-    .amplify-button--link {
-      color: #152440;
-      //   border-bottom: 1px solid black;
-      //   border-radius: 0;
-      //   padding: 0 2px 2px 2px;
-      //   margin:0 268px 0 268px;
+			&:hover {
+			background-color: #f3f5eb;
+			color: #cc4240;
+			}
+		}
 
-      &:hover {
-        background-color: #f3f5eb;
-        color: #cc4240;
-      }
-    }
+		.amplify-tabs-item {
+			background-color: #f3f5eb;
+			color: #cc4240;
+			font-weight: 500;
+			border: 1px solid #e2e2e273;
+		}
 
-    .amplify-tabs-item {
-      background-color: #f3f5eb;
-      color: #cc4240;
-      font-weight: 500;
-      border: 1px solid #e2e2e273;
-    }
+		.amplify-alert--error {
+			background-color: #f3f5eb;
+			color: #cc4240;
+			font-weight: 500;
+			border: 1px solid #cc4240;
+		}
 
-    .amplify-alert--error {
-      background-color: #f3f5eb;
-      color: #cc4240;
-      font-weight: 500;
-      border: 1px solid #cc4240;
-    }
+		button[data-state="inactive"] {
+			background-color: #f3f5eb86;
+			color: #152440;
+		}
 
-    button[data-state="inactive"] {
-      background-color: #f3f5eb86;
-      color: #152440;
-    }
+		button[data-state="active"] {
+			border-top: 3px solid #f1ab50;
+		}
+	}
+}
 
-    button[data-state="active"] {
-      border-top: 3px solid #f1ab50;
-    }
-  }
+.Hidden {
+	display: none;
 }
 
 @media only screen and (min-width: 768px) {
-  .Authenticator {
-    width: 600px;
-    margin: auto;
-  }
-}
-
-.navigation {
-  display: flex;
-  justify-content: space-between;
-}
-
-.menu-compte,
-.menu-celliers {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  width: 75%;
-  button {
-    width: 100px;
-    height: 40px;
-  }
+	.Authenticator {
+		width: 600px;
+		margin: auto;
+	}
 }
