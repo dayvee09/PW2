@@ -1,6 +1,7 @@
 import * as React from "react";
 import "./Profil.scss";
 import FrmEmail from "./FrmEmail";
+import FrmPassword from "./FrmPassword";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { Auth } from 'aws-amplify';
@@ -39,25 +40,10 @@ export default function Profil(props) {
   // ----------------------- Gestion du profil ------------------------------------------------
 
   /**
-   *  Supprimer un profil;
-   */
-
-  async function supprimerUtilisateur() {
-    try {
-      const result = await Auth.deleteUser();
-    } catch (error) {}
-    let reponse = await fetch(
-      props.URI + "/" + "email" + "/" + props.emailUtilisateur + "/" + "utilisateurs",
-      { method: "DELETE" }
-    );
-    let reponseJson = await reponse.json();
-  }
-
-  /**
    * Gère la suppression du profil
    */
   function gererSupprimer() {
-    supprimerUtilisateur();
+    props.supprimerUtilisateur();
   }
 
   /**
@@ -80,7 +66,7 @@ export default function Profil(props) {
   }
 
   /**
-   * Gère la modification du password
+   * Gère la modification du mot de passe
    */
   function gererModifierPassword() {
     setFrmPasswordOuvert(true);
@@ -89,7 +75,7 @@ export default function Profil(props) {
   /**
    * requête de modification du password dans aws
    */
-  async function fetchPatchtPassword(passwordActuel, nouveauPassword) {
+  async function PatchPassword(passwordActuel, nouveauPassword) {
     Auth.currentAuthenticatedUser()
     .then(user => {
         return Auth.changePassword(user, passwordActuel, nouveauPassword);
@@ -125,21 +111,25 @@ export default function Profil(props) {
       <div className="bouteille" data-quantite="">
         <div className="description">
           <div className="description-originale">
-            <p className="nom">{props.emailUtilisateur}</p>
+            <p className="Email">{props.emailUtilisateur}</p>
             <button onClick={gererModifierEmail}>Modifier</button>
+          </div>
+          <div className="description-originale">
+            <p className="Mot de passe">********</p>
+            <button onClick={gererModifierPassword}>Modifier</button>
           </div>
         </div>
         <div className="options" data-id="">
           <button onClick={gererSupprimer}>Supprimer votre compte</button>
         </div>
-        <Snackbar sx={{ height: '100%' }} anchorOrigin={{
+        {/* <Snackbar sx={{ height: '100%' }} anchorOrigin={{
           vertical: "center",
           horizontal: "center"
         }} open={openAlert} autoHideDuration={1000} onClose={handleCloseAlert}>
           <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '100%' }}>
             En rupture de stock!
           </Alert>
-        </Snackbar>
+        </Snackbar> */}
         <FrmEmail
           frmEmailOuvert={frmEmailOuvert}
           setFrmEmailOuvert={setFrmEmailOuvert}
@@ -147,6 +137,11 @@ export default function Profil(props) {
           modifierEmail={modifierEmail}
           setNouvelEmailUtilisateur={setNouvelEmailUtilisateur}
           NouvelEmailUtilisateur={NouvelEmailUtilisateur}
+        />
+         <FrmPassword
+          frmPasswordOuvert={frmPasswordOuvert}
+          setFrmPasswordOuvert={setFrmPasswordOuvert}
+          emailUtilisateur={props.emailUtilisateur}
         />
       </div>
     </>
