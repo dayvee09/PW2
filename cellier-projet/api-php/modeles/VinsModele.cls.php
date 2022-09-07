@@ -58,6 +58,6 @@ class VinsModele extends AccesBd
     public function changer($params, $idEntite, $fragmentVin)
     {
         $this->modifier("UPDATE vino__bouteille_has_vino__cellier SET 	
-        quantite=:fragment_vin WHERE vino__bouteille_id=:vin_id AND vino__cellier_id=:cellier_id",  ['cellier_id' => $params["cellier"], 'vin_id' => $idEntite["bouteille"], 'fragment_vin' => $fragmentVin->quantite]);
+        quantite=:fragment_vin , date_achat=:fragment_dateAchat, garde_jusqua=:fragment_dateGarde WHERE vino__bouteille_id=:vin_id AND vino__cellier_id=:cellier_id",  ['cellier_id' => $params["cellier"], 'vin_id' => $idEntite["bouteille"], 'fragment_vin' => $fragmentVin->quantite, 'fragment_dateAchat'=>$fragmentVin->date_achat, 'fragment_dateGarde'=>$fragmentVin->garde_jusqua]);
     }
 }

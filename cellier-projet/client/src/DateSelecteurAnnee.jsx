@@ -16,10 +16,11 @@ export default function DateSelecteurAnnee(props) {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Stack spacing={3}>
             <DatePicker
+              dateFormat="yyyy"
               views={['year']}
               value={props.dateGarde}
               onChange={(newValue) => {
-                props.setDateGarde(newValue);
+                props.setDateGarde(newValue.format('YYYY').toString());
               }}
               renderInput={(params) => <TextField size="small" {...params} helperText={null} />}
             />

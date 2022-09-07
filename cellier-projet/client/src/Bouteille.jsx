@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import format from 'date-fns/format';
+import moment from 'moment';
+import { keyframes } from "@emotion/react";
 
 export default function Bouteille(props) {
   /**
@@ -33,13 +36,13 @@ export default function Bouteille(props) {
   /**
    * État de la date d'achat et la date précédente
    */
-   const [dateAchat, setDateAchat] = useState(props.date_achat);
-   const [dateAchat_p, setDateAchat_p] = useState(dateAchat);
+  const [dateAchat, setDateAchat] = useState(props.date_achat);
+  const [dateAchat_p, setDateAchat_p] = useState(dateAchat);
   /**
    * État de la date de garde et la date de garde précédente
    */
-   const [dateGarde, setDateGarde] = useState(props.date_jusqua);
-   const [dateGarde_p, setDateGarde_p] = useState(dateGarde);
+  const [dateGarde, setDateGarde] = useState(props.garde_jusqua);
+  const [dateGarde_p, setDateGarde_p] = useState(dateGarde);
 
   /**
    *  État du formulaire de modification
@@ -49,13 +52,15 @@ export default function Bouteille(props) {
 
   // useEffect(() => {
   //   fetchPutVinUn(quantite);
-  // }, []);
+  // }, [quantite]);
 
   /**
    * Gère l'affichage du formulaire quand click du bouton "Modifier"
    */
   function gererModifier() {
     setQuantite_p(quantite);
+    setDateAchat_p(dateAchat);
+    setDateGarde_p(dateGarde);
     setFrmOuvert(true);
   }
 
@@ -71,38 +76,40 @@ export default function Bouteille(props) {
    * Gère le bouton 'ajouter'
    */
   function gererAjouter() {
-    setQuantite(parseInt(quantite) + 1);
-    fetchPutVinUn(quantite);
+    setQuantite(quantite=>parseInt(quantite) + 1);
+    fetchPutVinUn(parseInt(quantite) + 1, dateAchat, dateGarde);
   }
 
   /**
    * Gère le bouton 'Boire'
    */
   function gererBoire() {
-    if (quantite > 0)
-      setQuantite(parseInt(quantite) - 1);
+    if (quantite > 0) {
+      setQuantite(quantite=>parseInt(quantite) - 1);
+      fetchPutVinUn(parseInt(quantite) - 1, dateAchat, dateGarde);
+    }
     else
-
       setOpenAlert(true);
-    fetchPutVinUn(quantite);
+   
   }
 
   /**
    * Gère la modification de la quantité de bouteille
    * @param {*} NouveauQuantite 
    */
-  function modifierBouteille(NouveauQuantite) {
+  function modifierBouteille(NouveauQuantite, NouveauDateAchat, NouveauDateGarde ) {
+
     var reg = /^[1-9]+[0-9]*]*$/;
     if (reg.test(NouveauQuantite)) {
       setQuantite(NouveauQuantite);
     }
-    fetchPutVinUn(quantite);
+    fetchPutVinUn(quantite, NouveauDateAchat, NouveauDateGarde);
   }
   /**
    * Actualiser la quantité du DB
    * @param {*} NouveauQuantite 
    */
-  async function fetchPutVinUn(NouveauQuantite) {
+  async function fetchPutVinUn(NouveauQuantite, NouveauDateAchat, NouveauDateGarde) {
     //route: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7
     let reponse = await fetch(
       // "http://localhost/PW2/cellier-projet/api-php" +
@@ -119,29 +126,21 @@ export default function Bouteille(props) {
       props.id,
       {
         method: "PATCH",
-        body: JSON.stringify({ quantite: NouveauQuantite }),
+        body: JSON.stringify({
+          quantite: NouveauQuantite,
+          date_achat: NouveauDateAchat,
+          garde_jusqua: NouveauDateGarde
+
+        }),
       }
     );
-    // let reponseJson = await reponse.json();
+     let reponseJson = await reponse.json();
   }
   // async function fetchVinUn() {
   //   //route: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7
-  //   let reponse = await fetch(
-  //     props.URI +
-  //     "/" +
-  //     "cellier" +
-  //     "/" +
-  //     props.vino__cellier_id +
-  //     "/" +
-  //     "vins" +
-  //     "/" +
-  //     "bouteille" +
-  //     "/" +
-  //     props.id
-  //   );
+  //   let reponse = await fetch(props.URI + "/" + "cellier" + "/" + props.vino__cellier_id + "/" + "vins" + "/" + "bouteille" + "/" + props.id );
   //   let reponseJson = await reponse.json();
   // }
-  console.log(props);
   return (
     <>
       <div className="bouteille" data-quantite="">

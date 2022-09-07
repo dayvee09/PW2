@@ -58,13 +58,18 @@ export default function FrmBouteille({
     setFrmOuvert(false);
     setVoirFiche(false);
     setQuantite(quantite_p);
+    setDateAchat(dateAchat_p);
+    setDateGarde(dateGarde_p);
   }
   /**
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
     if (quantite >= 0) {
-      modifierBouteille(quantite);
+      console.log(dateAchat);
+      console.log(dateGarde);
+      
+      modifierBouteille(quantite,dateAchat, dateGarde);
       setFrmOuvert(false);
     }
     else {
