@@ -55,7 +55,7 @@ export default function FrmEmail({
       <Dialog open={frmEmailOuvert} onClose={viderFermerFrm}>
         <DialogTitle> Modifier votre email</DialogTitle>
         <DialogContent>
-          <div className="description">
+          <div className="frmPassword">
             <p className="">Email actuel: {emailUtilisateur}</p>
             <TextField
                 onChange={gererInput}
