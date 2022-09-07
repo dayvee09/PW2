@@ -33,6 +33,13 @@ export default function Profil(props) {
    *  État des formulaires de modification
    */
 
+     const [passwordActuel, setPasswordActuel] = useState(false);
+     const [passwordNouveau, setPasswordNouveau] = useState(false);
+
+  /**
+   *  État des formulaires de modification
+   */
+
   const [frmEmailOuvert, setFrmEmailOuvert] = useState(false);
   const [frmPasswordOuvert, setFrmPasswordOuvert] = useState(false);
 
@@ -92,7 +99,6 @@ export default function Profil(props) {
     let result = await Auth.updateUserAttributes(user, {
         'email': NouvelEmailUtilisateur,
     });
-    console.log(result);
     if (result === "SUCCESS") {
       let reponse = await fetch(
           props.URI + "/" + "email" + "/" + props.emailUtilisateur + "/" + "utilisateurs",
@@ -142,6 +148,11 @@ export default function Profil(props) {
           frmPasswordOuvert={frmPasswordOuvert}
           setFrmPasswordOuvert={setFrmPasswordOuvert}
           emailUtilisateur={props.emailUtilisateur}
+          passwordActuel={passwordActuel}
+          setPasswordActuel={setPasswordActuel}
+          passwordNouveau={passwordNouveau}
+          setPasswordNouveau={setPasswordNouveau}
+          PatchPassword={PatchPassword}
         />
       </div>
     </>
