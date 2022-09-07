@@ -11,7 +11,7 @@
  *
  *
  */
-class SAQ extends Modele
+class SaqControleur extends Controleur
 {
 
     const DUPLICATION = 'duplication';
@@ -23,11 +23,17 @@ class SAQ extends Modele
     private static $_status;
     private $stmt;
 
-    public function __construct()
+    //IMPORTER DU SAQ
+    public function ajouter($donneesSaq)
     {
-        parent::__construct();
-        if (!($this->stmt = $this->_db->prepare("INSERT INTO vino__bouteille(nom, type, image, code_saq, pays, description, prix_saq, url_saq, url_img, format) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
-            echo "Echec de la préparation : (" . $this->mysqli->errno . ") " . $this->mysqli->error;
+        // $page = 1;
+        // $nombreProduit = 24; //48 ou 96	
+
+        $body = json_decode($donneesSaq);
+
+        for ($i = 0; $i < 1; $i++)    //permet d'importer séquentiellement plusieurs pages.
+        {
+            $nombre = $this->getProduits($body->nombre, $body->page + $i, $body->type);
         }
     }
 
@@ -80,20 +86,12 @@ class SAQ extends Modele
             //if ("resultats_product" == str$noeud -> getAttribute('class')) {
             if (strpos($noeud->getAttribute('class'), "product-item") !== false) {
 
-                //echo $this->get_inner_html($noeud);
                 $info = self::recupereInfo($noeud);
-                echo "<p>" . $info->nom;
                 $retour = $this->ajouteProduit($info);
-                echo "<br>Code de retour : " . $retour->raison . "<br>";
                 if ($retour->succes == false) {
-                    echo "<pre>";
-                    var_dump($info);
-                    echo "</pre>";
-                    echo "<br>";
                 } else {
                     $i++;
                 }
-                echo "</p>";
             }
         }
 
@@ -169,25 +167,21 @@ class SAQ extends Modele
 
     private function ajouteProduit($bte)
     {
+        $_db = new AccesBd;
         $retour = new stdClass();
         $retour->succes = false;
         $retour->raison = '';
 
-        //var_dump($bte);
+        // var_dump($bte);
         // Récupère le type
-        $rows = $this->_db->query("select id from vino__type where type = '" . $bte->desc->type . "'");
 
-        if ($rows->num_rows == 1) {
-            $type = $rows->fetch_assoc();
-            // var_dump($type);
-            $type = $type['id'];
-
-            $rows = $this->_db->query("select id from vino__bouteille where code_saq = '" . $bte->desc->code_SAQ . "'");
-            if ($rows->num_rows < 1) {
-                $this->stmt->bind_param("sissssisss", $bte->nom, $type, $bte->img, $bte->desc->code_SAQ, $bte->desc->pays, $bte->desc->texte, $bte->prix, $bte->url, $bte->img, $bte->desc->format);
-                $retour->succes = $this->stmt->execute();
-                $retour->raison = self::INSERE;
-                //var_dump($this->stmt);
+        $rows = $this->modele->un($bte->desc->type);
+        $type_id = $rows->id;
+        if (count((array)$rows) == 1) {
+            $rows = $this->modele->un($bte->desc->code_SAQ);
+            if ($rows === false) {
+                $this->reponse['entete_statut'] = 'HTTP/1.1 201 Created';
+                $this->reponse['corps'] = ['id' => $this->modele->ajouter($bte, $type_id)];
             } else {
                 $retour->succes = false;
                 $retour->raison = self::DUPLICATION;
@@ -197,5 +191,36 @@ class SAQ extends Modele
             $retour->raison = self::ERREURDB;
         }
         return $retour;
+    }
+
+    public function tout($groupe)
+    {
+        // $groupe = false;
+        $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
+        $this->reponse['corps'] = $this->modele->tout($groupe);
+    }
+
+    public function un($params, $idEntite)
+    {
+        $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
+        $this->reponse['corps'] = $this->modele->un($params, $idEntite);
+    }
+
+    public function remplacer($id, $cellier)
+    {
+        $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
+        $this->reponse['corps'] = $this->modele->remplacer($id, json_decode($cellier));
+    }
+
+    public function changer($params, $idEntite, $fragmentEntite)
+    {
+        $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
+        $this->reponse['corps'] = $this->modele->changer($params, $idEntite, json_decode($fragmentEntite));
+    }
+
+    public function retirer($id)
+    {
+        $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
+        $this->reponse['corps'] = ['nombre' => $this->modele->retirer($id)];
     }
 }

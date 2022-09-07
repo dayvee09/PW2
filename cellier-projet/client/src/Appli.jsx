@@ -363,6 +363,10 @@ const Appli = () => {
                       utilisateur={utilisateur}
                       setUtilisateur={setUtilisateur}
                       URI={URI}
+                      bouteilles={bouteilles}
+                      setBouteilles={setBouteilles}
+                      error={error}
+                      setError={setError}
                     />
                   }
                 />
