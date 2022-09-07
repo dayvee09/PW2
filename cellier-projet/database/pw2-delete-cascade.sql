@@ -79,15 +79,15 @@ CREATE TABLE `vino__bouteille_has_vino__cellier` (
 --
 
 INSERT INTO `vino__bouteille_has_vino__cellier` (`vino__bouteille_id`, `vino__cellier_id`, `quantite`, `date_achat`, `garde_jusqua`, `notes`) VALUES
-(1, 1, 5, '2022-01-16', '2023', 'Borsao'),
-(2, 1, 7, '2022-01-26', '2024', 'Monasterio'),
-(3, 1, 1, '2022-02-10', '2024', 'Castano'),
-(4, 1, 3, '2022-02-11', '2024', 'Campo'),
-(5, 1, 5, '2022-02-15', '2029', 'Bodegas'),
-(6, 1, 2, '2022-02-16', '2030', 'Pinot'),
-(7, 1, 6, '2022-02-19', '2024', 'Huber'),
-(8, 1, 8, '2022-02-22', '2044', 'Dominio'),
-(9, 1, 14, '2022-03-19', '2024', 'Tessellae'),
+(1, 2, 5, '2022-01-16', '2023', 'Borsao'),
+(2, 2, 7, '2022-01-26', '2024', 'Monasterio'),
+(3, 2, 1, '2022-02-10', '2024', 'Castano'),
+(4, 2, 3, '2022-02-11', '2024', 'Campo'),
+(5, 2, 5, '2022-02-15', '2029', 'Bodegas'),
+(6, 2, 2, '2022-02-16', '2030', 'Pinot'),
+(7, 2, 6, '2022-02-19', '2024', 'Huber'),
+(8, 2, 8, '2022-02-22', '2044', 'Dominio'),
+(9, 2, 14, '2022-03-19', '2024', 'Tessellae'),
 (10, 9, 20, '2022-07-26', '2024', 'Tenuta');
 
 -- --------------------------------------------------------
@@ -107,14 +107,14 @@ CREATE TABLE `vino__cellier` (
 --
 
 INSERT INTO `vino__cellier` (`id`, `nom`, `vino__utilisateur_id`) VALUES
-(1, 'chalet #1 de Roger', 1),
-(2, 'chalet #2 de Roger', 1),
-(3, 'chalet #3 de Roger', 1),
-(4, 'chalet #4 de Roger', 1),
-(5, 'chalet #5 de Roger', 1),
-(6, 'chalet #6 de Roger', 1),
-(7, 'chalet #7 de Roger', 1),
-(8, 'chalet #8 de Roger ', 1),
+(1, 'Admin', 1),
+(2, 'chalet #1 de Sebastien', 2),
+(3, 'chalet #2 de Sebastien', 2),
+(4, 'chalet #3 de Sebastien', 2),
+(5, 'chalet #4 de Sebastien', 2),
+(6, 'chalet #5 de Sebastien', 2),
+(7, 'chalet #6 de Sebastien', 2),
+(8, 'chalet #7 de Sebastien ', 2),
 (9, 'chalet de Bruno', 2);
 
 -- --------------------------------------------------------
@@ -155,9 +155,9 @@ CREATE TABLE `vino__utilisateur` (
 --
 
 INSERT INTO `vino__utilisateur` (`id`, `nom`, `email`, `mdp`, `privilege`) VALUES
-(1, 'Roger', 'roger@email.com', '123456', 'admin'),
-(2, 'Bruno', 'bruno@email.com', '123456', 'utilisateur'),
-(12, NULL, 's.gedeon@hotmail.fr', NULL, NULL);
+(1, 'Admin', 'davids09@hotmail.com', NULL, 'admin'),
+(2, 'Sebastien', 's.gedeon@hotmail.fr', NULL, 'utilisateur'),
+(3, 'Bruno', 'bruno@email.com', NULL, 'utilisateur');
 
 --
 -- Index pour les tables déchargées
