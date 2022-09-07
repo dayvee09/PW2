@@ -1,5 +1,5 @@
 <?php
-class UtilisateursControleur extends Controleur
+class AdminControleur extends Controleur
 {
     public function tout($params)
     {

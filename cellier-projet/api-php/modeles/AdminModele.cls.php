@@ -1,5 +1,5 @@
 <?php
-class UtilisateursModele extends AccesBd
+class AdminModele extends AccesBd
 {
     public function tout($params)
     {
