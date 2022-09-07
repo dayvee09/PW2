@@ -48,7 +48,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -202,6 +202,7 @@ const Appli = () => {
     const emailUtilisateur = email;
     console.log(emailUtilisateur);
     setEmailUtilisateur(emailUtilisateur);
+    console.log(DATA);
     if (DATA !== undefined) {
       return;
     }
@@ -281,7 +282,25 @@ const Appli = () => {
       });
   }
 
-  async function handleSignOut() {
+  async function supprimerUtilisateur() {
+    await Auth.deleteUser()
+      .then(() => {
+          setId("");
+          setUtilisateur("");
+          setBouteilles("");
+          setCelliers("");
+          setEmailUtilisateur("");
+          DATA = undefined;
+        })
+      .catch((err) => console.log("Erreur lors de la suppression de viotre profil", err));
+    let reponse = await fetch(
+      URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
+      { method: "DELETE" }
+    );
+    let reponseJson = await reponse.json();
+  }
+
+  async function gererSignOut() {
     await Auth.signOut()
       .then(() => {
         setId("");
@@ -368,7 +387,7 @@ const Appli = () => {
                 <div className="menu-compte">
                   <NavLink to="/">
                     <div>
-                      <button onClick={handleSignOut}>Sign Out</button>
+                      <button onClick={gererSignOut}>Sign Out</button>
                     </div>
                   </NavLink>
                   {location === "/" && (
@@ -388,11 +407,11 @@ const Appli = () => {
                   path={`/profil/${emailUtilisateur}`}
                   element={
                     <Profil
+                      supprimerUtilisateur={supprimerUtilisateur}
                       emailUtilisateur={emailUtilisateur}
                       setEmailUtilisateur={setEmailUtilisateur}
                       utilisateur={utilisateur}
                       setUtilisateur={setUtilisateur}
-                      URI={URI}
                     />
                   }
                 />
