@@ -24,7 +24,7 @@ function ListeBouteilles(props) {
                 bouteilles={props.bouteilles}
                 setBouteilles={props.setBouteilles}
                 cellier={props.cellier}
-                bouteille={props.bouteille}
+                bouteille={bouteille}
                 URI={props.URI}
               />
             </div>

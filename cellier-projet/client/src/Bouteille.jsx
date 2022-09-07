@@ -5,11 +5,12 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-import format from 'date-fns/format';
-import moment from 'moment';
-import { keyframes } from "@emotion/react";
+// import format from 'date-fns/format';
+// import moment from 'moment';
+// import { keyframes } from "@emotion/react";
 
 export default function Bouteille(props) {
+
   /**
    *  API MUI https://mui.com/material-ui/react-snackbar/
    */
@@ -23,44 +24,44 @@ export default function Bouteille(props) {
     }
     setOpenAlert(false);
   };
+
   /**
   *  État d'affichage de la fiche de bouteille
   */
   const [voirFiche, setVoirFiche] = useState(false);
 
   /**
+  *  État du formulaire de modification
+  */
+  const [frmOuvert, setFrmOuvert] = useState(false);
+
+  /**
+   * État de la bouteille
+   */
+  const [bouteille, setBouteille] = useState(props.bouteille);
+
+  /**
    *  État de la quantité et la quantité précédente
    */
   const [quantite, setQuantite] = useState(props.quantite);
-  const [quantite_p, setQuantite_p] = useState(quantite);
+
   /**
    * État de la date d'achat et la date précédente
    */
   const [dateAchat, setDateAchat] = useState(props.date_achat);
-  const [dateAchat_p, setDateAchat_p] = useState(dateAchat);
+
   /**
    * État de la date de garde et la date de garde précédente
    */
   const [dateGarde, setDateGarde] = useState(props.garde_jusqua);
-  const [dateGarde_p, setDateGarde_p] = useState(dateGarde);
-
-  /**
-   *  État du formulaire de modification
-   */
-
-  const [frmOuvert, setFrmOuvert] = useState(false);
-
-  // useEffect(() => {
-  //   fetchPutVinUn(quantite);
-  // }, [quantite]);
 
   /**
    * Gère l'affichage du formulaire quand click du bouton "Modifier"
    */
   function gererModifier() {
-    setQuantite_p(quantite);
-    setDateAchat_p(dateAchat);
-    setDateGarde_p(dateGarde);
+    setQuantite(bouteille.quantite);
+    setDateAchat(bouteille.date_achat);
+    setDateGarde(bouteille.garde_jusqua);
     setFrmOuvert(true);
   }
 
@@ -76,7 +77,7 @@ export default function Bouteille(props) {
    * Gère le bouton 'ajouter'
    */
   function gererAjouter() {
-    setQuantite(quantite=>parseInt(quantite) + 1);
+    setQuantite(quantite => parseInt(quantite) + 1);
     fetchPutVinUn(parseInt(quantite) + 1, dateAchat, dateGarde);
   }
 
@@ -85,19 +86,18 @@ export default function Bouteille(props) {
    */
   function gererBoire() {
     if (quantite > 0) {
-      setQuantite(quantite=>parseInt(quantite) - 1);
+      setQuantite(quantite => parseInt(quantite) - 1);
       fetchPutVinUn(parseInt(quantite) - 1, dateAchat, dateGarde);
     }
     else
       setOpenAlert(true);
-   
   }
 
   /**
    * Gère la modification de la quantité de bouteille
    * @param {*} NouveauQuantite 
    */
-  function modifierBouteille(NouveauQuantite, NouveauDateAchat, NouveauDateGarde ) {
+  function modifierBouteille(NouveauQuantite, NouveauDateAchat, NouveauDateGarde) {
 
     var reg = /^[1-9]+[0-9]*]*$/;
     if (reg.test(NouveauQuantite)) {
@@ -110,7 +110,8 @@ export default function Bouteille(props) {
    * @param {*} NouveauQuantite 
    */
   async function fetchPutVinUn(NouveauQuantite, NouveauDateAchat, NouveauDateGarde) {
-    //route: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7
+    //Route API: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7, 
+    //           Execute dans l'ordre 'VinsControleur.cls.php'->'VinsModele.cls.php'->function changer($params, $idEntite, $fragmentVin),'fragmentVin'-> body
     let reponse = await fetch(
       // "http://localhost/PW2/cellier-projet/api-php" +
       props.URI +
@@ -130,17 +131,30 @@ export default function Bouteille(props) {
           quantite: NouveauQuantite,
           date_achat: NouveauDateAchat,
           garde_jusqua: NouveauDateGarde
-
         }),
       }
     );
-     let reponseJson = await reponse.json();
+    let reponseJson = await reponse.json();
+    fetchVinUn();
   }
-  // async function fetchVinUn() {
-  //   //route: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7
-  //   let reponse = await fetch(props.URI + "/" + "cellier" + "/" + props.vino__cellier_id + "/" + "vins" + "/" + "bouteille" + "/" + props.id );
-  //   let reponseJson = await reponse.json();
-  // }
+  async function fetchVinUn() {
+    //Route API: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7, collection->'vins', params-> 'cellier'=> 6, idEntite-> 'bouteille'=> 7
+    await fetch(props.URI + "/" + "cellier" + "/" + props.vino__cellier_id + "/" + "vins" + "/" + "bouteille" + "/" + props.id)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setBouteille(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        // setError(error);
+      });
+    // console.log(bouteille);
+  }
   return (
     <>
       <div className="bouteille" data-quantite="">
@@ -151,7 +165,7 @@ export default function Bouteille(props) {
         <div className="description">
           <div className="description-originale">
             <p className="nom">{props.nom} </p>
-            <p className="nom">Quantité: {quantite} </p>
+            <p className="nom">Quantité: {bouteille.quantite} </p>
           </div>
         </div>
         <div className="options" data-id="{id_bouteille_cellier}">
@@ -169,33 +183,19 @@ export default function Bouteille(props) {
           </Alert>
         </Snackbar>
         <FrmBouteille
+          bouteille={bouteille}
           frmOuvert={frmOuvert}
           setFrmOuvert={setFrmOuvert}
-          bouteille_id={props.id}
-          cellier_id={props.vino__cellier_id}
-          bouteille_nom={props.nom}
-          bouteille_image={props.image}
-          quantite_p={quantite_p}
-          bouteille_pays={props.pays}
+          voirFiche={voirFiche}
+          setVoirFiche={setVoirFiche}
           bouteille_type={props.type}
-          bouteille_format={props.format}
-          bouteille_prix={props.prix_saq}
-          bouteille_millesime={props.millesime}
-          bouteille_date_achat={props.date_achat}
-          bouteille_date_jusqua={props.garde_jusqua}
-          bouteille_description={props.description}
-          bouteille_url_saq={props.url_saq}
           quantite={quantite}
           setQuantite={setQuantite}
           dateAchat={dateAchat}
           setDateAchat={setDateAchat}
-          dateAchat_p={dateAchat_p}
           dateGarde={dateGarde}
           setDateGarde={setDateGarde}
-          dateGarde_p={dateGarde_p}
           modifierBouteille={modifierBouteille}
-          voirFiche={voirFiche}
-          setVoirFiche={setVoirFiche}
         />
       </div>
     </>
