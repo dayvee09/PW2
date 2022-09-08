@@ -26,14 +26,18 @@ export default function FrmPassword({
     setPasswordActuel,
     passwordNouveau,
     setPasswordNouveau,
-    PatchPassword
 }) {
 
 
   /**
    * L‘état d'erreur
    */
-  const [openErr, setOpenErr] = React.useState(false);
+  const [openErr, setOpenErr] = useState(false);
+
+  /**
+   * État du message retour
+   */
+  const [messageRetour, setMessageRetour] = useState([]);
 
   /**
    *  Gère l'action d'annuler
@@ -43,11 +47,23 @@ export default function FrmPassword({
   }
 
   /**
+   * requête de modification du password dans aws
+   */
+  async function PatchPassword(passwordActuel, nouveauPassword) {
+    Auth.currentAuthenticatedUser()
+    .then(user => {
+        return Auth.changePassword(user, passwordActuel, nouveauPassword);
+    })
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+  }
+
+  /**
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
     PatchPassword(passwordActuel,passwordNouveau)
-    setFrmPasswordOuvert(false);
+    setOpenErr(true)
   }
   
   return (
@@ -72,6 +88,24 @@ export default function FrmPassword({
               id="Nouveau_mot_de_passe"
               type="password"
             />
+
+            <Dialog open={openErr}>
+              <Alert severity="error"
+                action={
+                  <IconButton
+                    aria-label="close"
+                    size="small"
+                    onClick={() => {
+                      setOpenErr(false);
+                    }}
+                  >
+                  <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+              >
+                {messageRetour}
+              </Alert>
+            </Dialog>
           </div>
         </DialogContent>
         <DialogActions>
