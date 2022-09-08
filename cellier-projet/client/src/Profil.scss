@@ -1,23 +1,60 @@
 .Profil {
-    .Profil {
-      border: 1px dotted black;
-      padding: 40px;
-      .img {
-        img {
-          width: 200px;
-          height: 200px;
-          object-fit: contain;
-        }
-      }
-      .options {
-        display: flex;
-        justify-content: space-between;
-        position: relative;
-      }
-      .snackbar-wrapper {
-        position: absolute;
-        top: 0;
-        right:0;
-      }
+  border: 1px solid black;
+  padding: 40px;
+  margin: 20px;
+  .img {
+    img {
+      width: 200px;
+      height: 200px;
+      object-fit: contain;
     }
   }
+  .snackbar-wrapper {
+    position: absolute;
+    top: 0;
+    right:0;
+  }
+  .description {
+    margin-top:-20px;
+  }
+  .modifier {
+    background-color: #f3f5eb;
+    border: none;
+    text-underline-offset: 3px;
+    text-decoration: underline; 
+    &:hover {
+      font-weight:500;
+    }
+  }
+  
+  .infos-modification {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-bottom: -1%;
+    margin-left: 10%;
+    font-size: 15px;
+  }
+}
+
+.boutonSupprimer {
+  background-color: #f3f5eb;
+  border: none;
+  text-underline-offset: 3px;
+  text-decoration: underline;
+  font-size: 15px;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 2%;
+  margin-bottom: 2rem;
+  &:hover {
+    font-weight:500;
+  }
+}
+
+.signOut {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 1rem;
+}
+

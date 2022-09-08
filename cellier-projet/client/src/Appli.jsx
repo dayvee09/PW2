@@ -341,7 +341,7 @@ const Appli = () => {
   // ------------------Gestion de l'importation de bouteilles de la SAQ-----------------------
 
   // ---------------------------------- Rendering -----------------------------------------
-  return ( 
+  return (
     <div className={Auth.user ? "Appli" : "Login"}>
 		<div className="appli--container ">		
 		<img
