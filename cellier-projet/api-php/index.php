@@ -59,7 +59,7 @@ class Routeur
         // echo 'Méthod HTTP : ' . $this->methode;
 
 
-        // Routeur pour le serveur de développement:
+        // Routeur pour le serveur de développement (Ne pas effacer):
 
         // if (count($partiesRoute) > 7 && trim(urldecode($partiesRoute[7])) != '') {
         //     $collection = trim(urldecode($partiesRoute[7]));
