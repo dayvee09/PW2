@@ -92,6 +92,7 @@ export default function Profil(props) {
         <FrmEmail
           frmEmailOuvert={frmEmailOuvert}
           setFrmEmailOuvert={setFrmEmailOuvert}
+          utilisateur={props.utilisateur}
           emailUtilisateur={props.emailUtilisateur}
           setEmailUtilisateur={props.setEmailUtilisateur}
           URI={props.URI}
