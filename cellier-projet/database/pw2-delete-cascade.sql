@@ -79,6 +79,16 @@ CREATE TABLE `vino__bouteille_has_vino__cellier` (
 --
 
 INSERT INTO `vino__bouteille_has_vino__cellier` (`vino__bouteille_id`, `vino__cellier_id`, `quantite`, `date_achat`, `garde_jusqua`, `notes`) VALUES
+(1, 1, 5, '2022-01-16', '2023', 'Borsao'),
+(2, 1, 7, '2022-01-26', '2024', 'Monasterio'),
+(3, 1, 1, '2022-02-10', '2024', 'Castano'),
+(4, 1, 3, '2022-02-11', '2024', 'Campo'),
+(5, 1, 5, '2022-02-15', '2029', 'Bodegas'),
+(6, 1, 2, '2022-02-16', '2030', 'Pinot'),
+(7, 1, 6, '2022-02-19', '2024', 'Huber'),
+(8, 1, 8, '2022-02-22', '2044', 'Dominio'),
+(9, 1, 14, '2022-03-19', '2024', 'Tessellae'),
+(10, 9, 20, '2022-07-26', '2024', 'Tenuta'),
 (1, 2, 5, '2022-01-16', '2023', 'Borsao'),
 (2, 2, 7, '2022-01-26', '2024', 'Monasterio'),
 (3, 2, 1, '2022-02-10', '2024', 'Castano'),
@@ -87,8 +97,7 @@ INSERT INTO `vino__bouteille_has_vino__cellier` (`vino__bouteille_id`, `vino__ce
 (6, 2, 2, '2022-02-16', '2030', 'Pinot'),
 (7, 2, 6, '2022-02-19', '2024', 'Huber'),
 (8, 2, 8, '2022-02-22', '2044', 'Dominio'),
-(9, 2, 14, '2022-03-19', '2024', 'Tessellae'),
-(10, 9, 20, '2022-07-26', '2024', 'Tenuta');
+(9, 2, 14, '2022-03-19', '2024', 'Tessellae');
 
 -- --------------------------------------------------------
 
