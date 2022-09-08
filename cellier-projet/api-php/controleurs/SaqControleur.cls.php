@@ -174,7 +174,6 @@ class SaqControleur extends Controleur
 
         // var_dump($bte);
         // Récupère le type
-
         $rows = $this->modele->un($bte->desc->type);
         $type_id = $rows->id;
         if (count((array)$rows) == 1) {

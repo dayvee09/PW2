@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:8889
--- Généré le : lun. 29 août 2022 à 22:51
--- Version du serveur : 5.7.34
--- Version de PHP : 8.0.8
+-- Hôte : 127.0.0.1
+-- Généré le : jeu. 08 sep. 2022 à 19:40
+-- Version du serveur :  10.4.19-MariaDB
+-- Version de PHP : 7.3.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de données : `cellier`
+-- Base de données : `pw2`
 --
 
 -- --------------------------------------------------------
@@ -79,14 +79,23 @@ CREATE TABLE `vino__bouteille_has_vino__cellier` (
 --
 
 INSERT INTO `vino__bouteille_has_vino__cellier` (`vino__bouteille_id`, `vino__cellier_id`, `quantite`, `date_achat`, `garde_jusqua`, `notes`) VALUES
+(1, 1, 5, '2022-01-16', '2023', 'Borsao'),
 (1, 2, 5, '2022-01-16', '2023', 'Borsao'),
+(2, 1, 7, '2022-01-26', '2024', 'Monasterio'),
 (2, 2, 7, '2022-01-26', '2024', 'Monasterio'),
+(3, 1, 1, '2022-02-10', '2024', 'Castano'),
 (3, 2, 1, '2022-02-10', '2024', 'Castano'),
+(4, 1, 3, '2022-02-11', '2024', 'Campo'),
 (4, 2, 3, '2022-02-11', '2024', 'Campo'),
+(5, 1, 5, '2022-02-15', '2029', 'Bodegas'),
 (5, 2, 5, '2022-02-15', '2029', 'Bodegas'),
+(6, 1, 2, '2022-02-16', '2030', 'Pinot'),
 (6, 2, 2, '2022-02-16', '2030', 'Pinot'),
+(7, 1, 6, '2022-02-19', '2024', 'Huber'),
 (7, 2, 6, '2022-02-19', '2024', 'Huber'),
+(8, 1, 8, '2022-02-22', '2044', 'Dominio'),
 (8, 2, 8, '2022-02-22', '2044', 'Dominio'),
+(9, 1, 14, '2022-03-19', '2024', 'Tessellae'),
 (9, 2, 14, '2022-03-19', '2024', 'Tessellae'),
 (10, 9, 20, '2022-07-26', '2024', 'Tenuta');
 
@@ -134,7 +143,8 @@ CREATE TABLE `vino__type` (
 
 INSERT INTO `vino__type` (`id`, `type`) VALUES
 (1, 'Vin rouge'),
-(2, 'Vin blanc');
+(2, 'Vin blanc'),
+(3, 'Vin rose');
 
 -- --------------------------------------------------------
 
@@ -218,7 +228,7 @@ ALTER TABLE `vino__cellier`
 -- AUTO_INCREMENT pour la table `vino__utilisateur`
 --
 ALTER TABLE `vino__utilisateur`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Contraintes pour les tables déchargées
