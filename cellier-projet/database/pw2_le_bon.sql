@@ -143,7 +143,8 @@ CREATE TABLE `vino__type` (
 
 INSERT INTO `vino__type` (`id`, `type`) VALUES
 (1, 'Vin rouge'),
-(2, 'Vin blanc');
+(2, 'Vin blanc'),
+(3, 'Vin rose');
 
 -- --------------------------------------------------------
 
