@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost
--- Généré le : lun. 29 août 2022 à 16:23
--- Version du serveur : 10.4.20-MariaDB
--- Version de PHP : 7.4.21
+-- Hôte : 127.0.0.1
+-- Généré le : jeu. 08 sep. 2022 à 19:40
+-- Version du serveur :  10.4.19-MariaDB
+-- Version de PHP : 7.3.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -80,14 +80,23 @@ CREATE TABLE `vino__bouteille_has_vino__cellier` (
 
 INSERT INTO `vino__bouteille_has_vino__cellier` (`vino__bouteille_id`, `vino__cellier_id`, `quantite`, `date_achat`, `garde_jusqua`, `notes`) VALUES
 (1, 1, 5, '2022-01-16', '2023', 'Borsao'),
+(1, 2, 5, '2022-01-16', '2023', 'Borsao'),
 (2, 1, 7, '2022-01-26', '2024', 'Monasterio'),
+(2, 2, 7, '2022-01-26', '2024', 'Monasterio'),
 (3, 1, 1, '2022-02-10', '2024', 'Castano'),
+(3, 2, 1, '2022-02-10', '2024', 'Castano'),
 (4, 1, 3, '2022-02-11', '2024', 'Campo'),
+(4, 2, 3, '2022-02-11', '2024', 'Campo'),
 (5, 1, 5, '2022-02-15', '2029', 'Bodegas'),
+(5, 2, 5, '2022-02-15', '2029', 'Bodegas'),
 (6, 1, 2, '2022-02-16', '2030', 'Pinot'),
+(6, 2, 2, '2022-02-16', '2030', 'Pinot'),
 (7, 1, 6, '2022-02-19', '2024', 'Huber'),
+(7, 2, 6, '2022-02-19', '2024', 'Huber'),
 (8, 1, 8, '2022-02-22', '2044', 'Dominio'),
+(8, 2, 8, '2022-02-22', '2044', 'Dominio'),
 (9, 1, 14, '2022-03-19', '2024', 'Tessellae'),
+(9, 2, 14, '2022-03-19', '2024', 'Tessellae'),
 (10, 9, 20, '2022-07-26', '2024', 'Tenuta');
 
 -- --------------------------------------------------------
@@ -107,14 +116,14 @@ CREATE TABLE `vino__cellier` (
 --
 
 INSERT INTO `vino__cellier` (`id`, `nom`, `vino__utilisateur_id`) VALUES
-(1, 'chalet #1 de Roger', 1),
-(2, 'chalet #2 de Roger', 1),
-(3, 'chalet #3 de Roger', 1),
-(4, 'chalet #4 de Roger', 1),
-(5, 'chalet #5 de Roger', 1),
-(6, 'chalet #6 de Roger', 1),
-(7, 'chalet #7 de Roger', 1),
-(8, 'chalet #8 de Roger ', 1),
+(1, 'Admin', 1),
+(2, 'chalet #1 de Sebastien', 2),
+(3, 'chalet #2 de Sebastien', 2),
+(4, 'chalet #3 de Sebastien', 2),
+(5, 'chalet #4 de Sebastien', 2),
+(6, 'chalet #5 de Sebastien', 2),
+(7, 'chalet #6 de Sebastien', 2),
+(8, 'chalet #7 de Sebastien ', 2),
 (9, 'chalet de Bruno', 2);
 
 -- --------------------------------------------------------
@@ -144,10 +153,10 @@ INSERT INTO `vino__type` (`id`, `type`) VALUES
 
 CREATE TABLE `vino__utilisateur` (
   `id` int(11) NOT NULL,
-  `nom` varchar(45) NOT NULL,
+  `nom` varchar(45) DEFAULT NULL,
   `email` varchar(45) NOT NULL,
-  `mdp` varchar(45) NOT NULL,
-  `privilege` varchar(45) NOT NULL
+  `mdp` varchar(45) DEFAULT NULL,
+  `privilege` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -155,9 +164,9 @@ CREATE TABLE `vino__utilisateur` (
 --
 
 INSERT INTO `vino__utilisateur` (`id`, `nom`, `email`, `mdp`, `privilege`) VALUES
-(1, 'Roger', 'roger@email.com', '123456', 'admin'),
-(2, 'Bruno', 'bruno@email.com', '123456', 'utilisateur'),
-(3, 'Dan Yin', 'e2195178@cmaisonneuve.qc.ca', '12345678', '');
+(1, 'Admin', 'davids09@hotmail.com', NULL, 'admin'),
+(2, 'Sebastien', 's.gedeon@hotmail.fr', NULL, 'utilisateur'),
+(3, 'Bruno', 'bruno@email.com', NULL, 'utilisateur');
 
 --
 -- Index pour les tables déchargées
@@ -195,7 +204,8 @@ ALTER TABLE `vino__type`
 -- Index pour la table `vino__utilisateur`
 --
 ALTER TABLE `vino__utilisateur`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- AUTO_INCREMENT pour les tables déchargées
@@ -227,20 +237,20 @@ ALTER TABLE `vino__utilisateur`
 -- Contraintes pour la table `vino__bouteille`
 --
 ALTER TABLE `vino__bouteille`
-  ADD CONSTRAINT `fk_vino__bouteille_vino__type1` FOREIGN KEY (`vino__type_id`) REFERENCES `vino__type` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_vino__bouteille_vino__type1` FOREIGN KEY (`vino__type_id`) REFERENCES `vino__type` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `vino__bouteille_has_vino__cellier`
 --
 ALTER TABLE `vino__bouteille_has_vino__cellier`
-  ADD CONSTRAINT `fk_vino__bouteille_has_vino__cellier_vino__bouteille1` FOREIGN KEY (`vino__bouteille_id`) REFERENCES `vino__bouteille` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_vino__bouteille_has_vino__cellier_vino__cellier1` FOREIGN KEY (`vino__cellier_id`) REFERENCES `vino__cellier` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_vino__bouteille_has_vino__cellier_vino__bouteille1` FOREIGN KEY (`vino__bouteille_id`) REFERENCES `vino__bouteille` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_vino__bouteille_has_vino__cellier_vino__cellier1` FOREIGN KEY (`vino__cellier_id`) REFERENCES `vino__cellier` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `vino__cellier`
 --
 ALTER TABLE `vino__cellier`
-  ADD CONSTRAINT `fk_vino__cellier_vino__utilisateur1` FOREIGN KEY (`vino__utilisateur_id`) REFERENCES `vino__utilisateur` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_vino__cellier_vino__utilisateur1` FOREIGN KEY (`vino__utilisateur_id`) REFERENCES `vino__utilisateur` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

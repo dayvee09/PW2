@@ -9,8 +9,10 @@ import { Auth } from 'aws-amplify';
 import { useState, useEffect } from "react";
 import "./FrmEmail.scss";
 import Alert from '@mui/material/Alert';
-import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import Collapse from '@mui/material/Collapse';
 
 export default function FrmEmail({
@@ -24,11 +26,6 @@ export default function FrmEmail({
 }) {
 
   /**
-   * État d'erreur
-   */
-  const [openErr, setOpenErr] = React.useState(false);
-
-  /**
    * État de l'alerte
    */
   const [severity, setSeverity] = useState([]);
@@ -37,6 +34,21 @@ export default function FrmEmail({
    * État du message retour
    */
   const [messageRetour, setMessageRetour] = useState([]);
+
+  /**
+   * État de l'alerte
+   */
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlert(false);
+    setFrmEmailOuvert(false)
+  };
 
   /**
    *  Gère l'action d'annuler
@@ -78,17 +90,18 @@ export default function FrmEmail({
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
+    setSeverity("")
     var reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     setNouvelEmailUtilisateur(NouvelEmailUtilisateur);
     if (reg.test(NouvelEmailUtilisateur)) {
       fetchPatchUtilisateurEmail(NouvelEmailUtilisateur);
       setMessageRetour("Modification effectuée")
       setSeverity("success")
-      setOpenErr(true)
+      setOpenAlert(true)
     } else {
       setMessageRetour("Courriel invalide")
       setSeverity("error")
-      setOpenErr(true)
+      setOpenAlert(true)
     }
   }
   
@@ -106,23 +119,24 @@ export default function FrmEmail({
                 type={"text"}
                 defaultValue={emailUtilisateur}
             />
-            <Dialog open={openErr}>
-              <Alert severity={severity}
-                action={
-                  <IconButton
-                    aria-label="close"
-                    size="small"
-                    onClick={() => {
-                      setOpenErr(false);
-                    }}
-                  >
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                }
+            <Snackbar
+              sx={{ height: "100%" }}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+              open={openAlert}
+              autoHideDuration={1000}
+              onClose={handleCloseAlert}
+            >
+              <Alert
+                onClose={handleCloseAlert}
+                severity={severity}
+                sx={{ width: "100%" }}
               >
-                {messageRetour}
+                  {messageRetour}
               </Alert>
-            </Dialog>
+            </Snackbar>
           </div>
         </DialogContent>
           <DialogActions>
