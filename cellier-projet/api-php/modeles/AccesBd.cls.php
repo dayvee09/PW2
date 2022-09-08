@@ -22,7 +22,7 @@ class AccesBd
             $this->pdo = new PDO(
                 "mysql:host=localhost; dbname=pw2; charset=utf8",
                 'root',
-                'root',
+                '',
                 $options
             );
         } catch (Exception $e) {
@@ -55,7 +55,7 @@ class AccesBd
      * @return array Tableau associatif (colonne de groupage) contenant des tableaux
      *                  des données groupées
      */
-    public function lire($sql, $params = [])
+    protected function lire($sql, $params = [])
     {
         $this->soumettre($sql, $params);
         // if ($groupe !== PDO::FETCH_GROUP) {
@@ -64,7 +64,7 @@ class AccesBd
         return $this->requetePdo->fetchAll();
     }
 
-    public function lireUn($sql, $params = [])
+    protected function lireUn($sql, $params = [])
     {
         $this->soumettre($sql, $params);
         return $this->requetePdo->fetch();
@@ -77,7 +77,7 @@ class AccesBd
      * @param  array $params Tableau associatif des paramètres de la requête
      * @return int Identifiant (auto increment) du dernier enregistrement inséré
      */
-    public function creer($sql, $params = [])
+    protected function creer($sql, $params = [])
     {
         $this->soumettre($sql, $params);
         return $this->pdo->lastInsertId();
@@ -90,7 +90,7 @@ class AccesBd
      * @param  array $params Tableau associatif des paramètres de la requête
      * @return int Nombre d'enregistrements affectés
      */
-    public function modifier($sql, $params = [])
+    protected function modifier($sql, $params = [])
     {
         $this->soumettre($sql, $params);
         return $this->requetePdo->rowCount();
@@ -103,7 +103,7 @@ class AccesBd
      * @param  array $params Tableau associatif des paramètres de la requête
      * @return int Nombre d'enregistrements affectés
      */
-    public function supprimer($sql, $params = [])
+    protected function supprimer($sql, $params = [])
     {
         $this->soumettre($sql, $params);
         return $this->requetePdo->rowCount();
