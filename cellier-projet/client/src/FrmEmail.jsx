@@ -22,6 +22,9 @@ export default function FrmEmail({
   URI
 }) {
 
+  /**
+   *  État des styles des composants MUI
+   */
   const Button = styled(MuiButton)((props) => ({
     color: "black"
   }));
@@ -114,7 +117,6 @@ export default function FrmEmail({
           <div className="frmPassword">
             <p className="">Email actuel: {emailUtilisateur}</p>
             <TextField
-                sx={{backgroundColor: "#f3f5eb"}}
                 onChange={gererInput}
                 autoFocus
                 id="email"
