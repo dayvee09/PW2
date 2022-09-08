@@ -6,19 +6,11 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Auth } from "aws-amplify";
 import { useState, useEffect } from "react";
 import "./FrmPassword.scss";
-import Alert from '@mui/material/Alert';
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Collapse from '@mui/material/Collapse';
 import {
-    Flex,
-    Heading,
-    TextField,
     PasswordField,
     Button,
-    useTheme,
 } from '@aws-amplify/ui-react';
 
 export default function FrmPassword({
@@ -146,8 +138,8 @@ export default function FrmPassword({
         <DialogActions>
             <Button onClick={viderFermerFrm}>Annuler</Button>
             <Button onClick={gererSoumettre}>Soumettre</Button>
-          </DialogActions>
-        </Dialog>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
