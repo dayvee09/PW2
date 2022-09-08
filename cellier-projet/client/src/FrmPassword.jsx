@@ -95,24 +95,22 @@ export default function FrmPassword({
       <Dialog open={frmPasswordOuvert} onClose={viderFermerFrm}>
         <DialogTitle> Modifier votre mot de passe</DialogTitle>
         <DialogContent>
-            <div className="frmPassword">
+        <div className="frmPassword">
             <PasswordField
               className="PasswordField"
               onChange={(event)=> setPasswordActuel(event.target.value)}
               autoFocus
               label="Mot de passe actuel"
               id="Mot_de_passe_actuel"
-              type="password"
             />
             <PasswordField
               className="PasswordField"
               onChange={(event)=> setPasswordNouveau(event.target.value)}
               autoFocus
+              descriptiveText="Le mot de passe doit contenir au moins huit caractères"
               label="Nouveau mot de passe"
               id="Nouveau_mot_de_passe"
-              type="password"
             />
-
             <Dialog open={openErr}>
               <Alert severity={severity}
                 action={
