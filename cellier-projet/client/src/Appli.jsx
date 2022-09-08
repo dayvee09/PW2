@@ -26,6 +26,7 @@ import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
 import Logo from "./img/png/logo-jaune.png";
+import NavMobile from "./NavMobile";
 
 let DATA;
 
@@ -68,6 +69,7 @@ const Appli = () => {
       Submit: "Envoyer",
       Submitting: "Envoi en cours...",
       Sending: "Envoi en cours...",
+      Confirming: "Confirmation en cours...",
       "Back to Sign In": "Retour à la connexion",
       "Signing in": "Veuillez patientez",
       "User does not exist.": "Adresse courriel ou mot de passe incorrecte",
@@ -96,6 +98,35 @@ const Appli = () => {
         "Votre code a été envoyé à votre adresse ",
       "It may take a minute to arrive.":
         "Cela pourrait prendre quelque minutes",
+      "User does not exist.": "Adresse courriel ou mot de passe incorrecte",
+      "Incorrect username or password.":
+        "Adresse courriel ou mot de passe incorrecte",
+      "Username/client id combination not found.": "Adresse courriel invalide",
+      "Attempt limit exceeded, please try after some time.":
+        "Trop de tentatives, veuillez réessayer plus tard",
+      "Cannot reset password for the user as there is no registered/verified email or phone_number":
+        "Adresse courriel invalide",
+      "Password must have at least 8 characters":
+        "Le mot de passe doit contenir au moins 8 caractère",
+      "Your passwords must match": "Vos mots de passe doivent être identiques",
+      "An account with the given email already exists.":
+        "Adresse courriel invalide",
+      "Invalid verification code provided, please try again.":
+        "Code invalide, veuillez réessayer",
+      "Username cannot be empty": "Veuillez entrer votre adresse courriel",
+      "Custom auth lambda trigger is not configured for the user pool.":
+        "Adresse courriel ou mot de passe incorrecte",
+      "Password cannot be empty": "Veuillez entrer votre mot de passe",
+      "Creating Account": "Création du compte",
+      Confirm: "Confirmer",
+      "We Emailed You": "Courriel envoyé",
+      "Your code is on the way. To log in, enter the code we emailed to":
+        "Votre code a été envoyé à votre adresse ",
+      "It may take a minute to arrive.":
+        "Cela pourrait prendre quelque minutes",
+      "We Sent A Code": "Code Envoyé",
+      "Your code is on the way. To log in, enter the code we sent you. It may take a minute to arrive.":
+        "Votre code a été envoyé à votre adresse. Cela pourrait prendre quelque minutes",
     },
   };
 
@@ -151,6 +182,7 @@ const Appli = () => {
     const emailUtilisateur = email;
     console.log(emailUtilisateur);
     setEmailUtilisateur(emailUtilisateur);
+    console.log(DATA);
     if (DATA !== undefined) {
       return;
     }
@@ -230,7 +262,27 @@ const Appli = () => {
       });
   }
 
-  async function handleSignOut() {
+  async function supprimerUtilisateur() {
+    await Auth.deleteUser()
+      .then(() => {
+        setId("");
+        setUtilisateur("");
+        setBouteilles("");
+        setCelliers("");
+        setEmailUtilisateur("");
+        DATA = undefined;
+      })
+      .catch((err) =>
+        console.log("Erreur lors de la suppression de viotre profil", err)
+      );
+    let reponse = await fetch(
+      URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
+      { method: "DELETE" }
+    );
+    let reponseJson = await reponse.json();
+  }
+
+  async function gererSignOut() {
     await Auth.signOut()
       .then(() => {
         setId("");
@@ -281,13 +333,16 @@ const Appli = () => {
         setError(error);
       });
   }
-
   // ------------------Gestion de l'importation de bouteilles de la SAQ-----------------------
 
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
-      <img className="logo" src={Logo} alt="logo-mon-vino"></img>
+      <img
+        className={Auth.user ? "Hidden" : "logo"}
+        src={Logo}
+        alt="logo-mon-vino"
+      ></img>
       <Authenticator className="Authenticator" formFields={formFields}>
         {({ signOut, user }) => (
           <div>
@@ -320,7 +375,7 @@ const Appli = () => {
                 <div className="menu-compte">
                   <NavLink to="/">
                     <div>
-                      <button onClick={handleSignOut}>Sign Out</button>
+                      <button onClick={gererSignOut}>Sign Out</button>
                     </div>
                   </NavLink>
                   {location === "/" && (
@@ -340,12 +395,12 @@ const Appli = () => {
               </div>
 
               {/* ------------------------------ Routes --------------------------------*/}
-
               <Routes>
                 <Route
                   path={`/profil/${emailUtilisateur}`}
                   element={
                     <Profil
+                      supprimerUtilisateur={supprimerUtilisateur}
                       emailUtilisateur={emailUtilisateur}
                       setEmailUtilisateur={setEmailUtilisateur}
                       utilisateur={utilisateur}
@@ -405,10 +460,11 @@ const Appli = () => {
           </div>
         )}
       </Authenticator>
-      <p className="Auth-sub-title">
+      <p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
         Commencez dès maintenant votre collection de vin !
       </p>
       <small className="">© Mon Vino 2022, Tous droits réservés</small>
+      <NavMobile Auth={Auth} />
     </div>
   );
 };
