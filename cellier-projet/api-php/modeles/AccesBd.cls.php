@@ -8,7 +8,7 @@ class AccesBd
     {
         try {
             $options = [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION];
-            // Connection au serveur de développement
+            // Connection au serveur de développement (Ne pas effacer)
 
             // $this->pdo = new PDO(
             //     "mysql:host=monvino.c2i48shq0eku.us-east-1.rds.amazonaws.com; port=3306; dbname=monvino; charset=utf8",
