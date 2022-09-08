@@ -14,15 +14,26 @@
     top: 0;
     right:0;
   }
-}
-
-.modifier {
-  background-color: #f3f5eb;
-  border: none;
-  text-underline-offset: 3px;
-  text-decoration: underline; 
-  &:hover {
-    font-weight:500;
+  .description {
+    margin-top:-20px;
+  }
+  .modifier {
+    background-color: #f3f5eb;
+    border: none;
+    text-underline-offset: 3px;
+    text-decoration: underline; 
+    &:hover {
+      font-weight:500;
+    }
+  }
+  
+  .infos-modification {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-bottom: -1%;
+    margin-left: 10%;
+    font-size: 15px;
   }
 }
 
@@ -41,11 +52,9 @@
   }
 }
 
-.infos-modification {
+.signOut {
   display: flex;
-  justify-content: space-between;
-  width: 80%;
-  margin-bottom: -1%;
-  margin-left: 10%;
-  font-size: 15px;
+  justify-content: flex-end;
+  margin-right: 1rem;
 }
+
