@@ -9,37 +9,34 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
 export default function Profil(props) {
-  /**
-   *  API MUI https://mui.com/material-ui/react-snackbar/
-   */
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
-  const [openAlert, setOpenAlert] = React.useState(false);
-  const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenAlert(false);
-  };
+  // /**
+  //  *  API MUI https://mui.com/material-ui/react-snackbar/
+  //  */
+  // const Alert = React.forwardRef(function Alert(props, ref) {
+  //   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  // });
+  // const [openAlert, setOpenAlert] = React.useState(false);
+  // const handleCloseAlert = (event, reason) => {
+  //   if (reason === 'clickaway') {
+  //     return;
+  //   }
+  //   setOpenAlert(false);
+  // };
 
   /**
    *  État du nouvel email par défaut
    */
-
   const [NouvelEmailUtilisateur, setNouvelEmailUtilisateur] = useState(props.emailUtilisateur);
 
   /**
    *  État des formulaires de modification
    */
-
-     const [passwordActuel, setPasswordActuel] = useState(false);
-     const [passwordNouveau, setPasswordNouveau] = useState(false);
+  const [passwordActuel, setPasswordActuel] = useState(false);
+  const [passwordNouveau, setPasswordNouveau] = useState(false);
 
   /**
    *  État des formulaires de modification
    */
-
   const [frmEmailOuvert, setFrmEmailOuvert] = useState(false);
   const [frmPasswordOuvert, setFrmPasswordOuvert] = useState(false);
 
@@ -51,17 +48,6 @@ export default function Profil(props) {
    */
   function gererSupprimer() {
     props.supprimerUtilisateur();
-  }
-
-  /**
-   *  Modifier le courriel du profil;
-   */
-  function modifierEmail(NouvelEmailUtilisateur) {
-    var reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    if (reg.test(NouvelEmailUtilisateur)) {
-      setNouvelEmailUtilisateur(NouvelEmailUtilisateur);
-    }
-    fetchPatchUtilisateurEmail(NouvelEmailUtilisateur);
   }
 
   /**
@@ -77,39 +63,6 @@ export default function Profil(props) {
    */
   function gererModifierPassword() {
     setFrmPasswordOuvert(true);
-  }
-
-  /**
-   * requête de modification du password dans aws
-   */
-  async function PatchPassword(passwordActuel, nouveauPassword) {
-    Auth.currentAuthenticatedUser()
-    .then(user => {
-        return Auth.changePassword(user, passwordActuel, nouveauPassword);
-    })
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
-  }
-
-  /**
-   * requête de modification de l'email utilisateur
-   */
-  async function fetchPatchUtilisateurEmail(NouvelEmailUtilisateur) {
-    let user = await Auth.currentAuthenticatedUser();
-    let result = await Auth.updateUserAttributes(user, {
-        'email': NouvelEmailUtilisateur,
-    });
-    if (result === "SUCCESS") {
-      let reponse = await fetch(
-          props.URI + "/" + "email" + "/" + props.emailUtilisateur + "/" + "utilisateurs",
-          {
-              method: "PATCH",
-              body: JSON.stringify({ email: NouvelEmailUtilisateur }),
-          }
-      );
-      let reponseJson = await reponse.json();
-    }
-    props.setEmailUtilisateur(NouvelEmailUtilisateur)
   }
 
   return (
@@ -140,7 +93,8 @@ export default function Profil(props) {
           frmEmailOuvert={frmEmailOuvert}
           setFrmEmailOuvert={setFrmEmailOuvert}
           emailUtilisateur={props.emailUtilisateur}
-          modifierEmail={modifierEmail}
+          setEmailUtilisateur={props.setEmailUtilisateur}
+          URI={props.URI}
           setNouvelEmailUtilisateur={setNouvelEmailUtilisateur}
           NouvelEmailUtilisateur={NouvelEmailUtilisateur}
         />
@@ -152,7 +106,7 @@ export default function Profil(props) {
           setPasswordActuel={setPasswordActuel}
           passwordNouveau={passwordNouveau}
           setPasswordNouveau={setPasswordNouveau}
-          PatchPassword={PatchPassword}
+          //PatchPassword={PatchPassword}
         />
       </div>
     </>
