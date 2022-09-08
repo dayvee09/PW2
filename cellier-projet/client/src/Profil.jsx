@@ -149,7 +149,7 @@ export default function Profil(props) {
       <div className="boutonSupprimer" data-id="">
           <button className="boutonSupprimer" onClick={gererSupprimer}>Supprimer votre compte</button>
       </div>
-      <Dialog open={frmSuppressionOuvert} onClose={viderFermerFrm}>
+      <Dialog   PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }}open={frmSuppressionOuvert} onClose={viderFermerFrm}>
         <DialogTitle> Voulez-vous vraiment supprimer votre profil ?</DialogTitle>
         <DialogActions>
             <Button onClick={viderFermerFrm}>Annuler</Button>
