@@ -5,14 +5,32 @@ import FrmPassword from "./FrmPassword";
 import { useState, useEffect } from "react";
 import MuiAlert from '@mui/material/Alert';
 import Dialog from "@mui/material/Dialog";
+import { styled } from "@mui/material/styles";
+import MuiButton from "@mui/material/Button";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import {
+  Route,
+  Routes,
+  NavLink,
+  useParams,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import {
   TextField,
   Button,
 } from '@aws-amplify/ui-react';
 export default function Profil(props) {
+
+  /**
+   *  État des styles des composants MUI
+   */
+  const Button = styled(MuiButton)((props) => ({
+    color: "black"
+  }));
 
   /**
    *  État du nouvel email par défaut
@@ -91,9 +109,13 @@ export default function Profil(props) {
 
   return (
     <>
+      <NavLink to="/">
+        <div className="signOut">
+          <Button onClick={props.gererSignOut}>Déconnexion</Button>
+        </div>
+      </NavLink> 
       <div className="Profil" data-quantite="">
         <div className="description">
-          <div className="description-email">
             <div className="infos-modification">
               <p>Adresse Courriel</p>
               <button className="modifier" onClick={gererModifierEmail}>Modifier</button>
@@ -124,7 +146,6 @@ export default function Profil(props) {
                 variant="outlined" 
                 defaultValue={"**********"}
             />
-          </div>
         </div>
         <FrmEmail
           frmEmailOuvert={frmEmailOuvert}
@@ -149,7 +170,7 @@ export default function Profil(props) {
       <div className="boutonSupprimer" data-id="">
           <button className="boutonSupprimer" onClick={gererSupprimer}>Supprimer votre compte</button>
       </div>
-      <Dialog   PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }}open={frmSuppressionOuvert} onClose={viderFermerFrm}>
+      <Dialog PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }} open={frmSuppressionOuvert} onClose={viderFermerFrm}>
         <DialogTitle> Voulez-vous vraiment supprimer votre profil ?</DialogTitle>
         <DialogActions>
             <Button onClick={viderFermerFrm}>Annuler</Button>
