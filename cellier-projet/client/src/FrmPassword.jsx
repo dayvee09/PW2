@@ -8,6 +8,8 @@ import { useState, useEffect } from "react";
 import "./FrmPassword.scss";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { styled } from "@mui/material/styles";
+import MuiButton from "@mui/material/Button";
 import {
     PasswordField,
     Button,
@@ -22,6 +24,10 @@ export default function FrmPassword({
     setPasswordNouveau,
 }) {
 
+
+  const Button = styled(MuiButton)((props) => ({
+    color: "black"
+  }));
 
   /**
    * État de l'alerte
@@ -96,7 +102,7 @@ export default function FrmPassword({
   
   return (
     <div>
-      <Dialog open={frmPasswordOuvert} onClose={viderFermerFrm}>
+      <Dialog PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }} open={frmPasswordOuvert} onClose={viderFermerFrm}>
         <DialogTitle> Modifier votre mot de passe</DialogTitle>
         <DialogContent>
         <div className="frmPassword">
