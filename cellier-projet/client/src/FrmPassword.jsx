@@ -35,6 +35,11 @@ export default function FrmPassword({
   const [openErr, setOpenErr] = useState(false);
 
   /**
+   * État de l'alerte
+   */
+  const [severity, setSeverity] = useState([]);
+
+  /**
    * État du message retour
    */
   const [messageRetour, setMessageRetour] = useState([]);
@@ -54,8 +59,20 @@ export default function FrmPassword({
     .then(user => {
         return Auth.changePassword(user, passwordActuel, nouveauPassword);
     })
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
+    .then(data => {console.log(data)
+                    if (data) {
+                      setMessageRetour("Modification effectuée")
+                      setSeverity('success')
+                    }
+                  }
+          )
+    .catch(err => {console.log(err)
+                    if (err) {
+                      setMessageRetour("Mot de passe invalide")
+                      setSeverity('error')
+                    }
+                  }
+          );
   }
 
   /**
