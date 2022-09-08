@@ -55,21 +55,23 @@ export default function FrmPassword({
    * requête de modification du password dans aws
    */
   async function PatchPassword(passwordActuel, nouveauPassword) {
+    setMessageRetour("");
+    setSeverity("");
     Auth.currentAuthenticatedUser()
     .then(user => {
         return Auth.changePassword(user, passwordActuel, nouveauPassword);
     })
     .then(data => {console.log(data)
                     if (data) {
+                      //setSeverity("success")
                       setMessageRetour("Modification effectuée")
-                      setSeverity('success')
                     }
                   }
           )
     .catch(err => {console.log(err)
                     if (err) {
+                      //setSeverity("error")
                       setMessageRetour("Mot de passe invalide")
-                      setSeverity('error')
                     }
                   }
           );
@@ -80,6 +82,11 @@ export default function FrmPassword({
    */
   function gererSoumettre() {
     PatchPassword(passwordActuel,passwordNouveau)
+    if (messageRetour === "Modification effectuée") {
+      setSeverity("success")
+    } else {
+      setSeverity("error")
+    }
     setOpenErr(true)
   }
   
@@ -107,7 +114,7 @@ export default function FrmPassword({
             />
 
             <Dialog open={openErr}>
-              <Alert severity="error"
+              <Alert severity={severity}
                 action={
                   <IconButton
                     aria-label="close"
