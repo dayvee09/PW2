@@ -49,7 +49,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -335,7 +335,7 @@ const Appli = () => {
   // ------------------Gestion de l'importation de bouteilles de la SAQ-----------------------
 
   // ---------------------------------- Rendering -----------------------------------------
-  return ( 
+  return (
     <div className={Auth.user ? "Appli" : "Login"}>
       <img
         className={Auth.user ? "Hidden" : "logo"}
@@ -360,99 +360,105 @@ const Appli = () => {
             />
 
             {/*-------------------------------- Menu de navigation --------------------------*/}
-           
-              <div className="navigation">
-                <div className="menu-celliers">
-                  {location !== "/" && (
-                    <div>
-                      <NavLink to={`/`}>
-                        <button>Retour aux Celliers</button>
-                      </NavLink>
-                    </div>
-                  )}
-                </div>
-                <div className="menu-compte">
-                  <NavLink to="/">
-                    <div>
-                      <button onClick={gererSignOut}>Sign Out</button>
-                    </div>
-                  </NavLink>
-                </div>
-              </div>
 
-              {/* ------------------------------ Routes --------------------------------*/}
-              <Routes>
-                <Route
-                  path={`/profil/${emailUtilisateur}`}
-                  element={
-                    <Profil
-                      supprimerUtilisateur={supprimerUtilisateur}
-                      emailUtilisateur={emailUtilisateur}
-                      setEmailUtilisateur={setEmailUtilisateur}
-                      utilisateur={utilisateur}
-                      setUtilisateur={setUtilisateur}
-                      URI={URI}
-                    />
-                  }
-                />
-                <Route
-                  path={`/admin/${emailUtilisateur}`}
-                  element={
-                    <Admin
-                      emailUtilisateur={emailUtilisateur}
-                      setEmailUtilisateur={setEmailUtilisateur}
-                      utilisateur={utilisateur}
-                      setUtilisateur={setUtilisateur}
-                      URI={URI}
-                      bouteilles={bouteilles}
-                      setBouteilles={setBouteilles}
-                      error={error}
-                      setError={setError}
-                    />
-                  }
-                />
-                <Route
-                  path={`/cellier/${cellier}/vins`}
-                  element={
-                    <ListeBouteilles
-                      bouteilles={bouteilles}
-                      setBouteilles={setBouteilles}
-                      fetchVins={fetchVins}
-                      gererBouteilles={gererBouteilles}
-                      cellier={cellier}
-                      URI={URI}
-                    />
-                  }
-                />
-                <Route
-                  path={`/`}
-                  element={
-                    <ListeCelliers
-                      celliers={celliers}
-                      setCelliers={setCelliers}
-                      cellier={cellier}
-                      setCellier={setCellier}
-                      fetchCelliers={fetchCelliers}
-                      fetchVins={fetchVins}
-                      id={id}
-                      emailUtilisateur={emailUtilisateur}
-                      gererCellier={gererCellier}
-                      URI={URI}
-                    />
-                  }
-                />
-              </Routes>
+            <div className="navigation">
+              <div className="menu-celliers">
+                {location !== "/" && (
+                  <div>
+                    <NavLink to={`/`}>
+                      <button>Retour aux Celliers</button>
+                    </NavLink>
+                  </div>
+                )}
+              </div>
+              <div className="menu-compte">
+                <NavLink to="/">
+                  <div>
+                    <button onClick={gererSignOut}>Sign Out</button>
+                  </div>
+                </NavLink>
+                {location === "/" && (
+                  <div>
+                    {utilisateur && utilisateur.privilege === "admin" && (
+                      <NavLink to={`/admin/${emailUtilisateur}`}>
+                        <button>Admin</button>
+                      </NavLink>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* ------------------------------ Routes --------------------------------*/}
+            <Routes>
+              <Route
+                path={`/profil/${emailUtilisateur}`}
+                element={
+                  <Profil
+                    supprimerUtilisateur={supprimerUtilisateur}
+                    emailUtilisateur={emailUtilisateur}
+                    setEmailUtilisateur={setEmailUtilisateur}
+                    utilisateur={utilisateur}
+                    setUtilisateur={setUtilisateur}
+                    URI={URI}
+                  />
+                }
+              />
+              <Route
+                path={`/admin/${emailUtilisateur}`}
+                element={
+                  <Admin
+                    emailUtilisateur={emailUtilisateur}
+                    setEmailUtilisateur={setEmailUtilisateur}
+                    utilisateur={utilisateur}
+                    setUtilisateur={setUtilisateur}
+                    URI={URI}
+                    bouteilles={bouteilles}
+                    setBouteilles={setBouteilles}
+                    error={error}
+                    setError={setError}
+                  />
+                }
+              />
+              <Route
+                path={`/cellier/${cellier}/vins`}
+                element={
+                  <ListeBouteilles
+                    bouteilles={bouteilles}
+                    setBouteilles={setBouteilles}
+                    fetchVins={fetchVins}
+                    gererBouteilles={gererBouteilles}
+                    cellier={cellier}
+                    URI={URI}
+                  />
+                }
+              />
+              <Route
+                path={`/`}
+                element={
+                  <ListeCelliers
+                    celliers={celliers}
+                    setCelliers={setCelliers}
+                    cellier={cellier}
+                    setCellier={setCellier}
+                    fetchCelliers={fetchCelliers}
+                    fetchVins={fetchVins}
+                    id={id}
+                    emailUtilisateur={emailUtilisateur}
+                    gererCellier={gererCellier}
+                    URI={URI}
+                  />
+                }
+              />
+            </Routes>
           </div>
         )}
-		</Authenticator>
-		<p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
-			Commencez dès maintenant votre collection de vin !
-		</p>
+      </Authenticator>
+      <p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
+        Commencez dès maintenant votre collection de vin !
+      </p>
       <small className="">© Mon Vino 2022, Tous droits réservés</small>
-	  	<NavMobile 
-			Auth={Auth} 
-			emailUtilisateur={emailUtilisateur} 
-		 />  
+      <NavMobile Auth={Auth} emailUtilisateur={emailUtilisateur} />
     </div>
   );
 };
