@@ -8,7 +8,7 @@ class AccesBd
     {
         try {
             $options = [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ, PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION];
-            // Connection au serveur de développement
+            // Connection au serveur de développement (Ne pas effacer)
 
             // $this->pdo = new PDO(
             //     "mysql:host=monvino.c2i48shq0eku.us-east-1.rds.amazonaws.com; port=3306; dbname=monvino; charset=utf8",
@@ -42,7 +42,7 @@ class AccesBd
     private function soumettre($sql, $params = [])
     {
         $this->requetePdo = $this->pdo->prepare($sql);
-
+        // var_dump($params);
         $this->requetePdo->execute($params);
     }
 
@@ -55,7 +55,7 @@ class AccesBd
      * @return array Tableau associatif (colonne de groupage) contenant des tableaux
      *                  des données groupées
      */
-    protected function lire($sql, $params = [])
+    public function lire($sql, $params = [])
     {
         $this->soumettre($sql, $params);
         // if ($groupe !== PDO::FETCH_GROUP) {
@@ -64,7 +64,7 @@ class AccesBd
         return $this->requetePdo->fetchAll();
     }
 
-    protected function lireUn($sql, $params = [])
+    public function lireUn($sql, $params = [])
     {
         $this->soumettre($sql, $params);
         return $this->requetePdo->fetch();
@@ -77,7 +77,7 @@ class AccesBd
      * @param  array $params Tableau associatif des paramètres de la requête
      * @return int Identifiant (auto increment) du dernier enregistrement inséré
      */
-    protected function creer($sql, $params = [])
+    public function creer($sql, $params = [])
     {
         $this->soumettre($sql, $params);
         return $this->pdo->lastInsertId();
@@ -90,7 +90,7 @@ class AccesBd
      * @param  array $params Tableau associatif des paramètres de la requête
      * @return int Nombre d'enregistrements affectés
      */
-    protected function modifier($sql, $params = [])
+    public function modifier($sql, $params = [])
     {
         $this->soumettre($sql, $params);
         return $this->requetePdo->rowCount();
@@ -103,7 +103,7 @@ class AccesBd
      * @param  array $params Tableau associatif des paramètres de la requête
      * @return int Nombre d'enregistrements affectés
      */
-    protected function supprimer($sql, $params = [])
+    public function supprimer($sql, $params = [])
     {
         $this->soumettre($sql, $params);
         return $this->requetePdo->rowCount();
