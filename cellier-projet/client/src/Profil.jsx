@@ -4,6 +4,10 @@ import FrmEmail from "./FrmEmail";
 import FrmPassword from "./FrmPassword";
 import { useState, useEffect } from "react";
 import MuiAlert from '@mui/material/Alert';
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
 import {
   TextField,
   Button,
@@ -28,6 +32,11 @@ export default function Profil(props) {
   const [frmPasswordOuvert, setFrmPasswordOuvert] = useState(false);
 
   /**
+   *  État de la boite de dialogue de suppression
+   */
+  const [frmSuppressionOuvert, setFrmSuppressionOuvert] = useState(false);
+
+  /**
    * État de l'alerte
   */
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -45,11 +54,25 @@ export default function Profil(props) {
   // ----------------------- Gestion du profil ------------------------------------------------
 
   /**
-   * Gère la suppression du profil
+   * Gère la fermeture de la boite de dialogue de supression du profil
+   */
+  function viderFermerFrm() {
+    setFrmSuppressionOuvert(false);
+  }
+
+  /**
+   * Gère l'ouverture de la boite de dialogue de supression du profil
    */
   function gererSupprimer() {
-    props.supprimerUtilisateur();
+    setFrmSuppressionOuvert(true);
   }
+
+  /**
+   * Gère la suppression du profil
+   */
+    function gererSoumettre() {
+      props.supprimerUtilisateur();
+    }
 
   /**
    * Gère la modification de l'email
@@ -126,6 +149,13 @@ export default function Profil(props) {
       <div className="boutonSupprimer" data-id="">
           <button className="boutonSupprimer" onClick={gererSupprimer}>Supprimer votre compte</button>
       </div>
+      <Dialog open={frmSuppressionOuvert} onClose={viderFermerFrm}>
+        <DialogTitle> Voulez-vous vraiment supprimer votre profil ?</DialogTitle>
+        <DialogActions>
+            <Button onClick={viderFermerFrm}>Annuler</Button>
+            <Button onClick={gererSoumettre}>Soumettre</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }
