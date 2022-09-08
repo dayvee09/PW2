@@ -25,6 +25,9 @@ export default function FrmPassword({
 }) {
 
 
+  /**
+   *  État des styles des composants MUI
+   */
   const Button = styled(MuiButton)((props) => ({
     color: "black"
   }));
@@ -38,6 +41,11 @@ export default function FrmPassword({
    * État du message retour
    */
   const [messageRetour, setMessageRetour] = useState([]);
+
+  /**
+   * État du booléen pour le choix de l'option severity
+   */
+  const [bool, setBool] = useState(false);
 
   /**
    * État de l'alerte
@@ -65,24 +73,24 @@ export default function FrmPassword({
    * requête de modification du password dans aws
    */
   async function PatchPassword(passwordActuel, nouveauPassword) {
+    setBool(false);
     setMessageRetour("");
     setSeverity("");
     Auth.currentAuthenticatedUser()
     .then(user => {
         return Auth.changePassword(user, passwordActuel, nouveauPassword);
     })
-    .then(data => {console.log(data)
-                    if (data) {
-                      //setSeverity("success")
-                      setMessageRetour("Modification effectuée")
-                    }
+    .then(data => {   
+                    console.log(data)
+                    setBool(true)
+                    setMessageRetour("Modification effectuée")
+                    console.log(bool);
                   }
           )
-    .catch(err => {console.log(err)
-                    if (err) {
-                      //setSeverity("error")
-                      setMessageRetour("Mot de passe invalide")
-                    }
+    .catch(err => {
+                    console.log(err)
+                    setBool(false)
+                    setMessageRetour("Mot de passe invalide")
                   }
           );
   }
@@ -91,8 +99,9 @@ export default function FrmPassword({
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
+    setSeverity("")
     PatchPassword(passwordActuel,passwordNouveau)
-    if (messageRetour === "Modification effectuée") {
+    if (bool === true) {
       setSeverity("success")
     } else {
       setSeverity("error")
@@ -103,7 +112,7 @@ export default function FrmPassword({
   return (
     <div>
       <Dialog PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }} open={frmPasswordOuvert} onClose={viderFermerFrm}>
-        <DialogTitle> Modifier votre mot de passe</DialogTitle>
+        <DialogTitle>Modifier votre mot de passe</DialogTitle>
         <DialogContent>
         <div className="frmPassword">
             <PasswordField

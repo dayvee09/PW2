@@ -345,7 +345,7 @@ const Appli = () => {
       <Authenticator className="Authenticator" formFields={formFields}>
         {({ signOut, user }) => (
           <div>
-            <h1>Hello {user.attributes.email}</h1>
+            <h1>Hello {emailUtilisateur}</h1>
             <Utilisateur
               utilisateur={utilisateur}
               setUtilisateur={setUtilisateur}
@@ -372,11 +372,11 @@ const Appli = () => {
                 )}
               </div>
               <div className="menu-compte">
-                <NavLink to="/">
+                {/* <NavLink to="/">
                   <div>
                     <button onClick={gererSignOut}>Sign Out</button>
                   </div>
-                </NavLink>
+                </NavLink> */}
                 {location === "/" && (
                   <div>
                     {utilisateur && utilisateur.privilege === "admin" && (
@@ -400,6 +400,7 @@ const Appli = () => {
                     setEmailUtilisateur={setEmailUtilisateur}
                     utilisateur={utilisateur}
                     setUtilisateur={setUtilisateur}
+                    gererSignOut={gererSignOut}
                     URI={URI}
                   />
                 }
