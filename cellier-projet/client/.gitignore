@@ -3,8 +3,6 @@
 # Fichier contenant l'objet de configuration Firebase
 /src/code/config.js
 /src/appli.jsx
-/src/Footer.jsx
-/src/Footer.scss
 
 # Ignorer .eslintcache
 .eslintcache
