@@ -2,7 +2,6 @@
 
 import React from "react";
 import {
-  BrowserRouter as Router,
   Route,
   Routes,
   NavLink,
@@ -50,7 +49,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -336,7 +335,7 @@ const Appli = () => {
   // ------------------Gestion de l'importation de bouteilles de la SAQ-----------------------
 
   // ---------------------------------- Rendering -----------------------------------------
-  return (
+  return ( 
     <div className={Auth.user ? "Appli" : "Login"}>
       <img
         className={Auth.user ? "Hidden" : "logo"}
@@ -361,7 +360,7 @@ const Appli = () => {
             />
 
             {/*-------------------------------- Menu de navigation --------------------------*/}
-            <Router>
+           
               <div className="navigation">
                 <div className="menu-celliers">
                   {location !== "/" && (
@@ -378,19 +377,6 @@ const Appli = () => {
                       <button onClick={gererSignOut}>Sign Out</button>
                     </div>
                   </NavLink>
-                  {location === "/" && (
-                    <div>
-                      {utilisateur && utilisateur.privilege === "admin" && (
-                        <NavLink to={`/admin/${emailUtilisateur}`}>
-                          <button>Admin</button>
-                        </NavLink>
-                      )}
-
-                      <NavLink to={`/profil/${emailUtilisateur}`}>
-                        <button>Profil</button>
-                      </NavLink>
-                    </div>
-                  )}
                 </div>
               </div>
 
@@ -456,15 +442,17 @@ const Appli = () => {
                   }
                 />
               </Routes>
-            </Router>
           </div>
         )}
-      </Authenticator>
-      <p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
-        Commencez dès maintenant votre collection de vin !
-      </p>
+		</Authenticator>
+		<p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
+			Commencez dès maintenant votre collection de vin !
+		</p>
       <small className="">© Mon Vino 2022, Tous droits réservés</small>
-      <NavMobile Auth={Auth} />
+	  	<NavMobile 
+			Auth={Auth} 
+			emailUtilisateur={emailUtilisateur} 
+		 />  
     </div>
   );
 };
