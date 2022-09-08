@@ -7,6 +7,8 @@ import { Auth } from "aws-amplify";
 import { useState, useEffect } from "react";
 import "./FrmPassword.scss";
 import Alert from '@mui/material/Alert';
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Collapse from '@mui/material/Collapse';
@@ -30,11 +32,6 @@ export default function FrmPassword({
 
 
   /**
-   * L‘état d'erreur
-   */
-  const [openErr, setOpenErr] = useState(false);
-
-  /**
    * État de l'alerte
    */
   const [severity, setSeverity] = useState([]);
@@ -43,6 +40,21 @@ export default function FrmPassword({
    * État du message retour
    */
   const [messageRetour, setMessageRetour] = useState([]);
+
+  /**
+   * État de l'alerte
+   */
+  const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlert(false);
+    setFrmPasswordOuvert(false)
+  };
 
   /**
    *  Gère l'action d'annuler
@@ -87,7 +99,7 @@ export default function FrmPassword({
     } else {
       setSeverity("error")
     }
-    setOpenErr(true)
+    setOpenAlert(true)
   }
   
   return (
@@ -111,23 +123,24 @@ export default function FrmPassword({
               label="Nouveau mot de passe"
               id="Nouveau_mot_de_passe"
             />
-            <Dialog open={openErr}>
-              <Alert severity={severity}
-                action={
-                  <IconButton
-                    aria-label="close"
-                    size="small"
-                    onClick={() => {
-                      setOpenErr(false);
-                    }}
-                  >
-                  <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                }
+            <Snackbar
+              sx={{ height: "100%" }}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+              open={openAlert}
+              autoHideDuration={1000}
+              onClose={handleCloseAlert}
+            >
+              <Alert
+                onClose={handleCloseAlert}
+                severity={severity}
+                sx={{ width: "100%" }}
               >
-                {messageRetour}
+                  {messageRetour}
               </Alert>
-            </Dialog>
+            </Snackbar>
           </div>
         </DialogContent>
         <DialogActions>

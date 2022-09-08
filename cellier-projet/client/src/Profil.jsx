@@ -9,19 +9,6 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 
 export default function Profil(props) {
-  // /**
-  //  *  API MUI https://mui.com/material-ui/react-snackbar/
-  //  */
-  // const Alert = React.forwardRef(function Alert(props, ref) {
-  //   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  // });
-  // const [openAlert, setOpenAlert] = React.useState(false);
-  // const handleCloseAlert = (event, reason) => {
-  //   if (reason === 'clickaway') {
-  //     return;
-  //   }
-  //   setOpenAlert(false);
-  // };
 
   /**
    *  État du nouvel email par défaut
@@ -39,6 +26,20 @@ export default function Profil(props) {
    */
   const [frmEmailOuvert, setFrmEmailOuvert] = useState(false);
   const [frmPasswordOuvert, setFrmPasswordOuvert] = useState(false);
+
+  /**
+   * État de l'alerte
+  */
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+  const [openAlert, setOpenAlert] = React.useState(false);
+  const handleCloseAlert = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenAlert(false);
+  };
 
 
   // ----------------------- Gestion du profil ------------------------------------------------
@@ -74,21 +75,21 @@ export default function Profil(props) {
             <button onClick={gererModifierEmail}>Modifier</button>
           </div>
           <div className="description-originale">
-            <p className="Mot de passe">********</p>
+            <p className="Mot de passe">Modifier votre mot de passe</p>
             <button onClick={gererModifierPassword}>Modifier</button>
           </div>
         </div>
         <div className="options" data-id="">
           <button onClick={gererSupprimer}>Supprimer votre compte</button>
         </div>
-        {/* <Snackbar sx={{ height: '100%' }} anchorOrigin={{
-          vertical: "center",
+        <Snackbar sx={{ height: '100%' }} anchorOrigin={{
+          vertical: "top",
           horizontal: "center"
         }} open={openAlert} autoHideDuration={1000} onClose={handleCloseAlert}>
           <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '100%' }}>
             En rupture de stock!
           </Alert>
-        </Snackbar> */}
+        </Snackbar>
         <FrmEmail
           frmEmailOuvert={frmEmailOuvert}
           setFrmEmailOuvert={setFrmEmailOuvert}
@@ -107,7 +108,6 @@ export default function Profil(props) {
           setPasswordActuel={setPasswordActuel}
           passwordNouveau={passwordNouveau}
           setPasswordNouveau={setPasswordNouveau}
-          //PatchPassword={PatchPassword}
         />
       </div>
     </>
