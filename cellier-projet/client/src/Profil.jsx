@@ -3,11 +3,11 @@ import "./Profil.scss";
 import FrmEmail from "./FrmEmail";
 import FrmPassword from "./FrmPassword";
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import { Auth } from 'aws-amplify';
-import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
-
+import {
+  TextField,
+  Button,
+} from '@aws-amplify/ui-react';
 export default function Profil(props) {
 
   /**
@@ -68,28 +68,41 @@ export default function Profil(props) {
 
   return (
     <>
-      <div className="bouteille" data-quantite="">
+      <div className="Profil" data-quantite="">
         <div className="description">
-          <div className="description-originale">
-            <p className="Email">{props.emailUtilisateur}</p>
-            <button onClick={gererModifierEmail}>Modifier</button>
+          <div className="description-email">
+            <div className="infos-modification">
+              <p>Adresse Courriel</p>
+              <button className="modifier" onClick={gererModifierEmail}>Modifier</button>
+            </div>
+            <TextField
+                style = {{width: '80%'}} 
+                id="email"
+                InputProps={{
+                  readOnly: true,
+                }}
+                type={"text"}
+                variant="outlined" 
+                defaultValue={props.emailUtilisateur}
+            />
           </div>
-          <div className="description-originale">
-            <p className="Mot de passe">Modifier votre mot de passe</p>
-            <button onClick={gererModifierPassword}>Modifier</button>
+          <div className="description-password">
+            <div className="infos-modification">
+              <p>Mot de passe</p>
+              <button className="modifier" onClick={gererModifierPassword}>Modifier</button>
+            </div>
+            <TextField
+                style = {{width: '80%'}}  
+                id="email"
+                InputProps={{
+                  readOnly: true,
+                }}
+                type={"password"}
+                variant="outlined" 
+                defaultValue={"**********"}
+            />
           </div>
         </div>
-        <div className="options" data-id="">
-          <button onClick={gererSupprimer}>Supprimer votre compte</button>
-        </div>
-        <Snackbar sx={{ height: '100%' }} anchorOrigin={{
-          vertical: "top",
-          horizontal: "center"
-        }} open={openAlert} autoHideDuration={1000} onClose={handleCloseAlert}>
-          <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '100%' }}>
-            En rupture de stock!
-          </Alert>
-        </Snackbar>
         <FrmEmail
           frmEmailOuvert={frmEmailOuvert}
           setFrmEmailOuvert={setFrmEmailOuvert}
@@ -109,6 +122,9 @@ export default function Profil(props) {
           passwordNouveau={passwordNouveau}
           setPasswordNouveau={setPasswordNouveau}
         />
+      </div>
+      <div className="boutonSupprimer" data-id="">
+          <button className="boutonSupprimer" onClick={gererSupprimer}>Supprimer votre compte</button>
       </div>
     </>
   );
