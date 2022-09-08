@@ -2,6 +2,7 @@
 	* {
 	  font-family: Alata, sans-serif;
 	  font-weight: 500;
+	//   border: red 1px dashed;
 	}
 	
 	.css-1bjk3jo-MuiButtonBase-root-MuiBottomNavigationAction-root.Mui-selected {
@@ -10,7 +11,7 @@
 
 	.MuiPaper-root {
 		background-color: #f3f5eb;
-		padding-top: 20px;
+		padding: 20px 20px 0 20px;
 	}
 	
 	.BottomNav {
@@ -19,24 +20,25 @@
 		background-color: #f3f5eb;
 		
 		a  {
-			padding-top: 10px;
+			padding-top: 15px;
 			margin-top: -20px;
 		}
 		
 		span {
 			padding-top:10px;
+			font-size: 12px;
 		}
 		
 		a.Mui-selected:not(.AddBottleIcone) {
 		border-top: 5px solid;
-		// background-color: red;
+		// color: #f1ab50;
 		// filter: invert(73%) sepia(12%) saturate(2149%) hue-rotate(347deg) brightness(101%) contrast(89%);
 		// filter: invert(72%) sepia(41%) saturate(778%) hue-rotate(338deg) brightness(102%) contrast(89%);
-		// filter: invert(39%) sepia(68%) saturate(920%) hue-rotate(322deg) brightness(83%) contrast(93%);
+		filter: invert(39%) sepia(68%) saturate(920%) hue-rotate(322deg) brightness(83%) contrast(93%);
 		}
 		
 		.AddBottleIcone {
-		width: 110px;
+		width: 105px;
 		height: 120px;
 		position: absolute;
 		bottom: 0;
@@ -45,8 +47,20 @@
 	}
 }
 
-// @media only screen and (min-width: 768px) {
-// 	.NavMobile {
-// 		display: none;
-// 	}
-// }
+@media only screen and (min-width: 768px) {
+	.NavMobile {
+		display: none;
+
+		.BottomNav {
+			padding-bottom: 10px;
+			position: relative;
+			background-color: #f3f5eb;
+			
+			a  {
+				padding-top: 10px;
+				margin-top: -20px;
+			}
+		}
+		
+	}
+}
