@@ -10,7 +10,6 @@ import { ReactComponent as FavorisIcone } from "./img/svg/icone_favorite_blue_li
 import { ReactComponent as AideIcone } from "./img/svg/icone_help_blue_line.svg";
 import { ReactComponent as AddBottleIcone } from "./img/svg/add_bottle_blue_filled.svg";
 
-
 export default function NavMobile({Auth, emailUtilisateur}) {
 
 	const [value, setValue] = React.useState(0);
@@ -34,7 +33,7 @@ export default function NavMobile({Auth, emailUtilisateur}) {
 				className="AddBottleIcone"
 				icon={<AddBottleIcone />}
 				component={Link} 
-				to="/"
+				to="/bouteille"
 				/>
 				<BottomNavigationAction disabled={true} />
 				<BottomNavigationAction label="FAVORIS" icon={<FavorisIcone />} component={Link} to="." />

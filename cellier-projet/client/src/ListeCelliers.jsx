@@ -9,7 +9,12 @@ function ListeCelliers(props) {
 
   if (props.celliers.length > 0) {
     return (
-      <div className="ListeCelliers">
+		<>
+		<div className="liste-cellier--entete">
+			<h1>Mes Celliers</h1>
+			<button>+ Ajouter</button>
+		</div>
+		<div className="ListeCelliers">
         {props.celliers.map((cellier) => (
           <div key={cellier.id} className="Cellier">
             <Cellier
@@ -25,6 +30,7 @@ function ListeCelliers(props) {
           </div>
         ))}
       </div>
+	  </>
     );
   }
 }
