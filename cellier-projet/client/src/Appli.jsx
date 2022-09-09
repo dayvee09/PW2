@@ -47,12 +47,11 @@ const Appli = () => {
   const ENV = "dev";
   const [URI, setURI] = useState([]);
   let location = window.location.pathname;
-
   useEffect(() => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -345,8 +344,8 @@ const Appli = () => {
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
-		{ Auth.user && (<NavDesktop user={Auth.user}/> )};
-      	<div className="appli--container ">
+      {Auth.user && <NavDesktop user={Auth.user} />};
+      <div className="appli--container ">
         <img
           className={Auth.user ? "Hidden" : "logo"}
           src={Logo}
@@ -475,7 +474,7 @@ const Appli = () => {
         <p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
           Commencez dès maintenant votre collection de vin !
         </p>
-        <NavMobile Auth={Auth} emailUtilisateur={emailUtilisateur}/>
+        <NavMobile Auth={Auth} emailUtilisateur={emailUtilisateur} />
       </div>
       <PiedDePage />
     </div>
