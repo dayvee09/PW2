@@ -6,19 +6,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Auth } from "aws-amplify";
 import { useState, useEffect } from "react";
 import "./FrmPassword.scss";
-import Alert from '@mui/material/Alert';
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Collapse from '@mui/material/Collapse';
+import { styled } from "@mui/material/styles";
+import MuiButton from "@mui/material/Button";
 import {
-    Flex,
-    Heading,
-    TextField,
     PasswordField,
     Button,
-    useTheme,
 } from '@aws-amplify/ui-react';
 
 export default function FrmPassword({
@@ -32,6 +26,13 @@ export default function FrmPassword({
 
 
   /**
+   *  État des styles des composants MUI
+   */
+  const Button = styled(MuiButton)((props) => ({
+    color: "black",
+  }));
+
+  /**
    * État de l'alerte
    */
   const [severity, setSeverity] = useState([]);
@@ -40,6 +41,11 @@ export default function FrmPassword({
    * État du message retour
    */
   const [messageRetour, setMessageRetour] = useState([]);
+
+  /**
+   * État du booléen pour le choix de l'option severity
+   */
+  const [bool, setBool] = useState(false);
 
   /**
    * État de l'alerte
@@ -67,24 +73,24 @@ export default function FrmPassword({
    * requête de modification du password dans aws
    */
   async function PatchPassword(passwordActuel, nouveauPassword) {
+    setBool(false);
     setMessageRetour("");
     setSeverity("");
     Auth.currentAuthenticatedUser()
     .then(user => {
         return Auth.changePassword(user, passwordActuel, nouveauPassword);
     })
-    .then(data => {console.log(data)
-                    if (data) {
-                      //setSeverity("success")
-                      setMessageRetour("Modification effectuée")
-                    }
+    .then(data => {   
+                    console.log(data)
+                    setBool(true)
+                    setMessageRetour("Modification effectuée")
+                    console.log(bool);
                   }
           )
-    .catch(err => {console.log(err)
-                    if (err) {
-                      //setSeverity("error")
-                      setMessageRetour("Mot de passe invalide")
-                    }
+    .catch(err => {
+                    console.log(err)
+                    setBool(false)
+                    setMessageRetour("Mot de passe invalide")
                   }
           );
   }
@@ -93,7 +99,9 @@ export default function FrmPassword({
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
+    setSeverity("")
     PatchPassword(passwordActuel,passwordNouveau)
+    console.log(messageRetour);
     if (messageRetour === "Modification effectuée") {
       setSeverity("success")
     } else {
@@ -104,8 +112,8 @@ export default function FrmPassword({
   
   return (
     <div>
-      <Dialog open={frmPasswordOuvert} onClose={viderFermerFrm}>
-        <DialogTitle> Modifier votre mot de passe</DialogTitle>
+      <Dialog PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }} open={frmPasswordOuvert} onClose={viderFermerFrm}>
+        <DialogTitle>Modifier votre mot de passe</DialogTitle>
         <DialogContent>
         <div className="frmPassword">
             <PasswordField
@@ -146,8 +154,8 @@ export default function FrmPassword({
         <DialogActions>
             <Button onClick={viderFermerFrm}>Annuler</Button>
             <Button onClick={gererSoumettre}>Soumettre</Button>
-          </DialogActions>
-        </Dialog>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

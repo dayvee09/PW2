@@ -124,7 +124,7 @@ INSERT INTO `vino__cellier` (`id`, `nom`, `vino__utilisateur_id`) VALUES
 (6, 'chalet #5 de Sebastien', 2),
 (7, 'chalet #6 de Sebastien', 2),
 (8, 'chalet #7 de Sebastien ', 2),
-(9, 'chalet de Bruno', 2);
+(9, 'chalet de Bruno', 3);
 
 -- --------------------------------------------------------
 
@@ -143,7 +143,8 @@ CREATE TABLE `vino__type` (
 
 INSERT INTO `vino__type` (`id`, `type`) VALUES
 (1, 'Vin rouge'),
-(2, 'Vin blanc');
+(2, 'Vin blanc'),
+(3, 'Vin rose');
 
 -- --------------------------------------------------------
 
