@@ -15,7 +15,7 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import Axios from "axios";
 import "./Appli.scss";
-import Footer from "./Footer.jsx";
+// import Footer from "./Footer.jsx";
 import ListeBouteilles from "./ListeBouteilles";
 import Admin from "./Admin";
 import ListeCelliers from "./ListeCelliers";
@@ -378,13 +378,6 @@ const Appli = () => {
 						</div>
 					)}
 					</div>
-					<div className="menu-compte">
-					<NavLink to="/">
-						<div>
-						<button onClick={gererSignOut}>Sign Out</button>
-						</div>
-					</NavLink>
-					</div>
 				</div>
 
 				{/* ------------------------------ Routes --------------------------------*/}
@@ -398,6 +391,7 @@ const Appli = () => {
 						setEmailUtilisateur={setEmailUtilisateur}
 						utilisateur={utilisateur}
 						setUtilisateur={setUtilisateur}
+            gererSignOut={gererSignOut}
 						URI={URI}
 						/>
 					}
@@ -460,7 +454,7 @@ const Appli = () => {
 				emailUtilisateur={emailUtilisateur} 
 			/>  
 		</div>
-		<Footer />
+		{/* <Footer /> */}
     </div>
   );
 };
