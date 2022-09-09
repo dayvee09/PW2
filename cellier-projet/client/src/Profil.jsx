@@ -3,7 +3,7 @@ import "./Profil.scss";
 import FrmEmail from "./FrmEmail";
 import FrmPassword from "./FrmPassword";
 import { useState, useEffect } from "react";
-import MuiAlert from '@mui/material/Alert';
+import MuiAlert from "@mui/material/Alert";
 import Dialog from "@mui/material/Dialog";
 import { styled } from "@mui/material/styles";
 import MuiButton from "@mui/material/Button";
@@ -19,22 +19,21 @@ import {
   useNavigate,
   useLocation,
 } from "react-router-dom";
-import {
-  TextField
-} from '@aws-amplify/ui-react';
+import { TextField } from "@aws-amplify/ui-react";
 export default function Profil(props) {
-
   /**
    *  État des styles des composants MUI
    */
   const Button = styled(MuiButton)((props) => ({
-    color: "black"
+    color: "black",
   }));
 
   /**
    *  État du nouvel email par défaut
    */
-  const [NouvelEmailUtilisateur, setNouvelEmailUtilisateur] = useState(props.emailUtilisateur);
+  const [NouvelEmailUtilisateur, setNouvelEmailUtilisateur] = useState(
+    props.emailUtilisateur
+  );
 
   /**
    *  État des formulaires de modification
@@ -55,18 +54,17 @@ export default function Profil(props) {
 
   /**
    * État de l'alerte
-  */
+   */
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const [openAlert, setOpenAlert] = React.useState(false);
   const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setOpenAlert(false);
   };
-
 
   // ----------------------- Gestion du profil ------------------------------------------------
 
@@ -87,9 +85,9 @@ export default function Profil(props) {
   /**
    * Gère la suppression du profil
    */
-    function gererSoumettre() {
-      props.supprimerUtilisateur();
-    }
+  function gererSoumettre() {
+    props.supprimerUtilisateur();
+  }
 
   /**
    * Gère la modification de l'email
@@ -112,39 +110,43 @@ export default function Profil(props) {
         <div className="signOut">
           <Button onClick={props.gererSignOut}>Déconnexion</Button>
         </div>
-      </NavLink> 
+      </NavLink>
       <div className="Profil" data-quantite="">
         <div className="description">
-            <div className="infos-modification">
-              <p>Adresse Courriel</p>
-              <button className="modifier" onClick={gererModifierEmail}>Modifier</button>
-            </div>
-            <TextField
-                style = {{width: '100%'}} 
-                id="email"
-                InputProps={{
-                  readOnly: true,
-                }}
-                type={"text"}
-                variant="outlined" 
-                defaultValue={props.emailUtilisateur}
-            />
+          <div className="infos-modification">
+            <p>Adresse Courriel</p>
+            <button className="modifier" onClick={gererModifierEmail}>
+              Modifier
+            </button>
           </div>
-          <div className="description-password">
-            <div className="infos-modification">
-              <p>Mot de passe</p>
-              <button className="modifier" onClick={gererModifierPassword}>Modifier</button>
-            </div>
-            <TextField
-                style = {{width: '100%'}}  
-                id="email"
-                InputProps={{
-                  readOnly: true,
-                }}
-                type={"password"}
-                variant="outlined" 
-                defaultValue={"**********"}
-            />
+          <TextField
+            style={{ width: "100%" }}
+            id="email"
+            InputProps={{
+              readOnly: true,
+            }}
+            type={"text"}
+            variant="outlined"
+            defaultValue={props.emailUtilisateur}
+          />
+        </div>
+        <div className="description-password">
+          <div className="infos-modification">
+            <p>Mot de passe</p>
+            <button className="modifier" onClick={gererModifierPassword}>
+              Modifier
+            </button>
+          </div>
+          <TextField
+            style={{ width: "100%" }}
+            id="email"
+            InputProps={{
+              readOnly: true,
+            }}
+            type={"password"}
+            variant="outlined"
+            defaultValue={"**********"}
+          />
         </div>
         <FrmEmail
           frmEmailOuvert={frmEmailOuvert}
@@ -156,7 +158,7 @@ export default function Profil(props) {
           setNouvelEmailUtilisateur={setNouvelEmailUtilisateur}
           NouvelEmailUtilisateur={NouvelEmailUtilisateur}
         />
-         <FrmPassword
+        <FrmPassword
           frmPasswordOuvert={frmPasswordOuvert}
           setFrmPasswordOuvert={setFrmPasswordOuvert}
           emailUtilisateur={props.emailUtilisateur}
@@ -167,13 +169,22 @@ export default function Profil(props) {
         />
       </div>
       <div className="boutonSupprimer" data-id="">
-          <button className="boutonSupprimer" onClick={gererSupprimer}>Supprimer votre compte</button>
+        <button className="boutonSupprimer" onClick={gererSupprimer}>
+          Supprimer votre compte
+        </button>
       </div>
-      <Dialog PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }} open={frmSuppressionOuvert} onClose={viderFermerFrm}>
-        <DialogTitle> Voulez-vous vraiment supprimer votre profil ?</DialogTitle>
+      <Dialog
+        PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
+        open={frmSuppressionOuvert}
+        onClose={viderFermerFrm}
+      >
+        <DialogTitle>
+          {" "}
+          Voulez-vous vraiment supprimer votre profil ?
+        </DialogTitle>
         <DialogActions>
-            <Button onClick={viderFermerFrm}>Annuler</Button>
-            <Button onClick={gererSoumettre}>Soumettre</Button>
+          <Button onClick={viderFermerFrm}>Annuler</Button>
+          <Button onClick={gererSoumettre}>Soumettre</Button>
         </DialogActions>
       </Dialog>
     </>

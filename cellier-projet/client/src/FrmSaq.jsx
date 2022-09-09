@@ -89,9 +89,6 @@ export default function FrmSaq({
           <Button onClick={viderFermerFrm}>Annuler</Button>
           <Button onClick={gererSoumettre}>Soumettre</Button>
         </DialogActions>
-        <DialogActions>
-          <Button onClick={viderFermerFrm}>OK</Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

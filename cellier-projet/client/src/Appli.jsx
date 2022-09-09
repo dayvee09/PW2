@@ -47,7 +47,6 @@ const Appli = () => {
   const ENV = "dev";
   const [URI, setURI] = useState([]);
   let location = window.location.pathname;
-
   useEffect(() => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
