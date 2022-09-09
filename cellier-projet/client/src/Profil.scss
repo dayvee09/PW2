@@ -1,5 +1,6 @@
 .Profil {
-  border: 1px solid black;
+  border: 1px solid #d3d7dd;
+  background-color: #f3f5eb;
   padding: 40px;
   margin: 20px;
   .img {
@@ -18,6 +19,7 @@
     margin-top:-20px;
   }
   .modifier {
+    background-color: #f3f5eb;
     border: none;
     text-underline-offset: 3px;
     text-decoration: underline; 
@@ -27,23 +29,24 @@
   }
   
   .infos-modification {
+    background-color: #f3f5eb;
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: -1%;
+    margin-bottom: -2%;
     font-size: 15px;
   }
 }
 
 .boutonSupprimer {
-  background-color:none;
   border: none;
+
   text-underline-offset: 3px;
   text-decoration: underline;
   font-size: 15px;
   display: flex;
   justify-content: flex-start;
-  margin-left: 1.5%;
+  margin-left: 0.5rem;
   margin-bottom: 2rem;
   &:hover {
     font-weight:500;
@@ -53,6 +56,6 @@
 .signOut {
   display: flex;
   justify-content: flex-end;
-  margin-right: 1rem;
+  margin-right: 0.7rem;
 }
 
