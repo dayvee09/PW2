@@ -3,6 +3,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { createTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { Auth } from 'aws-amplify';
 import { useState, useEffect } from "react";
@@ -26,8 +27,38 @@ export default function FrmEmail({
    *  État des styles des composants MUI
    */
   const Button = styled(MuiButton)((props) => ({
-    color: "black"
+    color: "#f3f5eb",
+    backgroundColor: "#cc4240",
+    textDecoration: "none",
+    borderRadius:"0px",
+    fontFamily: "Alata",
+    '&:hover': {
+      backgroundColor: '#f1ab50',
+      color: '#f3f5eb',
+    }
   }));
+
+  const CssDialogTitle = styled(DialogTitle)((props) => ({
+    fontFamily: "Alata",
+    color: "#152440",
+    fontSize:"19px",
+    marginTop:"10px",
+    textAlign:"center"
+  }));
+
+  // const styles = theme => ({
+  //   textField: {
+  //       width: '90%',
+  //       marginLeft: 'auto',
+  //       marginRight: 'auto',            
+  //       paddingBottom: 0,
+  //       marginTop: 0,
+  //       fontWeight: 500
+  //   },
+  //   input: {
+  //       color: 'white'
+  //   }
+  // });
 
   /**
    * État de l'alerte
@@ -111,7 +142,7 @@ export default function FrmEmail({
   return (
     <div>
       <Dialog PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }} className="dialogue" open={frmEmailOuvert} onClose={viderFermerFrm}>
-        <DialogTitle> Modifier votre email</DialogTitle>
+        <CssDialogTitle>Modifier votre email</CssDialogTitle>
         <DialogContent>
           <div className="frmPassword">
             <p className="">Email actuel: {emailUtilisateur}</p>
@@ -121,6 +152,15 @@ export default function FrmEmail({
                 id="email"
                 type={"text"}
                 defaultValue={emailUtilisateur}
+                focusColor="#f1ab50"
+                // className={classes.textField}
+                // InputProps={{
+                //   className: classes.input,
+                //   '&:focus': {
+                //     borderColor: "#f1ab50",
+                //     boxShadow: "none"
+                //   }
+                // }}
             />
             <Snackbar
               sx={{ height: "100%" }}
