@@ -15,6 +15,8 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import Axios from "axios";
 import "./Appli.scss";
+import NavMobile from "./NavMobile";
+import NavDesktop from "./NavDesktop";
 import PiedDePage from "./PiedDePage.jsx";
 import ListeBouteilles from "./ListeBouteilles";
 import Admin from "./Admin";
@@ -26,7 +28,7 @@ import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
 import Logo from "./img/png/logo-jaune.png";
-import NavMobile from "./NavMobile";
+import FrmAjoutBouteille from "./FrmAjoutBouteille";
 
 let DATA;
 
@@ -343,7 +345,8 @@ const Appli = () => {
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
-      <div className="appli--container ">
+		{ Auth.user && (<NavDesktop user={Auth.user}/> )};
+      	<div className="appli--container ">
         <img
           className={Auth.user ? "Hidden" : "logo"}
           src={Logo}
@@ -352,7 +355,6 @@ const Appli = () => {
         <Authenticator className="Authenticator" formFields={formFields}>
           {({ signOut, user }) => (
             <div>
-              <h2>Hello {user.attributes.email}</h2>
               <Utilisateur
                 utilisateur={utilisateur}
                 setUtilisateur={setUtilisateur}
@@ -365,8 +367,6 @@ const Appli = () => {
                 fetchUtilisateur={fetchUtilisateur}
                 createUser={createUser}
               />
-
-              {/*-------------------------------- Menu de navigation --------------------------*/}
 
               {/*-------------------------------- Menu de navigation --------------------------*/}
 
@@ -439,6 +439,19 @@ const Appli = () => {
                   }
                 />
                 <Route
+                  path={`/vins`}
+                  element={
+                    <FrmAjoutBouteille
+                      bouteilles={bouteilles}
+                      setBouteilles={setBouteilles}
+                      fetchVins={fetchVins}
+                      gererBouteilles={gererBouteilles}
+                      cellier={cellier}
+                      URI={URI}
+                    />
+                  }
+                />
+                <Route
                   path={`/`}
                   element={
                     <ListeCelliers
@@ -462,7 +475,7 @@ const Appli = () => {
         <p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
           Commencez dès maintenant votre collection de vin !
         </p>
-        <NavMobile Auth={Auth} emailUtilisateur={emailUtilisateur} />
+        <NavMobile Auth={Auth} emailUtilisateur={emailUtilisateur}/>
       </div>
       <PiedDePage />
     </div>
