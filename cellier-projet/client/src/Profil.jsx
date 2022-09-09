@@ -7,6 +7,7 @@ import MuiAlert from "@mui/material/Alert";
 import Dialog from "@mui/material/Dialog";
 import { styled } from "@mui/material/styles";
 import MuiButton from "@mui/material/Button";
+import Image from "./img/svg/icone_profil_blue_line.svg";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -24,10 +25,12 @@ export default function Profil(props) {
   /**
    *  État des styles des composants MUI
    */
-   const Button = styled(MuiButton)((props) => ({
+  const Button = styled(MuiButton)((props) => ({
     color: "#f3f5eb",
     backgroundColor: "#cc4240",
     textDecoration: "none",
+    borderRadius:"0px",
+    fontFamily: "Alata",
     '&:hover': {
       backgroundColor: '#f1ab50',
       color: '#f3f5eb',
@@ -37,9 +40,7 @@ export default function Profil(props) {
   /**
    *  État du nouvel email par défaut
    */
-  const [NouvelEmailUtilisateur, setNouvelEmailUtilisateur] = useState(
-    props.emailUtilisateur
-  );
+  const [NouvelEmailUtilisateur, setNouvelEmailUtilisateur] = useState(props.emailUtilisateur);
 
   /**
    *  État des formulaires de modification

@@ -29,7 +29,22 @@ export default function FrmPassword({
    *  État des styles des composants MUI
    */
   const Button = styled(MuiButton)((props) => ({
-    color: "black",
+    color: "#f3f5eb",
+    backgroundColor: "#cc4240",
+    textDecoration: "none",
+    borderRadius:"0px",
+    fontFamily: "Alata",
+    '&:hover': {
+      backgroundColor: '#f1ab50',
+      color: '#f3f5eb',
+      }
+  }));
+
+  const DialogTitle = styled(MuiButton)((props) => ({
+    fontFamily: "Alata",
+    color: "#152440",
+    fontSize:"20px",
+    marginTop:"10px"
   }));
 
   /**
