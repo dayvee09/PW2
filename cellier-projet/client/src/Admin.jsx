@@ -68,43 +68,45 @@ export default function Admin(props) {
 
   return (
     <>
-      <h1>Bienvenue sur l'interface d'admin!</h1>
-      <div>
-        <button onClick={gererSaq}>Importer des bouteilles de la Saq</button>
-      </div>
-      <Snackbar
-        sx={{ height: "100%" }}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-        open={openAlert}
-        autoHideDuration={1000}
-        onClose={handleCloseAlert}
-      >
-        <Alert
+      <div className="Admin">
+        <h1>Bienvenue sur l'interface d'admin!</h1>
+        <div>
+          <button onClick={gererSaq}>Importer des bouteilles de la Saq</button>
+        </div>
+        <Snackbar
+          sx={{ height: "100%" }}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          open={openAlert}
+          autoHideDuration={1000}
           onClose={handleCloseAlert}
-          severity="success"
-          sx={{ width: "100%" }}
         >
-          Importation de {nombre} bouteilles de vin {type} dans la page {page}{" "}
-          du catalogue de la SAQ réussie!
-        </Alert>
-      </Snackbar>
-      <FrmSaq
-        frmOuvert={frmOuvert}
-        setFrmOuvert={setFrmOuvert}
-        nombre_p={nombre_p}
-        nombre={nombre}
-        setNombre={setNombre}
-        page={page}
-        setPage={setPage}
-        page_p={page_p}
-        type={type}
-        setType={setType}
-        type_p={type_p}
-        importerSaq={importerSaq}
-      />
+          <Alert
+            onClose={handleCloseAlert}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Importation de {nombre} bouteilles de vin {type} dans la page {page}{" "}
+            du catalogue de la SAQ réussie!
+          </Alert>
+        </Snackbar>
+        <FrmSaq
+          frmOuvert={frmOuvert}
+          setFrmOuvert={setFrmOuvert}
+          nombre_p={nombre_p}
+          nombre={nombre}
+          setNombre={setNombre}
+          page={page}
+          setPage={setPage}
+          page_p={page_p}
+          type={type}
+          setType={setType}
+          type_p={type_p}
+          importerSaq={importerSaq}
+        />
+      </div>
     </>
   );
 }
