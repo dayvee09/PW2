@@ -22,6 +22,7 @@ import {
 } from "react-router-dom";
 import { TextField } from "@aws-amplify/ui-react";
 export default function Profil(props) {
+
   /**
    *  État des styles des composants MUI
    */

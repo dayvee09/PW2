@@ -34,14 +34,22 @@ export default function FrmEmail({
     '&:hover': {
       backgroundColor: '#f1ab50',
       color: '#f3f5eb',
-      }
+    }
   }));
 
-  const DialogTitle = styled(MuiButton)((props) => ({
+  const CssDialogTitle = styled(DialogTitle)((props) => ({
     fontFamily: "Alata",
     color: "#152440",
     fontSize:"19px",
-    marginTop:"10px"
+    marginTop:"10px",
+    textAlign:"center"
+  }));
+
+  const CssTextField = styled(TextField)((props) => ({
+    '&:focus': {
+      borderColor: "#f1ab50",
+      boxShadow: "none"
+    }
   }));
 
   /**
@@ -126,11 +134,11 @@ export default function FrmEmail({
   return (
     <div>
       <Dialog PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }} className="dialogue" open={frmEmailOuvert} onClose={viderFermerFrm}>
-        <DialogTitle> Modifier votre email</DialogTitle>
+        <CssDialogTitle>Modifier votre email</CssDialogTitle>
         <DialogContent>
           <div className="frmPassword">
             <p className="">Email actuel: {emailUtilisateur}</p>
-            <TextField
+            <CssTextField
                 onChange={gererInput}
                 autoFocus
                 id="email"
