@@ -1,0 +1,70 @@
+.ToggleBtn {
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    .button {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      width: 200px;
+      height: 39px;
+      color: #152440;
+      border: 1px solid #f1ab50;
+      border-radius: 5px;
+    }
+
+    .button-element {
+      width: 100px;
+      height: 39px;
+      background: #f1ab50;
+      box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.14);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s;
+    }
+
+    #importer {
+      font-family: "Raleway", sans-serif;
+      font-size: 12px;
+      font-weight:500;
+      font-style: normal;
+      letter-spacing: 0.2px;
+      color: #152440;
+    
+    }
+
+    #creer {
+      font-family:  "Raleway", sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      font-style: normal;
+      letter-spacing: 0.2px;
+      color: #fff;
+      padding-left: 23px;
+    }
+   
+    label {
+      display: none;
+    }
+  }
+}
+
+.tfx100 {
+    transform:translateX(100px);
+}
+.tfxn100 {
+    transform:translateX(-100px);
+}
+.tfx0 {
+    transform:translateX(0px);
+}
+.br1 {
+    border-radius:0px 5px 5px 0px;
+}
+.br2 {
+    border-radius:5px 0px 0px 5px;
+}

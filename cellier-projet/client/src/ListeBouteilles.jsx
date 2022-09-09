@@ -4,6 +4,8 @@ import Axios from "axios";
 import Bouteille from "./Bouteille";
 import { useNavigate, NavLink } from "react-router-dom";
 
+import Grid from '@material-ui/core/Grid';
+
 function ListeBouteilles(props) {
   let history = useNavigate();
   const [bouteilles, setBouteilles] = useState(props.bouteilles);
@@ -15,8 +17,10 @@ function ListeBouteilles(props) {
     if (props.bouteilles.length > 1) {
       return (
         <div className="ListeBouteilles">
+          <Grid container spacing={40}>
           {bouteilles.map((bouteille) => (
-            <div key={bouteille.id} className="Bouteille">
+            // < item key={bouteille.id} sm={6} md={4} lg={3}>
+            <Grid key={bouteille.id} sm={6} md={4} lg={3} className="Bouteille">
               <Bouteille
                 {...bouteille}
                 gererBouteille={props.gererBouteille}
@@ -27,8 +31,10 @@ function ListeBouteilles(props) {
                 bouteille={bouteille}
                 URI={props.URI}
               />
-            </div>
+            {/* </div> */}
+            </Grid>
           ))}
+          </Grid>
         </div>
       );
     } else if (props.bouteilles.length > 0) {
