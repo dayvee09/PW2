@@ -124,7 +124,7 @@ INSERT INTO `vino__cellier` (`id`, `nom`, `vino__utilisateur_id`) VALUES
 (6, 'chalet #5 de Sebastien', 2),
 (7, 'chalet #6 de Sebastien', 2),
 (8, 'chalet #7 de Sebastien ', 2),
-(9, 'chalet de Bruno', 2);
+(9, 'chalet de Bruno', 3);
 
 -- --------------------------------------------------------
 
