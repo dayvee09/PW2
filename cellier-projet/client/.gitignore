@@ -5,6 +5,10 @@
 /src/appli.jsx
 /src/Footer.jsx
 /src/Footer.scss
+/src/FrmAjoutBouteille.jsx
+/src/FrmAjoutBouteille.scss
+/src/BtnGroup.jsx
+
 
 # Ignorer .eslintcache
 .eslintcache
