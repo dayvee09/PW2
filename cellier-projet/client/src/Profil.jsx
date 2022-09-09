@@ -59,6 +59,7 @@ export default function Profil(props) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const [openAlert, setOpenAlert] = React.useState(false);
+  const navigate = useNavigate();
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -104,13 +105,21 @@ export default function Profil(props) {
     setFrmPasswordOuvert(true);
   }
 
+  const test = function () {
+    props.gererSignOut();
+    const timer = setTimeout(() => {
+      navigate("/", { replace: true });
+    }, 1000);
+    return () => clearTimeout(timer);
+  };
+
   return (
     <>
-      <NavLink to="/">
-        <div className="signOut">
-          <Button onClick={props.gererSignOut}>Déconnexion</Button>
-        </div>
-      </NavLink>
+      {/* <NavLink to="/"> */}
+      <div className="signOut">
+        <Button onClick={test}>Déconnexion</Button>
+      </div>
+      {/* </NavLink> */}
       <div className="Profil" data-quantite="">
         <div className="description">
           <div className="infos-modification">
@@ -168,11 +177,13 @@ export default function Profil(props) {
           setPasswordNouveau={setPasswordNouveau}
         />
       </div>
-      <div className="boutonSupprimer" data-id="">
-        <button className="boutonSupprimer" onClick={gererSupprimer}>
-          Supprimer votre compte
-        </button>
-      </div>
+      {props.utilisateur && props.utilisateur.privilege !== "admin" && (
+        <div className="boutonSupprimer" data-id="">
+          <button className="boutonSupprimer" onClick={gererSupprimer}>
+            Supprimer votre compte
+          </button>
+        </div>
+      )}
       <Dialog
         PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
         open={frmSuppressionOuvert}

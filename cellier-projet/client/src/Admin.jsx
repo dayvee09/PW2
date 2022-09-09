@@ -7,11 +7,11 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
 export default function Admin(props) {
-  const [nombre, setNombre] = useState(props.nombre);
+  const [nombre, setNombre] = useState(24);
   const [nombre_p, setNombre_p] = useState(nombre);
   const [page, setPage] = useState(props.page);
   const [page_p, setPage_p] = useState(page);
-  const [type, setType] = useState(props.type);
+  const [type, setType] = useState("rouge");
   const [type_p, setType_p] = useState(type);
   const [frmOuvert, setFrmOuvert] = useState(false);
   const Alert = React.forwardRef(function Alert(props, ref) {
