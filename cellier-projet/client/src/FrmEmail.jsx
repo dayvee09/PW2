@@ -3,6 +3,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { createTheme } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { Auth } from 'aws-amplify';
 import { useState, useEffect } from "react";
@@ -45,12 +46,19 @@ export default function FrmEmail({
     textAlign:"center"
   }));
 
-  const CssTextField = styled(TextField)((props) => ({
-    '&:focus': {
-      borderColor: "#f1ab50",
-      boxShadow: "none"
-    }
-  }));
+  // const styles = theme => ({
+  //   textField: {
+  //       width: '90%',
+  //       marginLeft: 'auto',
+  //       marginRight: 'auto',            
+  //       paddingBottom: 0,
+  //       marginTop: 0,
+  //       fontWeight: 500
+  //   },
+  //   input: {
+  //       color: 'white'
+  //   }
+  // });
 
   /**
    * État de l'alerte
@@ -138,12 +146,21 @@ export default function FrmEmail({
         <DialogContent>
           <div className="frmPassword">
             <p className="">Email actuel: {emailUtilisateur}</p>
-            <CssTextField
+            <TextField
                 onChange={gererInput}
                 autoFocus
                 id="email"
                 type={"text"}
                 defaultValue={emailUtilisateur}
+                focusColor="#f1ab50"
+                // className={classes.textField}
+                // InputProps={{
+                //   className: classes.input,
+                //   '&:focus': {
+                //     borderColor: "#f1ab50",
+                //     boxShadow: "none"
+                //   }
+                // }}
             />
             <Snackbar
               sx={{ height: "100%" }}
