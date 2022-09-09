@@ -24,7 +24,6 @@ export default function FrmPassword({
     setPasswordNouveau,
 }) {
 
-
   /**
    *  État des styles des composants MUI
    */
@@ -40,11 +39,12 @@ export default function FrmPassword({
       }
   }));
 
-  const DialogTitle = styled(MuiButton)((props) => ({
+  const CssDialogTitle = styled(DialogTitle)((props) => ({
     fontFamily: "Alata",
     color: "#152440",
     fontSize:"20px",
-    marginTop:"10px"
+    marginTop:"10px",
+    textAlign:"center"
   }));
 
   /**
@@ -56,6 +56,14 @@ export default function FrmPassword({
    * État du message retour
    */
   const [messageRetour, setMessageRetour] = useState([]);
+  useEffect(() => {
+    setSeverity("")
+    if (messageRetour === "Modification effectuée") {
+      setSeverity("success")
+    } else {
+      setSeverity("error")
+    }
+  }, [messageRetour]);
 
   /**
    * État du booléen pour le choix de l'option severity
@@ -84,6 +92,9 @@ export default function FrmPassword({
     setFrmPasswordOuvert(false);
   }
 
+  const validationRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  const errorMessage = `Une majuscule, une minuscule et un minimum de 8 caractères requis`;
+
   /**
    * requête de modification du password dans aws
    */
@@ -97,15 +108,12 @@ export default function FrmPassword({
     })
     .then(data => {   
                     console.log(data)
-                    setBool(true)
                     setMessageRetour("Modification effectuée")
-                    console.log(bool);
                   }
           )
     .catch(err => {
                     console.log(err)
-                    setBool(false)
-                    setMessageRetour("Mot de passe invalide")
+                    setMessageRetour("Courriel invalide")
                   }
           );
   }
@@ -114,21 +122,16 @@ export default function FrmPassword({
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
-    setSeverity("")
-    PatchPassword(passwordActuel,passwordNouveau)
-    console.log(messageRetour);
-    if (messageRetour === "Modification effectuée") {
-      setSeverity("success")
-    } else {
-      setSeverity("error")
+    if (validationRegex.test(passwordNouveau)) {
+      PatchPassword(passwordActuel,passwordNouveau)
+      setOpenAlert(true)
     }
-    setOpenAlert(true)
   }
   
   return (
     <div>
       <Dialog PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }} open={frmPasswordOuvert} onClose={viderFermerFrm}>
-        <DialogTitle>Modifier votre mot de passe</DialogTitle>
+        <CssDialogTitle>Modifier votre mot de passe</CssDialogTitle>
         <DialogContent>
         <div className="frmPassword">
             <PasswordField
@@ -137,14 +140,27 @@ export default function FrmPassword({
               autoFocus
               label="Mot de passe actuel"
               id="Mot_de_passe_actuel"
+              PaperProps={{
+                '&:focus': {
+                  borderColor: "#f1ab50",
+                  boxShadow: "none"
+                }
+              }}
             />
             <PasswordField
               className="PasswordField"
               onChange={(event)=> setPasswordNouveau(event.target.value)}
               autoFocus
-              descriptiveText="Le mot de passe doit contenir au moins huit caractères"
+              hasError={!validationRegex.test(passwordNouveau)}
+              errorMessage={errorMessage}
               label="Nouveau mot de passe"
               id="Nouveau_mot_de_passe"
+              PaperProps={{
+                '&:focus': {
+                  borderColor: "#f1ab50",
+                  boxShadow: "none"
+                }
+              }}
             />
             <Snackbar
               sx={{ height: "100%" }}
