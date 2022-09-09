@@ -29,7 +29,7 @@ export default function FrmPassword({
    *  État des styles des composants MUI
    */
   const Button = styled(MuiButton)((props) => ({
-    color: "black"
+    color: "black",
   }));
 
   /**
@@ -101,7 +101,8 @@ export default function FrmPassword({
   function gererSoumettre() {
     setSeverity("")
     PatchPassword(passwordActuel,passwordNouveau)
-    if (bool === true) {
+    console.log(messageRetour);
+    if (messageRetour === "Modification effectuée") {
       setSeverity("success")
     } else {
       setSeverity("error")
