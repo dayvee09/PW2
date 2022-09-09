@@ -1,7 +1,6 @@
 .Profil {
-  font-family: Alata;
+  font-family: Raleway light (300);
   border: 1px solid #d3d7dd;
-  background-color: #f3f5eb92;
   padding: 40px;
   margin: 20px;
   .img {
@@ -20,17 +19,16 @@
     margin-top:-20px;
   }
   .modifier {
-    background-color: #f3f5eb;
+    background-color: transparent;
     border: none;
     text-underline-offset: 3px;
     text-decoration: underline; 
     &:hover {
-      font-weight:bolder;
+      font-weight:bold;
     }
   }
   
   .infos-modification {
-    background-color: #f3f5eb;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -44,14 +42,14 @@
   background-color:transparent;
   text-underline-offset: 3px;
   text-decoration: underline;
-  font-family: Alata;
+  font-family: Raleway light (300);
   font-size: 15px;
   display: flex;
   justify-content: flex-start;
   margin-left: 0.5rem;
   margin-bottom: 2rem;
   &:hover {
-    font-weight:bolder;
+    font-weight:bold;
   }
 }
 
@@ -60,8 +58,10 @@
   display: flex;
   justify-content: flex-end;
   margin-right: 1.2rem;
-  margin-bottom: 1.9rem;
+  margin-bottom: 3rem;
+  margin-top: 2rem;
 }
+
 a:link {
   text-decoration: none;
 }
