@@ -15,7 +15,11 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import Axios from "axios";
 import "./Appli.scss";
+<<<<<<< HEAD
 // import Footer from "./Footer.jsx";
+=======
+import PiedDepage from "./PiedDepage.jsx";
+>>>>>>> 084ed874a1631e589e21b93d04942e3d8ac67de6
 import ListeBouteilles from "./ListeBouteilles";
 import Admin from "./Admin";
 import ListeCelliers from "./ListeCelliers";
@@ -341,7 +345,7 @@ const Appli = () => {
   // ------------------Gestion de l'importation de bouteilles de la SAQ-----------------------
 
   // ---------------------------------- Rendering -----------------------------------------
-  return (
+  return ( 
     <div className={Auth.user ? "Appli" : "Login"}>
 		<div className="appli--container ">		
 		<img
@@ -454,7 +458,11 @@ const Appli = () => {
 				emailUtilisateur={emailUtilisateur} 
 			/>  
 		</div>
+<<<<<<< HEAD
 		{/* <Footer /> */}
+=======
+		<PiedDepage />
+>>>>>>> 084ed874a1631e589e21b93d04942e3d8ac67de6
     </div>
   );
 };
