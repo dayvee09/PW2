@@ -105,11 +105,11 @@ export default function Profil(props) {
     setFrmPasswordOuvert(true);
   }
 
-  const test = function () {
+  const redirectionAccueil = function () {
     props.gererSignOut();
     const timer = setTimeout(() => {
       navigate("/", { replace: true });
-    }, 1000);
+    }, 2000);
     return () => clearTimeout(timer);
   };
 
@@ -117,7 +117,7 @@ export default function Profil(props) {
     <>
       {/* <NavLink to="/"> */}
       <div className="signOut">
-        <Button onClick={test}>Déconnexion</Button>
+        <Button onClick={redirectionAccueil}>Déconnexion</Button>
       </div>
       {/* </NavLink> */}
       <div className="Profil" data-quantite="">
