@@ -15,6 +15,7 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import Axios from "axios";
 import "./Appli.scss";
+import PiedDePage from "./PiedDePage.jsx";
 import ListeBouteilles from "./ListeBouteilles";
 import Admin from "./Admin";
 import ListeCelliers from "./ListeCelliers";
@@ -126,6 +127,11 @@ const Appli = () => {
       "We Sent A Code": "Code Envoyé",
       "Your code is on the way. To log in, enter the code we sent you. It may take a minute to arrive.":
         "Votre code a été envoyé à votre adresse. Cela pourrait prendre quelque minutes",
+      Skip: "Passer",
+      Verify: "Vérifier",
+      Email: "Courriel",
+      "Account recovery requires verified contact information":
+        "La récupération de compte nécessite des informations de contact vérifiées",
     },
   };
 
@@ -179,7 +185,7 @@ const Appli = () => {
 
   email().then((email) => {
     const emailUtilisateur = email;
-    console.log(emailUtilisateur);
+    // console.log(emailUtilisateur);
     setEmailUtilisateur(emailUtilisateur);
     console.log(DATA);
     if (DATA !== undefined) {
@@ -337,128 +343,128 @@ const Appli = () => {
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
-      <img
-        className={Auth.user ? "Hidden" : "logo"}
-        src={Logo}
-        alt="logo-mon-vino"
-      ></img>
-      <Authenticator className="Authenticator" formFields={formFields}>
-        {({ signOut, user }) => (
-          <div>
-            <h1>Hello {user.attributes.email}</h1>
-            <Utilisateur
-              utilisateur={utilisateur}
-              setUtilisateur={setUtilisateur}
-              utilisateurs={utilisateurs}
-              setUtilisateurs={setUtilisateurs}
-              id={id}
-              setId={setId}
-              emailUtilisateur={emailUtilisateur}
-              fetchUtilisateurs={fetchUtilisateurs}
-              fetchUtilisateur={fetchUtilisateur}
-              createUser={createUser}
-            />
+      <div className="appli--container ">
+        <img
+          className={Auth.user ? "Hidden" : "logo"}
+          src={Logo}
+          alt="logo-mon-vino"
+        ></img>
+        <Authenticator className="Authenticator" formFields={formFields}>
+          {({ signOut, user }) => (
+            <div>
+              <h2>Hello {user.attributes.email}</h2>
+              <Utilisateur
+                utilisateur={utilisateur}
+                setUtilisateur={setUtilisateur}
+                utilisateurs={utilisateurs}
+                setUtilisateurs={setUtilisateurs}
+                id={id}
+                setId={setId}
+                emailUtilisateur={emailUtilisateur}
+                fetchUtilisateurs={fetchUtilisateurs}
+                fetchUtilisateur={fetchUtilisateur}
+                createUser={createUser}
+              />
 
-            {/*-------------------------------- Menu de navigation --------------------------*/}
+              {/*-------------------------------- Menu de navigation --------------------------*/}
 
-            <div className="navigation">
-              <div className="menu-celliers">
-                {location !== "/" && (
-                  <div>
-                    <NavLink to={`/`}>
-                      <button>Retour aux Celliers</button>
-                    </NavLink>
-                  </div>
-                )}
-              </div>
-              <div className="menu-compte">
-                <NavLink to="/">
-                  <div>
-                    <button onClick={gererSignOut}>Sign Out</button>
-                  </div>
-                </NavLink>
-                {location === "/" && (
-                  <div>
-                    {utilisateur && utilisateur.privilege === "admin" && (
-                      <NavLink to={`/admin/${emailUtilisateur}`}>
-                        <button>Admin</button>
+              {/*-------------------------------- Menu de navigation --------------------------*/}
+
+              <div className="navigation">
+                <div className="menu-celliers">
+                  {location !== "/" && (
+                    <div>
+                      <NavLink to={`/`}>
+                        <button>Retour aux Celliers</button>
                       </NavLink>
-                    )}
-                  </div>
-                )}
+                    </div>
+                  )}
+                </div>
+                <div className="menu-compte">
+                  {location === "/" && (
+                    <div>
+                      {utilisateur && utilisateur.privilege === "admin" && (
+                        <NavLink to={`/admin/${emailUtilisateur}`}>
+                          <button>Menu Admin</button>
+                        </NavLink>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
 
-            {/* ------------------------------ Routes --------------------------------*/}
-            <Routes>
-              <Route
-                path={`/profil/${emailUtilisateur}`}
-                element={
-                  <Profil
-                    supprimerUtilisateur={supprimerUtilisateur}
-                    emailUtilisateur={emailUtilisateur}
-                    setEmailUtilisateur={setEmailUtilisateur}
-                    utilisateur={utilisateur}
-                    setUtilisateur={setUtilisateur}
-                    URI={URI}
-                  />
-                }
-              />
-              <Route
-                path={`/admin/${emailUtilisateur}`}
-                element={
-                  <Admin
-                    emailUtilisateur={emailUtilisateur}
-                    setEmailUtilisateur={setEmailUtilisateur}
-                    utilisateur={utilisateur}
-                    setUtilisateur={setUtilisateur}
-                    URI={URI}
-                    bouteilles={bouteilles}
-                    setBouteilles={setBouteilles}
-                    error={error}
-                    setError={setError}
-                  />
-                }
-              />
-              <Route
-                path={`/cellier/${cellier}/vins`}
-                element={
-                  <ListeBouteilles
-                    bouteilles={bouteilles}
-                    setBouteilles={setBouteilles}
-                    fetchVins={fetchVins}
-                    gererBouteilles={gererBouteilles}
-                    cellier={cellier}
-                    URI={URI}
-                  />
-                }
-              />
-              <Route
-                path={`/`}
-                element={
-                  <ListeCelliers
-                    celliers={celliers}
-                    setCelliers={setCelliers}
-                    cellier={cellier}
-                    setCellier={setCellier}
-                    fetchCelliers={fetchCelliers}
-                    fetchVins={fetchVins}
-                    id={id}
-                    emailUtilisateur={emailUtilisateur}
-                    gererCellier={gererCellier}
-                    URI={URI}
-                  />
-                }
-              />
-            </Routes>
-          </div>
-        )}
-      </Authenticator>
-      <p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
-        Commencez dès maintenant votre collection de vin !
-      </p>
-      <small className="">© Mon Vino 2022, Tous droits réservés</small>
-      <NavMobile Auth={Auth} emailUtilisateur={emailUtilisateur} />
+              {/* ------------------------------ Routes --------------------------------*/}
+              <Routes>
+                <Route
+                  path={`/profil/${emailUtilisateur}`}
+                  element={
+                    <Profil
+                      supprimerUtilisateur={supprimerUtilisateur}
+                      emailUtilisateur={emailUtilisateur}
+                      setEmailUtilisateur={setEmailUtilisateur}
+                      utilisateur={utilisateur}
+                      setUtilisateur={setUtilisateur}
+                      gererSignOut={gererSignOut}
+                      URI={URI}
+                    />
+                  }
+                />
+                <Route
+                  path={`/admin/${emailUtilisateur}`}
+                  element={
+                    <Admin
+                      emailUtilisateur={emailUtilisateur}
+                      setEmailUtilisateur={setEmailUtilisateur}
+                      utilisateur={utilisateur}
+                      setUtilisateur={setUtilisateur}
+                      URI={URI}
+                      bouteilles={bouteilles}
+                      setBouteilles={setBouteilles}
+                      error={error}
+                      setError={setError}
+                    />
+                  }
+                />
+                <Route
+                  path={`/cellier/${cellier}/vins`}
+                  element={
+                    <ListeBouteilles
+                      bouteilles={bouteilles}
+                      setBouteilles={setBouteilles}
+                      fetchVins={fetchVins}
+                      gererBouteilles={gererBouteilles}
+                      cellier={cellier}
+                      URI={URI}
+                    />
+                  }
+                />
+                <Route
+                  path={`/`}
+                  element={
+                    <ListeCelliers
+                      celliers={celliers}
+                      setCelliers={setCelliers}
+                      cellier={cellier}
+                      setCellier={setCellier}
+                      fetchCelliers={fetchCelliers}
+                      fetchVins={fetchVins}
+                      id={id}
+                      emailUtilisateur={emailUtilisateur}
+                      gererCellier={gererCellier}
+                      URI={URI}
+                    />
+                  }
+                />
+              </Routes>
+            </div>
+          )}
+        </Authenticator>
+        <p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
+          Commencez dès maintenant votre collection de vin !
+        </p>
+        <NavMobile Auth={Auth} emailUtilisateur={emailUtilisateur} />
+      </div>
+      <PiedDePage />
     </div>
   );
 };
