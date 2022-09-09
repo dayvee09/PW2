@@ -1,5 +1,4 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -8,12 +7,10 @@ import TextField from "@mui/material/TextField";
 import { Auth } from 'aws-amplify';
 import { useState, useEffect } from "react";
 import "./FrmEmail.scss";
-import Alert from '@mui/material/Alert';
-import CloseIcon from '@mui/icons-material/Close';
-import IconButton from '@mui/material/IconButton';
+import { styled } from "@mui/material/styles";
+import MuiButton from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import Collapse from '@mui/material/Collapse';
 
 export default function FrmEmail({
   setEmailUtilisateur,
@@ -24,6 +21,13 @@ export default function FrmEmail({
   setFrmEmailOuvert,
   URI
 }) {
+
+  /**
+   *  État des styles des composants MUI
+   */
+  const Button = styled(MuiButton)((props) => ({
+    color: "black"
+  }));
 
   /**
    * État de l'alerte
@@ -107,7 +111,7 @@ export default function FrmEmail({
   
   return (
     <div>
-      <Dialog open={frmEmailOuvert} onClose={viderFermerFrm}>
+      <Dialog PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }} className="dialogue" open={frmEmailOuvert} onClose={viderFermerFrm}>
         <DialogTitle> Modifier votre email</DialogTitle>
         <DialogContent>
           <div className="frmPassword">
