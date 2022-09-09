@@ -108,7 +108,6 @@ export default function FrmEmail({
       setOpenAlert(true)
     }
   }
-  
   return (
     <div>
       <Dialog PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }} className="dialogue" open={frmEmailOuvert} onClose={viderFermerFrm}>
