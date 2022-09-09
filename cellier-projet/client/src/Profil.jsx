@@ -28,7 +28,7 @@ export default function Profil(props) {
    *  État des styles des composants MUI
    */
   const Button = styled(MuiButton)((props) => ({
-    color: "black"
+    color: "black",
   }));
 
   /**
