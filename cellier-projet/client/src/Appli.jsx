@@ -345,7 +345,7 @@ const Appli = () => {
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
-      {Auth.user && <NavDesktop user={Auth.user} />};
+      {Auth.user && <NavDesktop user={Auth.user} gererSignOut={gererSignOut}/>};
       <div className="appli--container ">
         <img
           className={Auth.user ? "Hidden" : "logo"}
