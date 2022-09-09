@@ -6,13 +6,10 @@ import {
   Routes,
   NavLink,
 } from "react-router-dom";
-import { generateRandomString } from "@aws-amplify/core";
-import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { fontFamily, typography } from "@mui/system";
-import { red } from "@mui/material/colors";
+
 
 export default function Cellier(props) {
   const [cellier, setCellier] = useState([props.id]);
@@ -81,7 +78,8 @@ export default function Cellier(props) {
 			 paddingLeft: 10,
 			 paddingRight: 10,
 			 backgroundColor: '#d3d7dd',
-			 
+			 boxShadow: 'none',
+			 border: '0.5px solid #152440',
 			},
 		}}
       >
