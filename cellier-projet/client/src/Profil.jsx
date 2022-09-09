@@ -20,8 +20,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import {
-  TextField,
-  Button,
+  TextField
 } from '@aws-amplify/ui-react';
 export default function Profil(props) {
 
@@ -121,7 +120,7 @@ export default function Profil(props) {
               <button className="modifier" onClick={gererModifierEmail}>Modifier</button>
             </div>
             <TextField
-                style = {{width: '80%'}} 
+                style = {{width: '100%'}} 
                 id="email"
                 InputProps={{
                   readOnly: true,
@@ -137,7 +136,7 @@ export default function Profil(props) {
               <button className="modifier" onClick={gererModifierPassword}>Modifier</button>
             </div>
             <TextField
-                style = {{width: '80%'}}  
+                style = {{width: '100%'}}  
                 id="email"
                 InputProps={{
                   readOnly: true,

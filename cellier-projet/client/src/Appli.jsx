@@ -368,6 +368,8 @@ const Appli = () => {
 
               {/*-------------------------------- Menu de navigation --------------------------*/}
 
+              {/*-------------------------------- Menu de navigation --------------------------*/}
+
               <div className="navigation">
                 <div className="menu-celliers">
                   {location !== "/" && (
@@ -379,11 +381,6 @@ const Appli = () => {
                   )}
                 </div>
                 <div className="menu-compte">
-                  <NavLink to="/">
-                    <div>
-                      <button onClick={gererSignOut}>Sign Out</button>
-                    </div>
-                  </NavLink>
                   {location === "/" && (
                     <div>
                       {utilisateur && utilisateur.privilege === "admin" && (
@@ -407,6 +404,7 @@ const Appli = () => {
                       setEmailUtilisateur={setEmailUtilisateur}
                       utilisateur={utilisateur}
                       setUtilisateur={setUtilisateur}
+                      gererSignOut={gererSignOut}
                       URI={URI}
                     />
                   }
