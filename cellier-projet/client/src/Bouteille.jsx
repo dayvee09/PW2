@@ -8,7 +8,6 @@ import MuiAlert from '@mui/material/Alert';
 // import format from 'date-fns/format';
 // import moment from 'moment';
 // import { keyframes } from "@emotion/react";
-
 export default function Bouteille(props) {
 
   /**
@@ -159,7 +158,7 @@ export default function Bouteille(props) {
     <>
       <div className="bouteille" data-quantite="">
         <div className="img">
-          <img src={props.image} alt="bouteille" />
+          <img src={props.image.indexOf("pastille_gout")< 0? props.image : "https://assets.sellers.loblaw.ca/products/all/1276/255419_1.jpg?size=274"} alt="bouteille" />
         </div>
 
         <div className="description">
