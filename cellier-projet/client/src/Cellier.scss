@@ -17,6 +17,12 @@
 			.cellier--gestion-dots {
 				color: #cc4240;
 				margin-right: -10px;
+
+				&:hover {
+					background-color: #d3d7dd78;
+					border-radius: 20px;
+					cursor: pointer;
+				}
 			}
 
 			.cellier--nom {
@@ -34,7 +40,7 @@
 				border-radius: 4px;
 				background-color: transparent;
 				text-transform: uppercase;
-				padding: 0 20px 0 20px;
+				padding: 0 15px 0 15px;
 
 				&:hover {
 					background-color: #d3d7dd;

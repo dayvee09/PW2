@@ -1,0 +1,25 @@
+.NavDesktop {
+	display: none;
+}
+
+@media only screen and (min-width: 768px) {
+	.NavDesktop {
+		background-color: #f3f5eb;
+		display: flex;
+		justify-content: space-between;
+		padding: 25px 5rem 25px 5rem;
+
+		.logo {
+			height: 50px;
+			width: 120px;
+		}
+
+		.NavDesktop--container-profil {
+			display: flex;
+			
+			img {
+				margin-right: 15px;
+			}
+		}
+	}
+}
