@@ -17,34 +17,19 @@ import DateSelecteurAnnee from "./DateSelecteurAnnee";
 
 
 export default function FrmBouteille({
-  bouteille_id,
-  cellier_id,
-  bouteille_nom,
-  bouteille_image,
-  quantite_p,
+  bouteille,
+  frmOuvert,
+  setFrmOuvert,
+  voirFiche,
+  setVoirFiche,
+  bouteille_type,
   quantite,
   setQuantite,
   dateAchat,
   setDateAchat,
-  dateAchat_p,
   dateGarde,
   setDateGarde,
-  dateGarde_p,
-  frmOuvert,
-  setFrmOuvert,
-  modifierBouteille,
-  bouteille_pays,
-  bouteille_type,
-  bouteille_format,
-  bouteille_prix,
-  bouteille_millesime,
-  bouteille_date_achat,
-  bouteille_date_jusqua,
-  bouteille_description,
-  bouteille_url_saq,
-  voirFiche,
-  setVoirFiche,
-  bouteille
+  modifierBouteille
 }) {
 
   /**
@@ -57,19 +42,13 @@ export default function FrmBouteille({
   function viderFermerFrm() {
     setFrmOuvert(false);
     setVoirFiche(false);
-    setQuantite(quantite_p);
-    setDateAchat(dateAchat_p);
-    setDateGarde(dateGarde_p);
   }
   /**
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
     if (quantite >= 0) {
-      console.log(dateAchat);
-      console.log(dateGarde);
-      
-      modifierBouteille(quantite,dateAchat, dateGarde);
+      modifierBouteille(quantite, dateAchat, dateGarde);
       setFrmOuvert(false);
     }
     else {
@@ -88,22 +67,22 @@ export default function FrmBouteille({
         )} */}
         <DialogContent>
           <div className="img">
-            <img src={bouteille_image} alt="bouteille" />
+            <img src={bouteille.image} alt="bouteille" />
           </div>
           <div className="description">
-            <h2 className="nom">{bouteille_nom} </h2>
-            <p className="type">{bouteille_type} - {bouteille_format} - {bouteille_pays}</p>
+            <h2 className="nom">{bouteille.nom} </h2>
+            <p className="type">{bouteille_type} - {bouteille.format} - {bouteille.pays}</p>
             <hr />
-            <p className="description">Description : {bouteille_description}</p>
-            <p className="millesime">Millesime : {bouteille_millesime}</p>
-            <p className="millesime">Prix : {bouteille_prix}.00$</p>
+            <p className="description">Description : {bouteille.description}</p>
+            <p className="millesime">Millesime : {bouteille.millesime}</p>
+            <p className="millesime">Prix : {bouteille.prix_saq}.00$</p>
             <p>
-              <a href={bouteille_url_saq}>Voir SAQ</a>
+              <a href={bouteille.url_saq}>Voir SAQ</a>
             </p>
-            <div className={voirFiche === false? "hidden" : ""}>
-              <p className="quantite">Quantité : {quantite}</p>
-              <p className="date_achat">Date achat : {bouteille_date_achat}</p>
-              <p className="date_achat">Date jusqu'à : {bouteille_date_jusqua}</p>
+            <div className={voirFiche === false ? "hidden" : ""}>
+              <p className="quantite">Quantité : {bouteille.quantite}</p>
+              <p className="date_achat">Date achat : {bouteille.date_achat}</p>
+              <p className="date_achat">Date jusqu'à : {bouteille.garde_jusqua}</p>
             </div>
             <Dialog open={openErr}>
               <Alert severity="error"
@@ -124,21 +103,21 @@ export default function FrmBouteille({
             </Dialog>
           </div>
           <FrmBouteilleInput
+            bouteille={bouteille}
             voirFiche={voirFiche}
-            quantite_p={quantite_p}
             setQuantite={setQuantite}
-            quantite={quantite} />
+          />
           <DateSelecteur
             voirFiche={voirFiche}
+            bouteille={bouteille}
             dateAchat={dateAchat}
             setDateAchat={setDateAchat}
-            dateAchat_p={dateAchat_p}
           />
           <DateSelecteurAnnee
             voirFiche={voirFiche}
+            bouteille={bouteille}
             dateGarde={dateGarde}
             setDateGarde={setDateGarde}
-            dateGarde_p={dateGarde_p}
           />
         </DialogContent>
         {voirFiche === false ? (

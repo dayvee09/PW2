@@ -27,6 +27,7 @@ import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
 import Logo from "./img/png/logo-jaune.png";
 import NavMobile from "./NavMobile";
+import FrmAjoutBouteille from "./FrmAjoutBouteille";
 
 let DATA;
 
@@ -439,6 +440,19 @@ const Appli = () => {
                   }
                 />
                 <Route
+                  path={`/vins`}
+                  element={
+                    <FrmAjoutBouteille
+                      bouteilles={bouteilles}
+                      setBouteilles={setBouteilles}
+                      fetchVins={fetchVins}
+                      gererBouteilles={gererBouteilles}
+                      cellier={cellier}
+                      URI={URI}
+                    />
+                  }
+                />
+                <Route
                   path={`/`}
                   element={
                     <ListeCelliers
@@ -462,7 +476,7 @@ const Appli = () => {
         <p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
           Commencez dès maintenant votre collection de vin !
         </p>
-        <NavMobile Auth={Auth} emailUtilisateur={emailUtilisateur} />
+        <NavMobile Auth={Auth} emailUtilisateur={emailUtilisateur}/>
       </div>
       <PiedDePage />
     </div>

@@ -16,7 +16,7 @@ export default function DateSelecteur(props) {
                     <Stack spacing={3}>
 
                         <DatePicker
-                           dateFormat="yyyy-MM-"
+                           dateFormat="YYYY-MM-DD"
                             views={['day']}
                             value={props.dateAchat}
                             onChange={(newValue) => {
