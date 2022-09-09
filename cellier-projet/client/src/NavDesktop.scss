@@ -8,6 +8,7 @@
 		display: flex;
 		justify-content: space-between;
 		padding: 25px 5rem 25px 5rem;
+	
 
 		.logo {
 			height: 50px;
@@ -17,9 +18,23 @@
 		.NavDesktop--container-profil {
 			display: flex;
 			
+			p {
+				padding-top: 10px;
+			}
+			
 			img {
 				margin-right: 15px;
 			}
 		}
+	}
+}
+
+.MuiList-root {
+	a span {
+		margin: 0 auto;
+	}
+	a:hover {
+		color: #cc4240;
+		background-color: transparent;
 	}
 }
