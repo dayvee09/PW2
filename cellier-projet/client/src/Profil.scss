@@ -18,7 +18,6 @@
     margin-top:-20px;
   }
   .modifier {
-    background-color: #f3f5eb;
     border: none;
     text-underline-offset: 3px;
     text-decoration: underline; 
@@ -30,22 +29,21 @@
   .infos-modification {
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 100%;
     margin-bottom: -1%;
-    margin-left: 10%;
     font-size: 15px;
   }
 }
 
 .boutonSupprimer {
-  background-color: #f3f5eb;
+  background-color:none;
   border: none;
   text-underline-offset: 3px;
   text-decoration: underline;
   font-size: 15px;
   display: flex;
   justify-content: flex-start;
-  margin-left: 2%;
+  margin-left: 1.5%;
   margin-bottom: 2rem;
   &:hover {
     font-weight:500;
