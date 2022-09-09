@@ -1,0 +1,45 @@
+.FrmAjoutBouteille {
+  border: 1px dotted gray;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 20px 0;
+  .EnteteAjoutBouteille {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    background-color: #152440;
+    h2 {
+      color: white;
+      font-size: 2em;
+      font-weight: 400;
+      width: 200px;
+      flex-wrap: wrap;
+      font-family: Alata, sans-serif;
+      text-align: center;
+    }
+  }
+  .FrmAjoutNouvelle{
+     margin: 20px;
+    //  *+* {
+    //   margin: 2px;
+    //  }
+     label {
+        margin-top: 10px;
+        display: block;
+     }
+    //  label+* {
+    //   margin-top: 10px;
+    //  }
+     *+label {
+      margin-bottom: 0px;
+     }
+  }
+  .bandeRouge {
+    width: auto;
+    padding: 10px;
+    background-color: #cc4240;
+  }
+}

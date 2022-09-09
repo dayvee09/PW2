@@ -1,7 +1,4 @@
 import TextField from "@mui/material/TextField";
-import { StyledEngineProvider } from '@mui/material/styles';
-import DateSelecteur from './DateSelecteur';
-import DateSelecteurAnnee from './DateSelecteurAnnee';
 import "./FrmBouteilleInput.scss";
 
 export default function FrmBouteilleInput(props) {
@@ -20,7 +17,7 @@ export default function FrmBouteilleInput(props) {
         type={"number"}
         min={0}
         inputProps={{ min: 0 }}
-        defaultValue={props.quantite}
+        defaultValue={props.bouteille.quantite}
       />
     </div>
   );
