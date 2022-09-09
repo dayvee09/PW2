@@ -24,8 +24,14 @@ export default function Profil(props) {
   /**
    *  État des styles des composants MUI
    */
-  const Button = styled(MuiButton)((props) => ({
-    color: "black",
+   const Button = styled(MuiButton)((props) => ({
+    color: "#f3f5eb",
+    backgroundColor: "#cc4240",
+    textDecoration: "none",
+    '&:hover': {
+      backgroundColor: '#f1ab50',
+      color: '#f3f5eb',
+     }
   }));
 
   /**
