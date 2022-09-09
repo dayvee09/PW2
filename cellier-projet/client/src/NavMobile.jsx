@@ -11,9 +11,9 @@ import { ReactComponent as AideIcone } from "./img/svg/icone_help_blue_line.svg"
 import { ReactComponent as AddBottleIcone } from "./img/svg/add_bottle_blue_filled.svg";
 
 export default function NavMobile({Auth, emailUtilisateur}) {
-
+    // état du BottomNavigation
 	const [value, setValue] = React.useState(0);
-
+	
 	return (
 	<div>
 	  <div className={Auth.user ? "NavMobile" : "Hidden"}>
@@ -33,7 +33,7 @@ export default function NavMobile({Auth, emailUtilisateur}) {
 				className="AddBottleIcone"
 				icon={<AddBottleIcone />}
 				component={Link} 
-				to="/bouteille"
+				to={`/vins`}
 				/>
 				<BottomNavigationAction disabled={true} />
 				<BottomNavigationAction label="FAVORIS" icon={<FavorisIcone />} component={Link} to="." />
