@@ -15,6 +15,8 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import Axios from "axios";
 import "./Appli.scss";
+import NavMobile from "./NavMobile";
+import NavDesktop from "./NavDesktop";
 import PiedDePage from "./PiedDePage.jsx";
 import ListeBouteilles from "./ListeBouteilles";
 import Admin from "./Admin";
@@ -26,7 +28,6 @@ import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
 import Logo from "./img/png/logo-jaune.png";
-import NavMobile from "./NavMobile";
 
 let DATA;
 
@@ -50,7 +51,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -343,7 +344,8 @@ const Appli = () => {
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
-      <div className="appli--container ">
+		{ Auth.user && (<NavDesktop user={Auth.user}/> )};
+      	<div className="appli--container ">
         <img
           className={Auth.user ? "Hidden" : "logo"}
           src={Logo}
@@ -352,7 +354,6 @@ const Appli = () => {
         <Authenticator className="Authenticator" formFields={formFields}>
           {({ signOut, user }) => (
             <div>
-              <h2>Hello {user.attributes.email}</h2>
               <Utilisateur
                 utilisateur={utilisateur}
                 setUtilisateur={setUtilisateur}
@@ -365,8 +366,6 @@ const Appli = () => {
                 fetchUtilisateur={fetchUtilisateur}
                 createUser={createUser}
               />
-
-              {/*-------------------------------- Menu de navigation --------------------------*/}
 
               {/*-------------------------------- Menu de navigation --------------------------*/}
 
