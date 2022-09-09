@@ -138,6 +138,8 @@
 
 @media only screen and (min-width: 1024px) {
 	.Appli {
-		padding: 0 5rem 100px 5rem;
+		.appli--container {
+			padding: 0 5rem 75px 5rem;
+		}
 	}
 }
