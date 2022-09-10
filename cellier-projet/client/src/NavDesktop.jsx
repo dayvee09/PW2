@@ -76,6 +76,10 @@ export default function NavDesktop({ user, gererSignOut }) {
         <MenuItem component={Link} to={`/`}>
           <span>Mes Celliers</span>
         </MenuItem>
+		<hr></hr>
+        <MenuItem component={Link} to={``}>
+          <span>Mes Favoris</span>
+        </MenuItem>
         <hr></hr>
         <MenuItem>
           <span onClick={redirectionAccueil}>Déconnexion</span>
