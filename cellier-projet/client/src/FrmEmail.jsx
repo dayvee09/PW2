@@ -60,17 +60,13 @@ export default function FrmEmail({
    */
   const theme = createTheme({
     components: {
-      // Inputs
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            // borderRadius: inputBorderRadius,
-            // "& .MuiOutlinedInput-notchedOutline": {
-            //   border: `5px solid green`
-            // },
             "&.Mui-focused": {
               "& .MuiOutlinedInput-notchedOutline": {
-                border: `2px solid #f1ab50`
+                border: `1px solid #f1ab50`,
+                boxShadow: `none`
               }
             }
           }
@@ -155,7 +151,7 @@ export default function FrmEmail({
       <Dialog PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }} className="dialogue" open={frmEmailOuvert} onClose={viderFermerFrm}>
         <CssDialogTitle>Modifier votre email</CssDialogTitle>
         <DialogContent>
-          <div className="frmPassword">
+          <div className="frmEmail">
             <p className="">Email actuel: {emailUtilisateur}</p>
             <ThemeProvider theme={theme}>
               <TextField 
@@ -164,7 +160,6 @@ export default function FrmEmail({
                   id="email"
                   type={"text"}
                   defaultValue={emailUtilisateur}
-                  // focusColor="#f1ab50"
               />
             </ThemeProvider>
             <Snackbar

@@ -12,13 +12,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import {
-  Route,
-  Routes,
-  NavLink,
-  useParams,
-  Navigate,
   useNavigate,
-  useLocation,
 } from "react-router-dom";
 import { TextField } from "@aws-amplify/ui-react";
 export default function Profil(props) {
@@ -75,22 +69,19 @@ export default function Profil(props) {
     setOpenAlert(false);
   };
 
-   /**
+  /**
    * Thème de modification du composant TextField
    */
-  const themeProfil = createTheme({
+  const theme = createTheme({
     components: {
       // Inputs
       MuiOutlinedInput: {
         styleOverrides: {
           root: {
-            // borderRadius: inputBorderRadius,
-            // "& .MuiOutlinedInput-notchedOutline": {
-            //   border: `5px solid green`
-            // },
             "&.Mui-focused": {
               "& .MuiOutlinedInput-notchedOutline": {
-                border: `2px solid #f1ab50`
+                border: `1px solid #f1ab50`,
+                boxShadow:'none'
               }
             }
           }
@@ -160,13 +151,11 @@ export default function Profil(props) {
               Modifier
             </button>
           </div>
-          <ThemeProvider theme={themeProfil}>
+          <ThemeProvider theme={theme}>
             <TextField
               style={{ width: "100%" }}
               id="email"
-              InputProps={{
-                readOnly: true,
-              }}
+              InputProps={{ inputProps: {readOnly: true,  backgroundColor:"black"} }}
               type={"text"}
               variant="outlined"
               defaultValue={props.emailUtilisateur}
@@ -180,13 +169,13 @@ export default function Profil(props) {
               Modifier
             </button>
           </div>
-          <ThemeProvider theme={themeProfil}>
+          <ThemeProvider theme={theme}>
             <TextField
               style={{ width: "100%" }}
               id="email"
-              InputProps={{
-                readOnly: true,
-              }}
+              // InputProps={{
+              //   readOnly: true,
+              // }}
               type={"password"}
               variant="outlined"
               defaultValue={"**********"}
