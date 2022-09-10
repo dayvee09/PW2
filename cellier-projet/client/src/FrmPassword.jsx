@@ -6,9 +6,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { Auth } from "aws-amplify";
 import { useState, useEffect } from "react";
 import "./FrmPassword.scss";
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { styled } from "@mui/material/styles";
 import MuiButton from "@mui/material/Button";
 import {
     PasswordField,
@@ -47,28 +47,6 @@ export default function FrmPassword({
     textAlign:"center"
   }));
 
-  const CssTextField = styled(PasswordField, {
-    shouldForwardProp: (props) => props !== "focusColor"
-  })((p) => ({
-    // input label when focused
-    "& label.Mui-focused": {
-      color: p.focusColor
-    },
-    // focused color for input with variant='standard'
-    "& .MuiInput-underline:after": {
-      borderBottomColor: p.focusColor
-    },
-    // focused color for input with variant='filled'
-    "& .MuiFilledInput-underline:after": {
-      borderBottomColor: p.focusColor
-    },
-    // focused color for input with variant='outlined'
-    "& .MuiOutlinedInput-root": {
-      "&.Mui-focused fieldset": {
-        borderColor: p.focusColor
-      }
-    }
-  }));
 
   /**
    * État de l'alerte
@@ -172,12 +150,12 @@ export default function FrmPassword({
               errorMessage={errorMessage}
               label="Nouveau mot de passe"
               id="Nouveau_mot_de_passe"
-              PaperProps={{
-                '&:focus': {
-                  borderColor: "#f1ab50",
-                  boxShadow: "none"
-                }
-              }}
+              // PaperProps={{
+              //   '&:focus': {
+              //     borderColor: "#f1ab50",
+              //     boxShadow: "none"
+              //   }
+              // }}
             />
             <Snackbar
               sx={{ height: "100%" }}
