@@ -344,7 +344,8 @@ const Appli = () => {
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
-      {Auth.user && <NavDesktop user={Auth.user} gererSignOut={gererSignOut}/>};
+      {Auth.user && <NavDesktop user={Auth.user} gererSignOut={gererSignOut} />}
+      ;
       <div className="appli--container ">
         <img
           className={Auth.user ? "Hidden" : "logo"}
@@ -376,17 +377,6 @@ const Appli = () => {
                       <NavLink to={`/`}>
                         <button>Retour aux Celliers</button>
                       </NavLink>
-                    </div>
-                  )}
-                </div>
-                <div className="menu-compte">
-                  {location === "/" && (
-                    <div>
-                      {utilisateur && utilisateur.privilege === "admin" && (
-                        <NavLink to={`/admin/${emailUtilisateur}`}>
-                          <button>Menu Admin</button>
-                        </NavLink>
-                      )}
                     </div>
                   )}
                 </div>
@@ -462,6 +452,7 @@ const Appli = () => {
                       fetchVins={fetchVins}
                       id={id}
                       emailUtilisateur={emailUtilisateur}
+                      utilisateur={utilisateur}
                       gererCellier={gererCellier}
                       URI={URI}
                     />

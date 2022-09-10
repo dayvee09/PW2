@@ -24,131 +24,130 @@
 
 // Gestion du formulaire de connexion
 .Login {
-	background-position: top;
-	background-repeat: no-repeat;
-	background-size: cover;
-	color: #152440;
-	font-family: "Raleway", sans-serif;
-	font-weight: 200;
-	padding-top:25px;
-	padding-bottom:25px;
-	text-align: center;
-	background-image: linear-gradient(
-		to top,
-		rgb(204, 66, 64) 70%,
-		rgba(16, 30, 51, 0.95) 50%,
-		),
-		url(./img/jpg/background-accueil.jpg);
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #152440;
+  font-family: "Raleway", sans-serif;
+  font-weight: 200;
+  padding-top: 25px;
+  padding-bottom: 25px;
+  text-align: center;
+  background-image: linear-gradient(
+      to top,
+      rgb(204, 66, 64) 70%,
+      rgba(16, 30, 51, 0.95) 50%
+    ),
+    url(./img/jpg/background-accueil.jpg);
 
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
 
-		position: fixed;
-		bottom: 0 ;
-		top: 0;
-		left:0;
-		right:0;
-		
-		.logo {
-			width: 200px;
-			padding-bottom: 25px;
-		}
-		
-		.Auth-sub-title {
-			padding-bottom: 25px;
-			font-weight: 200;
-			font-size: 15px;
-			color: #f3f5eb;
-		}
-		
-		small {
-			font-size: 0.9em;
-			color: #f3f5eb;
-		}
-		
-		.Authenticator {
-			padding-bottom: 25px;
+  .logo {
+    width: 200px;
+    padding-bottom: 25px;
+  }
 
-		.amplify-heading {
-			font-size: 15px;
-		}
+  .Auth-sub-title {
+    padding-bottom: 25px;
+    font-weight: 200;
+    font-size: 15px;
+    color: #f3f5eb;
+  }
 
-		div:first-child {
-			background-color: #f3f5eb;
-			width: 100%;
-		}
+  small {
+    font-size: 0.9em;
+    color: #f3f5eb;
+  }
 
-		input {
-			text-align: left;
+  .Authenticator {
+    padding-bottom: 25px;
 
-			&:focus {
-				border-color: #f1ab50;
-				box-shadow: none;
-			}
-		}
+    .amplify-heading {
+      font-size: 15px;
+    }
 
-		.amplify-button--primary {
-			background-color: #f1ab50;
-			color: #101e33;
-			font-weight: 200;
+    div:first-child {
+      background-color: #f3f5eb;
+      width: 100%;
+    }
 
-			&:hover {
-				background-color: #152440;
-				color: #f3f5eb;
-			}
-		}
+    input {
+      text-align: left;
 
-		.amplify-button--link {
-			color: #152440;
-			text-underline-offset: 5px;
-			text-decoration: underline 1px; 
-			
-			&:hover {
-			background-color: #f3f5eb;
-			color: #cc4240;
-			}
-		}
+      &:focus {
+        border-color: #f1ab50;
+        box-shadow: none;
+      }
+    }
 
-		.amplify-tabs-item {
-			background-color: #f3f5eb;
-			color: #cc4240;
-			font-weight: 500;
-			border: 1px solid #e2e2e273;
-		}
+    .amplify-button--primary {
+      background-color: #f1ab50;
+      color: #101e33;
+      font-weight: 200;
 
-		.amplify-alert--error {
-			background-color: #f3f5eb;
-			color: #cc4240;
-			font-weight: 500;
-			border: 1px solid #cc4240;
-		}
+      &:hover {
+        background-color: #152440;
+        color: #f3f5eb;
+      }
+    }
 
-		button[data-state="inactive"] {
-			background-color: #f3f5eb86;
-			color: #152440;
-		}
+    .amplify-button--link {
+      color: #152440;
+      text-underline-offset: 5px;
+      text-decoration: underline 1px;
 
-		button[data-state="active"] {
-			border-top: 3px solid #f1ab50;
-		}
-	}
+      &:hover {
+        background-color: #f3f5eb;
+        color: #cc4240;
+      }
+    }
+
+    .amplify-tabs-item {
+      background-color: #f3f5eb;
+      color: #cc4240;
+      font-weight: 500;
+      border: 1px solid #e2e2e273;
+    }
+
+    .amplify-alert--error {
+      background-color: #f3f5eb;
+      color: #cc4240;
+      font-weight: 500;
+      border: 1px solid #cc4240;
+    }
+
+    button[data-state="inactive"] {
+      background-color: #f3f5eb86;
+      color: #152440;
+    }
+
+    button[data-state="active"] {
+      border-top: 3px solid #f1ab50;
+    }
+  }
 }
 
 @media only screen and (min-width: 768px) {
-	.Authenticator {
-		width: 600px;
-		margin: auto;
-	}
+  .Authenticator {
+    width: 600px;
+    margin: auto;
+  }
 
-	.Appli {
-		.appli--container {
-			padding: 0 5rem 75px 5rem;
-		}
-	}
+  .Appli {
+    .appli--container {
+      padding: 0 5rem 75px 5rem;
+    }
+  }
 }
 
 @media only screen and (min-width: 1200px) {
-	.Appli {
-		.appli--container {
-			padding: 0 5rem 75px 5rem;
-		}
-	}
+  .Appli {
+    .appli--container {
+      padding: 0 5rem 75px 5rem;
+    }
+  }
 }

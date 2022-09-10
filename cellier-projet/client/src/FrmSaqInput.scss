@@ -1,8 +1,24 @@
-.MuiList-root {
-  background-color: transparent;
-  li {
-    &:first-of-type {
-      margin-left: 0px;
-    }
+.FrmSaqInput {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-evenly;
+}
+
+.MuiList-root li:hover {
+  color: #cc4240;
+  background-color: rgba(25, 118, 210, 0.08) !important;
+  margin: 0px;
+}
+
+.MuiList-root li {
+  margin: 0px !important;
+}
+
+@media only screen and (min-width: 768px) {
+  .FrmSaqInput {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
   }
 }
