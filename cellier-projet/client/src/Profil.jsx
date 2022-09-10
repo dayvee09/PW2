@@ -5,8 +5,8 @@ import FrmPassword from "./FrmPassword";
 import { useState, useEffect } from "react";
 import MuiAlert from "@mui/material/Alert";
 import Dialog from "@mui/material/Dialog";
-import { styled } from "@mui/material/styles";
 import MuiButton from "@mui/material/Button";
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import Image from "./img/svg/icone_profil_blue_line.svg";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -75,6 +75,30 @@ export default function Profil(props) {
     setOpenAlert(false);
   };
 
+   /**
+   * Thème de modification du composant TextField
+   */
+  const themeProfil = createTheme({
+    components: {
+      // Inputs
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            // borderRadius: inputBorderRadius,
+            // "& .MuiOutlinedInput-notchedOutline": {
+            //   border: `5px solid green`
+            // },
+            "&.Mui-focused": {
+              "& .MuiOutlinedInput-notchedOutline": {
+                border: `2px solid #f1ab50`
+              }
+            }
+          }
+        }
+      }
+    }
+  });
+
   // ----------------------- Gestion du profil ------------------------------------------------
 
   /**
@@ -136,16 +160,18 @@ export default function Profil(props) {
               Modifier
             </button>
           </div>
-          <TextField
-            style={{ width: "100%" }}
-            id="email"
-            InputProps={{
-              readOnly: true,
-            }}
-            type={"text"}
-            variant="outlined"
-            defaultValue={props.emailUtilisateur}
-          />
+          <ThemeProvider theme={themeProfil}>
+            <TextField
+              style={{ width: "100%" }}
+              id="email"
+              InputProps={{
+                readOnly: true,
+              }}
+              type={"text"}
+              variant="outlined"
+              defaultValue={props.emailUtilisateur}
+            />
+          </ThemeProvider>
         </div>
         <div className="description-password">
           <div className="infos-modification">
@@ -154,16 +180,18 @@ export default function Profil(props) {
               Modifier
             </button>
           </div>
-          <TextField
-            style={{ width: "100%" }}
-            id="email"
-            InputProps={{
-              readOnly: true,
-            }}
-            type={"password"}
-            variant="outlined"
-            defaultValue={"**********"}
-          />
+          <ThemeProvider theme={themeProfil}>
+            <TextField
+              style={{ width: "100%" }}
+              id="email"
+              InputProps={{
+                readOnly: true,
+              }}
+              type={"password"}
+              variant="outlined"
+              defaultValue={"**********"}
+            />
+          </ThemeProvider>
         </div>
         <FrmEmail
           frmEmailOuvert={frmEmailOuvert}
