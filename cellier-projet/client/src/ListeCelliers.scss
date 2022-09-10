@@ -11,6 +11,17 @@
   display: flex;
   justify-content: space-between;
 
+  .entete--items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .entete--items > * + * {
+    margin-top: 10px;
+  }
+
   button {
     border: none;
     background-color: transparent;
