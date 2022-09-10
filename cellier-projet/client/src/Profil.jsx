@@ -11,12 +11,9 @@ import Image from "./img/svg/icone_profil_blue_filled.svg";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import {
-  useNavigate,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { TextField } from "@aws-amplify/ui-react";
 export default function Profil(props) {
-
   /**
    *  État des styles des composants MUI
    */
@@ -24,18 +21,20 @@ export default function Profil(props) {
     color: "#f3f5eb",
     backgroundColor: "#cc4240",
     textDecoration: "none",
-    borderRadius:"0px",
+    borderRadius: "0px",
     fontFamily: "Alata",
-    '&:hover': {
-      backgroundColor: '#f1ab50',
-      color: '#f3f5eb',
-     }
+    "&:hover": {
+      backgroundColor: "#f1ab50",
+      color: "#f3f5eb",
+    },
   }));
 
   /**
    *  État du nouvel email par défaut
    */
-  const [NouvelEmailUtilisateur, setNouvelEmailUtilisateur] = useState(props.emailUtilisateur);
+  const [NouvelEmailUtilisateur, setNouvelEmailUtilisateur] = useState(
+    props.emailUtilisateur
+  );
 
   /**
    *  État des formulaires de modification
@@ -81,13 +80,13 @@ export default function Profil(props) {
             "&.Mui-focused": {
               "& .MuiOutlinedInput-notchedOutline": {
                 border: `1px solid #f1ab50`,
-                boxShadow:'none'
-              }
-            }
-          }
-        }
-      }
-    }
+                boxShadow: "none",
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
   // ----------------------- Gestion du profil ------------------------------------------------
@@ -138,15 +137,13 @@ export default function Profil(props) {
 
   return (
     <>
-    	<div className="infos-profil">
+      <div className="infos-profil">
         <img src={Image} className="icone-profil" alt="icone-profil"></img>
         <p>{props.emailUtilisateur}</p>
       </div>
-      {/* <NavLink to="/"> */}
       <div className="signOut">
         <Button onClick={redirectionAccueil}>Déconnexion</Button>
       </div>
-      {/* </NavLink> */}
       <div className="Profil" data-quantite="">
         <div className="description">
           <div className="infos-modification">
@@ -159,7 +156,9 @@ export default function Profil(props) {
             <TextField
               style={{ width: "100%" }}
               id="email"
-              InputProps={{ inputProps: {readOnly: true,  backgroundColor:"black"} }}
+              InputProps={{
+                inputProps: { readOnly: true, backgroundColor: "black" },
+              }}
               type={"text"}
               variant="outlined"
               defaultValue={props.emailUtilisateur}
