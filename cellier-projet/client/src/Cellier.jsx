@@ -65,7 +65,6 @@ export default function Cellier(props) {
 			<p>ID : {props.id}</p>
 			<p>Id Utilisateur : {props.vino__utilisateur_id}</p>
 		</div>
-	</div>
 	<Menu
         open={menuContextuelOuvert}
         anchorEl={eltAncrage}
@@ -86,7 +85,8 @@ export default function Cellier(props) {
         <MenuItem>Modifier</MenuItem>
 		<hr></hr>
         <MenuItem>Supprimer</MenuItem>
-      </Menu>
+    </Menu>
+	</div>
     </>
   );
 }

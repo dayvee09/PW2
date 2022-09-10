@@ -64,7 +64,28 @@ export default function FrmSaqInput(props) {
         variant="standard"
         s
         placeholder="Page"
-        sx={{ m: 1, minWidth: 120 }}
+        sx={[
+          {
+            m: 1,
+            minWidth: 120,
+          },
+          {
+            backgroundColor: "#FFFFFF",
+          },
+          {
+            "& label.Mui-focused": { color: "#f1ab50" },
+          },
+          {
+            "&:Mui-focused": {
+              backgroundColor: "#f1ab50",
+              color: "#f3f5eb",
+            },
+
+            "& .MuiInput-underline:after": {
+              borderBottomColor: "#f1ab50",
+            },
+          },
+        ]}
         size="small"
         autoFocus
         onChange={gererPage}

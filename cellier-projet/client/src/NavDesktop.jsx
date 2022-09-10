@@ -2,6 +2,7 @@ import "./NavDesktop.scss";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Logo from "./img/png/logo-bleu.png";
+import AddBottleImage from "./img/svg/add_bottle_blue_filled.svg";
 import Image from "./img/svg/icone_profil_blue_line.svg";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -34,14 +35,22 @@ export default function NavDesktop({ user, gererSignOut, utilisateur }) {
         <NavLink to="/">
           <img className="logo" src={Logo} alt="logo-mon-vino"></img>
         </NavLink>
-        <div
-          className="NavDesktop--container-profil"
-          onClick={gererMenuContextuel}
-        >
-          <img src={Image} alt="icone-profil" width={20}></img>
-          <p>{user.attributes.email}</p>
-        </div>
-      </div>
+		<div className="actionMenu">
+			<NavLink to="/vins">
+			<img className="iconeAddBottle" 
+					src={AddBottleImage} 
+					alt="bouton-ajouter-bouteille"
+					>
+			</img>
+			</NavLink>
+			<div
+			className="navDesktop--container-profil"
+			onClick={gererMenuContextuel}
+			>
+			<img src={Image} alt="icone-profil" width={20}></img>
+			<p>{user.attributes.email}</p>
+			</div>
+		</div>
       <Menu
         open={menuContextuelOuvert}
         anchorEl={eltAncrage}
@@ -72,6 +81,7 @@ export default function NavDesktop({ user, gererSignOut, utilisateur }) {
           <span onClick={redirectionAccueil}>Déconnexion</span>
         </MenuItem>
       </Menu>
+      </div>
     </>
   );
 }

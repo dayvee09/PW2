@@ -86,8 +86,30 @@ export default function FrmSaq({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={viderFermerFrm}>Annuler</Button>
-          <Button onClick={gererSoumettre}>Soumettre</Button>
+          <Button
+            sx={[
+              {
+                "&:hover": {
+                  color: "#f1ab50",
+                },
+              },
+            ]}
+            onClick={viderFermerFrm}
+          >
+            Annuler
+          </Button>
+          <Button
+            sx={[
+              {
+                "&:hover": {
+                  color: "#f1ab50",
+                },
+              },
+            ]}
+            onClick={gererSoumettre}
+          >
+            Soumettre
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
