@@ -5,6 +5,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { styled } from "@mui/system";
 
 export default function FrmSaqInput(props) {
   const gererType = (e) => {
@@ -18,8 +19,33 @@ export default function FrmSaqInput(props) {
     props.setPage(e.target.value);
   }
   return (
-    <div>
-      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+    <div className="FrmSaqInput">
+      <FormControl
+        sx={[
+          {
+            m: 1,
+            minWidth: 120,
+          },
+          {
+            backgroundColor: "#FFFFFF",
+          },
+          {
+            "& label.Mui-focused": { color: "#f1ab50" },
+          },
+          {
+            "&:Mui-focused": {
+              backgroundColor: "#f1ab50",
+              color: "#f3f5eb",
+            },
+
+            "& .MuiInput-underline:after": {
+              borderBottomColor: "#f1ab50",
+            },
+          },
+        ]}
+        variant="standard"
+        size="small"
+      >
         <InputLabel id="nombre">Nombre</InputLabel>
         <Select
           labelId="nombre"
@@ -27,6 +53,7 @@ export default function FrmSaqInput(props) {
           value={props.nombre}
           label="Nombre"
           onChange={gererNombre}
+          autoFocus
         >
           <MenuItem value={24}>24</MenuItem>
           <MenuItem value={48}>48</MenuItem>
@@ -34,8 +61,31 @@ export default function FrmSaqInput(props) {
         </Select>
       </FormControl>
       <TextField
+        variant="standard"
+        s
         placeholder="Page"
-        sx={{ m: 1, minWidth: 120 }}
+        sx={[
+          {
+            m: 1,
+            minWidth: 120,
+          },
+          {
+            backgroundColor: "#FFFFFF",
+          },
+          {
+            "& label.Mui-focused": { color: "#f1ab50" },
+          },
+          {
+            "&:Mui-focused": {
+              backgroundColor: "#f1ab50",
+              color: "#f3f5eb",
+            },
+
+            "& .MuiInput-underline:after": {
+              borderBottomColor: "#f1ab50",
+            },
+          },
+        ]}
         size="small"
         autoFocus
         onChange={gererPage}
@@ -45,7 +95,32 @@ export default function FrmSaqInput(props) {
         inputProps={{ min: 0 }}
         defaultValue={props.page}
       />
-      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+      <FormControl
+        variant="standard"
+        sx={[
+          {
+            m: 1,
+            minWidth: 120,
+          },
+          {
+            backgroundColor: "#FFFFFF",
+          },
+          {
+            "& label.Mui-focused": { color: "#f1ab50" },
+          },
+          {
+            "&:Mui-focused": {
+              backgroundColor: "#f1ab50",
+              color: "#f3f5eb",
+            },
+
+            "& .MuiInput-underline:after": {
+              borderBottomColor: "#f1ab50",
+            },
+          },
+        ]}
+        size="small"
+      >
         <InputLabel id="type">Type</InputLabel>
         <Select
           labelId="type"
