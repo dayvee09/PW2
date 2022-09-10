@@ -22,8 +22,8 @@
   .modifier {
     background-color: #f3f5eb;
     border: none;
-    text-underline-offset: 3px;
-    text-decoration: underline; 
+    text-underline-offset: 5px;
+    text-decoration: underline 1px; 
     &:hover {
       font-weight:bolder;
     }
