@@ -3,12 +3,11 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { createTheme } from "@mui/material/styles";
+import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { Auth } from 'aws-amplify';
 import { useState, useEffect } from "react";
 import "./FrmEmail.scss";
-import { styled } from "@mui/material/styles";
 import MuiButton from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -46,20 +45,6 @@ export default function FrmEmail({
     textAlign:"center"
   }));
 
-  // const styles = theme => ({
-  //   textField: {
-  //       width: '90%',
-  //       marginLeft: 'auto',
-  //       marginRight: 'auto',            
-  //       paddingBottom: 0,
-  //       marginTop: 0,
-  //       fontWeight: 500
-  //   },
-  //   input: {
-  //       color: 'white'
-  //   }
-  // });
-
   /**
    * État de l'alerte
    */
@@ -69,6 +54,30 @@ export default function FrmEmail({
    * État du message retour
    */
   const [messageRetour, setMessageRetour] = useState([]);
+
+  /**
+   * Thème de modification du composant TextField
+   */
+  const theme = createTheme({
+    components: {
+      // Inputs
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            // borderRadius: inputBorderRadius,
+            // "& .MuiOutlinedInput-notchedOutline": {
+            //   border: `5px solid green`
+            // },
+            "&.Mui-focused": {
+              "& .MuiOutlinedInput-notchedOutline": {
+                border: `2px solid #f1ab50`
+              }
+            }
+          }
+        }
+      }
+    }
+  });
 
   /**
    * État de l'alerte
@@ -107,6 +116,7 @@ export default function FrmEmail({
     let result = await Auth.updateUserAttributes(user, {
         'email': NouvelEmailUtilisateur,
     });
+    console.log(result);
     if (result === "SUCCESS") {
       let reponse = await fetch(
           URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
@@ -128,6 +138,7 @@ export default function FrmEmail({
     setSeverity("")
     var reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     setNouvelEmailUtilisateur(NouvelEmailUtilisateur);
+    console.log(NouvelEmailUtilisateur);
     if (reg.test(NouvelEmailUtilisateur)) {
       fetchPatchUtilisateurEmail(NouvelEmailUtilisateur);
       setMessageRetour("Modification effectuée")
@@ -146,22 +157,16 @@ export default function FrmEmail({
         <DialogContent>
           <div className="frmPassword">
             <p className="">Email actuel: {emailUtilisateur}</p>
-            <TextField
-                onChange={gererInput}
-                autoFocus
-                id="email"
-                type={"text"}
-                defaultValue={emailUtilisateur}
-                focusColor="#f1ab50"
-                // className={classes.textField}
-                // InputProps={{
-                //   className: classes.input,
-                //   '&:focus': {
-                //     borderColor: "#f1ab50",
-                //     boxShadow: "none"
-                //   }
-                // }}
-            />
+            <ThemeProvider theme={theme}>
+              <TextField 
+                  onChange={gererInput}
+                  autoFocus
+                  id="email"
+                  type={"text"}
+                  defaultValue={emailUtilisateur}
+                  // focusColor="#f1ab50"
+              />
+            </ThemeProvider>
             <Snackbar
               sx={{ height: "100%" }}
               anchorOrigin={{
