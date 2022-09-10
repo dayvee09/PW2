@@ -7,7 +7,7 @@ import MuiAlert from "@mui/material/Alert";
 import Dialog from "@mui/material/Dialog";
 import MuiButton from "@mui/material/Button";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
-import Image from "./img/svg/icone_profil_blue_line.svg";
+import Image from "./img/svg/icone_profil_blue_filled.svg";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -138,6 +138,10 @@ export default function Profil(props) {
 
   return (
     <>
+    	<div className="infos-profil">
+        <img src={Image} className="icone-profil" alt="icone-profil"></img>
+        <p>{props.emailUtilisateur}</p>
+      </div>
       {/* <NavLink to="/"> */}
       <div className="signOut">
         <Button onClick={redirectionAccueil}>Déconnexion</Button>
@@ -172,7 +176,7 @@ export default function Profil(props) {
           <ThemeProvider theme={theme}>
             <TextField
               style={{ width: "100%" }}
-              id="email"
+              id="password"
               // InputProps={{
               //   readOnly: true,
               // }}
