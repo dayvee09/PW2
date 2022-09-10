@@ -54,7 +54,7 @@
 		.Auth-sub-title {
 			padding-bottom: 25px;
 			font-weight: 200;
-			font-size: 12px;
+			font-size: 15px;
 			color: #f3f5eb;
 		}
 		
@@ -97,7 +97,9 @@
 
 		.amplify-button--link {
 			color: #152440;
-
+			text-underline-offset: 5px;
+			text-decoration: underline 1px; 
+			
 			&:hover {
 			background-color: #f3f5eb;
 			color: #cc4240;
@@ -134,9 +136,15 @@
 		width: 600px;
 		margin: auto;
 	}
+
+	.Appli {
+		.appli--container {
+			padding: 0 5rem 75px 5rem;
+		}
+	}
 }
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 1200px) {
 	.Appli {
 		.appli--container {
 			padding: 0 5rem 75px 5rem;
