@@ -150,12 +150,6 @@ export default function FrmPassword({
               errorMessage={errorMessage}
               label="Nouveau mot de passe"
               id="Nouveau_mot_de_passe"
-              // PaperProps={{
-              //   '&:focus': {
-              //     borderColor: "#f1ab50",
-              //     boxShadow: "none"
-              //   }
-              // }}
             />
             <Snackbar
               sx={{ height: "100%" }}
