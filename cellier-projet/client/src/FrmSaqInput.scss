@@ -1,2 +1,14 @@
 .FrmSaqInput {
+  display: flex;
+  align-items: flex-end;
+}
+
+.MuiList-root li:hover {
+  color: red;
+  background-color: rgba(25, 118, 210, 0.08);
+  margin: 0px;
+}
+
+.MuiList-root li {
+  margin: 0px !important;
 }
