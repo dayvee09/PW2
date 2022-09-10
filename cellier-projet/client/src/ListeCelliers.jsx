@@ -16,15 +16,6 @@ function ListeCelliers(props) {
             <div className="entete--item">
               <button>+ Ajouter</button>
             </div>
-            {window.location.pathname === "/" && (
-              <div className="entete--item">
-                {props.utilisateur && props.utilisateur.privilege === "admin" && (
-                  <NavLink to={`/admin/${props.emailUtilisateur}`}>
-                    <button>Menu Admin</button>
-                  </NavLink>
-                )}
-              </div>
-            )}
           </div>
         </div>
         <div className="ListeCelliers">
