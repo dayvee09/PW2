@@ -17,21 +17,21 @@
 		cursor: pointer;
 		font-family: Raleway;
 		font-size: 15px;
+		text-underline-offset: 5px;
+		text-decoration: underline 1px; 
 	}
 }
 
 @media only screen and (min-width: 768px) {
 	.ListeCelliers {
-		gap: 50px;
 		display: grid;
+		gap: 30px;
 		grid-template-columns: repeat(2, 1fr);
 	}
 }
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 1200px) {
 	.ListeCelliers {
-		gap: 50px;
-		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 
 	}
