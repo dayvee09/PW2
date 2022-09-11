@@ -13,9 +13,15 @@ class VinsModele extends AccesBd
 
     public function ajouter($vin)
     {
-        $nouveau_id = $this->creer("INSERT INTO vino__bouteille (nom, `image`, code_saq, pays, `description`, prix_saq, url_saq, url_img, `format`, vino__type_id, millesime,personnalise) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$vin->nom, $vin->image, $vin->code_saq, $vin->pays, $vin->description, $vin->prix_saq, $vin->url_saq, $vin->url_img, $vin->format, $vin->vino__type_id, $vin->millesime, $vin->personnalise]);
+        if($vin->personnalise===1) {
+            $nouveau_id = $this->creer("INSERT INTO vino__bouteille (nom, `image`, code_saq, pays, `description`, prix_saq, url_saq, url_img, `format`, vino__type_id, millesime,personnalise) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$vin->nom, $vin->image, $vin->code_saq, $vin->pays, $vin->description, $vin->prix_saq, $vin->url_saq, $vin->url_img, $vin->format, $vin->vino__type_id, $vin->millesime, $vin->personnalise]);
+        
         return $this->creer("INSERT INTO `vino__bouteille_has_vino__cellier` (`vino__bouteille_id`, `vino__cellier_id`, `quantite`, `date_achat`, `garde_jusqua`, `notes`) VALUES
             (?, ?, ?, ?, ?, ?)", [$nouveau_id, $vin->vino__cellier_id, $vin->quantite, $vin->date_achat, $vin->garde_jusqua, $vin->notes]);
+        }
+
+        return $this->creer("INSERT INTO `vino__bouteille_has_vino__cellier` (`vino__bouteille_id`, `vino__cellier_id`, `quantite`, `date_achat`, `garde_jusqua`, `notes`) VALUES
+        (?, ?, ?, ?, ?, ?)", [$vin->vino__bouteille_id, $vin->vino__cellier_id, $vin->quantite, $vin->date_achat, $vin->garde_jusqua, $vin->notes]);
     }
 
     public function retirer($id)

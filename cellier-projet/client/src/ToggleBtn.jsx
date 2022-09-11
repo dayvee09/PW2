@@ -33,12 +33,13 @@ export default function ToggleBtn(props) {
           </p>
         </div>
         <label>
-          Preffered Contact method:
+          
           <input
             id="for-button"
             type="text"
             name="method"
             value={btnState === true ? "CRÉER" : "IMPORTER"}
+            readOnly
           />
         </label>
       </div>

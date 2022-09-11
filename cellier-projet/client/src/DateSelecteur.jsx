@@ -10,7 +10,7 @@ export default function DateSelecteur(props) {
 
     return (
         <div className={['DateSelecteur', props.voirFiche === true? "hidden" : ""].join(' ')}>
-            <label>Date d'achat: </label>
+            {/* <label>Date d'achat: </label> */}
             <div className="DateInput">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <Stack spacing={3}>
