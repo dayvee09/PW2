@@ -23,13 +23,18 @@
   }
 
   button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    font-family: Raleway;
-    font-size: 15px;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	font-family: Raleway;
+	font-size: 15px;
+	padding-top: 35px;
     text-underline-offset: 5px;
     text-decoration: underline 1px;
+
+	&:hover {
+		color: #cc4240;
+	}
   }
 }
 
