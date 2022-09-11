@@ -1,25 +1,25 @@
 .Appli {
-	.appli--container {
-		padding: 0 1.25rem 75px 1.25rem;
-		min-height: 85vh
-	}
+  .appli--container {
+    padding: 0 1.25rem 75px 1.25rem;
+    min-height: 85vh;
+  }
 
-	.navigation {
-		display: flex;
-		justify-content: space-between;
-	}
-	  
-	.menu-compte,
-	.menu-celliers {
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
-		width: 75%;
-		button {
-		  width: 100px;
-		  height: 40px;
-		}
-	}
+  .navigation {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .menu-celliers {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 75%;
+    padding-left: 10px;
+    button {
+      width: 100px;
+      height: 40px;
+    }
+  }
 }
 
 // Gestion du formulaire de connexion

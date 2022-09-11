@@ -6,10 +6,9 @@ import {
   Routes,
   NavLink,
 } from "react-router-dom";
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 
 export default function Cellier(props) {
   const [cellier, setCellier] = useState([props.id]);
@@ -32,7 +31,6 @@ export default function Cellier(props) {
 
   function gererMenuContextuel(evt) {
     setEltAncrage(evt.currentTarget);
-	console.log("test")
   }
 
   function gererFermerMenuContextuel() {
@@ -41,52 +39,56 @@ export default function Cellier(props) {
 
   return (
     <>
-	<div onClick={handleChange}
-		className={
-		selection == "fond-selection"
-			? "cellier fond-selection"
-			: "cellier fond-normal"
-		}
-		data-quantite=""
-	>
-		<div className="cellier--gestion">
-			{selection == "fond-selection" ? (
-				<div className="btn-cellier">
-				<NavLink to={`/cellier/${cellier}/vins`}>
-					<button>Voir mes bouteilles</button>
-				</NavLink>
-				</div>
-			) : (
-				<p className="cellier--nom">{props.nom}</p>
-			)}
-			<MoreVertIcon className="cellier--gestion-dots" onClick={gererMenuContextuel} />
-		</div>
-		<div className="cellier--description">
-			<p>ID : {props.id}</p>
-			<p>Id Utilisateur : {props.vino__utilisateur_id}</p>
-		</div>
-	<Menu
-        open={menuContextuelOuvert}
-        anchorEl={eltAncrage}
-        onClose={gererFermerMenuContextuel}
-        anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-        transformOrigin={{vertical: 'top', horizontal: 'right'}}
-		PaperProps={{
-			style: {
-			 color: '#152440',
-			 paddingLeft: 10,
-			 paddingRight: 10,
-			 backgroundColor: '#d3d7dd',
-			 boxShadow: 'none',
-			 border: '0.5px solid #152440',
-			},
-		}}
+      <div
+        onClick={handleChange}
+        className={
+          selection == "fond-selection"
+            ? "cellier fond-selection"
+            : "cellier fond-normal"
+        }
+        data-quantite=""
       >
-        <MenuItem>Modifier</MenuItem>
-		<hr></hr>
-        <MenuItem>Supprimer</MenuItem>
-    </Menu>
-	</div>
+        <div className="cellier--gestion">
+          {selection == "fond-selection" ? (
+            <div className="btn-cellier">
+              <NavLink to={`/cellier/${cellier}/vins`}>
+                <button>Voir mes bouteilles</button>
+              </NavLink>
+            </div>
+          ) : (
+            <p className="cellier--nom">{props.nom}</p>
+          )}
+          <MoreVertIcon
+            className="cellier--gestion-dots"
+            onClick={gererMenuContextuel}
+          />
+        </div>
+        <div className="cellier--description">
+          <p>ID : {props.id}</p>
+          <p>Id Utilisateur : {props.vino__utilisateur_id}</p>
+        </div>
+        <Menu
+          open={menuContextuelOuvert}
+          anchorEl={eltAncrage}
+          onClose={gererFermerMenuContextuel}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+          PaperProps={{
+            style: {
+              color: "#152440",
+              paddingLeft: 10,
+              paddingRight: 10,
+              backgroundColor: "#d3d7dd",
+              boxShadow: "none",
+              border: "0.5px solid #152440",
+            },
+          }}
+        >
+          <MenuItem>Modifier</MenuItem>
+          <hr></hr>
+          <MenuItem>Supprimer</MenuItem>
+        </Menu>
+      </div>
     </>
   );
 }

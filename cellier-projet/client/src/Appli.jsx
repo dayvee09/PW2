@@ -188,7 +188,7 @@ const Appli = () => {
     const emailUtilisateur = email;
     // console.log(emailUtilisateur);
     setEmailUtilisateur(emailUtilisateur);
-    console.log(DATA);
+    // console.log(DATA);
     if (DATA !== undefined) {
       return;
     }
@@ -304,7 +304,6 @@ const Appli = () => {
   // ---------------------------------- Gestion des celliers -----------------------------
 
   async function fetchCelliers() {
-    console.log("fetchCelliers: ", id);
     await fetch(URI + "/" + "user_id" + "/" + id + "/" + "celliers")
       .then((response) => {
         if (response.ok) {
@@ -339,12 +338,19 @@ const Appli = () => {
         setError(error);
       });
   }
+
   // ------------------Gestion de l'importation de bouteilles de la SAQ-----------------------
 
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
-      {Auth.user && <NavDesktop user={Auth.user} gererSignOut={gererSignOut} />}
+      {Auth.user && (
+        <NavDesktop
+          user={Auth.user}
+          gererSignOut={gererSignOut}
+          utilisateur={utilisateur}
+        />
+      )}
       ;
       <div className="appli--container ">
         <img
@@ -412,6 +418,7 @@ const Appli = () => {
                       setBouteilles={setBouteilles}
                       error={error}
                       setError={setError}
+                      gererSignOut={gererSignOut}
                     />
                   }
                 />
@@ -432,11 +439,12 @@ const Appli = () => {
                   path={`/vins`}
                   element={
                     <FrmAjoutBouteille
-                      bouteilles={bouteilles}
-                      setBouteilles={setBouteilles}
-                      fetchVins={fetchVins}
-                      gererBouteilles={gererBouteilles}
-                      cellier={cellier}
+                      // bouteilles={bouteilles}
+                      // setBouteilles={setBouteilles}
+                      // fetchVins={fetchVins}
+                      // fetchCelliers={fetchCelliers}
+                      // gererBouteilles={gererBouteilles}
+                      celliers={celliers}
                       URI={URI}
                     />
                   }
@@ -466,7 +474,11 @@ const Appli = () => {
         <p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
           Commencez dès maintenant votre collection de vin !
         </p>
-        <NavMobile Auth={Auth} emailUtilisateur={emailUtilisateur} />
+        <NavMobile
+          Auth={Auth}
+          emailUtilisateur={emailUtilisateur}
+          utilisateur={utilisateur}
+        />
       </div>
       <PiedDePage />
     </div>
