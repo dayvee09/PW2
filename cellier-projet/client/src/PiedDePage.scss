@@ -18,14 +18,22 @@
 }
 
 .Login .PiedDePage {
-  	position: fixed;
+	background-color: #cc4240;
 
+	justify-content: center; 
 	.nav-link-help {
 		display: none;
 	}
 }
 
 @media only screen and (min-width: 768px) {
+
+	.Login .PiedDePage {
+		position: fixed;
+		background-color: #152440;
+		justify-content: space-between; 
+ 	}
+	
 	.PiedDePage {
 		position: fixed;
 		.nav-link-help {
