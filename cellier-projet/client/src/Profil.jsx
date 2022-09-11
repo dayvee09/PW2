@@ -23,6 +23,8 @@ export default function Profil(props) {
     textDecoration: "none",
     borderRadius:"4px",
     fontFamily: "Alata",
+	fontSize: "12px",
+	padding: "10px 20px",
     "&:hover": {
       backgroundColor: "#f1ab50",
       color: "#f3f5eb",

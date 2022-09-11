@@ -52,7 +52,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -321,6 +321,24 @@ const Appli = () => {
       });
   }
 
+  async function ajouterCellier(cellier) {
+	  let reponse = await fetch(URI + "/", {
+		  method: "POST",
+		  body: JSON.stringify(cellier),
+		})
+		.then((response) => {
+			// Gestion du message de retour
+			let messageRetour = "";
+			if (response.ok) {
+				messageRetour = "Cellier ajouté avec succès.";
+			} else {
+				messageRetour = "Erreur lors de l'ajout du cellier.";
+			}
+			// rediriger vers la liste des celliers
+			window.location.href = "/?message="+ messageRetour; 
+		})
+  }
+
   // --------------------------------- Gestion des bouteilles ------------------------------------
 
   async function fetchVins() {
@@ -339,7 +357,7 @@ const Appli = () => {
         setError(error);
       });
   }
-
+// console.log(Auth.user)
   // ------------------Gestion de l'importation de bouteilles de la SAQ-----------------------
 
   // ---------------------------------- Rendering -----------------------------------------
@@ -472,6 +490,8 @@ const Appli = () => {
                   path={`/ajouter-cellier`}
                   element={
                     <FrmAjoutCellier
+					  celliers={celliers}
+					  ajouterCellier={ajouterCellier}
                       URI={URI}
                     />
                   }
