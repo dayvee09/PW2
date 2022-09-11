@@ -52,7 +52,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -442,11 +442,12 @@ const Appli = () => {
                   path={`/vins`}
                   element={
                     <FrmAjoutBouteille
-                      bouteilles={bouteilles}
-                      setBouteilles={setBouteilles}
-                      fetchVins={fetchVins}
-                      gererBouteilles={gererBouteilles}
-                      cellier={cellier}
+                      // bouteilles={bouteilles}
+                      // setBouteilles={setBouteilles}
+                      // fetchVins={fetchVins}
+                      // fetchCelliers={fetchCelliers}
+                      // gererBouteilles={gererBouteilles}
+                      celliers={celliers}
                       URI={URI}
                     />
                   }
