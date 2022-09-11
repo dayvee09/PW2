@@ -11,6 +11,9 @@ import "./FrmEmail.scss";
 import MuiButton from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import {
+  useNavigate,
+} from "react-router-dom";
 
 export default function FrmEmail({
   setEmailUtilisateur,
@@ -19,7 +22,8 @@ export default function FrmEmail({
   setNouvelEmailUtilisateur,
   frmEmailOuvert,
   setFrmEmailOuvert,
-  URI,
+  fetchUtilisateur,
+  URI
 }) {
   /**
    *  État des styles des composants MUI
@@ -28,7 +32,7 @@ export default function FrmEmail({
     color: "#f3f5eb",
     backgroundColor: "#cc4240",
     textDecoration: "none",
-    borderRadius: "0px",
+    borderRadius:"4px",
     fontFamily: "Alata",
     "&:hover": {
       backgroundColor: "#f1ab50",
@@ -81,9 +85,10 @@ export default function FrmEmail({
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const [openAlert, setOpenAlert] = React.useState(false);
+  const navigate = useNavigate();
   const handleCloseAlert = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
+    if (reason === 'clickaway') {
+      return
     }
     setOpenAlert(false);
     setFrmEmailOuvert(false);
@@ -112,6 +117,7 @@ export default function FrmEmail({
       email: NouvelEmailUtilisateur,
     });
     if (result === "SUCCESS") {
+      console.log(NouvelEmailUtilisateur);
       let reponse = await fetch(
         URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
         {
@@ -120,9 +126,11 @@ export default function FrmEmail({
         }
       );
       let reponseJson = await reponse.json();
+      setEmailUtilisateur(NouvelEmailUtilisateur)
+      fetchUtilisateur();
+      navigate(`/profil/${NouvelEmailUtilisateur}`, { replace: true })
     }
-    setEmailUtilisateur(NouvelEmailUtilisateur);
-    return result;
+    return result
   }
 
   /**

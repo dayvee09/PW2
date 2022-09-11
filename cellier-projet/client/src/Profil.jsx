@@ -21,7 +21,7 @@ export default function Profil(props) {
     color: "#f3f5eb",
     backgroundColor: "#cc4240",
     textDecoration: "none",
-    borderRadius: "0px",
+    borderRadius:"4px",
     fontFamily: "Alata",
     "&:hover": {
       backgroundColor: "#f1ab50",
@@ -156,9 +156,6 @@ export default function Profil(props) {
             <TextField
               style={{ width: "100%" }}
               id="email"
-              InputProps={{
-                inputProps: { readOnly: true, backgroundColor: "black" },
-              }}
               type={"text"}
               variant="outlined"
               defaultValue={props.emailUtilisateur}
@@ -191,6 +188,7 @@ export default function Profil(props) {
           utilisateur={props.utilisateur}
           emailUtilisateur={props.emailUtilisateur}
           setEmailUtilisateur={props.setEmailUtilisateur}
+          fetchUtilisateur={props.fetchUtilisateur}
           URI={props.URI}
           setNouvelEmailUtilisateur={setNouvelEmailUtilisateur}
           NouvelEmailUtilisateur={NouvelEmailUtilisateur}
