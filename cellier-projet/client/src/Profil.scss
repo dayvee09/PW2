@@ -24,7 +24,7 @@
     text-underline-offset: 5px;
     text-decoration: underline 1px; 
     &:hover {
-      font-weight:bold;
+      color:#f1ab50;
     }
   }
   
@@ -47,9 +47,10 @@
   display: flex;
   justify-content: flex-start;
   margin-left: 0.5rem;
+  margin-top: 1.3rem;
   margin-bottom: 2rem;
   &:hover {
-    font-weight:bold;
+    color:#f1ab50;
   }
 }
 

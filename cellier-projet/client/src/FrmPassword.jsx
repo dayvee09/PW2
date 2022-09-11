@@ -58,10 +58,9 @@ export default function FrmPassword({
    */
   const [messageRetour, setMessageRetour] = useState([]);
   useEffect(() => {
-    setSeverity("")
     if (messageRetour === "Modification effectuée") {
       setSeverity("success")
-    } else {
+    } else if (messageRetour === "Courriel invalide"){
       setSeverity("error")
     }
   }, [messageRetour]);
@@ -84,6 +83,7 @@ export default function FrmPassword({
     }
     setOpenAlert(false);
     setFrmPasswordOuvert(false)
+    setSeverity("")
   };
 
   /**
