@@ -1,14 +1,19 @@
 .FormAjoutCellier {
 	text-align: center;
 
-	form{
+	.form-ajout--container {
 		max-width: 400px;
 		margin: 0 auto;
+
+		span {
+			color: #cc4240;
+		}
 
 		label {
 			font-size: 15px;
 			font-weight: 300;
 		}
+		
 		input {
 			margin-top: 20px;
 			margin-bottom: 20px;
@@ -19,6 +24,7 @@
 
 		button {
 			padding: 10px 25px 10px 25px;
+			margin-top: 20px;
 			font-size: 12px;
 			font-family: Alata, sans-serif;
 			text-transform: uppercase;

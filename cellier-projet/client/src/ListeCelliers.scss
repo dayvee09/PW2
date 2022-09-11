@@ -1,6 +1,7 @@
 .ListeCelliers {
   width: 100%;
   cursor: pointer;
+  padding-top: 10px;
 
   .Cellier:first-of-type .cellier {
     margin-top: 0;
@@ -36,6 +37,11 @@
 		color: #cc4240;
 	}
   }
+}
+
+.liste-cellier--message-retour {
+	color: #cc4240;
+	padding: 10px;
 }
 
 @media only screen and (min-width: 768px) {
