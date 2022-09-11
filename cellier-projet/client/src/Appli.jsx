@@ -47,7 +47,6 @@ const Appli = () => {
   const ENV = "dev";
   const [URI, setURI] = useState([]);
   let location = window.location.pathname;
-
   useEffect(() => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
@@ -189,7 +188,7 @@ const Appli = () => {
     const emailUtilisateur = email;
     // console.log(emailUtilisateur);
     setEmailUtilisateur(emailUtilisateur);
-    console.log(DATA);
+    // console.log(DATA);
     if (DATA !== undefined) {
       return;
     }
@@ -305,7 +304,6 @@ const Appli = () => {
   // ---------------------------------- Gestion des celliers -----------------------------
 
   async function fetchCelliers() {
-    console.log("fetchCelliers: ", id);
     await fetch(URI + "/" + "user_id" + "/" + id + "/" + "celliers")
       .then((response) => {
         if (response.ok) {
@@ -340,13 +338,21 @@ const Appli = () => {
         setError(error);
       });
   }
+
   // ------------------Gestion de l'importation de bouteilles de la SAQ-----------------------
 
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
-		{ Auth.user && (<NavDesktop user={Auth.user}/> )};
-      	<div className="appli--container ">
+      {Auth.user && (
+        <NavDesktop
+          user={Auth.user}
+          gererSignOut={gererSignOut}
+          utilisateur={utilisateur}
+        />
+      )}
+      ;
+      <div className="appli--container ">
         <img
           className={Auth.user ? "Hidden" : "logo"}
           src={Logo}
@@ -377,17 +383,6 @@ const Appli = () => {
                       <NavLink to={`/`}>
                         <button>Retour aux Celliers</button>
                       </NavLink>
-                    </div>
-                  )}
-                </div>
-                <div className="menu-compte">
-                  {location === "/" && (
-                    <div>
-                      {utilisateur && utilisateur.privilege === "admin" && (
-                        <NavLink to={`/admin/${emailUtilisateur}`}>
-                          <button>Menu Admin</button>
-                        </NavLink>
-                      )}
                     </div>
                   )}
                 </div>
@@ -422,6 +417,7 @@ const Appli = () => {
                       setBouteilles={setBouteilles}
                       error={error}
                       setError={setError}
+                      gererSignOut={gererSignOut}
                     />
                   }
                 />
@@ -464,6 +460,7 @@ const Appli = () => {
                       fetchVins={fetchVins}
                       id={id}
                       emailUtilisateur={emailUtilisateur}
+                      utilisateur={utilisateur}
                       gererCellier={gererCellier}
                       URI={URI}
                     />
@@ -476,7 +473,11 @@ const Appli = () => {
         <p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
           Commencez dès maintenant votre collection de vin !
         </p>
-        <NavMobile Auth={Auth} emailUtilisateur={emailUtilisateur}/>
+        <NavMobile
+          Auth={Auth}
+          emailUtilisateur={emailUtilisateur}
+          utilisateur={utilisateur}
+        />
       </div>
       <PiedDePage />
     </div>

@@ -1,24 +1,41 @@
 .PiedDePage {
-  background-color: #152440;
-  border-top: 5px solid #cc4240;
-  color: #f3f5eb;
-  padding-top: 25px;
-  padding-bottom: 50px;
-  padding-left: 1.25rem;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  text-align: left;
+	* {
+	  color: #f3f5eb;
+	}
+
+	background-color: #152440;
+	border-top: 5px solid #cc4240;
+	bottom: 0;
+	padding: 25px;
+	display: flex;
+	justify-content: space-between; 
+	text-align: left;
+	width: 100%;
+
+	.nav-link-help {
+		display: none;
+	}
 }
 
 .Login .PiedDePage {
-  position: fixed;
-  padding-bottom: 25px;
+  	position: fixed;
+
+	.nav-link-help {
+		display: none;
+	}
 }
 
 @media only screen and (min-width: 768px) {
-  .PiedDePage {
-    position: fixed;
-    padding-bottom: 25px;
-  }
+	.PiedDePage {
+		position: fixed;
+		.nav-link-help {
+			display: block;
+			font-size: 12px;
+
+			&:hover {
+				color: #f1ab50;
+				cursor: pointer;
+			}
+		}
+	}
 }

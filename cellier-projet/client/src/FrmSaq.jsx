@@ -51,7 +51,7 @@ export default function FrmSaq({
 
   return (
     <div>
-      <Dialog open={frmOuvert} onClose={viderFermerFrm}>
+      <Dialog className="FrmSaq" open={frmOuvert} onClose={viderFermerFrm}>
         <DialogContent>
           <div className="description">
             <Dialog open={openErr}>
@@ -86,11 +86,30 @@ export default function FrmSaq({
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={viderFermerFrm}>Annuler</Button>
-          <Button onClick={gererSoumettre}>Soumettre</Button>
-        </DialogActions>
-        <DialogActions>
-          <Button onClick={viderFermerFrm}>OK</Button>
+          <Button
+            // sx={[
+            //   {
+            //     "&:hover": {
+            //       color: "#f1ab50",
+            //     },
+            //   },
+            // ]}
+            onClick={viderFermerFrm}
+          >
+            Annuler
+          </Button>
+          <Button
+            // sx={[
+            //   {
+            //     "&:hover": {
+            //       color: "#f1ab50",
+            //     },
+            //   },
+            // ]}
+            onClick={gererSoumettre}
+          >
+            Soumettre
+          </Button>
         </DialogActions>
       </Dialog>
     </div>
