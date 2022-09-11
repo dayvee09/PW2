@@ -7,6 +7,18 @@ import { useNavigate, useParams, NavLink } from "react-router-dom";
 function ListeCelliers(props) {
   let history = useNavigate();
 
+  // Gestion du message de retour après ajout/modification/suppression
+  let urlString = window.location.href;
+  var url = new URL(urlString);
+  var messageRetour = url.searchParams.get("message");
+  if(messageRetour != "") {
+	document.querySelector('span').innerText = messageRetour;
+  }
+  // Nettoyer le message de retour
+  setTimeout(function() {
+    document.querySelector('span').innerText = "";
+  }, 3000);
+
   if (props.celliers.length > 0) {
     return (
       <>
@@ -16,6 +28,7 @@ function ListeCelliers(props) {
            		<button>+ Ajouter</button>
 			</NavLink>
         </div>
+		<span className="liste-cellier--message-retour"></span>
         <div className="ListeCelliers">
           {props.celliers.map((cellier) => (
             <div key={cellier.id} className="Cellier">
