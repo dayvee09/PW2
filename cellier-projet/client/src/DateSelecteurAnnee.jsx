@@ -11,7 +11,7 @@ export default function DateSelecteurAnnee(props) {
 
   return (
     <div className={['DateSelecteurAnnee', props.voirFiche === true? "hidden" : ""].join(' ')}>
-      <label>Date jusqu'à: </label>
+      {/* <label>Date jusqu'à: </label> */}
       <div className="DateInput">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <Stack spacing={3}>

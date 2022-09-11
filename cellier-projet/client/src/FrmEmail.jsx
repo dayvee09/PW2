@@ -5,7 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import { Auth } from 'aws-amplify';
+import { Auth } from "aws-amplify";
 import { useState, useEffect } from "react";
 import "./FrmEmail.scss";
 import MuiButton from "@mui/material/Button";
@@ -25,7 +25,6 @@ export default function FrmEmail({
   fetchUtilisateur,
   URI
 }) {
-
   /**
    *  État des styles des composants MUI
    */
@@ -35,18 +34,18 @@ export default function FrmEmail({
     textDecoration: "none",
     borderRadius:"4px",
     fontFamily: "Alata",
-    '&:hover': {
-      backgroundColor: '#f1ab50',
-      color: '#f3f5eb',
-    }
+    "&:hover": {
+      backgroundColor: "#f1ab50",
+      color: "#f3f5eb",
+    },
   }));
 
   const CssDialogTitle = styled(DialogTitle)((props) => ({
     fontFamily: "Alata",
     color: "#152440",
-    fontSize:"19px",
-    marginTop:"10px",
-    textAlign:"center"
+    fontSize: "19px",
+    marginTop: "10px",
+    textAlign: "center",
   }));
 
   /**
@@ -70,13 +69,13 @@ export default function FrmEmail({
             "&.Mui-focused": {
               "& .MuiOutlinedInput-notchedOutline": {
                 border: `1px solid #f1ab50`,
-                boxShadow: `none`
-              }
-            }
-          }
-        }
-      }
-    }
+                boxShadow: `none`,
+              },
+            },
+          },
+        },
+      },
+    },
   });
 
   /**
@@ -88,9 +87,8 @@ export default function FrmEmail({
   const [openAlert, setOpenAlert] = React.useState(false);
   const navigate = useNavigate();
   const handleCloseAlert = (event, reason) => {
-    navigate(`/profil/${NouvelEmailUtilisateur}`, { replace: true })
     if (reason === 'clickaway') {
-      navigate(`/profil/${NouvelEmailUtilisateur}`, { replace: true })
+      return
     }
     setOpenAlert(false);
     setFrmEmailOuvert(false);
@@ -116,17 +114,16 @@ export default function FrmEmail({
   async function fetchPatchUtilisateurEmail(NouvelEmailUtilisateur) {
     let user = await Auth.currentAuthenticatedUser();
     let result = await Auth.updateUserAttributes(user, {
-        'email': NouvelEmailUtilisateur,
+      email: NouvelEmailUtilisateur,
     });
-    console.log(result);
     if (result === "SUCCESS") {
       console.log(NouvelEmailUtilisateur);
       let reponse = await fetch(
-          URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
-          {
-              method: "PATCH",
-              body: JSON.stringify({ email: NouvelEmailUtilisateur }),
-          }
+        URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
+        {
+          method: "PATCH",
+          body: JSON.stringify({ email: NouvelEmailUtilisateur }),
+        }
       );
       let reponseJson = await reponse.json();
       setEmailUtilisateur(NouvelEmailUtilisateur)
@@ -140,35 +137,39 @@ export default function FrmEmail({
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
-    setSeverity("")
+    setSeverity("");
     var reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     setNouvelEmailUtilisateur(NouvelEmailUtilisateur);
-    console.log(NouvelEmailUtilisateur);
     if (reg.test(NouvelEmailUtilisateur)) {
       fetchPatchUtilisateurEmail(NouvelEmailUtilisateur);
-      setMessageRetour("Modification effectuée")
-      setSeverity("success")
-      setOpenAlert(true)
+      setMessageRetour("Modification effectuée");
+      setSeverity("success");
+      setOpenAlert(true);
     } else {
-      setMessageRetour("Courriel invalide")
-      setSeverity("error")
-      setOpenAlert(true)
+      setMessageRetour("Courriel invalide");
+      setSeverity("error");
+      setOpenAlert(true);
     }
   }
   return (
     <div>
-      <Dialog PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }} className="dialogue" open={frmEmailOuvert} onClose={viderFermerFrm}>
+      <Dialog
+        PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
+        className="dialogue"
+        open={frmEmailOuvert}
+        onClose={viderFermerFrm}
+      >
         <CssDialogTitle>Modifier votre email</CssDialogTitle>
         <DialogContent>
           <div className="frmEmail">
             <p className="">Email actuel: {emailUtilisateur}</p>
             <ThemeProvider theme={theme}>
-              <TextField 
-                  onChange={gererInput}
-                  autoFocus
-                  id="email"
-                  type={"text"}
-                  defaultValue={emailUtilisateur}
+              <TextField
+                onChange={gererInput}
+                autoFocus
+                id="email"
+                type={"text"}
+                defaultValue={emailUtilisateur}
               />
             </ThemeProvider>
             <Snackbar
@@ -186,15 +187,15 @@ export default function FrmEmail({
                 severity={severity}
                 sx={{ width: "100%" }}
               >
-                  {messageRetour}
+                {messageRetour}
               </Alert>
             </Snackbar>
           </div>
         </DialogContent>
-          <DialogActions>
-            <Button onClick={viderFermerFrm}>Annuler</Button>
-            <Button onClick={gererSoumettre}>Soumettre</Button>
-          </DialogActions>
+        <DialogActions>
+          <Button onClick={viderFermerFrm}>Annuler</Button>
+          <Button onClick={gererSoumettre}>Soumettre</Button>
+        </DialogActions>
       </Dialog>
     </div>
   );

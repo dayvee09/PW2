@@ -10,20 +10,16 @@ import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import MuiButton from "@mui/material/Button";
-import {
-    PasswordField,
-    Button,
-} from '@aws-amplify/ui-react';
+import { PasswordField, Button } from "@aws-amplify/ui-react";
 
 export default function FrmPassword({
-    setFrmPasswordOuvert,
-    frmPasswordOuvert,
-    passwordActuel,
-    setPasswordActuel,
-    passwordNouveau,
-    setPasswordNouveau,
+  setFrmPasswordOuvert,
+  frmPasswordOuvert,
+  passwordActuel,
+  setPasswordActuel,
+  passwordNouveau,
+  setPasswordNouveau,
 }) {
-
   /**
    *  État des styles des composants MUI
    */
@@ -33,20 +29,19 @@ export default function FrmPassword({
     textDecoration: "none",
     borderRadius:"4px",
     fontFamily: "Alata",
-    '&:hover': {
-      backgroundColor: '#f1ab50',
-      color: '#f3f5eb',
-      }
+    "&:hover": {
+      backgroundColor: "#f1ab50",
+      color: "#f3f5eb",
+    },
   }));
 
   const CssDialogTitle = styled(DialogTitle)((props) => ({
     fontFamily: "Alata",
     color: "#152440",
-    fontSize:"20px",
-    marginTop:"10px",
-    textAlign:"center"
+    fontSize: "20px",
+    marginTop: "10px",
+    textAlign: "center",
   }));
-
 
   /**
    * État de l'alerte
@@ -74,11 +69,11 @@ export default function FrmPassword({
    * État de l'alerte
    */
   const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const [openAlert, setOpenAlert] = React.useState(false);
   const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setOpenAlert(false);
@@ -104,19 +99,16 @@ export default function FrmPassword({
     setMessageRetour("");
     setSeverity("");
     Auth.currentAuthenticatedUser()
-    .then(user => {
+      .then((user) => {
         return Auth.changePassword(user, passwordActuel, nouveauPassword);
-    })
-    .then(data => {   
-                    console.log(data)
-                    setMessageRetour("Modification effectuée")
-                  }
-          )
-    .catch(err => {
-                    console.log(err)
-                    setMessageRetour("Courriel invalide")
-                  }
-          );
+      })
+      .then((data) => {
+        setMessageRetour("Modification effectuée");
+      })
+      .catch((err) => {
+        console.log(err);
+        setMessageRetour("Courriel invalide");
+      });
   }
 
   /**
@@ -124,27 +116,31 @@ export default function FrmPassword({
    */
   function gererSoumettre() {
     if (validationRegex.test(passwordNouveau)) {
-      PatchPassword(passwordActuel,passwordNouveau)
-      setOpenAlert(true)
+      PatchPassword(passwordActuel, passwordNouveau);
+      setOpenAlert(true);
     }
   }
-  
+
   return (
     <div>
-      <Dialog PaperProps={{ sx: {backgroundColor: "#f3f5eb"} }} open={frmPasswordOuvert} onClose={viderFermerFrm}>
+      <Dialog
+        PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
+        open={frmPasswordOuvert}
+        onClose={viderFermerFrm}
+      >
         <CssDialogTitle>Modifier votre mot de passe</CssDialogTitle>
         <DialogContent>
-        <div className="frmPassword">
+          <div className="frmPassword">
             <PasswordField
               className="PasswordField"
-              onChange={(event)=> setPasswordActuel(event.target.value)}
+              onChange={(event) => setPasswordActuel(event.target.value)}
               autoFocus
               label="Mot de passe actuel"
               id="Mot_de_passe_actuel"
             />
             <PasswordField
               className="PasswordField"
-              onChange={(event)=> setPasswordNouveau(event.target.value)}
+              onChange={(event) => setPasswordNouveau(event.target.value)}
               autoFocus
               hasError={!validationRegex.test(passwordNouveau)}
               errorMessage={errorMessage}
@@ -166,14 +162,14 @@ export default function FrmPassword({
                 severity={severity}
                 sx={{ width: "100%" }}
               >
-                  {messageRetour}
+                {messageRetour}
               </Alert>
             </Snackbar>
           </div>
         </DialogContent>
         <DialogActions>
-            <Button onClick={viderFermerFrm}>Annuler</Button>
-            <Button onClick={gererSoumettre}>Soumettre</Button>
+          <Button onClick={viderFermerFrm}>Annuler</Button>
+          <Button onClick={gererSoumettre}>Soumettre</Button>
         </DialogActions>
       </Dialog>
     </div>
