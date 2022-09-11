@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import FrmSaq from "./FrmSaq";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
 
 export default function Admin(props) {
   const [nombre, setNombre] = useState(24);
@@ -24,6 +25,7 @@ export default function Admin(props) {
     }
     setOpenAlert(false);
   };
+  const navigate = useNavigate();
 
   // ----------------------- Gestion de l'admin ------------------------------------------------
 
@@ -66,12 +68,29 @@ export default function Admin(props) {
       });
   }
 
+  const redirectionAccueil = function () {
+    props.gererSignOut();
+    const timer = setTimeout(() => {
+      navigate("/", { replace: true });
+    }, 2000);
+    return () => clearTimeout(timer);
+  };
+
   return (
     <>
       <div className="Admin">
-        <h1>Bienvenue sur l'interface d'admin!</h1>
-        <div>
-          <button onClick={gererSaq}>Importer des bouteilles de la Saq</button>
+        <div className="content-admin">
+          <h1>Bienvenue sur l'interface d'admin!</h1>
+          <div>
+            <button className="importer-admin" onClick={gererSaq}>
+              Importer des bouteilles de la Saq
+            </button>
+          </div>
+        </div>
+        <div className="signOut-admin">
+          <button className="deconnexion-admin" onClick={redirectionAccueil}>
+            Déconnexion
+          </button>
         </div>
         <Snackbar
           sx={{ height: "100%" }}
