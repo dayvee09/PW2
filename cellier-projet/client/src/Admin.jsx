@@ -5,13 +5,14 @@ import { useState, useEffect } from "react";
 import FrmSaq from "./FrmSaq";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { useNavigate } from "react-router-dom";
 
 export default function Admin(props) {
-  const [nombre, setNombre] = useState(props.nombre);
+  const [nombre, setNombre] = useState(24);
   const [nombre_p, setNombre_p] = useState(nombre);
   const [page, setPage] = useState(props.page);
   const [page_p, setPage_p] = useState(page);
-  const [type, setType] = useState(props.type);
+  const [type, setType] = useState("rouge");
   const [type_p, setType_p] = useState(type);
   const [frmOuvert, setFrmOuvert] = useState(false);
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -24,6 +25,7 @@ export default function Admin(props) {
     }
     setOpenAlert(false);
   };
+  const navigate = useNavigate();
 
   // ----------------------- Gestion de l'admin ------------------------------------------------
 
@@ -66,45 +68,64 @@ export default function Admin(props) {
       });
   }
 
+  const redirectionAccueil = function () {
+    props.gererSignOut();
+    const timer = setTimeout(() => {
+      navigate("/", { replace: true });
+    }, 2000);
+    return () => clearTimeout(timer);
+  };
+
   return (
     <>
-      <h1>Bienvenue sur l'interface d'admin!</h1>
-      <div>
-        <button onClick={gererSaq}>Importer des bouteilles de la Saq</button>
-      </div>
-      <Snackbar
-        sx={{ height: "100%" }}
-        anchorOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-        open={openAlert}
-        autoHideDuration={1000}
-        onClose={handleCloseAlert}
-      >
-        <Alert
+      <div className="Admin">
+        <div className="content-admin">
+          <h1>Bienvenue sur l'interface d'admin!</h1>
+          <div>
+            <button className="importer-admin" onClick={gererSaq}>
+              Importer des bouteilles de la Saq
+            </button>
+          </div>
+        </div>
+        <div className="signOut-admin">
+          <button className="deconnexion-admin" onClick={redirectionAccueil}>
+            Déconnexion
+          </button>
+        </div>
+        <Snackbar
+          sx={{ height: "100%" }}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          open={openAlert}
+          autoHideDuration={1000}
           onClose={handleCloseAlert}
-          severity="success"
-          sx={{ width: "100%" }}
         >
-          Importation de {nombre} bouteilles de vin {type} dans la page {page}{" "}
-          du catalogue de la SAQ réussie!
-        </Alert>
-      </Snackbar>
-      <FrmSaq
-        frmOuvert={frmOuvert}
-        setFrmOuvert={setFrmOuvert}
-        nombre_p={nombre_p}
-        nombre={nombre}
-        setNombre={setNombre}
-        page={page}
-        setPage={setPage}
-        page_p={page_p}
-        type={type}
-        setType={setType}
-        type_p={type_p}
-        importerSaq={importerSaq}
-      />
+          <Alert
+            onClose={handleCloseAlert}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            Importation de {nombre} bouteilles de vin {type} dans la page {page}{" "}
+            du catalogue de la SAQ réussie!
+          </Alert>
+        </Snackbar>
+        <FrmSaq
+          frmOuvert={frmOuvert}
+          setFrmOuvert={setFrmOuvert}
+          nombre_p={nombre_p}
+          nombre={nombre}
+          setNombre={setNombre}
+          page={page}
+          setPage={setPage}
+          page_p={page_p}
+          type={type}
+          setType={setType}
+          type_p={type_p}
+          importerSaq={importerSaq}
+        />
+      </div>
     </>
   );
 }

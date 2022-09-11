@@ -1,38 +1,48 @@
 .ListeCelliers {
-	width: 100%;
-	cursor: pointer;
+  width: 100%;
+  cursor: pointer;
 
-	.Cellier:first-of-type .cellier{
-		margin-top: 0;
-	}
+  .Cellier:first-of-type .cellier {
+    margin-top: 0;
+  }
 }
 
 .liste-cellier--entete {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 
-	button {
-		border: none;
-		background-color: transparent;
-		cursor: pointer;
-		font-family: Raleway;
-		font-size: 15px;
-	}
+  .entete--items {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .entete--items > * + * {
+    margin-top: 10px;
+  }
+
+  button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-family: Raleway;
+    font-size: 15px;
+    text-underline-offset: 5px;
+    text-decoration: underline 1px;
+  }
 }
 
 @media only screen and (min-width: 768px) {
-	.ListeCelliers {
-		gap: 50px;
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-	}
+  .ListeCelliers {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
-@media only screen and (min-width: 1024px) {
-	.ListeCelliers {
-		gap: 50px;
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-
-	}
+@media only screen and (min-width: 1200px) {
+  .ListeCelliers {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

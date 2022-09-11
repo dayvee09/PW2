@@ -1,5 +1,6 @@
 .Profil {
-  border: 1px solid black;
+  font-family: Raleway light (300);
+  border: 1px solid #d3d7dd;
   padding: 40px;
   margin: 20px;
   .img {
@@ -18,11 +19,12 @@
     margin-top:-20px;
   }
   .modifier {
+    background-color: transparent;
     border: none;
-    text-underline-offset: 3px;
-    text-decoration: underline; 
+    text-underline-offset: 5px;
+    text-decoration: underline 1px; 
     &:hover {
-      font-weight:500;
+      font-weight:bold;
     }
   }
   
@@ -30,29 +32,64 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-bottom: -1%;
+    margin-bottom: -1rem;
     font-size: 15px;
   }
 }
 
 .boutonSupprimer {
-  background-color:none;
   border: none;
+  background-color:transparent;
   text-underline-offset: 3px;
   text-decoration: underline;
+  font-family: Raleway light (300);
   font-size: 15px;
   display: flex;
   justify-content: flex-start;
-  margin-left: 1.5%;
+  margin-left: 0.5rem;
   margin-bottom: 2rem;
   &:hover {
-    font-weight:500;
+    font-weight:bold;
   }
 }
 
 .signOut {
+  font-family: Alata;
   display: flex;
   justify-content: flex-end;
-  margin-right: 1rem;
+  margin-right: 1.2rem;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
 }
 
+a:link {
+  text-decoration: none;
+}
+
+.amplify-input:focus {
+    border-color: #f1ab50;
+    box-shadow: none;
+}
+
+.infos-profil {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 2rem;
+  .icone-profil {
+    box-shadow: none;
+    border: 1px solid #f1ab50;
+    background-color: #d3d7dd;
+    border-radius: 50%;
+    padding: 1.6rem;
+    width: 8rem;
+    margin-left:2rem;
+  }
+  p {
+    font-family: Raleway light (300);
+    font-size: medium;
+    font-weight:600;
+    margin-left: 1rem;
+    color: #152440;
+  }
+}

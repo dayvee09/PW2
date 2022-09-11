@@ -1,25 +1,56 @@
 .NavDesktop {
-	display: none;
+  display: none;
+
+  .MuiList-root {
+    display: none;
+  }
 }
 
 @media only screen and (min-width: 768px) {
-	.NavDesktop {
-		background-color: #f3f5eb;
-		display: flex;
-		justify-content: space-between;
-		padding: 25px 5rem 25px 5rem;
+  .NavDesktop {
+    background-color: #f3f5eb;
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 5rem 25px 5rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
 
-		.logo {
-			height: 50px;
-			width: 120px;
-		}
+    .logo,
+    .iconeAddBottle {
+      height: 50px;
+      width: 120px;
+    }
 
-		.NavDesktop--container-profil {
-			display: flex;
-			
-			img {
-				margin-right: 15px;
-			}
-		}
-	}
+    .iconeAddBottle {
+      &:hover {
+        scale: 1.05;
+      }
+    }
+
+    .actionMenu {
+      display: flex;
+    }
+
+    .navDesktop--container-profil {
+      display: flex;
+      cursor: pointer;
+
+      p {
+        padding-top: 10px;
+      }
+
+      img {
+        margin-right: 15px;
+      }
+    }
+  }
+
+  .MuiList-root {
+    a span {
+      margin: 0 auto;
+    }
+    a:hover {
+      color: #cc4240;
+      background-color: transparent;
+    }
+  }
 }
