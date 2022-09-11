@@ -438,11 +438,12 @@ const Appli = () => {
                   path={`/vins`}
                   element={
                     <FrmAjoutBouteille
-                      bouteilles={bouteilles}
-                      setBouteilles={setBouteilles}
-                      fetchVins={fetchVins}
-                      gererBouteilles={gererBouteilles}
-                      cellier={cellier}
+                      // bouteilles={bouteilles}
+                      // setBouteilles={setBouteilles}
+                      // fetchVins={fetchVins}
+                      // fetchCelliers={fetchCelliers}
+                      // gererBouteilles={gererBouteilles}
+                      celliers={celliers}
                       URI={URI}
                     />
                   }
