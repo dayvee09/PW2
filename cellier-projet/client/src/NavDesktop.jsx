@@ -14,7 +14,6 @@ export default function NavDesktop({ user, gererSignOut, utilisateur }) {
 
   function gererMenuContextuel(evt) {
     setEltAncrage(evt.currentTarget);
-    console.log("test");
   }
 
   function gererFermerMenuContextuel() {

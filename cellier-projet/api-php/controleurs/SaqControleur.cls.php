@@ -173,6 +173,7 @@ class SaqControleur extends Controleur
         $retour->raison = '';
 
         // var_dump($bte);
+        // die();
         // Récupère le type
         $rows = $this->modele->un($bte->desc->type);
         $type_id = $rows->id;

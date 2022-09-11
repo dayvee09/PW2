@@ -188,7 +188,7 @@ const Appli = () => {
     const emailUtilisateur = email;
     // console.log(emailUtilisateur);
     setEmailUtilisateur(emailUtilisateur);
-    console.log(DATA);
+    // console.log(DATA);
     if (DATA !== undefined) {
       return;
     }
@@ -304,7 +304,6 @@ const Appli = () => {
   // ---------------------------------- Gestion des celliers -----------------------------
 
   async function fetchCelliers() {
-    console.log("fetchCelliers: ", id);
     await fetch(URI + "/" + "user_id" + "/" + id + "/" + "celliers")
       .then((response) => {
         if (response.ok) {
@@ -339,6 +338,7 @@ const Appli = () => {
         setError(error);
       });
   }
+
   // ------------------Gestion de l'importation de bouteilles de la SAQ-----------------------
 
   // ---------------------------------- Rendering -----------------------------------------
@@ -417,6 +417,7 @@ const Appli = () => {
                       setBouteilles={setBouteilles}
                       error={error}
                       setError={setError}
+                      gererSignOut={gererSignOut}
                     />
                   }
                 />
