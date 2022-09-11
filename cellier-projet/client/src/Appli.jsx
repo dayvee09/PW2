@@ -19,6 +19,7 @@ import NavMobile from "./NavMobile";
 import NavDesktop from "./NavDesktop";
 import PiedDePage from "./PiedDePage.jsx";
 import ListeBouteilles from "./ListeBouteilles";
+import FrmAjoutCellier from "./FrmAjoutCellier";
 import Admin from "./Admin";
 import ListeCelliers from "./ListeCelliers";
 import Utilisateur, { user } from "./Utilisateur.jsx";
@@ -463,6 +464,14 @@ const Appli = () => {
                       emailUtilisateur={emailUtilisateur}
                       utilisateur={utilisateur}
                       gererCellier={gererCellier}
+                      URI={URI}
+                    />
+                  }
+                />
+				<Route
+                  path={`/ajouter-cellier`}
+                  element={
+                    <FrmAjoutCellier
                       URI={URI}
                     />
                   }
