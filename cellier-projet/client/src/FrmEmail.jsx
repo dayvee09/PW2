@@ -33,7 +33,7 @@ export default function FrmEmail({
     color: "#f3f5eb",
     backgroundColor: "#cc4240",
     textDecoration: "none",
-    borderRadius:"0px",
+    borderRadius:"4px",
     fontFamily: "Alata",
     '&:hover': {
       backgroundColor: '#f1ab50',
