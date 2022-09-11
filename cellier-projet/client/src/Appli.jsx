@@ -392,6 +392,7 @@ const Appli = () => {
                       emailUtilisateur={emailUtilisateur}
                       setEmailUtilisateur={setEmailUtilisateur}
                       utilisateur={utilisateur}
+                      fetchUtilisateur={fetchUtilisateur}
                       setUtilisateur={setUtilisateur}
                       gererSignOut={gererSignOut}
                       URI={URI}

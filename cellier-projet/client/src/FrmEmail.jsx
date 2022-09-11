@@ -11,6 +11,9 @@ import "./FrmEmail.scss";
 import MuiButton from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import {
+  useNavigate,
+} from "react-router-dom";
 
 export default function FrmEmail({
   setEmailUtilisateur,
@@ -19,6 +22,7 @@ export default function FrmEmail({
   setNouvelEmailUtilisateur,
   frmEmailOuvert,
   setFrmEmailOuvert,
+  fetchUtilisateur,
   URI
 }) {
 
@@ -82,12 +86,14 @@ export default function FrmEmail({
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const [openAlert, setOpenAlert] = React.useState(false);
+  const navigate = useNavigate();
   const handleCloseAlert = (event, reason) => {
+    navigate(`/profil/${NouvelEmailUtilisateur}`, { replace: true })
     if (reason === 'clickaway') {
-      return;
+      navigate(`/profil/${NouvelEmailUtilisateur}`, { replace: true })
     }
     setOpenAlert(false);
-    setFrmEmailOuvert(false)
+    setFrmEmailOuvert(false);
   };
 
   /**
@@ -114,6 +120,7 @@ export default function FrmEmail({
     });
     console.log(result);
     if (result === "SUCCESS") {
+      console.log(NouvelEmailUtilisateur);
       let reponse = await fetch(
           URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
           {
@@ -122,8 +129,10 @@ export default function FrmEmail({
           }
       );
       let reponseJson = await reponse.json();
+      setEmailUtilisateur(NouvelEmailUtilisateur)
+      fetchUtilisateur();
+      navigate(`/profil/${NouvelEmailUtilisateur}`, { replace: true })
     }
-    setEmailUtilisateur(NouvelEmailUtilisateur)
     return result
   }
 
