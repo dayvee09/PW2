@@ -6,31 +6,38 @@ import { useNavigate, useParams, NavLink } from "react-router-dom";
 
 function ListeCelliers(props) {
   let history = useNavigate();
+  let messageRetour;
 
-    // Gestion du message de retour après ajout/modification/suppression
-  	setTimeout(function() {
-		let urlString = window.location.href;
-		var url = new URL(urlString);
-		var messageRetour = url.searchParams.get("message");
-		if(messageRetour != "") {
-			document.querySelector('.liste-cellier--message-retour').innerText = messageRetour
-		}
-	}, 100);
-	// Nettoyer le message de retour
-	setTimeout(function() {
-		document.querySelector('.liste-cellier--message-retour').innerText = "";
-	}, 3000);
+  // Gestion du message de retour après ajout/modification/suppression
+  setTimeout(function () {
+    let urlString = window.location.href;
+    let url = new URL(urlString);
+    messageRetour = url.searchParams.get("message");
+    if (
+      messageRetour &&
+      document.querySelector(".liste-cellier--message-retour")
+    ) {
+      document.querySelector(".liste-cellier--message-retour").innerText =
+        messageRetour;
+    }
+  }, 100);
+  // Nettoyer le message de retour
+  if (messageRetour) {
+    setTimeout(function () {
+      document.querySelector(".liste-cellier--message-retour").innerText = "";
+    }, 3000);
+  }
 
   if (props.celliers.length > 0) {
     return (
       <>
         <div className="liste-cellier--entete">
-            <h1>Mes Celliers</h1>
-			<NavLink to="/ajouter-cellier">
-           		<button>+ Ajouter</button>
-			</NavLink>
+          <h1>Mes Celliers</h1>
+          <NavLink to="/ajouter-cellier">
+            <button>+ Ajouter</button>
+          </NavLink>
         </div>
-		<span className="liste-cellier--message-retour"></span>
+        <span className="liste-cellier--message-retour"></span>
         <div className="ListeCelliers">
           {props.celliers.map((cellier) => (
             <div key={cellier.id} className="Cellier">
