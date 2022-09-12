@@ -6,27 +6,24 @@ import { useNavigate, useParams, NavLink } from "react-router-dom";
 
 function ListeCelliers(props) {
   let history = useNavigate();
-  let messageRetourContainer = document.querySelector('.liste-cellier--message-retour');
 
-    // Gestion du message de retour après ajout/modification/suppression
-  	setTimeout(function() {
-		let urlString = window.location.href;
-		var url = new URL(urlString);
-		var messageRetour = url.searchParams.get("message");
-		if(messageRetour != "") {
-			if(messageRetourContainer != null)  {
-				messageRetourContainer.innerText = messageRetour
-				messageRetour = ""
-			}
-		}
-	}, 100);
-	// Nettoyer le message de retour
+  // Récuperer le message de retour après ajout/modification/suppression
+  let messageRetourContainer = document.querySelector('.liste-cellier--message-retour'),
+  	  urlString = window.location.href,
+      url = new URL(urlString),
+	  messageRetour = url.searchParams.get("message");
+	  
+  if (messageRetourContainer != null) {
+	// Injecter le message de retour dans le DOM
+  	messageRetourContainer.innerText = messageRetour 
+
+	// Effacer le message de retour du DOM
 	setTimeout(function() {
-		if(messageRetourContainer != null)  {
-			messageRetourContainer.innerText = "";
-		}
+		messageRetourContainer.innerText = '';
+		window.history.pushState({}, '', '/');
 	}, 3000);
-
+  }
+  
   if (props.celliers.length > 0) {
     return (
       <>
