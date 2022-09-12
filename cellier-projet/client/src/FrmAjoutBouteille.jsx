@@ -15,13 +15,25 @@ import moment from "moment";
 
 export default function FrmAjoutBouteille(props) {
   /**
+   * État de bouton, false- importer , true- créer
+   */
+  const [btnState, setBtnState] = useState(false);
+
+  /**
+   * État de l'erreur du formulaire
+   */
+  const [erreur, setErreur] = React.useState([]);
+  /**
    * État de la liste de bouteille
    */
-  const [vinsListe, setVinsListe] = useState([]);
+  const [vinsListe, setVinsListe] = React.useState([]);
   /**
    * État de la valeur choisi du composant 'Autocomplete'
    */
   const [value, setValue] = React.useState([]);
+
+  // const [form, setForm] = React.State({vinCellier: props.celliers[0].id, vinQuantite: 1, vinDateAchat: moment().format("YYYY-MM-DD"), vinGarde:  moment().get("year").toString(), vinNote: "", vinNom: "", vinImage: "", vinPays: "", vinDescription: "", vinPrix: 0, vinFormat: "750 ml", vinType: "1", vinMillesime: 2023});
+
   /**
    * État du type de bouteille
    */
@@ -46,6 +58,38 @@ export default function FrmAjoutBouteille(props) {
   const [vinGarde, setVinGarde] = React.useState(
     moment().get("year").toString()
   );
+  /**
+   * État de la Note
+   */
+  const [vinNote, setVinNote] = React.useState("");
+  /**
+   * État du nom de la bouteille
+   */
+  const [vinNom, setVinNom] = React.useState("");
+  /**
+   * État du prix de la bouteille
+   */
+  const [vinPrix, setVinPrix] = React.useState(0);
+  /**
+   * État du millesime de la bouteille
+   */
+  const [vinMillesime, setMillesime] = React.useState("");
+  /**
+   * État du pays de la bouteille
+   */
+  const [vinPays, setVinPays] = React.useState("");
+  /**
+   * État du format de la bouteille
+   */
+  const [vinFormat, setVinFormat] = React.useState("");
+  /**
+   * État de la description de la bouteille
+   */
+  const [vinDescription, setVinDescription] = React.useState("");
+  /**
+   * État de l'image de la bouteille
+   */
+  const [vinImage, setVinImage] = React.useState("");
 
   /**
    *  Fetch la liste de la bouteilles de la BD pour préparer à injecter à la liste du composant 'Autocomplete'
@@ -63,74 +107,103 @@ export default function FrmAjoutBouteille(props) {
       });
   }, []);
 
-  /**
-   * Gère le changement du type de bouteille
-   * @param {*} event
-   */
-  const gererTypeChange = (event) => {
-    setVinType(event.target.value);
-  };
-  /**
-   * Gère le changement du cellier choisi
-   * @param {*} event
-   */
-  const gererCellierChange = (event) => {
-    setVinCellier(event.target.value);
-  };
-  /**
-   * Gère le changement de la quantité choisie
-   * @param {*} event
-   */
-  const gererQuantiteChange = (event) => {
-    setVinQuantite(event.target.value);
-  };
+  function clearForm() {
+    setValue((value) => {
+      value = [];
+    });
+
+    setMillesime("");
+    setVinPays("");
+    setVinCellier(props.celliers[0].id);
+    setVinFormat("");
+    setVinPrix(0);
+    setVinDescription("");
+    setVinGarde(moment().get("year").toString());
+    setVinImage("");
+    setVinNom("#");
+    setVinNote("");
+    setVinQuantite(1);
+    setVinType(1);
+    setVinDateAchat(moment().format("YYYY-MM-DD"));
+  }
   /**
    * Gère le bouton 'Ajouter'
    */
 
   function gererAjoutBouteille() {
-    // if(!value) {
-    fetchAjouterVin();
-    // }
+    console.log("error[]:", erreur);
+    console.log("vin_id:", value.id);
+    console.log("cellier_id:", vinCellier);
+    console.log("quantite:", vinQuantite);
+    console.log("Date_achat:", vinDateAchat);
+    console.log("Garde:", vinGarde);
+    console.log("notes:", value ? value.notes : vinNote);
+    console.log("personnalise(0 ou 1):", value ? value.personnalise : 1);
+    console.log("Nom: ", vinNom);
+    console.log("Image: ", vinImage);
+    console.log("Pays: ", vinPays);
+    console.log("Description: ", vinDescription);
+    console.log("Prix: ", vinPrix);
+    console.log("format: ", vinFormat);
+    console.log("type_id: ", vinType);
+    console.log("Millesime: ", vinMillesime);
+
+    if (value || erreur.length === 0) {
+      fetchAjouterVin();
+    } else console.log("form invalid");
   }
   /**
    * Ajouter une nouvelle bouteille à la BD
    *
    */
   async function fetchAjouterVin() {
-    console.log("vin_id:", value.id);
-    console.log("cellier_id:", vinCellier);
-    console.log("quantite:", vinQuantite);
-    console.log("Date_achat:", vinDateAchat);
-    console.log("Garde:", vinGarde);
-    console.log("notes:", value.notes);
-    console.log("personnalise(0):", value.personnalise);
+    //Route API: localhost/PW2/cellier-projet/api-php/cellier/3/vins,
+    // les données（payload） à ajouter pour l'importation du SAQ, servi au table 'vino__bouteille_has_vino__cellier', le key "personnalise" = 0
 
-    // //Route API: localhost/PW2/cellier-projet/api-php/cellier/3/vins,
-    //   let reponse = await fetch(
-    //   // "http://localhost/PW2/cellier-projet/api-php" +
-    //   props.URI +
-    //   "/" +
-    //   "cellier" +
-    //   "/" +
-    //  vinCellier +
-    //   "/" +
-    //   "vins",
-    //   {
-    //     method: "POST",
-    //     body: JSON.stringify({
-    //           vino__bouteille_id:value.id,
-    //           vino__cellier_id:vinCellier,
-    //           quantite:vinQuantite,
-    //           date_achat:vinDateAchat,
-    //           garde_jusqua:vinGarde,
-    //           notes:value.notes,
-    //           personnalise:value.personnalise
-    //     }),
-    //   }
-    // );
-    // let reponseJson = await reponse.json();
-    // fetchVinUn();
+    let formData = {};
+    if (btnState === false) {
+      formData = {
+        vino__bouteille_id: value.id,
+        vino__cellier_id: vinCellier,
+        quantite: vinQuantite,
+        date_achat: vinDateAchat,
+        garde_jusqua: vinGarde,
+        notes: value.notes,
+        personnalise: 0,
+      };
+    } else {
+      formData = {
+        nom: vinNom,
+        image: vinImage,
+        code_saq: "",
+        pays: vinPays,
+        description: vinDescription,
+        prix_saq: vinPrix,
+        url_saq: "",
+        url_img: "",
+        format: vinFormat,
+        vino__type_id: vinType,
+        millesime: vinMillesime,
+        personnalise: 1,
+        vino__cellier_id: vinCellier,
+        quantite: vinQuantite,
+        date_achat: vinDateAchat,
+        garde_jusqua: vinGarde,
+        notes: vinNote,
+      };
+    }
+
+    // Fetch API d'ajouter une bouteille , soit l'importation du SAQ soit la création personnalisé
+    let reponse = await fetch(
+      // "http://localhost/PW2/cellier-projet/api-php" +
+      props.URI + "/" + "cellier" + "/" + vinCellier + "/" + "vins",
+      {
+        method: "POST",
+        body: JSON.stringify(formData),
+      }
+    );
+    let reponseJson = await reponse.json();
+    console.log("responseJson:", reponseJson);
   }
   const imgUrl = () => {
     let ok = "https://www.saq.com/media/wysiwyg/placeholder/category/06.png";
@@ -142,7 +215,6 @@ export default function FrmAjoutBouteille(props) {
     }
     return ok;
   };
-
   return (
     <div className="FrmAjoutBouteille">
       <div className="btnClose">
@@ -153,7 +225,13 @@ export default function FrmAjoutBouteille(props) {
 
       <div className="EnteteAjoutBouteille">
         <h2>AJOUTER UNE BOUTEILLE</h2>
-        <BtnGroup />
+        <BtnGroup
+          btnState={btnState}
+          setBtnState={setBtnState}
+          clearForm={clearForm}
+          setMillesime={setMillesime}
+          VinMillesime={vinMillesime}
+        />
       </div>
       <div className="bandeRouge"></div>
 
@@ -161,96 +239,147 @@ export default function FrmAjoutBouteille(props) {
         <div className="img--wrap">
           <img src={imgUrl() ? imgUrl() : ""} alt="" />
         </div>
+        {/* Apparaîte uniquement en important de la bouteille du SAQ */}
+        <div className={btnState ? "hidden" : ""}>
+          <label>Nom: {value ? value.nom : ""}</label>
+        </div>
+        {/* Autocomplete début */}
+        <div className={btnState ? "hidden" : ""}>
+          <label htmlFor="">Recherche: </label>
+          <Autocomplete
+            options={vinsListe}
+            getOptionLabel={(option) => option.nom}
+            disablePortal
+            size="small"
+            blurOnSelect={true}
+            noOptionsText={"La bouteille n'existe pas"}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            // Gère du boutton clear 'X' , faut nettoyer tous les champs du formulaire
+            onInputChange={(event, newValue, reason) => {
+              if (reason === "clear" || newValue === "") {
+                setValue((value) => {
+                  value = [];
+                });
+              }
+            }}
+            // Gère du changement de l'option
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+            renderOption={(props, option) => {
+              return (
+                <li {...props} key={option.id}>
+                  {option.nom} - {option.format}
+                </li>
+              );
+            }}
+            renderInput={(params) => <TextField {...params} size="small" />}
+          />
+        </div>
+        {/* Autocomplete fin */}
 
-        <label htmlFor="">Nom: {value ? value.nom : ""}</label>
-
-        <label htmlFor="">Recherche: </label>
-
-        <Autocomplete
-          options={vinsListe}
-          getOptionLabel={(option) => option.nom}
-          disablePortal
-          size="small"
-          blurOnSelect={true}
-          noOptionsText={"La bouteille n'existe pas"}
-          isOptionEqualToValue={(option, value) => option.id === value.id}
-
-          // Gère du boutton clear 'X' , faut nettoyer tous les champs du formulaire
-          onInputChange={(event, newValue, reason) => {
-            if (reason === "clear" || newValue === "") {
-              setValue((value) => {
-                value = [];
-              });
-            }
-          }}
-
-          // Gère du changement de l'option
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-          renderOption={(props, option) => {
-            return (
-              <li {...props} key={option.id}>
-                {option.nom} - {option.format}
-              </li>
-            );
-          }}
-          renderInput={(params) => <TextField {...params} size="small" />}
-        />
-        
         <Grid container spacing={1}>
           {/* min-width -- (desktop)lg:1200px - md:992px - sm:768px, xs(mobile)-max-width:768px */}
-          <Grid item xs={12} sm={6} md={3} lg={3}>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={12}
+            lg={6}
+            className={btnState ? "" : "hidden"}
+          >
+            <label>Nom</label>
+            <TextField
+              fullWidth
+              size="small"
+              type="text"
+              name="nom"
+              value={vinNom}
+              onChange={(e) => {
+                setVinNom(e.target.value);
+                e.target.value === ""
+                  ? setErreur({ nom: "champ obligatoire" })
+                  : delete erreur["nom"];
+              }}
+              error={vinNom === ""}
+              helperText={vinNom === "" ? "* Champ obligatoire!" : " "}
+            />
+          </Grid>
+          <Grid item xs={6} sm={6} md={3} lg={3}>
             <label>Millesime</label>
             <TextField
               fullWidth
               size="small"
               type="text"
               name="millesime"
-              value={value ? value.millesime : ""}
+              value={value ? value.millesime : vinMillesime}
+              onChange={(e) => {
+                setMillesime(e.target.value);
+              }}
               // inputProps={
               //   { readOnly: true, }
               // }
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={3} lg={3}>
+          <Grid item xs={6} sm={6} md={3} lg={3}>
             <label>Pays</label>
             <TextField
               fullWidth
               size="small"
               type="text"
               name="pays"
-              value={value ? value.pays : ""}
+              value={value ? value.pays : vinPays}
+              onChange={(e) => {
+                setVinPays(e.target.value);
+              }}
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={3} lg={3}>
+          <Grid item xs={6} sm={6} md={3} lg={3}>
             <label>Prix</label>
             <TextField
               fullWidth
               size="small"
               type="number"
               name="prix"
-              value={value ? value.prix_saq : ""}
+              value={value ? value.prix_saq : vinPrix}
+              onChange={(e) => {
+                setVinPrix(e.target.value);
+                e.target.value === ""
+                  ? setErreur({ prix: "champ obligatoire" })
+                  : delete erreur["prix"];
+              }}
+              error={vinPrix === ""}
+              helperText={vinPrix === "" ? "* Champ obligatoire!" : " "}
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={3} lg={3}>
+          <Grid item xs={6} sm={6} md={3} lg={3}>
             <label>format(ml)</label>
             <TextField
               fullWidth
               size="small"
               type="text"
               name="format"
-              value={value ? value.format : ""}
+              value={value ? value.format : vinFormat}
+              onChange={(e) => {
+                setVinFormat(e.target.value);
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={6}>
             <label>Description</label>
             <TextField
+              // style={{ height: 20 }}
               fullWidth
               size="small"
               type="text"
               name="description"
-              value={value ? value.description : ""}
+              multiline
+              rows={2}
+              // maxRows={3}
+              value={value ? value.description : vinDescription}
+              onChange={(e) => {
+                setVinDescription(e.target.value);
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={3}>
@@ -258,7 +387,9 @@ export default function FrmAjoutBouteille(props) {
             <TextField
               select
               value={value ? value.vino__type_id : vinType}
-              onChange={gererTypeChange}
+              onChange={(e) => {
+                setVinType(e.target.value);
+              }}
               SelectProps={{
                 native: true,
               }}
@@ -274,14 +405,14 @@ export default function FrmAjoutBouteille(props) {
             </TextField>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Grid item xs={6} sm={6} md={4} lg={3}>
             <label>Date d'achat</label>
             <DateSelecteur
               dateAchat={vinDateAchat}
               setDateAchat={setVinDateAchat}
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Grid item xs={6} sm={6} md={4} lg={3}>
             <label>Garde</label>
             <DateSelecteurAnnee
               dateGarde={vinGarde}
@@ -289,27 +420,39 @@ export default function FrmAjoutBouteille(props) {
             />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Grid item xs={6} sm={6} md={4} lg={3}>
             <label>Note</label>
             <TextField
               fullWidth
               size="small"
               type="text"
               name="notes"
-              value={value ? value.notes : ""}
+              value={value ? value.notes : vinNote}
+              onChange={(e) => {
+                setVinNote(e.target.value);
+              }}
             />
           </Grid>
-          <Grid item xs={12} sm={6} md={4} lg={3}>
+          <Grid item xs={6} sm={6} md={4} lg={3}>
             <label>Quantite</label>
             <TextField
               fullWidth
               size="small"
               type={"number"}
-              min={1}
-              inputProps={{ min: 1 }}
+              inputProps={{ min: 1, inputMode: "numeric", pattern: "/^\+?[1-9]\d*$/" }}
               defaultValue={1}
               name="quantite"
-              onChange={gererQuantiteChange}
+              required
+              value={vinQuantite}
+              onChange={(e) => {
+                setVinQuantite(e.target.value);
+                e.target.value === ""
+                  ? setErreur({ quantite: "champ obligatoire" })
+                  : delete erreur["quantite"];
+              }}
+              error={vinQuantite === ""}
+              helperText={vinQuantite === "" ? "* Champ obligatoire!" : " "}
+              // onChange={gererQuantiteChange}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={3}>
@@ -317,7 +460,7 @@ export default function FrmAjoutBouteille(props) {
             <TextField
               select
               value={vinCellier}
-              onChange={gererCellierChange}
+              onChange={(e) => setVinCellier(e.target.value)}
               SelectProps={{
                 native: true,
               }}
