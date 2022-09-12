@@ -40,7 +40,6 @@ export default function Cellier(props) {
   return (
     <>
       <div
-        onClick={handleChange}
         className={
           selection == "fond-selection"
             ? "cellier fond-selection"
@@ -48,21 +47,23 @@ export default function Cellier(props) {
         }
         data-quantite=""
       >
-        <div className="cellier--gestion">
-          {selection == "fond-selection" ? (
-            <div className="btn-cellier">
-              <NavLink to={`/cellier/${cellier}/vins`}>
-                <button>Voir mes bouteilles</button>
-              </NavLink>
-            </div>
-          ) : (
-            <p className="cellier--nom">{props.nom}</p>
-          )}
-          <MoreVertIcon
-            className="cellier--gestion-dots"
-            onClick={gererMenuContextuel}
-          />
-        </div>
+		<div className="cellier--gestion">
+			<div className="cellier--gestion-container" onClick={handleChange}>
+			{selection == "fond-selection" ? (
+				<div className="btn-cellier">
+				<NavLink to={`/cellier/${cellier}/vins`}>
+					<button>Voir mes bouteilles</button>
+				</NavLink>
+				</div>
+			) : (
+				<p className="cellier--nom">{props.nom}</p>
+			)}
+			</div>
+			<MoreVertIcon
+				className="cellier--gestion-dots"
+				onClick={gererMenuContextuel}
+			/>
+		</div>
         <div className="cellier--description">
           <p>ID : {props.id}</p>
           <p>Id Utilisateur : {props.vino__utilisateur_id}</p>
