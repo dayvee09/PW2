@@ -2,16 +2,15 @@ import "./ToggleBtn.scss";
 import { useState } from "react";
 
 export default function ToggleBtn(props) {
-  /**
-   * État de bouton, false- importer , true- créer
-   */
-  const [btnState, setBtnState] = useState(false);
-
+  
   function handleClickBtn() {
-    if (btnState) {
-      setBtnState(false);
+    if (props.btnState) {
+      props.clearForm();
+      props.setBtnState(false);
+      
     } else {
-      setBtnState(true);
+      props.clearForm();
+      props.setBtnState(true);
     }
   }
 
@@ -23,13 +22,13 @@ export default function ToggleBtn(props) {
             id="my-button"
             className={[
               "button-element",
-              btnState === true ? "tfx100 br1" : "tfx0 br2",
+              props.btnState === true ? "tfx100 br1" : "tfx0 br2",
             ].join(" ")}
           >
-            <p id="importer">{btnState === true ? "CRÉER" : "IMPORTER"}</p>
+            <p id="importer">{props.btnState === true ? "CRÉER" : "IMPORTER"}</p>
           </div>
-          <p id="creer" className={btnState === true ? "tfxn100" : "tfx0"}>
-            {btnState === true ? "IMPORTER" : "CRÉER"}
+          <p id="creer" className={props.btnState === true ? "tfxn100" : "tfx0"}>
+            {props.btnState === true ? "IMPORTER" : "CRÉER"}
           </p>
         </div>
         <label>
@@ -38,7 +37,7 @@ export default function ToggleBtn(props) {
             id="for-button"
             type="text"
             name="method"
-            value={btnState === true ? "CRÉER" : "IMPORTER"}
+            value={props.btnState === true ? "CRÉER" : "IMPORTER"}
             readOnly
           />
         </label>

@@ -20,7 +20,7 @@ function ListeBouteilles(props) {
           <Grid container spacing={40}>
           {bouteilles.map((bouteille) => (
             // < item key={bouteille.id} sm={6} md={4} lg={3}>
-            <Grid key={bouteille.id} sm={6} md={4} lg={3} className="Bouteille">
+            <Grid item key={bouteille.id} sm={6} md={4} lg={3} className="Bouteille">
               <Bouteille
                 {...bouteille}
                 gererBouteille={props.gererBouteille}
@@ -32,7 +32,7 @@ function ListeBouteilles(props) {
                 URI={props.URI}
               />
             {/* </div> */}
-            </Grid>
+            </Grid >
           ))}
           </Grid>
         </div>
