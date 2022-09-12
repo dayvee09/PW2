@@ -19,6 +19,12 @@ export default function Utilisateur(props) {
     if (props.utilisateur) {
       props.setId(props.utilisateur.id);
     }
+    if (props.utilisateur) {
+      props.setUsername(props.utilisateur.nom);
+    }
+    if (props.utilisateur) {
+      props.setEmailUtilisateur(props.utilisateur.email);
+    }
   }, [props.utilisateur]);
 
   return <div></div>;

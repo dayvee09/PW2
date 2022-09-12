@@ -13,7 +13,14 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "@aws-amplify/ui-react";
+
 export default function Profil(props) {
+  const [NouveauUsername, setNouveauUsername] = useState();
+
+  // useEffect(() => {
+  //   setNouveauUsername(props.username);
+  // }, []);
+
   /**
    *  État des styles des composants MUI
    */
@@ -23,20 +30,18 @@ export default function Profil(props) {
     textDecoration: "none",
     borderRadius:"4px",
     fontFamily: "Alata",
-	fontSize: "12px",
-	padding: "10px 20px",
-    "&:hover": {
-      backgroundColor: "#f1ab50",
-      color: "#f3f5eb",
-    },
+    fontSize: "12px",
+    padding: "10px 20px",
+      "&:hover": {
+        backgroundColor: "#f1ab50",
+        color: "#f3f5eb",
+      },
   }));
 
   /**
    *  État du nouvel email par défaut
    */
-  const [NouvelEmailUtilisateur, setNouvelEmailUtilisateur] = useState(
-    props.emailUtilisateur
-  );
+  const [NouvelEmailUtilisateur, setNouvelEmailUtilisateur] = useState(props.emailUtilisateur);
 
   /**
    *  État des formulaires de modification
@@ -141,13 +146,30 @@ export default function Profil(props) {
     <>
       <div className="infos-profil">
         <img src={Image} className="icone-profil" alt="icone-profil"></img>
-        <p>{props.emailUtilisateur}</p>
+        <p>{props.username}</p>
       </div>
       <div className="signOut">
         <Button onClick={redirectionAccueil}>Déconnexion</Button>
       </div>
-      <div className="Profil" data-quantite="">
-        <div className="description">
+      <div className="Profil">
+        <div className="description-username">
+          <div className="infos-modification">
+            <p>Nom d'usager</p>
+            <button className="modifier">
+              Modifier
+            </button>
+          </div>
+          <ThemeProvider theme={theme}>
+            <TextField
+              style={{ width: "100%" }}
+              id="username"
+              type={"text"}
+              variant="outlined"
+              defaultValue={props.username}
+            />
+          </ThemeProvider>
+        </div>
+        <div className="description-courriel">
           <div className="infos-modification">
             <p>Adresse Courriel</p>
             <button className="modifier" onClick={gererModifierEmail}>
