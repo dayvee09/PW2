@@ -140,7 +140,7 @@ export default function FrmEmail({
       setSeverity("success");
       setOpenAlert(true);
     } else {
-      setMessageRetour("Non d'usager invalide");
+      setMessageRetour("Le nom d'usager doit contenir au moins huit caractères. Les . et _ ne sont pas acceptés au début et à la fin du nom d'usager. Les caractères spéciaux ne sont pas acceptés.");
       setSeverity("error");
       setOpenAlert(true);
     }
@@ -164,6 +164,7 @@ export default function FrmEmail({
                 id="username"
                 type={"text"}
                 defaultValue={username}
+                helperText="Le nom d'usager doit contenir au moins huit caractères."
               />
             </ThemeProvider>
             <Snackbar
