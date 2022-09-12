@@ -29,9 +29,15 @@ class UtilisateursModele extends AccesBd
 
     public function changer($params, $fragmentUtilisateur)
     {
-        return $this->modifier("UPDATE vino__utilisateur SET vino__utilisateur.email=:fragment_utilisateur WHERE vino__utilisateur.email=:email ", [
+        if (isset($fragmentUtilisateur->email)) {
+        return $this->modifier("UPDATE vino__utilisateur SET vino__utilisateur.email=:fragment_utilisateur  WHERE vino__utilisateur.email=:email ", [
             'email' => $params["email"],
             'fragment_utilisateur' => $fragmentUtilisateur->email
+        ]);} else if (isset($fragmentUtilisateur->nom)) {
+        return $this->modifier("UPDATE vino__utilisateur SET vino__utilisateur.nom=:fragment_utilisateur  WHERE vino__utilisateur.email=:email ", [
+            'nom' => $params["nom"],
+            'fragment_utilisateur' => $fragmentUtilisateur->nom
         ]);
+        }
     }
 }
