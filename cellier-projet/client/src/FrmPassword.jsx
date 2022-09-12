@@ -27,7 +27,7 @@ export default function FrmPassword({
     color: "#f3f5eb",
     backgroundColor: "#cc4240",
     textDecoration: "none",
-    borderRadius: "0px",
+    borderRadius:"4px",
     fontFamily: "Alata",
     "&:hover": {
       backgroundColor: "#f1ab50",
@@ -53,11 +53,10 @@ export default function FrmPassword({
    */
   const [messageRetour, setMessageRetour] = useState([]);
   useEffect(() => {
-    setSeverity("");
     if (messageRetour === "Modification effectuée") {
-      setSeverity("success");
-    } else {
-      setSeverity("error");
+      setSeverity("success")
+    } else if (messageRetour === "Courriel invalide"){
+      setSeverity("error")
     }
   }, [messageRetour]);
 
@@ -78,7 +77,8 @@ export default function FrmPassword({
       return;
     }
     setOpenAlert(false);
-    setFrmPasswordOuvert(false);
+    setFrmPasswordOuvert(false)
+    setSeverity("")
   };
 
   /**

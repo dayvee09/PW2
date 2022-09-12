@@ -61,7 +61,12 @@ function ListeBouteilles(props) {
       );
     } else {
       return (
-        <h1 className="aucune-bouteille">Pas de bouteilles dans ce cellier</h1>
+		<div className="ListeBouteilles--default">
+			<h1 className="aucune-bouteille">Pas de bouteilles dans ce cellier</h1>
+			<NavLink to="/vins">
+				<button>Ajouter une bouteille</button>
+			</NavLink>
+		</div>
       );
     }
   }

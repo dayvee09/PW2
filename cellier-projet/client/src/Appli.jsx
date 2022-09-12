@@ -19,6 +19,7 @@ import NavMobile from "./NavMobile";
 import NavDesktop from "./NavDesktop";
 import PiedDePage from "./PiedDePage.jsx";
 import ListeBouteilles from "./ListeBouteilles";
+import FrmAjoutCellier from "./FrmAjoutCellier";
 import Admin from "./Admin";
 import ListeCelliers from "./ListeCelliers";
 import Utilisateur, { user } from "./Utilisateur.jsx";
@@ -320,6 +321,24 @@ const Appli = () => {
       });
   }
 
+  async function ajouterCellier(cellier) {
+	  let reponse = await fetch(URI + "/", {
+		  method: "POST",
+		  body: JSON.stringify(cellier),
+		})
+		.then((response) => {
+			// Gestion du message de retour
+			let messageRetour = "";
+			if (response.ok) {
+				messageRetour = "Cellier ajouté avec succès.";
+			} else {
+				messageRetour = "Erreur lors de l'ajout du cellier.";
+			}
+			// rediriger vers la liste des celliers
+			window.location.href = "/?message="+ messageRetour; 
+		})
+  }
+
   // --------------------------------- Gestion des bouteilles ------------------------------------
 
   async function fetchVins() {
@@ -338,7 +357,7 @@ const Appli = () => {
         setError(error);
       });
   }
-
+// console.log(Auth.user)
   // ------------------Gestion de l'importation de bouteilles de la SAQ-----------------------
 
   // ---------------------------------- Rendering -----------------------------------------
@@ -398,6 +417,7 @@ const Appli = () => {
                       emailUtilisateur={emailUtilisateur}
                       setEmailUtilisateur={setEmailUtilisateur}
                       utilisateur={utilisateur}
+                      fetchUtilisateur={fetchUtilisateur}
                       setUtilisateur={setUtilisateur}
                       gererSignOut={gererSignOut}
                       URI={URI}
@@ -462,6 +482,16 @@ const Appli = () => {
                       emailUtilisateur={emailUtilisateur}
                       utilisateur={utilisateur}
                       gererCellier={gererCellier}
+                      URI={URI}
+                    />
+                  }
+                />
+				<Route
+                  path={`/ajouter-cellier`}
+                  element={
+                    <FrmAjoutCellier
+					  celliers={celliers}
+					  ajouterCellier={ajouterCellier}
                       URI={URI}
                     />
                   }
