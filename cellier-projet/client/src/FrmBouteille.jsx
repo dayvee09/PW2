@@ -7,14 +7,13 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useState, useEffect } from "react";
 import FrmBouteilleInput from "./FrmBouteilleInput";
 import "./FrmBouteille.scss";
-import Alert from '@mui/material/Alert';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Collapse from '@mui/material/Collapse';
+import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Collapse from "@mui/material/Collapse";
 
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
-
 
 export default function FrmBouteille({
   bouteille,
@@ -29,9 +28,8 @@ export default function FrmBouteille({
   setDateAchat,
   dateGarde,
   setDateGarde,
-  modifierBouteille
+  modifierBouteille,
 }) {
-
   /**
    * L‘état d'erreur
    */
@@ -50,10 +48,8 @@ export default function FrmBouteille({
     if (quantite >= 0) {
       modifierBouteille(quantite, dateAchat, dateGarde);
       setFrmOuvert(false);
-    }
-    else {
-      if (quantite < 0)
-        setOpenErr(true);
+    } else {
+      if (quantite < 0) setOpenErr(true);
     }
   }
 
@@ -71,7 +67,9 @@ export default function FrmBouteille({
           </div>
           <div className="description">
             <h2 className="nom">{bouteille.nom} </h2>
-            <p className="type">{bouteille_type} - {bouteille.format} - {bouteille.pays}</p>
+            <p className="type">
+              {bouteille_type} - {bouteille.format} - {bouteille.pays}
+            </p>
             <hr />
             <p className="description">Description : {bouteille.description}</p>
             <p className="millesime">Millesime : {bouteille.millesime}</p>
@@ -82,10 +80,13 @@ export default function FrmBouteille({
             <div className={voirFiche === false ? "hidden" : ""}>
               <p className="quantite">Quantité : {bouteille.quantite}</p>
               <p className="date_achat">Date achat : {bouteille.date_achat}</p>
-              <p className="date_achat">Date jusqu'à : {bouteille.garde_jusqua}</p>
+              <p className="date_achat">
+                Date jusqu'à : {bouteille.garde_jusqua}
+              </p>
             </div>
             <Dialog open={openErr}>
-              <Alert severity="error"
+              <Alert
+                severity="error"
                 action={
                   <IconButton
                     aria-label="close"
@@ -102,17 +103,26 @@ export default function FrmBouteille({
               </Alert>
             </Dialog>
           </div>
+          <div className={voirFiche === true ? "hidden" : ""}>
+            <label htmlFor="">Quantité: </label>
+          </div>
           <FrmBouteilleInput
             bouteille={bouteille}
             voirFiche={voirFiche}
             setQuantite={setQuantite}
           />
+          <div className={voirFiche === true ? "hidden" : ""}>
+            <label>Date d'achat: </label>
+          </div>
           <DateSelecteur
             voirFiche={voirFiche}
             bouteille={bouteille}
             dateAchat={dateAchat}
             setDateAchat={setDateAchat}
           />
+          <div className={voirFiche === true ? "hidden" : ""}>
+            <label>Garde: </label>
+          </div>
           <DateSelecteurAnnee
             voirFiche={voirFiche}
             bouteille={bouteille}

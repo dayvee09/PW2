@@ -31,12 +31,12 @@ function ListeCelliers(props) {
     return (
       <>
         <div className="liste-cellier--entete">
-            <h1>Mes Celliers</h1>
-			<NavLink to="/ajouter-cellier">
-           		<button>+ Ajouter</button>
-			</NavLink>
+          <h1>Mes Celliers</h1>
+          <NavLink to="/ajouter-cellier">
+            <button>+ Ajouter</button>
+          </NavLink>
         </div>
-		<span className="liste-cellier--message-retour"></span>
+        <span className="liste-cellier--message-retour"></span>
         <div className="ListeCelliers">
           {props.celliers.map((cellier) => (
             <div key={cellier.id} className="Cellier">

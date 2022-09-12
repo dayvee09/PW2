@@ -17,7 +17,7 @@ function ListeBouteilles(props) {
     if (props.bouteilles.length > 1) {
       return (
         <div className="ListeBouteilles">
-			<div className="ListeBouteille--grid">
+			  <div className="ListeBouteille--grid">
 				{bouteilles.map((bouteille) => (
 					<Bouteille
 						{...bouteille}
@@ -30,7 +30,7 @@ function ListeBouteilles(props) {
 						URI={props.URI}
 					/>
 				))}
-			</div>
+			  </div>
         </div>
       );
     } else if (props.bouteilles.length > 0) {
