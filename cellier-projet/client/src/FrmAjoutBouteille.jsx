@@ -131,22 +131,22 @@ export default function FrmAjoutBouteille(props) {
    */
 
   function gererAjoutBouteille() {
-    console.log("error[]:", erreur);
-    console.log("vin_id:", value.id);
-    console.log("cellier_id:", vinCellier);
-    console.log("quantite:", vinQuantite);
-    console.log("Date_achat:", vinDateAchat);
-    console.log("Garde:", vinGarde);
-    console.log("notes:", value ? value.notes : vinNote);
-    console.log("personnalise(0 ou 1):", value ? value.personnalise : 1);
-    console.log("Nom: ", vinNom);
-    console.log("Image: ", vinImage);
-    console.log("Pays: ", vinPays);
-    console.log("Description: ", vinDescription);
-    console.log("Prix: ", vinPrix);
-    console.log("format: ", vinFormat);
-    console.log("type_id: ", vinType);
-    console.log("Millesime: ", vinMillesime);
+    // console.log("error[]:", erreur);
+    // console.log("vin_id:", value.id);
+    // console.log("cellier_id:", vinCellier);
+    // console.log("quantite:", vinQuantite);
+    // console.log("Date_achat:", vinDateAchat);
+    // console.log("Garde:", vinGarde);
+    // console.log("notes:", value ? value.notes : vinNote);
+    // console.log("personnalise(0 ou 1):", value ? value.personnalise : 1);
+    // console.log("Nom: ", vinNom);
+    // console.log("Image: ", vinImage);
+    // console.log("Pays: ", vinPays);
+    // console.log("Description: ", vinDescription);
+    // console.log("Prix: ", vinPrix);
+    // console.log("format: ", vinFormat);
+    // console.log("type_id: ", vinType);
+    // console.log("Millesime: ", vinMillesime);
 
     if (value || erreur.length === 0) {
       fetchAjouterVin();
@@ -194,16 +194,25 @@ export default function FrmAjoutBouteille(props) {
     }
 
     // Fetch API d'ajouter une bouteille , soit l'importation du SAQ soit la création personnalisé
-    let reponse = await fetch(
+    let fetchAjoutBouteille = await fetch(
       // "http://localhost/PW2/cellier-projet/api-php" +
       props.URI + "/" + "cellier" + "/" + vinCellier + "/" + "vins",
       {
         method: "POST",
         body: JSON.stringify(formData),
       }
-    );
-    let reponseJson = await reponse.json();
-    console.log("responseJson:", reponseJson);
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {})
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        props.setError(error);
+      });
   }
   const imgUrl = () => {
     let ok = "https://www.saq.com/media/wysiwyg/placeholder/category/06.png";
@@ -439,7 +448,11 @@ export default function FrmAjoutBouteille(props) {
               fullWidth
               size="small"
               type={"number"}
-              inputProps={{ min: 1, inputMode: "numeric", pattern: "/^\+?[1-9]\d*$/" }}
+              inputProps={{
+                min: 1,
+                inputMode: "numeric",
+                pattern: "/^+?[1-9]d*$/",
+              }}
               defaultValue={1}
               name="quantite"
               required

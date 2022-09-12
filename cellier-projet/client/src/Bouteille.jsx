@@ -3,13 +3,12 @@ import "./Bouteille.scss";
 import FrmBouteille from "./FrmBouteille";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert from '@mui/material/Alert';
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 // import format from 'date-fns/format';
 // import moment from 'moment';
 // import { keyframes } from "@emotion/react";
 export default function Bouteille(props) {
-
   /**
    *  API MUI https://mui.com/material-ui/react-snackbar/
    */
@@ -18,20 +17,20 @@ export default function Bouteille(props) {
   });
   const [openAlert, setOpenAlert] = React.useState(false);
   const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setOpenAlert(false);
   };
 
   /**
-  *  État d'affichage de la fiche de bouteille
-  */
+   *  État d'affichage de la fiche de bouteille
+   */
   const [voirFiche, setVoirFiche] = useState(false);
 
   /**
-  *  État du formulaire de modification
-  */
+   *  État du formulaire de modification
+   */
   const [frmOuvert, setFrmOuvert] = useState(false);
 
   /**
@@ -76,7 +75,7 @@ export default function Bouteille(props) {
    * Gère le bouton 'ajouter'
    */
   function gererAjouter() {
-    setQuantite(quantite => parseInt(quantite) + 1);
+    setQuantite((quantite) => parseInt(quantite) + 1);
     fetchPutVinUn(parseInt(quantite) + 1, dateAchat, dateGarde);
   }
 
@@ -85,19 +84,20 @@ export default function Bouteille(props) {
    */
   function gererBoire() {
     if (quantite > 0) {
-      setQuantite(quantite => parseInt(quantite) - 1);
+      setQuantite((quantite) => parseInt(quantite) - 1);
       fetchPutVinUn(parseInt(quantite) - 1, dateAchat, dateGarde);
-    }
-    else
-      setOpenAlert(true);
+    } else setOpenAlert(true);
   }
 
   /**
    * Gère la modification de la quantité de bouteille
-   * @param {*} NouveauQuantite 
+   * @param {*} NouveauQuantite
    */
-  function modifierBouteille(NouveauQuantite, NouveauDateAchat, NouveauDateGarde) {
-
+  function modifierBouteille(
+    NouveauQuantite,
+    NouveauDateAchat,
+    NouveauDateGarde
+  ) {
     var reg = /^[1-9]+[0-9]*]*$/;
     if (reg.test(NouveauQuantite)) {
       setQuantite(NouveauQuantite);
@@ -106,30 +106,34 @@ export default function Bouteille(props) {
   }
   /**
    * Actualiser la quantité du DB
-   * @param {*} NouveauQuantite 
+   * @param {*} NouveauQuantite
    */
-  async function fetchPutVinUn(NouveauQuantite, NouveauDateAchat, NouveauDateGarde) {
-    //Route API: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7, 
+  async function fetchPutVinUn(
+    NouveauQuantite,
+    NouveauDateAchat,
+    NouveauDateGarde
+  ) {
+    //Route API: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7,
     //           Execute dans l'ordre 'VinsControleur.cls.php'->'VinsModele.cls.php'->function changer($params, $idEntite, $fragmentVin),'fragmentVin'-> body
     let reponse = await fetch(
       // "http://localhost/PW2/cellier-projet/api-php" +
       props.URI +
-      "/" +
-      "cellier" +
-      "/" +
-      props.vino__cellier_id +
-      "/" +
-      "vins" +
-      "/" +
-      "bouteille" +
-      "/" +
-      props.id,
+        "/" +
+        "cellier" +
+        "/" +
+        props.vino__cellier_id +
+        "/" +
+        "vins" +
+        "/" +
+        "bouteille" +
+        "/" +
+        props.id,
       {
         method: "PATCH",
         body: JSON.stringify({
           quantite: NouveauQuantite,
           date_achat: NouveauDateAchat,
-          garde_jusqua: NouveauDateGarde
+          garde_jusqua: NouveauDateGarde,
         }),
       }
     );
@@ -138,7 +142,19 @@ export default function Bouteille(props) {
   }
   async function fetchVinUn() {
     //Route API: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7, collection->'vins', params-> 'cellier'=> 6, idEntite-> 'bouteille'=> 7
-    await fetch(props.URI + "/" + "cellier" + "/" + props.vino__cellier_id + "/" + "vins" + "/" + "bouteille" + "/" + props.id)
+    await fetch(
+      props.URI +
+        "/" +
+        "cellier" +
+        "/" +
+        props.vino__cellier_id +
+        "/" +
+        "vins" +
+        "/" +
+        "bouteille" +
+        "/" +
+        props.id
+    )
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -152,32 +168,53 @@ export default function Bouteille(props) {
         console.error("Error fetching data: ", error);
         // setError(error);
       });
-    // console.log(bouteille);
   }
   return (
     <>
       <div className="bouteille" data-quantite="">
         <div className="img">
-          <img src={props.image.indexOf("pastille_gout")< 0? props.image : "https://assets.sellers.loblaw.ca/products/all/1276/255419_1.jpg?size=274"} alt="bouteille" />
+          <img
+            src={
+              props.image.indexOf("pastille_gout") < 0
+                ? props.image
+                : "https://assets.sellers.loblaw.ca/products/all/1276/255419_1.jpg?size=274"
+            }
+            alt="bouteille"
+          />
         </div>
-
-        <div className="description">
-          <div className="description-originale">
-            <p className="nom">{props.nom} </p>
-            <p className="nom">Quantité: {bouteille.quantite} </p>
+        <div className="bouteille--info-container">
+          <div className="description">
+            <div className="description-originale">
+              <p className="nom">{props.nom} </p>
+              <p className="nom">Quantité: {bouteille.quantite} </p>
+            </div>
+          </div>
+          <div className="options" data-id="{id_bouteille_cellier}">
+            <button onClick={gererModifier}>Modifier</button>
+            <button onClick={gererVoir}>Fiche</button>
+            <button onClick={gererAjouter} className="btnAjouter">
+              Ajouter
+            </button>
+            <button onClick={gererBoire} className="btnBoire">
+              Boire
+            </button>
           </div>
         </div>
-        <div className="options" data-id="{id_bouteille_cellier}">
-          <button onClick={gererModifier}>Modifier</button>
-          <button onClick={gererVoir}>Fiche</button>
-          <button onClick={gererAjouter} className="btnAjouter">Ajouter</button>
-          <button onClick={gererBoire} className="btnBoire">Boire</button>
-        </div>
-        <Snackbar sx={{ height: '100%' }} anchorOrigin={{
-          vertical: "top",
-          horizontal: "center"
-        }} open={openAlert} autoHideDuration={1000} onClose={handleCloseAlert}>
-          <Alert onClose={handleCloseAlert} severity="error" sx={{ width: '100%' }}>
+        <Snackbar
+          sx={{ height: "100%" }}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          open={openAlert}
+          autoHideDuration={1000}
+          onClose={handleCloseAlert}
+        >
+          <Alert
+            onClose={handleCloseAlert}
+            severity="error"
+            sx={{ width: "100%" }}
+          >
             En rupture de stock!
           </Alert>
         </Snackbar>
