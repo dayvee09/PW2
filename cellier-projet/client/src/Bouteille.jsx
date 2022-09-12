@@ -160,19 +160,20 @@ export default function Bouteille(props) {
         <div className="img">
           <img src={props.image.indexOf("pastille_gout")< 0? props.image : "https://assets.sellers.loblaw.ca/products/all/1276/255419_1.jpg?size=274"} alt="bouteille" />
         </div>
-
-        <div className="description">
-          <div className="description-originale">
-            <p className="nom">{props.nom} </p>
-            <p className="nom">Quantité: {bouteille.quantite} </p>
-          </div>
-        </div>
-        <div className="options" data-id="{id_bouteille_cellier}">
-          <button onClick={gererModifier}>Modifier</button>
-          <button onClick={gererVoir}>Fiche</button>
-          <button onClick={gererAjouter} className="btnAjouter">Ajouter</button>
-          <button onClick={gererBoire} className="btnBoire">Boire</button>
-        </div>
+		<div className="bouteille--info-container">
+			<div className="description">
+			<div className="description-originale">
+				<p className="nom">{props.nom} </p>
+				<p className="nom">Quantité: {bouteille.quantite} </p>
+			</div>
+			</div>
+			<div className="options" data-id="{id_bouteille_cellier}">
+			<button onClick={gererModifier}>Modifier</button>
+			<button onClick={gererVoir}>Fiche</button>
+			<button onClick={gererAjouter} className="btnAjouter">Ajouter</button>
+			<button onClick={gererBoire} className="btnBoire">Boire</button>
+			</div>
+		</div>
         <Snackbar sx={{ height: '100%' }} anchorOrigin={{
           vertical: "top",
           horizontal: "center"
