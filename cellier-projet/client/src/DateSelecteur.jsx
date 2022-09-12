@@ -5,12 +5,12 @@ import { Stack } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import moment from "moment";
 
 export default function DateSelecteur(props) {
 
     return (
         <div className={['DateSelecteur', props.voirFiche === true? "hidden" : ""].join(' ')}>
-            {/* <label>Date d'achat: </label> */}
             <div className="DateInput">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <Stack spacing={3}>
@@ -19,10 +19,10 @@ export default function DateSelecteur(props) {
                            dateFormat="YYYY-MM-DD"
                             views={['day']}
                             value={props.dateAchat}
-                            onChange={(newValue) => {
-                                props.setDateAchat(newValue.format("YYYY-MM-DD"));
+                            onChange={(newValue) => { newValue?
+                                props.setDateAchat(newValue.format("YYYY-MM-DD")):props.setDateAchat(moment().format("YYYY-MM-DD"));
                             }}
-                            renderInput={(params) => <TextField fullWidth size="small" {...params} helperText={null} />}
+                            renderInput={(params) => <TextField fullWidth size="small" {...params}  helperText={null}/>}
                         />
                     </Stack>
                 </LocalizationProvider>

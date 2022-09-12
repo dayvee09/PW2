@@ -7,7 +7,6 @@ export default function FrmBouteilleInput(props) {
   }
   return (
     <div className={["FrmBouteilleInput", props.voirFiche === true? "hidden" : ""].join(' ')} >
-      <label htmlFor="">Quantité: </label>
       <TextField
         fullWidth
         size="small"
