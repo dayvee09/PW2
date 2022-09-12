@@ -370,6 +370,7 @@ const Appli = () => {
           user={Auth.user}
           gererSignOut={gererSignOut}
           utilisateur={utilisateur}
+          username={username}
         />
       )}
       ;
