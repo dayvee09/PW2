@@ -1,26 +1,36 @@
-.Bouteille {
+// .Bouteille {
   .bouteille {
-    border: 1px dotted black;
-    padding: 40px;
-    margin: 10px;
-    height: 400px;
-    width: 300px;
-    .img {
-      img {
-        width: 200px;
-        height: 200px;
-        object-fit: contain;
-      }
-    }
-    .options {
-      display: flex;
-      justify-content: space-between;
-      position: relative;
-    }
-    .snackbar-wrapper {
-      position: absolute;
-      top: 0;
-      right:0;
-    }
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+	border-radius: 4px;
+	border: 0.5px solid #d3d7dd;
+
+	.bouteille--info-container {
+		padding: 10px;
+	}
+
+	.img {
+		background-color: #d3d7dd;
+		height: 180px;
+		img {
+			object-fit: contain;
+			height: 100%;
+			width: 100%;
+		}
+	}
+
+	.options {
+	//   display: flex;
+	  justify-content: space-between;
+	  position: relative;
+	}
+	.snackbar-wrapper {
+	  position: absolute;
+	  top: 0;
+	  right:0;
+	}
+
+	&:hover {
+		background-color: #d3d7dd40;
+	}
   }
-}
+// }
