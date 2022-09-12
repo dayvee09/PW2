@@ -4,7 +4,7 @@ import Axios from "axios";
 import Bouteille from "./Bouteille";
 import { useNavigate, NavLink } from "react-router-dom";
 
-import Grid from '@material-ui/core/Grid';
+import Grid from "@material-ui/core/Grid";
 
 function ListeBouteilles(props) {
   let history = useNavigate();
@@ -17,10 +17,8 @@ function ListeBouteilles(props) {
     if (props.bouteilles.length > 1) {
       return (
         <div className="ListeBouteilles">
-          <Grid container spacing={40}>
-          {bouteilles.map((bouteille) => (
-            // < item key={bouteille.id} sm={6} md={4} lg={3}>
-            <Grid item key={bouteille.id} sm={6} md={4} lg={3} className="Bouteille">
+          <div className="ListeBouteille--grid">
+            {bouteilles.map((bouteille) => (
               <Bouteille
                 {...bouteille}
                 gererBouteille={props.gererBouteille}
@@ -31,10 +29,8 @@ function ListeBouteilles(props) {
                 bouteille={bouteille}
                 URI={props.URI}
               />
-            {/* </div> */}
-            </Grid >
-          ))}
-          </Grid>
+            ))}
+          </div>
         </div>
       );
     } else if (props.bouteilles.length > 0) {
@@ -42,8 +38,7 @@ function ListeBouteilles(props) {
         <div className="ListeBouteilles">
           <div className="Bouteille">
             <Bouteille
-              key={props.bouteille.id}
-              {...props.bouteille}
+              {...props.bouteilles[0]}
               fetchVins={props.fetchVins}
               fetchVin={props.fetchVin}
               celliers={props.celliers}
@@ -52,7 +47,7 @@ function ListeBouteilles(props) {
               emailUtilisateur={props.emailUtilisateur}
               gererCellier={props.gererCellier}
               gererBouteilles={props.gererBouteilles}
-              bouteilles={props.bouteilles}
+              bouteille={props.bouteilles[0]}
               setBouteilles={props.setBouteilles}
               URI={props.URI}
             />
@@ -61,12 +56,14 @@ function ListeBouteilles(props) {
       );
     } else {
       return (
-		<div className="ListeBouteilles--default">
-			<h1 className="aucune-bouteille">Pas de bouteilles dans ce cellier</h1>
-			<NavLink to="/vins">
-				<button>Ajouter une bouteille</button>
-			</NavLink>
-		</div>
+        <div className="ListeBouteilles--default">
+          <h1 className="aucune-bouteille">
+            Pas de bouteilles dans ce cellier
+          </h1>
+          <NavLink to="/vins">
+            <button>Ajouter une bouteille</button>
+          </NavLink>
+        </div>
       );
     }
   }

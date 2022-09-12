@@ -1,17 +1,23 @@
-.ListeBouteilles {
-//   margin-top: 30px;
-//   display: grid;
-//   width: 100%;
-//   grid-template-columns: repeat(2, 1fr);
-//   gap: 30px;
-//   list-style: none;
+.ListeBouteille--grid {
+  margin-top: 30px;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  list-style: none;
 }
 
-// .aucune-bouteille {
-//   margin-top: 50px;
-//   align-self: center;
-//  }
-
+@media only screen and (min-width: 940px) {
+	.ListeBouteille--grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+  
+@media only screen and (min-width: 1200px) {
+  .ListeBouteille--grid {
+	  grid-template-columns: repeat(4, 1fr);
+  }
+}
 
 .ListeBouteilles--default {
 	button {
@@ -30,3 +36,13 @@
 		}
 	}
 }
+
+// .aucune-bouteille {
+//   margin-top: 50px;
+//   align-self: center;
+//  }
+// @media only screen and (min-width: 768px) {
+// 	.ListeBouteilles {
+// 		grid-template-columns: repeat(3, 1fr);
+// 	}
+//   }

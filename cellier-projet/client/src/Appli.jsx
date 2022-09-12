@@ -217,6 +217,8 @@ const Appli = () => {
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
   async function createUser(emailUtilisateur) {
     let bool = false;
+    setUsername(emailUtilisateur.substring(0, emailUtilisateur.indexOf("@")));
+    console.log(username);
     utilisateurs.forEach((utilisateur) => {
       if (utilisateur["email"] === emailUtilisateur && bool === false) {
         bool = true;
@@ -225,7 +227,7 @@ const Appli = () => {
     if (!bool) {
       let reponse = await fetch(URI + "/admin/ajout/utilisateurs", {
         method: "POST",
-        body: JSON.stringify({ email: emailUtilisateur }),
+        body: JSON.stringify({ email: emailUtilisateur, nom: username }),
       });
       let reponseJson = await reponse.json();
     }
@@ -277,6 +279,7 @@ const Appli = () => {
         setBouteilles("");
         setCelliers("");
         setEmailUtilisateur("");
+        setUsername("");
         DATA = undefined;
       })
       .catch((err) =>
@@ -297,6 +300,7 @@ const Appli = () => {
         setBouteilles("");
         setCelliers("");
         setEmailUtilisateur("");
+        setUsername("");
         DATA = undefined;
       })
       .catch((err) => console.log("Erreur lors de la déconnexion", err));
@@ -384,9 +388,12 @@ const Appli = () => {
                 setUtilisateur={setUtilisateur}
                 utilisateurs={utilisateurs}
                 setUtilisateurs={setUtilisateurs}
+                username={username}
+                setUsername={setUsername}
                 id={id}
                 setId={setId}
                 emailUtilisateur={emailUtilisateur}
+                setEmailUtilisateur={setEmailUtilisateur}
                 fetchUtilisateurs={fetchUtilisateurs}
                 fetchUtilisateur={fetchUtilisateur}
                 createUser={createUser}
@@ -416,6 +423,8 @@ const Appli = () => {
                       emailUtilisateur={emailUtilisateur}
                       setEmailUtilisateur={setEmailUtilisateur}
                       utilisateur={utilisateur}
+                      setUsername={setUsername}
+                      username={username}
                       fetchUtilisateur={fetchUtilisateur}
                       setUtilisateur={setUtilisateur}
                       gererSignOut={gererSignOut}
@@ -457,13 +466,15 @@ const Appli = () => {
                   path={`/vins`}
                   element={
                     <FrmAjoutBouteille
-                      // bouteilles={bouteilles}
-                      // setBouteilles={setBouteilles}
-                      // fetchVins={fetchVins}
-                      // fetchCelliers={fetchCelliers}
-                      // gererBouteilles={gererBouteilles}
+                      bouteilles={bouteilles}
+                      setBouteilles={setBouteilles}
+                      fetchVins={fetchVins}
+                      fetchCelliers={fetchCelliers}
+                      gererBouteilles={gererBouteilles}
                       celliers={celliers}
                       URI={URI}
+                      error={error}
+                      setError={setError}
                     />
                   }
                 />
