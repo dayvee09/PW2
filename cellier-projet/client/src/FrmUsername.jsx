@@ -7,7 +7,7 @@ import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import { Auth } from "aws-amplify";
 import { useState, useEffect } from "react";
-import "./FrmEmail.scss";
+import "./FrmUsername.scss";
 import MuiButton from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
@@ -17,12 +17,12 @@ import {
 
 export default function FrmEmail({
   username,
-  setEmailUtilisateur,
+  setNouveauUsername,
   emailUtilisateur,
-  NouvelEmailUtilisateur,
-  setNouvelEmailUtilisateur,
-  frmEmailOuvert,
-  setFrmEmailOuvert,
+  NouveauUsername,
+  setUsername,
+  frmUsernameOuvert,
+  setFrmUsernameOuvert,
   fetchUtilisateur,
   URI
 }) {
@@ -92,48 +92,39 @@ export default function FrmEmail({
       return
     }
     setOpenAlert(false);
-    setFrmEmailOuvert(false);
+    setFrmUsernameOuvert(false);
   };
 
   /**
    *  Gère l'action d'annuler
    */
   function viderFermerFrm() {
-    setFrmEmailOuvert(false);
+    setFrmUsernameOuvert(false);
   }
 
   /**
    *  Gère l'action d'annuler
    */
   function gererInput(e) {
-    setNouvelEmailUtilisateur(e.target.value);
+    setNouveauUsername(e.target.value);
   }
 
   /**
    * requête de modification de l'email utilisateur
    */
-  async function fetchPatchUtilisateurEmail(NouvelEmailUtilisateur) {
-    let user = await Auth.currentAuthenticatedUser();
-    let result = await Auth.updateUserAttributes(user, {
-      email: NouvelEmailUtilisateur,
-    });
-    if (result === "SUCCESS") {
-      console.log(NouvelEmailUtilisateur);
-      console.log(username);
+  async function fetchPatchUtilisateurUsername(NouveauUsername) {
+      console.log(NouveauUsername);
       let reponse = await fetch(
         URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
         {
           method: "PATCH",
-          body: JSON.stringify({email: NouvelEmailUtilisateur}),
+          body: JSON.stringify({nom: NouveauUsername }),
         }
       );
       let reponseJson = await reponse.json();
-      console.log(reponseJson);
-      setEmailUtilisateur(NouvelEmailUtilisateur)
+      setUsername(NouveauUsername)
       fetchUtilisateur();
-      navigate(`/profil/${NouvelEmailUtilisateur}`, { replace: true })
-    }
-    return result
+      navigate(`/profil/${emailUtilisateur}`, { replace: true })
   }
 
   /**
@@ -141,15 +132,15 @@ export default function FrmEmail({
    */
   function gererSoumettre() {
     setSeverity("");
-    var reg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    setNouvelEmailUtilisateur(NouvelEmailUtilisateur);
-    if (reg.test(NouvelEmailUtilisateur)) {
-      fetchPatchUtilisateurEmail(NouvelEmailUtilisateur);
+    var reg = /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
+    setNouveauUsername(NouveauUsername);
+    if (reg.test(NouveauUsername)) {
+      fetchPatchUtilisateurUsername(NouveauUsername);
       setMessageRetour("Modification effectuée");
       setSeverity("success");
       setOpenAlert(true);
     } else {
-      setMessageRetour("Courriel invalide");
+      setMessageRetour("Non d'usager invalide");
       setSeverity("error");
       setOpenAlert(true);
     }
@@ -159,20 +150,20 @@ export default function FrmEmail({
       <Dialog
         PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
         className="dialogue"
-        open={frmEmailOuvert}
+        open={frmUsernameOuvert}
         onClose={viderFermerFrm}
       >
-        <CssDialogTitle>Modifier votre email</CssDialogTitle>
+        <CssDialogTitle>Modifier votre nom d'utilisateur</CssDialogTitle>
         <DialogContent>
-          <div className="frmEmail">
-            <p className="">Email actuel: {emailUtilisateur}</p>
+          <div className="frmUsername">
+            <p className="">Nom d'usager : {username}</p>
             <ThemeProvider theme={theme}>
               <TextField
                 onChange={gererInput}
                 autoFocus
-                id="email"
+                id="username"
                 type={"text"}
-                defaultValue={emailUtilisateur}
+                defaultValue={username}
               />
             </ThemeProvider>
             <Snackbar
