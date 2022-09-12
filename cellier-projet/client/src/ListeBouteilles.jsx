@@ -17,24 +17,20 @@ function ListeBouteilles(props) {
     if (props.bouteilles.length > 1) {
       return (
         <div className="ListeBouteilles">
-          <Grid container spacing={40}>
-          {bouteilles.map((bouteille) => (
-            // < item key={bouteille.id} sm={6} md={4} lg={3}>
-            <Grid item key={bouteille.id} sm={6} md={4} lg={3} className="Bouteille">
-              <Bouteille
-                {...bouteille}
-                gererBouteille={props.gererBouteille}
-                gererBouteilles={props.gererBouteilles}
-                bouteilles={props.bouteilles}
-                setBouteilles={props.setBouteilles}
-                cellier={props.cellier}
-                bouteille={bouteille}
-                URI={props.URI}
-              />
-            {/* </div> */}
-            </Grid >
-          ))}
-          </Grid>
+			  <div className="ListeBouteille--grid">
+				{bouteilles.map((bouteille) => (
+					<Bouteille
+						{...bouteille}
+						gererBouteille={props.gererBouteille}
+						gererBouteilles={props.gererBouteilles}
+						bouteilles={props.bouteilles}
+						setBouteilles={props.setBouteilles}
+						cellier={props.cellier}
+						bouteille={bouteille}
+						URI={props.URI}
+					/>
+				))}
+			  </div>
         </div>
       );
     } else if (props.bouteilles.length > 0) {
