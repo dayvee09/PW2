@@ -1,15 +1,7 @@
 // Début des modifications
 
 import React from "react";
-import {
-  Route,
-  Routes,
-  NavLink,
-  useParams,
-  Navigate,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Route, Routes, NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
