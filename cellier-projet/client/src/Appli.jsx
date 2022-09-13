@@ -44,7 +44,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -209,8 +209,7 @@ const Appli = () => {
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
   async function createUser(emailUtilisateur) {
     let bool = false;
-    setUsername(emailUtilisateur.substring(0, emailUtilisateur.indexOf("@")));
-    console.log(username);
+    let DefautUsername = (emailUtilisateur.substring(0, emailUtilisateur.indexOf("@")))
     utilisateurs.forEach((utilisateur) => {
       if (utilisateur["email"] === emailUtilisateur && bool === false) {
         bool = true;
@@ -219,7 +218,7 @@ const Appli = () => {
     if (!bool) {
       let reponse = await fetch(URI + "/admin/ajout/utilisateurs", {
         method: "POST",
-        body: JSON.stringify({ email: emailUtilisateur, nom: username }),
+        body: JSON.stringify({ email: emailUtilisateur, nom: DefautUsername }),
       });
       let reponseJson = await reponse.json();
     }
@@ -363,6 +362,7 @@ const Appli = () => {
           user={Auth.user}
           gererSignOut={gererSignOut}
           utilisateur={utilisateur}
+          username={username}
         />
       )}
       ;
