@@ -25,7 +25,6 @@ function FormAjoutCellier({ celliers, URI, fetchCelliers, setError }) {
 	navigate("/", { replace: true });
   };
 
-
   function gererAjoutCellier() {
 	let nomCellier = document.getElementById("nomCellier").value;
 	let utilisateurId = celliers[0].vino__utilisateur_id;
@@ -80,7 +79,7 @@ function FormAjoutCellier({ celliers, URI, fetchCelliers, setError }) {
 			<button onClick={gererAjoutCellier}>Ajouter</button>
 		</div>
 	  	<Snackbar
-			sx={{ height: "50%" }}
+			sx={{ height: "70%" }}
 			anchorOrigin={{
 			vertical: "top",
 			horizontal: "center",
