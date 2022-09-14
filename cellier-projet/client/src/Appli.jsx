@@ -65,7 +65,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -340,11 +340,6 @@ const Appli = () => {
 			});
 	}
 
-	async function modifierCellier(idCellier, cellierNom) {
-		console.log(idCellier)
-		console.log(cellierNom)
-	}
-
 	// --------------------------------- Gestion des bouteilles ------------------------------------
 
 	async function fetchVins() {
@@ -403,31 +398,6 @@ const Appli = () => {
 								fetchUtilisateur={fetchUtilisateur}
 								createUser={createUser}
 							/>
-
-              <div className="navigation">
-                <div className="menu-celliers">
-                  {location !== "/" && (
-                    <div>
-                      <NavLink to={`/`}>
-                        <Button>Retour aux Celliers </Button>
-                      </NavLink>
-                    </div>
-                  )}
-                </div>
-              </div>
-
-							<div className="navigation">
-								<div className="menu-celliers">
-									{location !== "/" && (
-										<div>
-											<NavLink to={`/`}>
-												<button>Retour aux Celliers</button>
-											</NavLink>
-										</div>
-									)}
-								</div>
-							</div>
-
 							{/* ------------------------------ Routes --------------------------------*/}
 							<Routes>
 								<Route
@@ -548,8 +518,10 @@ const Appli = () => {
 									path={`/modifier-cellier`}
 									element={
 										<FrmModifierCellier
-											modifierCellier={modifierCellier}
+											fetchCelliers={fetchCelliers}
 											URI={URI}
+											error={error}
+											setError={setError}
 										/>
 									}
 								/>
