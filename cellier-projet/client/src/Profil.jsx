@@ -180,6 +180,7 @@ export default function Profil(props) {
               type={"text"}
               variant="outlined"
               defaultValue={props.username}
+              value={props.username}
             />
           </ThemeProvider>
         </div>
@@ -197,6 +198,7 @@ export default function Profil(props) {
               type={"text"}
               variant="outlined"
               defaultValue={props.emailUtilisateur}
+              value={props.emailUtilisateur}
             />
           </ThemeProvider>
         </div>
