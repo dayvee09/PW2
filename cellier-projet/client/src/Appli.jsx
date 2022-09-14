@@ -322,6 +322,7 @@ const Appli = () => {
   // --------------------------------- Gestion des bouteilles ------------------------------------
 
   async function fetchVins() {
+    console.log(" GET Vins");
     await fetch(URI + "/" + "cellier" + "/" + cellier + "/" + "vins")
       .then((response) => {
         if (response.ok) {
