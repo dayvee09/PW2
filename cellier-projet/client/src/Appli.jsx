@@ -1,7 +1,7 @@
 // Début des modifications
 
 import React from "react";
-import { Route, Routes, NavLink } from "react-router-dom";
+import { Route, Routes, NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
@@ -44,7 +44,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -209,7 +209,10 @@ const Appli = () => {
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
   async function createUser(emailUtilisateur) {
     let bool = false;
-    let DefautUsername = (emailUtilisateur.substring(0, emailUtilisateur.indexOf("@")))
+    let DefautUsername = emailUtilisateur.substring(
+      0,
+      emailUtilisateur.indexOf("@")
+    );
     utilisateurs.forEach((utilisateur) => {
       if (utilisateur["email"] === emailUtilisateur && bool === false) {
         bool = true;
@@ -472,6 +475,24 @@ const Appli = () => {
                 />
                 <Route
                   path={`/`}
+                  element={
+                    <ListeCelliers
+                      celliers={celliers}
+                      setCelliers={setCelliers}
+                      cellier={cellier}
+                      setCellier={setCellier}
+                      fetchCelliers={fetchCelliers}
+                      fetchVins={fetchVins}
+                      id={id}
+                      emailUtilisateur={emailUtilisateur}
+                      utilisateur={utilisateur}
+                      gererCellier={gererCellier}
+                      URI={URI}
+                    />
+                  }
+                />
+                <Route
+                  path={`/PW2/cellier-projet`}
                   element={
                     <ListeCelliers
                       celliers={celliers}
