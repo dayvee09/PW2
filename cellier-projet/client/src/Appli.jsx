@@ -52,7 +52,8 @@ const Appli = () => {
     borderRadius: "4px",
     fontFamily: "Alata",
     fontSize: "12px",
-    width: "3rem",
+    width: "10rem",
+    marginLeft: "-0.7rem",
     padding: "10px 20px",
     "&:hover": {
       backgroundColor: "#f1ab50",
@@ -404,17 +405,17 @@ const Appli = () => {
                 createUser={createUser}
               />
 
-              <div className="navigation">
-                <div className="menu-celliers">
-                  {location !== "/" && (
-                    <div>
-                      <NavLink to={`/`}>
-                        <Button>Retour aux Celliers </Button>
-                      </NavLink>
-                    </div>
-                  )}
-                </div>
-              </div>
+              {/* <div className="navigation">
+								<div className="menu-celliers">
+									{location !== "/" && (
+										<div>
+											<NavLink to={`/`}>
+												<Button>Retour aux Celliers</Button>
+											</NavLink>
+										</div>
+									)}
+								</div>
+							</div> */}
 
               {/* ------------------------------ Routes --------------------------------*/}
               <Routes>
