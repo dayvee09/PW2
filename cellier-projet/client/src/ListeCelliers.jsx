@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
-import Cellier from "./Cellier";
 import "./ListeCelliers.scss";
-import { useNavigate, useParams, NavLink } from "react-router-dom";
+import Cellier from "./Cellier";
+import { NavLink } from "react-router-dom";
 
 function ListeCelliers(props) {
-  let history = useNavigate();
-
   if (props.celliers.length > 0) {
     return (
       <>
