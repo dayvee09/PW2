@@ -8,7 +8,6 @@ import Grid from "@material-ui/core/Grid";
 
 function ListeBouteilles(props) {
   let history = useNavigate();
-  const [bouteilles, setBouteilles] = useState(props.bouteilles);
 
   useEffect(() => {
     props.fetchVins();
@@ -18,7 +17,7 @@ function ListeBouteilles(props) {
       return (
         <div className="ListeBouteilles">
           <div className="ListeBouteille--grid">
-            {bouteilles.map((bouteille) => (
+            {props.bouteilles.map((bouteille) => (
               <Bouteille
                 {...bouteille}
                 gererBouteille={props.gererBouteille}
