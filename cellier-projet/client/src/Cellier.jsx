@@ -37,6 +37,25 @@ export default function Cellier(props) {
     setEltAncrage(null);
   }
 
+  async function fetchSupprimerCellier() {
+    await fetch(props.URI + `/cellier/${cellier}/celliers`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        props.fetchCelliers();
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        props.setError(props.error);
+      });
+  }
+  console.log(cellier);
   return (
     <>
       <div
@@ -47,23 +66,23 @@ export default function Cellier(props) {
         }
         data-quantite=""
       >
-		<div className="cellier--gestion">
-			<div className="cellier--gestion-container" onClick={handleChange}>
-			{selection == "fond-selection" ? (
-				<div className="btn-cellier">
-				<NavLink to={`/cellier/${cellier}/vins`}>
-					<button>Voir mes bouteilles</button>
-				</NavLink>
-				</div>
-			) : (
-				<p className="cellier--nom">{props.nom}</p>
-			)}
-			</div>
-			<MoreVertIcon
-				className="cellier--gestion-dots"
-				onClick={gererMenuContextuel}
-			/>
-		</div>
+        <div className="cellier--gestion">
+          <div className="cellier--gestion-container" onClick={handleChange}>
+            {selection == "fond-selection" ? (
+              <div className="btn-cellier">
+                <NavLink to={`/cellier/${cellier}/vins`}>
+                  <button>Voir mes bouteilles</button>
+                </NavLink>
+              </div>
+            ) : (
+              <p className="cellier--nom">{props.nom}</p>
+            )}
+          </div>
+          <MoreVertIcon
+            className="cellier--gestion-dots"
+            onClick={gererMenuContextuel}
+          />
+        </div>
         <div className="cellier--description">
           <p>ID : {props.id}</p>
           <p>Id Utilisateur : {props.vino__utilisateur_id}</p>
@@ -87,7 +106,7 @@ export default function Cellier(props) {
         >
           <MenuItem>Modifier</MenuItem>
           <hr></hr>
-          <MenuItem>Supprimer</MenuItem>
+          <MenuItem onClick={fetchSupprimerCellier}>Supprimer</MenuItem>
         </Menu>
       </div>
     </>

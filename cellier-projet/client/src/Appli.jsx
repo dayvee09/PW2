@@ -319,23 +319,6 @@ const Appli = () => {
       });
   }
 
-  async function ajouterCellier(cellier) {
-    let reponse = await fetch(URI + "/", {
-      method: "POST",
-      body: JSON.stringify(cellier),
-    }).then((response) => {
-      // Gestion du message de retour
-      let messageRetour = "";
-      if (response.ok) {
-        messageRetour = "Cellier ajouté avec succès.";
-      } else {
-        messageRetour = "Erreur lors de l'ajout du cellier.";
-      }
-      // rediriger vers la liste des celliers
-      window.location.href = "/?message=" + messageRetour;
-    });
-  }
-
   // --------------------------------- Gestion des bouteilles ------------------------------------
 
   async function fetchVins() {
@@ -488,6 +471,8 @@ const Appli = () => {
                       utilisateur={utilisateur}
                       gererCellier={gererCellier}
                       URI={URI}
+                      error={error}
+                      setError={setError}
                     />
                   }
                 />
@@ -506,16 +491,19 @@ const Appli = () => {
                       utilisateur={utilisateur}
                       gererCellier={gererCellier}
                       URI={URI}
+                      error={error}
+                      setError={setError}
                     />
                   }
                 />
                 <Route
-                  path={`/ajouter-cellier`}
+                  path={`/cellier/ajout/celliers`}
                   element={
                     <FrmAjoutCellier
                       celliers={celliers}
-                      ajouterCellier={ajouterCellier}
+                      fetchCelliers={fetchCelliers}
                       URI={URI}
+                      setError={setError}
                     />
                   }
                 />
