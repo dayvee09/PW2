@@ -20,6 +20,7 @@ import NavDesktop from "./NavDesktop";
 import PiedDePage from "./PiedDePage.jsx";
 import ListeBouteilles from "./ListeBouteilles";
 import FrmAjoutCellier from "./FrmAjoutCellier";
+import FrmModifierCellier from "./FrmModifierCellier";
 import Admin from "./Admin";
 import ListeCelliers from "./ListeCelliers";
 import Utilisateur, { user } from "./Utilisateur.jsx";
@@ -342,6 +343,11 @@ const Appli = () => {
     });
   }
 
+  async function modifierCellier(idCellier, cellierNom) {
+	console.log(idCellier)
+	console.log(cellierNom)
+  }
+
   // --------------------------------- Gestion des bouteilles ------------------------------------
 
   async function fetchVins() {
@@ -502,6 +508,15 @@ const Appli = () => {
                     <FrmAjoutCellier
                       celliers={celliers}
                       ajouterCellier={ajouterCellier}
+                      URI={URI}
+                    />
+                  }
+                />
+				 <Route
+                  path={`/modifier-cellier`}
+                  element={
+                    <FrmModifierCellier
+                      modifierCellier={modifierCellier}
                       URI={URI}
                     />
                   }

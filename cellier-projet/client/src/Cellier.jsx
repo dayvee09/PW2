@@ -9,12 +9,16 @@ import {
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import {
+	useNavigate,
+} from "react-router-dom";
 
 export default function Cellier(props) {
   const [cellier, setCellier] = useState([props.id]);
   const [selection, setSelection] = useState("fond-normal");
   const [eltAncrage, setEltAncrage] = useState(null);
   const menuContextuelOuvert = Boolean(eltAncrage);
+  const navigate = useNavigate();
 
   useEffect(() => {
     props.gererCellier(cellier);
@@ -35,6 +39,17 @@ export default function Cellier(props) {
 
   function gererFermerMenuContextuel() {
     setEltAncrage(null);
+  }
+
+  function gererSupprimer() {
+	props.supprimerCellier(props.id);
+  }
+
+  function gererModifier() {
+	navigate(`/modifier-cellier`, { state: {id: props.id, nom: props.nom}, replace: true })
+	// props.modifierCellier(props.id, "test");
+	// console.log('gerer')
+	
   }
 
   return (
@@ -65,8 +80,10 @@ export default function Cellier(props) {
 			/>
 		</div>
         <div className="cellier--description">
-          <p>ID : {props.id}</p>
-          <p>Id Utilisateur : {props.vino__utilisateur_id}</p>
+		  <p>bouteille</p>
+          <p>Valeur totale : </p>
+         <p>ID : {props.id}</p> {/* 
+          <p>Id Utilisateur : {props.vino__utilisateur_id}</p> */}
         </div>
         <Menu
           open={menuContextuelOuvert}
@@ -85,9 +102,9 @@ export default function Cellier(props) {
             },
           }}
         >
-          <MenuItem>Modifier</MenuItem>
+          <MenuItem onClick={gererModifier}>Modifier</MenuItem>
           <hr></hr>
-          <MenuItem>Supprimer</MenuItem>
+          <MenuItem onClick={gererSupprimer}>Supprimer</MenuItem>
         </Menu>
       </div>
     </>
