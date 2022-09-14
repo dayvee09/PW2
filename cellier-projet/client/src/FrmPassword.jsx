@@ -82,14 +82,17 @@ export default function FrmPassword({
   };
 
   /**
+   * État du message d'erreur du password
+   */
+   const validationRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+   const errorMessage = `Une majuscule, une minuscule et un minimum de 8 caractères requis`;
+
+  /**
    *  Gère l'action d'annuler
    */
   function viderFermerFrm() {
     setFrmPasswordOuvert(false);
   }
-
-  const validationRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-  const errorMessage = `Une majuscule, une minuscule et un minimum de 8 caractères requis`;
 
   /**
    * requête de modification du password dans aws

@@ -27,11 +27,11 @@ export default function NavMobile({ Auth, emailUtilisateur, utilisateur }) {
             value={value}
             onChange={(event, newValue) => {
               setValue(newValue);
-              // console.log(event.target.svg);
             }}
             showLabels
           >
             <BottomNavigationAction
+			      className="IconeHome"
               label="ACCUEIL"
               icon={<HomeIcone />}
               component={Link}

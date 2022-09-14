@@ -1,15 +1,7 @@
 // Début des modifications
 
 import React from "react";
-import {
-  Route,
-  Routes,
-  NavLink,
-  useParams,
-  Navigate,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
+import { Route, Routes, NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
@@ -20,6 +12,7 @@ import NavDesktop from "./NavDesktop";
 import PiedDePage from "./PiedDePage.jsx";
 import ListeBouteilles from "./ListeBouteilles";
 import FrmAjoutCellier from "./FrmAjoutCellier";
+import FrmModifierCellier from "./FrmModifierCellier";
 import Admin from "./Admin";
 import ListeCelliers from "./ListeCelliers";
 import Utilisateur, { user } from "./Utilisateur.jsx";
@@ -28,6 +21,8 @@ import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
+import MuiButton from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
 import Logo from "./img/png/logo-jaune.png";
 import FrmAjoutBouteille from "./FrmAjoutBouteille";
 
@@ -47,6 +42,25 @@ const Appli = () => {
   const [isLogged, setIsLogged] = useState(false);
   const ENV = "dev";
   const [URI, setURI] = useState([]);
+  /**
+   *  État des styles des composants MUI
+   */
+  const Button = styled(MuiButton)((props) => ({
+    color: "#f3f5eb",
+    backgroundColor: "#cc4240",
+    textDecoration: "none",
+    borderRadius: "4px",
+    fontFamily: "Alata",
+    fontSize: "12px",
+    width: "10rem",
+    marginLeft: "-0.7rem",
+    padding: "10px 20px",
+    "&:hover": {
+      backgroundColor: "#f1ab50",
+      color: "#f3f5eb",
+    },
+  }));
+
   let location = window.location.pathname;
   useEffect(() => {
     if (ENV == "prod") {
@@ -217,8 +231,10 @@ const Appli = () => {
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
   async function createUser(emailUtilisateur) {
     let bool = false;
-    setUsername(emailUtilisateur.substring(0, emailUtilisateur.indexOf("@")));
-    console.log(username);
+    let DefautUsername = emailUtilisateur.substring(
+      0,
+      emailUtilisateur.indexOf("@")
+    );
     utilisateurs.forEach((utilisateur) => {
       if (utilisateur["email"] === emailUtilisateur && bool === false) {
         bool = true;
@@ -227,7 +243,7 @@ const Appli = () => {
     if (!bool) {
       let reponse = await fetch(URI + "/admin/ajout/utilisateurs", {
         method: "POST",
-        body: JSON.stringify({ email: emailUtilisateur, nom: username }),
+        body: JSON.stringify({ email: emailUtilisateur, nom: DefautUsername }),
       });
       let reponseJson = await reponse.json();
     }
@@ -325,26 +341,15 @@ const Appli = () => {
       });
   }
 
-  async function ajouterCellier(cellier) {
-    let reponse = await fetch(URI + "/", {
-      method: "POST",
-      body: JSON.stringify(cellier),
-    }).then((response) => {
-      // Gestion du message de retour
-      let messageRetour = "";
-      if (response.ok) {
-        messageRetour = "Cellier ajouté avec succès.";
-      } else {
-        messageRetour = "Erreur lors de l'ajout du cellier.";
-      }
-      // rediriger vers la liste des celliers
-      window.location.href = "/?message=" + messageRetour;
-    });
+  async function modifierCellier(idCellier, cellierNom) {
+    console.log(idCellier);
+    console.log(cellierNom);
   }
 
   // --------------------------------- Gestion des bouteilles ------------------------------------
 
   async function fetchVins() {
+    console.log(" GET Vins");
     await fetch(URI + "/" + "cellier" + "/" + cellier + "/" + "vins")
       .then((response) => {
         if (response.ok) {
@@ -371,6 +376,7 @@ const Appli = () => {
           user={Auth.user}
           gererSignOut={gererSignOut}
           utilisateur={utilisateur}
+          username={username}
         />
       )}
       
@@ -399,19 +405,17 @@ const Appli = () => {
                 createUser={createUser}
               />
 
-              {/*-------------------------------- Menu de navigation --------------------------*/}
-
-              <div className="navigation">
-                <div className="menu-celliers">
-                  {location !== "/" && (
-                    <div>
-                      <NavLink to={`/`}>
-                        <button>Retour aux Celliers</button>
-                      </NavLink>
-                    </div>
-                  )}
-                </div>
-              </div>
+              {/* <div className="navigation">
+								<div className="menu-celliers">
+									{location !== "/" && (
+										<div>
+											<NavLink to={`/`}>
+												<Button>Retour aux Celliers</Button>
+											</NavLink>
+										</div>
+									)}
+								</div>
+							</div> */}
 
               {/* ------------------------------ Routes --------------------------------*/}
               <Routes>
@@ -495,15 +499,47 @@ const Appli = () => {
                       utilisateur={utilisateur}
                       gererCellier={gererCellier}
                       URI={URI}
+                      error={error}
+                      setError={setError}
                     />
                   }
                 />
                 <Route
-                  path={`/ajouter-cellier`}
+                  path={`/PW2/cellier-projet`}
+                  element={
+                    <ListeCelliers
+                      celliers={celliers}
+                      setCelliers={setCelliers}
+                      cellier={cellier}
+                      setCellier={setCellier}
+                      fetchCelliers={fetchCelliers}
+                      fetchVins={fetchVins}
+                      id={id}
+                      emailUtilisateur={emailUtilisateur}
+                      utilisateur={utilisateur}
+                      gererCellier={gererCellier}
+                      URI={URI}
+                      error={error}
+                      setError={setError}
+                    />
+                  }
+                />
+                <Route
+                  path={`/cellier/ajout/celliers`}
                   element={
                     <FrmAjoutCellier
                       celliers={celliers}
-                      ajouterCellier={ajouterCellier}
+                      fetchCelliers={fetchCelliers}
+                      URI={URI}
+                      setError={setError}
+                    />
+                  }
+                />
+                <Route
+                  path={`/modifier-cellier`}
+                  element={
+                    <FrmModifierCellier
+                      modifierCellier={modifierCellier}
                       URI={URI}
                     />
                   }

@@ -282,6 +282,7 @@ export default function FrmAjoutBouteille(props) {
       })
       .then((data) => {
         props.fetchVins();
+        navigate(`/cellier/${vinCellier}/vins`, { replace: true });
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -297,6 +298,7 @@ export default function FrmAjoutBouteille(props) {
     }
     return ok;
   };
+  console.log(props.bouteilles);
   return (
     <div className="FrmAjoutBouteille">
       {/* <div className="btnClose">
