@@ -1,0 +1,43 @@
+.FrmModifierCellier {
+	text-align: center;
+
+	.form-ajout--container {
+		max-width: 400px;
+		margin: 0 auto;
+
+		span {
+			color: #cc4240;
+		}
+
+		label {
+			font-size: 15px;
+			font-weight: 300;
+		}
+		
+		input {
+			margin-top: 20px;
+			margin-bottom: 20px;
+			padding: 5px;
+			width: 100%;
+			font-size: 15px;
+		}
+
+		button {
+			padding: 10px 25px 10px 25px;
+			margin-top: 20px;
+			font-size: 12px;
+			font-family: Alata, sans-serif;
+			text-transform: uppercase;
+			border: none;
+			border-radius: 4px;
+			background-color: #cc4240;
+			color: #f3f5eb;
+
+			&:hover {
+				background-color: #f1ab50;
+				color: #152440;
+				cursor: pointer;
+			}
+		}
+	}
+}
