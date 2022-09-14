@@ -78,27 +78,6 @@ export default function Profil(props) {
     setOpenAlert(false);
   };
 
-  /**
-   * Thème de modification du composant TextField
-   */
-  const theme = createTheme({
-    components: {
-      // Inputs
-      MuiOutlinedInput: {
-        styleOverrides: {
-          root: {
-            "&.Mui-focused": {
-              "& .MuiOutlinedInput-notchedOutline": {
-                border: `1px solid #f1ab50`,
-                boxShadow: "none",
-              },
-            },
-          },
-        },
-      },
-    },
-  });
-
   // ----------------------- Gestion du profil ------------------------------------------------
 
   /**
@@ -173,16 +152,15 @@ export default function Profil(props) {
               Modifier
             </button>
           </div>
-          <ThemeProvider theme={theme}>
-            <TextField
-              style={{ width: "100%" }}
-              id="username"
-              type={"text"}
-              variant="outlined"
-              defaultValue={props.username}
-              value={props.username}
-            />
-          </ThemeProvider>
+          <TextField
+            style={{ width: "100%" }}
+            id="username"
+            type={"text"}
+            variant="outlined"
+            defaultValue={props.username}
+            value={props.username}
+            disabled
+          />
         </div>
         <div className="description-courriel">
           <div className="infos-modification">
@@ -191,16 +169,15 @@ export default function Profil(props) {
               Modifier
             </button>
           </div>
-          <ThemeProvider theme={theme}>
-            <TextField
-              style={{ width: "100%" }}
-              id="email"
-              type={"text"}
-              variant="outlined"
-              defaultValue={props.emailUtilisateur}
-              value={props.emailUtilisateur}
-            />
-          </ThemeProvider>
+          <TextField
+            style={{ width: "100%" }}
+            id="email"
+            type={"text"}
+            variant="outlined"
+            defaultValue={props.emailUtilisateur}
+            value={props.emailUtilisateur}
+            disabled
+          />
         </div>
         <div className="description-password">
           <div className="infos-modification">
@@ -209,18 +186,14 @@ export default function Profil(props) {
               Modifier
             </button>
           </div>
-          <ThemeProvider theme={theme}>
-            <TextField
-              style={{ width: "100%" }}
-              id="password"
-              // InputProps={{
-              //   readOnly: true,
-              // }}
-              type={"password"}
-              variant="outlined"
-              defaultValue={"**********"}
-            />
-          </ThemeProvider>
+          <TextField
+            style={{ width: "100%" }}
+            id="password"
+            type={"password"}
+            variant="outlined"
+            defaultValue={"**********"}
+            disabled
+          />
         </div>
         <FrmUsername
           emailUtilisateur={props.emailUtilisateur}
