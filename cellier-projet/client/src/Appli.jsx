@@ -21,12 +21,55 @@ import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
+import MuiButton from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
 import Logo from "./img/png/logo-jaune.png";
 import FrmAjoutBouteille from "./FrmAjoutBouteille";
 
 let DATA;
 
 const Appli = () => {
+<<<<<<< HEAD
+  const [error, setError] = useState([]);
+  const [bouteilles, setBouteilles] = useState([]);
+  const [emailUtilisateur, setEmailUtilisateur] = useState([]);
+  const [id, setId] = useState([]);
+  const [cellier, setCellier] = useState([]);
+  const [username, setUsername] = useState([]);
+  const [utilisateur, setUtilisateur] = useState([]);
+  const [utilisateurs, setUtilisateurs] = useState([]);
+  const [celliers, setCelliers] = useState([]);
+  const [errorMessages, setErrorMessages] = useState({});
+  const [isLogged, setIsLogged] = useState(false);
+  const ENV = "dev";
+  const [URI, setURI] = useState([]);
+  /**
+   *  État des styles des composants MUI
+   */
+  const Button = styled(MuiButton)((props) => ({
+  color: "#f3f5eb",
+  backgroundColor: "#cc4240",
+  textDecoration: "none",
+  borderRadius:"4px",
+  fontFamily: "Alata",
+  fontSize: "12px",
+  width:"3rem",
+  padding: "10px 20px",
+    "&:hover": {
+      backgroundColor: "#f1ab50",
+      color: "#f3f5eb",
+    },
+  }));
+
+  let location = window.location.pathname;
+  useEffect(() => {
+    if (ENV == "prod") {
+      setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
+    } else {
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+    }
+  }, []);
+=======
 	const [error, setError] = useState([]);
 	const [bouteilles, setBouteilles] = useState([]);
 	const [emailUtilisateur, setEmailUtilisateur] = useState([]);
@@ -48,6 +91,7 @@ const Appli = () => {
 			setURI("http://localhost/PW2/cellier-projet/api-php");
 		}
 	}, []);
+>>>>>>> c373aa9804abbeaf4b084590f6790a24b01a3bad
 
 	// ------------------------------- Traduction du formulaire d'authentification ----------------------------
 
@@ -205,7 +249,13 @@ const Appli = () => {
 		setCellier(idCellier);
 	}
 
+<<<<<<< HEAD
+
+
+  // -------------------------- Requêtes Fetch ------------------------------------------------------
+=======
 	// -------------------------- Requêtes Fetch ------------------------------------------------------
+>>>>>>> c373aa9804abbeaf4b084590f6790a24b01a3bad
 
 	// ----------------------- Gestion des utilisateurs ------------------------------------------------
 	async function createUser(emailUtilisateur) {
@@ -384,7 +434,21 @@ const Appli = () => {
 								createUser={createUser}
 							/>
 
+<<<<<<< HEAD
+              <div className="navigation">
+                <div className="menu-celliers">
+                  {location !== "/" && (
+                    <div>
+                      <NavLink to={`/`}>
+                        <Button>Retour aux Celliers </Button>
+                      </NavLink>
+                    </div>
+                  )}
+                </div>
+              </div>
+=======
 							{/*-------------------------------- Menu de navigation --------------------------*/}
+>>>>>>> c373aa9804abbeaf4b084590f6790a24b01a3bad
 
 							<div className="navigation">
 								<div className="menu-celliers">

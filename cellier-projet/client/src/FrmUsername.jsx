@@ -132,7 +132,7 @@ export default function FrmEmail({
    */
   function gererSoumettre() {
     setSeverity("");
-    var reg = /^(?=[a-zA-Z0-9._]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
+    var reg = /^(?=[a-zA-Z0-9._àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
     setNouveauUsername(NouveauUsername);
     if (reg.test(NouveauUsername)) {
       fetchPatchUtilisateurUsername(NouveauUsername);
