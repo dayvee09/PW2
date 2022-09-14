@@ -18,7 +18,7 @@ class CelliersModele extends AccesBd
 
     public function retirer($id)
     {
-        return $this->supprimer("DELETE FROM vino__cellier WHERE vino__cellier.id=:id", ['id' => $id]);
+        return $this->supprimer("DELETE FROM vino__cellier WHERE vino__cellier.id=:id", ['id' => $id["cellier"]]);
     }
 
     public function remplacer($id, $cellier)
