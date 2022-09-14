@@ -2,6 +2,7 @@ import * as React from "react";
 import "./Profil.scss";
 import FrmEmail from "./FrmEmail";
 import FrmPassword from "./FrmPassword";
+import FrmUsername from "./FrmUsername";
 import { useState, useEffect } from "react";
 import MuiAlert from "@mui/material/Alert";
 import Dialog from "@mui/material/Dialog";
@@ -15,11 +16,6 @@ import { useNavigate } from "react-router-dom";
 import { TextField } from "@aws-amplify/ui-react";
 
 export default function Profil(props) {
-  const [NouveauUsername, setNouveauUsername] = useState();
-
-  // useEffect(() => {
-  //   setNouveauUsername(props.username);
-  // }, []);
 
   /**
    *  État des styles des composants MUI
@@ -43,6 +39,12 @@ export default function Profil(props) {
    */
   const [NouvelEmailUtilisateur, setNouvelEmailUtilisateur] = useState(props.emailUtilisateur);
 
+
+  /**
+   *  État du nouveau nom d'usager par défaut
+   */
+  const [NouveauUsername, setNouveauUsername] = useState(props.username);
+
   /**
    *  État des formulaires de modification
    */
@@ -52,6 +54,7 @@ export default function Profil(props) {
   /**
    *  État des formulaires de modification
    */
+  const [frmUsernameOuvert, setFrmUsernameOuvert] = useState(false);
   const [frmEmailOuvert, setFrmEmailOuvert] = useState(false);
   const [frmPasswordOuvert, setFrmPasswordOuvert] = useState(false);
 
@@ -117,6 +120,17 @@ export default function Profil(props) {
    */
   function gererSoumettre() {
     props.supprimerUtilisateur();
+    const timer = setTimeout(() => {
+      navigate("/", { replace: true });
+    }, 2000);
+    return () => clearTimeout(timer);
+  }
+
+  /**
+   * Gère la modification du username
+   */
+  function gererModifierUsername() {
+    setFrmUsernameOuvert(true);
   }
 
   /**
@@ -155,7 +169,7 @@ export default function Profil(props) {
         <div className="description-username">
           <div className="infos-modification">
             <p>Nom d'usager</p>
-            <button className="modifier">
+            <button className="modifier" onClick={gererModifierUsername}>
               Modifier
             </button>
           </div>
@@ -206,7 +220,18 @@ export default function Profil(props) {
             />
           </ThemeProvider>
         </div>
+        <FrmUsername
+          emailUtilisateur={props.emailUtilisateur}
+          frmUsernameOuvert={frmUsernameOuvert}
+          setFrmUsernameOuvert={setFrmUsernameOuvert}
+          username={props.username}
+          setUsername={props.setUsername}
+          NouveauUsername={NouveauUsername}
+          setNouveauUsername={setNouveauUsername}
+          URI={props.URI}
+        />
         <FrmEmail
+          username={props.username}
           frmEmailOuvert={frmEmailOuvert}
           setFrmEmailOuvert={setFrmEmailOuvert}
           utilisateur={props.utilisateur}

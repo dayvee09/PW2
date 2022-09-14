@@ -24,14 +24,12 @@ function ListeCelliers(props) {
 // 	}, 3000);
 //   }
 
-
-  
   if (props.celliers.length > 0) {
     return (
       <>
         <div className="liste-cellier--entete">
           <h1>Mes Celliers</h1>
-          <NavLink to="/ajouter-cellier">
+          <NavLink to="/cellier/ajout/celliers">
             <button>+ Ajouter</button>
           </NavLink>
         </div>
@@ -50,6 +48,9 @@ function ListeCelliers(props) {
 				supprimerCellier={props.supprimerCellier}
 				modifierCellier={props.modifierCellier}
                 URI={props.URI}
+                error={props.error}
+                setError={props.setError}
+                fetchCelliers={props.fetchCelliers}
               />
             </div>
           ))}
