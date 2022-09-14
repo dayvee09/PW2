@@ -42,24 +42,6 @@ const Appli = () => {
   const [isLogged, setIsLogged] = useState(false);
   const ENV = "dev";
   const [URI, setURI] = useState([]);
-  /**
-   *  État des styles des composants MUI
-   */
-  const Button = styled(MuiButton)((props) => ({
-    color: "#f3f5eb",
-    backgroundColor: "#cc4240",
-    textDecoration: "none",
-    borderRadius: "4px",
-    fontFamily: "Alata",
-    fontSize: "12px",
-    width: "10rem",
-    marginLeft: "-0.7rem",
-    padding: "10px 20px",
-    "&:hover": {
-      backgroundColor: "#f1ab50",
-      color: "#f3f5eb",
-    },
-  }));
 
   let location = window.location.pathname;
   useEffect(() => {
@@ -404,18 +386,6 @@ const Appli = () => {
                 fetchUtilisateur={fetchUtilisateur}
                 createUser={createUser}
               />
-
-              {/* <div className="navigation">
-								<div className="menu-celliers">
-									{location !== "/" && (
-										<div>
-											<NavLink to={`/`}>
-												<Button>Retour aux Celliers</Button>
-											</NavLink>
-										</div>
-									)}
-								</div>
-							</div> */}
 
               {/* ------------------------------ Routes --------------------------------*/}
               <Routes>
