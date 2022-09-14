@@ -20,8 +20,9 @@
 }
 
 .ListeBouteilles--default {
-	button {
-		background-color: #cc4240;
+
+	.retour {
+		background-color: #152440;
 		border: none;
 		border-radius: 4px;
 		color: #f3f5eb;
@@ -30,8 +31,21 @@
 		padding: 10px;
 
 		&:hover {
-			background-color: #f1ab50;
-			color: #101e33;
+			background-color: #cc4240;
+			cursor: pointer;
+		}
+
+		img {
+			padding-right: 10px;
+		}
+	}
+
+ 	p {
+		font-size: 12px;
+		color: #152440;
+
+		&:hover {
+			color: #cc4240;
 			cursor: pointer;
 		}
 	}
