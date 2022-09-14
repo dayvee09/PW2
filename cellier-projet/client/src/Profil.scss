@@ -71,6 +71,13 @@ a:link {
     box-shadow: none;
 }
 
+.amplify-input:disabled {
+  /* color: var(--amplify-components-fieldcontrol-disabled-color); */
+  cursor: var(--amplify-components-fieldcontrol-disabled-cursor);
+  border-color: #f1ab50;
+  background-color: var(--amplify-components-fieldcontrol-disabled-background-color);
+}
+
 .infos-profil {
   display: flex;
   flex-direction: row;
