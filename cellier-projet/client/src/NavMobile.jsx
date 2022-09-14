@@ -31,7 +31,7 @@ export default function NavMobile({ Auth, emailUtilisateur, utilisateur }) {
             showLabels
           >
             <BottomNavigationAction
-			  className="IconeHome"
+			      className="IconeHome"
               label="ACCUEIL"
               icon={<HomeIcone />}
               component={Link}
