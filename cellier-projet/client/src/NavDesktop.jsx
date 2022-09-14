@@ -7,7 +7,7 @@ import Image from "./img/svg/icone_profil_blue_line.svg";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-export default function NavDesktop({ user, gererSignOut, utilisateur }) {
+export default function NavDesktop({ user, gererSignOut, utilisateur, username }) {
   const [eltAncrage, setEltAncrage] = useState(null);
   const menuContextuelOuvert = Boolean(eltAncrage);
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ export default function NavDesktop({ user, gererSignOut, utilisateur }) {
             onClick={gererMenuContextuel}
           >
             <img src={Image} alt="icone-profil" width={20}></img>
-            <p>{user.attributes.email}</p>
+            <p>{username}</p>
           </div>
         </div>
         <Menu

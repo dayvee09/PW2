@@ -1,38 +1,14 @@
-import React, { useState, useEffect } from "react";
-import Axios from "axios";
-import Cellier from "./Cellier";
 import "./ListeCelliers.scss";
-import { useNavigate, useParams, NavLink } from "react-router-dom";
+import Cellier from "./Cellier";
+import { NavLink } from "react-router-dom";
 
 function ListeCelliers(props) {
-  let history = useNavigate();
-  let messageRetourContainer = document.querySelector('.liste-cellier--message-retour');
-
-    // Gestion du message de retour après ajout/modification/suppression
-  	setTimeout(function() {
-		let urlString = window.location.href;
-		var url = new URL(urlString);
-		var messageRetour = url.searchParams.get("message");
-		if(messageRetour != "") {
-			if(messageRetourContainer != null)  {
-				messageRetourContainer.innerText = messageRetour
-				messageRetour = ""
-			}
-		}
-	}, 100);
-	// Nettoyer le message de retour
-	setTimeout(function() {
-		if(messageRetourContainer != null)  {
-			messageRetourContainer.innerText = "";
-		}
-	}, 3000);
-
   if (props.celliers.length > 0) {
     return (
       <>
         <div className="liste-cellier--entete">
           <h1>Mes Celliers</h1>
-          <NavLink to="/ajouter-cellier">
+          <NavLink to="/cellier/ajout/celliers">
             <button>+ Ajouter</button>
           </NavLink>
         </div>
@@ -48,7 +24,12 @@ function ListeCelliers(props) {
                 setCellier={props.setCellier}
                 emailUtilisateur={props.emailUtilisateur}
                 gererCellier={props.gererCellier}
+                supprimerCellier={props.supprimerCellier}
+                modifierCellier={props.modifierCellier}
                 URI={props.URI}
+                error={props.error}
+                setError={props.setError}
+                fetchCelliers={props.fetchCelliers}
               />
             </div>
           ))}

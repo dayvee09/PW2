@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ListeBouteilles.scss";
 import Axios from "axios";
+import MuiButton from "@mui/material/Button";
 import Bouteille from "./Bouteille";
 import { useNavigate, NavLink } from "react-router-dom";
 
@@ -16,6 +17,17 @@ function ListeBouteilles(props) {
     if (props.bouteilles.length > 1) {
       return (
         <div className="ListeBouteilles">
+          <div className="navigation">
+            <div className="menu-celliers">
+              {location !== "/" && (
+                <div>
+                  <NavLink to={`/`}>
+                    <button>Retour aux Celliers</button>
+                  </NavLink>
+                </div>
+              )}
+            </div>
+          </div>
           <div className="ListeBouteille--grid">
             {props.bouteilles.map((bouteille) => (
               <Bouteille
