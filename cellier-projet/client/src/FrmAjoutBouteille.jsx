@@ -12,6 +12,7 @@ import Button from "@mui/material/Button";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 export default function FrmAjoutBouteille(props) {
   /**
@@ -90,6 +91,7 @@ export default function FrmAjoutBouteille(props) {
    * État de l'image de la bouteille
    */
   const [vinImage, setVinImage] = React.useState("");
+  const navigate = useNavigate();
 
   /**
    *  Fetch la liste de la bouteilles de la BD pour préparer à injecter à la liste du composant 'Autocomplete'
@@ -208,7 +210,10 @@ export default function FrmAjoutBouteille(props) {
         }
         throw response;
       })
-      .then((data) => {})
+      .then((data) => {
+        props.fetchVins();
+        navigate(`/`, { replace: true });
+      })
       .catch((error) => {
         console.error("Error fetching data: ", error);
         props.setError(error);
@@ -224,6 +229,7 @@ export default function FrmAjoutBouteille(props) {
     }
     return ok;
   };
+  console.log(props.bouteilles);
   return (
     <div className="FrmAjoutBouteille">
       <div className="btnClose">
