@@ -28,8 +28,8 @@ function ListeCelliers(props) {
                 setCellier={props.setCellier}
                 emailUtilisateur={props.emailUtilisateur}
                 gererCellier={props.gererCellier}
-				supprimerCellier={props.supprimerCellier}
-				modifierCellier={props.modifierCellier}
+                supprimerCellier={props.supprimerCellier}
+                modifierCellier={props.modifierCellier}
                 URI={props.URI}
                 error={props.error}
                 setError={props.setError}
