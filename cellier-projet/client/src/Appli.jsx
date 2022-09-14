@@ -20,6 +20,8 @@ import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
 import { I18n, userHasAuthenticated } from "aws-amplify";
+import MuiButton from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
 import Logo from "./img/png/logo-jaune.png";
 import FrmAjoutBouteille from "./FrmAjoutBouteille";
 
@@ -39,12 +41,30 @@ const Appli = () => {
   const [isLogged, setIsLogged] = useState(false);
   const ENV = "dev";
   const [URI, setURI] = useState([]);
+  /**
+   *  État des styles des composants MUI
+   */
+  const Button = styled(MuiButton)((props) => ({
+  color: "#f3f5eb",
+  backgroundColor: "#cc4240",
+  textDecoration: "none",
+  borderRadius:"4px",
+  fontFamily: "Alata",
+  fontSize: "12px",
+  width:"3rem",
+  padding: "10px 20px",
+    "&:hover": {
+      backgroundColor: "#f1ab50",
+      color: "#f3f5eb",
+    },
+  }));
+
   let location = window.location.pathname;
   useEffect(() => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -203,6 +223,8 @@ const Appli = () => {
   function gererCellier(idCellier) {
     setCellier(idCellier);
   }
+
+
 
   // -------------------------- Requêtes Fetch ------------------------------------------------------
 
@@ -385,7 +407,7 @@ const Appli = () => {
                   {location !== "/" && (
                     <div>
                       <NavLink to={`/`}>
-                        <button>Retour aux Celliers</button>
+                        <Button>Retour aux Celliers </Button>
                       </NavLink>
                     </div>
                   )}
