@@ -23,6 +23,6 @@ class CelliersModele extends AccesBd
 
     public function remplacer($id, $cellier)
     {
-        return $this->modifier("UPDATE vino__cellier SET vino__cellier.nom=:  WHERE vino__cellier.id=:id", ['id' => $id["cellier"]]);
+        return $this->modifier("UPDATE vino__cellier SET vino__cellier.nom=:cellier  WHERE vino__cellier.id=:id", ['id' => $id["cellier"], 'cellier' => $cellier->nom]);
     }
 }

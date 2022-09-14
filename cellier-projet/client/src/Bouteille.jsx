@@ -5,6 +5,9 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 // import format from 'date-fns/format';
 // import moment from 'moment';
 // import { keyframes } from "@emotion/react";
@@ -15,6 +18,8 @@ export default function Bouteille(props) {
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
+  const [eltAncrage, setEltAncrage] = useState(null);
+  const menuContextuelOuvert = Boolean(eltAncrage);
   const [openAlert, setOpenAlert] = React.useState(false);
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
@@ -22,6 +27,11 @@ export default function Bouteille(props) {
     }
     setOpenAlert(false);
   };
+
+  /**
+   *  État de la boite de dialogue de suppression
+   */
+  const [frmSuppressionOuvert, setFrmSuppressionOuvert] = useState(false);
 
   /**
    *  État d'affichage de la fiche de bouteille
@@ -52,6 +62,28 @@ export default function Bouteille(props) {
    * État de la date de garde et la date de garde précédente
    */
   const [dateGarde, setDateGarde] = useState(props.garde_jusqua);
+
+  /**
+   * Gestion du menu contextuel d'action d'un cellier
+   * @param {*} evt
+   */
+  function gererMenuContextuel(evt) {
+    setEltAncrage(evt.currentTarget);
+  }
+
+  /**
+   * Gestion de la fermeture du menu contextuel d'action d'un cellier
+   */
+  function gererFermerMenuContextuel() {
+    setEltAncrage(null);
+  }
+
+  /**
+   * Gère l'ouverture de la boite de dialogue de supression du cellier
+   */
+  function gererSupprimer() {
+    setFrmSuppressionOuvert(true);
+  }
 
   /**
    * Gère l'affichage du formulaire quand click du bouton "Modifier"
@@ -171,9 +203,10 @@ export default function Bouteille(props) {
   }
   return (
     <>
-      <div className="bouteille" data-quantite="">
-        <div className="img">
+      <div className="Bouteille" data-quantite="">
+        <div className="bouteille--gestion">
           <img
+            onClick={gererVoir}
             src={
               props.image.indexOf("pastille_gout") < 0
                 ? props.image
@@ -181,6 +214,12 @@ export default function Bouteille(props) {
             }
             alt="bouteille"
           />
+          <div className="options" data-id="{id_bouteille_cellier}">
+            <MoreVertIcon
+              className="bouteille--gestion-dots"
+              onClick={gererMenuContextuel}
+            />
+          </div>
         </div>
         <div className="bouteille--info-container">
           <div className="description">
@@ -188,16 +227,6 @@ export default function Bouteille(props) {
               <p className="nom">{props.nom} </p>
               <p className="nom">Quantité: {bouteille.quantite} </p>
             </div>
-          </div>
-          <div className="options" data-id="{id_bouteille_cellier}">
-            <button onClick={gererModifier}>Modifier</button>
-            <button onClick={gererVoir}>Fiche</button>
-            <button onClick={gererAjouter} className="btnAjouter">
-              Ajouter
-            </button>
-            <button onClick={gererBoire} className="btnBoire">
-              Boire
-            </button>
           </div>
         </div>
         <Snackbar
@@ -218,6 +247,30 @@ export default function Bouteille(props) {
             En rupture de stock!
           </Alert>
         </Snackbar>
+
+        <Menu
+          open={menuContextuelOuvert}
+          anchorEl={eltAncrage}
+          onClose={gererFermerMenuContextuel}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+          PaperProps={{
+            style: {
+              color: "#152440",
+              paddingLeft: 10,
+              paddingRight: 10,
+              backgroundColor: "#d3d7dd",
+              boxShadow: "none",
+              border: "0.5px solid #152440",
+            },
+          }}
+        >
+          <MenuItem onClick={gererModifier}>Modifier</MenuItem>
+          <MenuItem onClick={gererAjouter}>Ajouter</MenuItem>
+          <MenuItem onClick={gererBoire}>Boire</MenuItem>
+          <hr></hr>
+          <MenuItem onClick={gererSupprimer}>Supprimer</MenuItem>
+        </Menu>
         <FrmBouteille
           bouteille={bouteille}
           frmOuvert={frmOuvert}
