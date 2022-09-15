@@ -249,9 +249,13 @@ export default function Bouteille(props) {
    * Supprime le cellier
    */
   async function fetchSupprimerBouteille() {
-    await fetch(props.URI + `/supprimer/${props.id}/vins`, {
-      method: "DELETE",
-    })
+    await fetch(
+      props.URI +
+        `/supprimer/${props.id}/vins/cellier/${props.vino__cellier_id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => {
         if (response.ok) {
           return response.json();
