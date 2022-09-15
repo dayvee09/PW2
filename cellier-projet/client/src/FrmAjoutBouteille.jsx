@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
 import moment from "moment";
-import vinExemple from "./img/png/vin-default.png";
+import placeholderSaq from "./img/png/placeholder-saq.png";
 import { useNavigate } from "react-router-dom";
 import Bouteille from "./Bouteille";
 
@@ -290,11 +290,11 @@ export default function FrmAjoutBouteille(props) {
       });
   }
   const imgUrl = () => {
-    let ok = vinExemple;
+    let ok = placeholderSaq;
     if (value) {
       if (value.image && value.image.indexOf("pastille_gout") < 0) {
         ok = value.image;
-      } else ok = vinExemple;
+      } else ok = placeholderSaq;
     }
     return ok;
   };
@@ -320,7 +320,7 @@ export default function FrmAjoutBouteille(props) {
 
       <div className="FrmAjoutNouvelle">
         <div className="img--wrap">
-          <img src={imgUrl() ? imgUrl() : { vinExemple }} alt="" />
+          <img src={imgUrl() ? imgUrl() : { placeholderSaq }} alt="" />
         </div>
         {/* Apparaîte uniquement en important de la bouteille du SAQ */}
         <div className={btnState ? "hidden" : ""}>
