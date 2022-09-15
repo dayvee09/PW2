@@ -174,61 +174,62 @@ export default function Cellier(props) {
           <p>Valeur totale : 20 000$ </p>
           {/* <p>ID : {props.id}</p> 
           			<p>Id Utilisateur : {props.vino__utilisateur_id}</p> */}
-        </div>
-        <Menu
-          open={menuContextuelOuvert}
-          anchorEl={eltAncrage}
-          onClose={gererFermerMenuContextuel}
-          anchorOrigin={{ vertical: "top", horizontal: "right" }}
-          transformOrigin={{ vertical: "top", horizontal: "right" }}
-          PaperProps={{
-            style: {
-              color: "#152440",
-              paddingLeft: 10,
-              paddingRight: 10,
-              backgroundColor: "#d3d7dd",
-              boxShadow: "none",
-              border: "0.5px solid #152440",
-            },
-          }}
-        >
-          <MenuItem onClick={gererModifier}>Modifier</MenuItem>
-          <hr></hr>
-          <MenuItem onClick={gererSupprimer}>Supprimer</MenuItem>
-        </Menu>
-        <Dialog
-          PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
-          open={frmSuppressionOuvert}
-          onClose={viderFermerFrm}
-        >
-          <DialogTitle>
-            {" "}
-            Voulez-vous vraiment supprimer ce cellier ?
-          </DialogTitle>
-          <DialogActions>
-            <Button onClick={viderFermerFrm}>Annuler</Button>
-            <Button onClick={gererSoumettre}>Supprimer</Button>
-          </DialogActions>
-        </Dialog>
-        <Snackbar
-          sx={{ height: "100%" }}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-          open={openAlert}
-          autoHideDuration={2000}
-          onClose={handleCloseAlert}
-        >
-          <Alert
-            onClose={handleCloseAlert}
-            severity={severity}
-            sx={{ width: "100%" }}
-          >
-            {messageRetour}
-          </Alert>
-        </Snackbar>
-      </div>
-    </>
-  );
+				</div>
+				<Menu
+					open={menuContextuelOuvert}
+					anchorEl={eltAncrage}
+					onClose={gererFermerMenuContextuel}
+					anchorOrigin={{ vertical: "top", horizontal: "right" }}
+					transformOrigin={{ vertical: "top", horizontal: "right" }}
+					PaperProps={{
+						style: {
+							color: "#152440",
+							paddingLeft: 10,
+							paddingRight: 10,
+							backgroundColor: "#d3d7dd",
+							boxShadow: "none",
+							border: "0.5px solid #152440",
+						},
+					}}
+				>
+				<MenuItem onClick={gererModifier}>Modifier</MenuItem>
+				<hr></hr>
+        	    <MenuItem onClick={gererSupprimer}>Supprimer</MenuItem>
+       			</Menu>
+				<Dialog
+					PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
+					open={frmSuppressionOuvert}
+					onClose={viderFermerFrm}
+				>
+					<DialogTitle>
+					{" "}
+					Voulez-vous vraiment supprimer ce cellier ?
+					</DialogTitle>
+					<DialogActions>
+					<Button onClick={viderFermerFrm}>Annuler</Button>
+					<button onClick={gererSoumettre} className="action">Supprimer</button>
+					</DialogActions>
+				</Dialog>
+				<Snackbar
+					sx={{ height: "100%" }}
+					anchorOrigin={{
+					vertical: "top",
+					horizontal: "center",
+					}}
+					open={openAlert}
+					autoHideDuration={2000}
+					onClose={handleCloseAlert}
+				>
+					<Alert
+					onClose={handleCloseAlert}
+					severity={severity}
+					sx={{ width: "100%" }}
+					>
+					{messageRetour}
+					</Alert>
+				</Snackbar>
+      		</div>
+    	</>
+  	);
 }
+
