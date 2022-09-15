@@ -357,7 +357,7 @@ export default function Bouteille(props) {
           </DialogTitle>
           <DialogActions>
             <Button onClick={viderFermerFrm}>Annuler</Button>
-            <Button onClick={gererSoumettre}>Soumettre</Button>
+            <Button onClick={gererSoumettre}>Supprimer</Button>
           </DialogActions>
         </Dialog>
         <FrmBouteille
