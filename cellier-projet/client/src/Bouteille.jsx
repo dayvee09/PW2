@@ -268,6 +268,7 @@ export default function Bouteille(props) {
         setSeverity("success");
         setOpenAlert(true);
         setTimeout(() => {
+          viderFermerFrm();
           props.fetchVins();
         }, 2000);
       })
