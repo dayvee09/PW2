@@ -1,3 +1,3 @@
-# Mon Vino
+# Titre du site Web ou application
 
-Lien vers le serveur de développement: http://100.26.239.127/PW2/cellier-projet
+Court texte présentant votre site Web/application.
