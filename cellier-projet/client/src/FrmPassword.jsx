@@ -29,6 +29,8 @@ export default function FrmPassword({
     textDecoration: "none",
     borderRadius:"4px",
     fontFamily: "Alata",
+	padding: "10px 20px",
+	fontSize: "12px",
     "&:hover": {
       backgroundColor: "#f1ab50",
       color: "#f3f5eb",
@@ -172,7 +174,7 @@ export default function FrmPassword({
         </DialogContent>
         <DialogActions>
           <Button onClick={viderFermerFrm}>Annuler</Button>
-          <Button onClick={gererSoumettre}>Soumettre</Button>
+		  <button onClick={gererSoumettre} className="action">Enregistrer</button>
         </DialogActions>
       </Dialog>
     </div>

@@ -245,7 +245,7 @@ export default function Profil(props) {
         </DialogTitle>
         <DialogActions>
           <Button onClick={viderFermerFrm}>Annuler</Button>
-          <Button onClick={gererSoumettre}>Soumettre</Button>
+          <button onClick={gererSoumettre} className="action">Supprimer</button>
         </DialogActions>
       </Dialog>
     </>
