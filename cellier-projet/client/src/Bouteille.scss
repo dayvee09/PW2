@@ -1,5 +1,5 @@
+// .Bouteille {
 .Bouteille {
-
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
   border-radius: 4px;
   border: 0.5px solid #d3d7dd;
@@ -8,24 +8,17 @@
     padding: 10px;
   }
 
-  .img {
-    background-color: #d3d7dd;
-    height: 180px;
-
   .bouteille--gestion {
     position: relative;
     cursor: pointer;
     background-color: #d3d7dd;
     height: 180px;
 
->>>>>>> af536e82b01662d663987310166766e3018ab8ae
     img {
       object-fit: contain;
       height: 100%;
       width: 100%;
     }
-<<<<<<< HEAD
-=======
     display: flex;
     justify-content: space-between;
 
@@ -45,7 +38,6 @@
         cursor: pointer;
       }
     }
->>>>>>> af536e82b01662d663987310166766e3018ab8ae
   }
 
   .options {
@@ -61,18 +53,6 @@
 
   &:hover {
     background-color: #d3d7dd40;
-<<<<<<< HEAD
-  }
-  .bouteille--info-container .titre {
-	width: 200px;
-	overflow: hidden;
-	text-align: left;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-  }
-}
-=======
   }
 }
 // }
->>>>>>> af536e82b01662d663987310166766e3018ab8ae

@@ -72,7 +72,7 @@ export default function FrmAjoutBouteille(props) {
   /**
    * État du prix de la bouteille
    */
-  const [vinPrix, setVinPrix] = React.useState(10);
+  const [vinPrix, setVinPrix] = React.useState(1);
   /**
    * État du millesime de la bouteille
    */
@@ -84,7 +84,7 @@ export default function FrmAjoutBouteille(props) {
   /**
    * État du format de la bouteille
    */
-  const [vinFormat, setVinFormat] = React.useState("750ml");
+  const [vinFormat, setVinFormat] = React.useState("");
   /**
    * État de la description de la bouteille
    */
@@ -150,11 +150,11 @@ export default function FrmAjoutBouteille(props) {
     setValue((value) => {
       value = [];
     });
-    setMillesime(null);
+    setMillesime("");
     setVinPays("");
     setVinCellier(props.cellier? props.cellier : props.celliers[0].id);
     setVinFormat("");
-    setVinPrix(10);
+    setVinPrix(1);
     setVinDescription("");
     setVinGarde(moment().get("year").toString());
     setVinImage("");
@@ -195,9 +195,9 @@ export default function FrmAjoutBouteille(props) {
         // console.log("ajout en cours", vinCellier);
         fetchAjouterVin();
 
-        props.setCellier(vinCellier);
+        // props.setCellier(vinCellier);
         
-        navigate(`/cellier/${vinCellier}/vins`, { replace: true });
+        // navigate(`/cellier/${vinCellier}/vins`, { replace: true });
     } else console.log("form invalid");
   
   //     // }
@@ -384,12 +384,12 @@ export default function FrmAjoutBouteille(props) {
                   ? setErreur({ nom: "champ obligatoire" })
                   : delete erreur["nom"];
               }}
-              // error={vinNom === ""}
-              // helperText={vinNom === "" ? "* Champ obligatoire!" : " "}
+              error={vinNom === ""}
+              helperText={vinNom === "" ? "* Champ obligatoire!" : " "}
             />
-            <p className={erreur["nom"] ? "active" : "hidden"}>
+            {/* <p className={erreur["nom"] ? "active" : "hidden"}>
               ✳ {erreur["nom"]}{" "}
-            </p>
+            </p> */}
           </Grid>
           <Grid item xs={6} sm={6} md={3} lg={3}>
             <label>Millesime</label>
@@ -563,8 +563,6 @@ export default function FrmAjoutBouteille(props) {
                {/* <option key={cellier.id} value={cellier.id} disabled={cellier.id==redondance? true:false}> */}
                   {cellier.nom}
                 </option>
-               
-        
               ))}
             </TextField>
             <p className={erreur["ajout"] ? "active" : "hidden"}>

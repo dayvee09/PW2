@@ -42,7 +42,7 @@ export default function Cellier(props) {
   /**
    *  État des styles des composants MUI
    */
-  const Button = styled(MuiButton)((props) => ({
+ const Button = styled(MuiButton)((props) => ({
     color: "#f3f5eb",
     backgroundColor: "#cc4240",
     textDecoration: "none",

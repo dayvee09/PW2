@@ -9,6 +9,11 @@ import vinExemple from "./img/png/vin-default.png";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import MuiButton from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
 // import format from 'date-fns/format';
 // import moment from 'moment';
 // import { keyframes } from "@emotion/react";
@@ -28,7 +33,25 @@ export default function Bouteille(props) {
     }
     setOpenAlert(false);
   };
+  const [messageRetour, setMessageRetour] = useState([]);
+  const [severity, setSeverity] = useState([]);
 
+  /**
+   *  État des styles des composants MUI
+   */
+  const Button = styled(MuiButton)((props) => ({
+    color: "#f3f5eb",
+    backgroundColor: "#cc4240",
+    textDecoration: "none",
+    borderRadius: "4px",
+    fontFamily: "Alata",
+    fontSize: "12px",
+    padding: "10px 20px",
+    "&:hover": {
+      backgroundColor: "#f1ab50",
+      color: "#f3f5eb",
+    },
+  }));
   /**
    *  État de la boite de dialogue de suppression
    */
@@ -65,7 +88,7 @@ export default function Bouteille(props) {
   const [dateGarde, setDateGarde] = useState(props.garde_jusqua);
 
   /**
-   * Gestion du menu contextuel d'action d'un cellier
+   * Gestion du menu contextuel d'action d'un bouteille
    * @param {*} evt
    */
   function gererMenuContextuel(evt) {
@@ -73,18 +96,31 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Gestion de la fermeture du menu contextuel d'action d'un cellier
+   * Gestion de la fermeture du menu contextuel d'action d'une bouteille
    */
   function gererFermerMenuContextuel() {
     setEltAncrage(null);
   }
 
   /**
-   * Gère l'ouverture de la boite de dialogue de supression du cellier
+   * Gère la fermeture de la boite de dialogue de supression de la bouteille
+   */
+  function viderFermerFrm() {
+    setFrmSuppressionOuvert(false);
+  }
+  /**
+   * Gère l'ouverture de la boite de dialogue de supression d'une bouteille
    */
   function gererSupprimer() {
     setFrmSuppressionOuvert(true);
   }
+
+   /**
+   * Gère la suppression de la bouteille
+   */
+    function gererSoumettre() {
+      fetchSupprimerBouteille();
+    }
 
   /**
    * Gère l'affichage du formulaire quand click du bouton "Modifier"
@@ -202,6 +238,35 @@ export default function Bouteille(props) {
         // setError(error);
       });
   }
+
+  /**
+   * Supprime la bouteille
+   */
+   async function fetchSupprimerBouteille() {
+    await fetch(props.URI + "/" + "cellier" + "/" + props.vino__cellier_id + "/" + "vins" + "/" + "bouteille" + "/" + props.id, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setMessageRetour("Suppression effectuée");
+        setSeverity("success");
+        setOpenAlert(true);
+        setTimeout(() => {
+          // props.fetchUtilisateur();
+          //  props.fetchCelliers();
+          // props.fetchVins();
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        props.setError(props.error);
+      });
+  }
   return (
     <>
       <div className="Bouteille" data-quantite="">
@@ -272,6 +337,20 @@ export default function Bouteille(props) {
           <hr></hr>
           <MenuItem onClick={gererSupprimer}>Supprimer</MenuItem>
         </Menu>
+        <Dialog
+          PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
+          open={frmSuppressionOuvert}
+          onClose={viderFermerFrm}
+        >
+          <DialogTitle>
+            {" "}
+            Voulez-vous vraiment supprimer cette bouteille?
+          </DialogTitle>
+          <DialogActions>
+            <Button onClick={viderFermerFrm}>Annuler</Button>
+            <Button onClick={gererSoumettre}>Soumettre</Button>
+          </DialogActions>
+        </Dialog>
         <FrmBouteille
           bouteille={bouteille}
           frmOuvert={frmOuvert}
