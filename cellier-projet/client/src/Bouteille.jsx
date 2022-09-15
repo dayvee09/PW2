@@ -13,6 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import MuiButton from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
+import placeholderSaq from "./img/png/placeholder-saq.png";
 // import format from 'date-fns/format';
 // import moment from 'moment';
 // import { keyframes } from "@emotion/react";
@@ -262,7 +263,6 @@ export default function Bouteille(props) {
         setSeverity("success");
         setOpenAlert(true);
         setTimeout(() => {
-          console.log(props);
           props.fetchVins();
         }, 2000);
       })
@@ -280,7 +280,7 @@ export default function Bouteille(props) {
             src={
               props.image.indexOf("pastille_gout") < 0
                 ? props.image
-                : "https://assets.sellers.loblaw.ca/products/all/1276/255419_1.jpg?size=274"
+                : placeholderSaq
             }
             alt="bouteille"
           />
@@ -309,13 +309,6 @@ export default function Bouteille(props) {
           autoHideDuration={1000}
           onClose={handleCloseAlert}
         >
-          {/* <Alert
-            onClose={handleCloseAlert}
-            setSeverity="error"
-            sx={{ width: "100%" }}
-          >
-            En rupture de stock!
-          </Alert> */}
           <Alert
             onClose={handleCloseAlert}
             severity={severity}
