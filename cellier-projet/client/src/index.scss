@@ -39,3 +39,37 @@ hr {
 		padding-top: 0;
 	}
 }
+
+.action {
+	background-color: transparent;
+	color: #152440;
+	border: 1px solid #f1ab50;
+	padding: 11px 20px;
+	font-size: 12px;
+	text-transform: uppercase;
+	text-decoration: "none";
+	font-family: Alata;
+	border-radius: 4px;
+
+	&:hover {
+		background-color: #152440;
+		cursor: pointer;
+		color: #f3f5eb;
+		border: 1px solid #152440;
+	}
+}
+
+.css-8vnh0h-MuiPaper-root-MuiAlert-root {
+	background-color: #152440 !important;
+	border: 1px solid #f1ab50;
+	.MuiAlert-message {
+		font-family: raleway;
+	}
+
+	button {
+		&:hover {
+			background-color: #f1ab50;
+			color: #152440;
+		}
+	}
+}

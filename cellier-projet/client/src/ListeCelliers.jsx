@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 
 function ListeCelliers(props) {
   if (props.celliers.length > 0) {
+    // console.log("celliers:", props.celliers);
     return (
       <>
         <div className="liste-cellier--entete">
