@@ -259,10 +259,14 @@ export default function Bouteille(props) {
   /**
    * Supprime la bouteille
    */
-   async function fetchSupprimerBouteille() {
-    await fetch(props.URI + "/" + "cellier" + "/" + props.vino__cellier_id + "/" + "vins" + "/" + "bouteille" + "/" + props.id, {
-      method: "DELETE",
-    })
+  async function fetchSupprimerBouteille() {
+    await fetch(
+      props.URI +
+        `/supprimer/${props.id}/vins/cellier/${props.vino__cellier_id}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -290,7 +294,7 @@ export default function Bouteille(props) {
             onClick={gererVoir}
             src={
               (props.image&&props.image.indexOf("pastille_gout") < 0)
-                ? props.imag
+                ? props.image
                 : placeholderSaq
             }
             alt="bouteille"
