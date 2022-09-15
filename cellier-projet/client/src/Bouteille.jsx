@@ -8,6 +8,12 @@ import MuiAlert from "@mui/material/Alert";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogTitle from "@mui/material/DialogTitle";
+import MuiButton from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
+import placeholderSaq from "./img/png/placeholder-saq.png";
 // import format from 'date-fns/format';
 // import moment from 'moment';
 // import { keyframes } from "@emotion/react";
@@ -27,6 +33,23 @@ export default function Bouteille(props) {
     }
     setOpenAlert(false);
   };
+
+  /**
+   *  État des styles des composants MUI
+   */
+  const Button = styled(MuiButton)((props) => ({
+    color: "#f3f5eb",
+    backgroundColor: "#cc4240",
+    textDecoration: "none",
+    borderRadius: "4px",
+    fontFamily: "Alata",
+    fontSize: "12px",
+    padding: "10px 20px",
+    "&:hover": {
+      backgroundColor: "#f1ab50",
+      color: "#f3f5eb",
+    },
+  }));
 
   /**
    *  État de la boite de dialogue de suppression
@@ -62,6 +85,8 @@ export default function Bouteille(props) {
    * État de la date de garde et la date de garde précédente
    */
   const [dateGarde, setDateGarde] = useState(props.garde_jusqua);
+  const [messageRetour, setMessageRetour] = useState([]);
+  const [severity, setSeverity] = useState([]);
 
   /**
    * Gestion du menu contextuel d'action d'un cellier
@@ -79,10 +104,24 @@ export default function Bouteille(props) {
   }
 
   /**
+   * Gère la fermeture de la boite de dialogue de supression du profil
+   */
+  function viderFermerFrm() {
+    setFrmSuppressionOuvert(false);
+  }
+
+  /**
    * Gère l'ouverture de la boite de dialogue de supression du cellier
    */
   function gererSupprimer() {
     setFrmSuppressionOuvert(true);
+  }
+
+  /**
+   * Gère la suppression du cellier
+   */
+  function gererSoumettre() {
+    fetchSupprimerBouteille();
   }
 
   /**
@@ -118,7 +157,11 @@ export default function Bouteille(props) {
     if (quantite > 0) {
       setQuantite((quantite) => parseInt(quantite) - 1);
       fetchPutVinUn(parseInt(quantite) - 1, dateAchat, dateGarde);
-    } else setOpenAlert(true);
+    } else {
+      setMessageRetour("En rupture de stock");
+      setSeverity("error");
+      setOpenAlert(true);
+    }
   }
 
   /**
@@ -201,6 +244,33 @@ export default function Bouteille(props) {
         // setError(error);
       });
   }
+
+  /**
+   * Supprime le cellier
+   */
+  async function fetchSupprimerBouteille() {
+    await fetch(props.URI + `/supprimer/${props.id}/vins`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setMessageRetour("Suppression effectuée");
+        setSeverity("success");
+        setOpenAlert(true);
+        setTimeout(() => {
+          props.fetchVins();
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        props.setError(props.error);
+      });
+  }
   return (
     <>
       <div className="Bouteille" data-quantite="">
@@ -210,7 +280,7 @@ export default function Bouteille(props) {
             src={
               props.image.indexOf("pastille_gout") < 0
                 ? props.image
-                : "https://assets.sellers.loblaw.ca/products/all/1276/255419_1.jpg?size=274"
+                : placeholderSaq
             }
             alt="bouteille"
           />
@@ -241,10 +311,10 @@ export default function Bouteille(props) {
         >
           <Alert
             onClose={handleCloseAlert}
-            severity="error"
+            severity={severity}
             sx={{ width: "100%" }}
           >
-            En rupture de stock!
+            {messageRetour}
           </Alert>
         </Snackbar>
 
@@ -271,6 +341,20 @@ export default function Bouteille(props) {
           <hr></hr>
           <MenuItem onClick={gererSupprimer}>Supprimer</MenuItem>
         </Menu>
+        <Dialog
+          PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
+          open={frmSuppressionOuvert}
+          onClose={viderFermerFrm}
+        >
+          <DialogTitle>
+            {" "}
+            Voulez-vous vraiment supprimer cette bouteille ?
+          </DialogTitle>
+          <DialogActions>
+            <Button onClick={viderFermerFrm}>Annuler</Button>
+            <Button onClick={gererSoumettre}>Soumettre</Button>
+          </DialogActions>
+        </Dialog>
         <FrmBouteille
           bouteille={bouteille}
           frmOuvert={frmOuvert}
