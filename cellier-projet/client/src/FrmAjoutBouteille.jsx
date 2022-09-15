@@ -12,7 +12,9 @@ import Button from "@mui/material/Button";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
 import moment from "moment";
+import placeholderSaq from "./img/png/placeholder-saq.png";
 import { useNavigate } from "react-router-dom";
+import Bouteille from "./Bouteille";
 
 export default function FrmAjoutBouteille(props) {
   /**
@@ -43,7 +45,7 @@ export default function FrmAjoutBouteille(props) {
    * État du cellier choisi
    */
   const [vinCellier, setVinCellier] = React.useState(
-    props.cellier ? props.cellier : props.celliers[0].id
+    props.cellier ? props.cellier : props.cellier? props.cellier : props.celliers[0].id
   );
   /**
    * État de la quantité choisie
@@ -68,11 +70,11 @@ export default function FrmAjoutBouteille(props) {
   /**
    * État du nom de la bouteille
    */
-  const [vinNom, setVinNom] = React.useState("");
+  const [vinNom, setVinNom] = React.useState("#");
   /**
    * État du prix de la bouteille
    */
-  const [vinPrix, setVinPrix] = React.useState(0);
+  const [vinPrix, setVinPrix] = React.useState(1);
   /**
    * État du millesime de la bouteille
    */
@@ -93,8 +95,23 @@ export default function FrmAjoutBouteille(props) {
    * État de l'image de la bouteille
    */
   const [vinImage, setVinImage] = React.useState("");
+  // /**
+  //  * Collection des vins dans un cellier spécifié par son cellier_id
+  //  */
+  // const [vinsTest, setVinsTest] = React.useState([]);
+  // /**
+  //  * État d'identifiant d'un cellier où la bouteille à ajouter existe déjà
+  //  */
+  // const [redondance, setRedondance] = React.useState("");
+  // /**
+  //  * État de la navigation (sert à redirection)
+  //  */
   const navigate = useNavigate();
 
+  // /**
+  //  * Variable
+  //  */
+  // let redon;
   /**
    *  Fetch la liste de la bouteilles de la BD pour préparer à injecter à la liste du composant 'Autocomplete'
    */
@@ -109,29 +126,105 @@ export default function FrmAjoutBouteille(props) {
       .then((data) => {
         setVinsListe(data);
       });
+      
   }, []);
+
+  // useEffect(() => {
+  //   fetch(props.URI + `/cellier/${vinCellier}/vins`)
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         return response.json();
+  //       }
+  //       throw response;
+  //     })
+  //     .then((data) => {
+  //       setVinsTest(data);
+  //     });
+
+  //     if(gereAjoutRedondance() === -1 ){
+  //       setRedondance();
+  //     }else{
+  //       setRedondance(vinCellier);
+  //     }
+  // }, [vinCellier,value]);
 
   function clearForm() {
     setValue((value) => {
       value = [];
     });
+    setMillesime("");
+    setVinPays("");
+    setVinCellier(props.cellier? props.cellier : props.celliers[0].id);
+    setVinFormat("");
+    setVinPrix(1);
+    setVinDescription("");
+    setVinGarde(moment().get("year").toString());
+    setVinImage("");
+    setVinNom("#");
+    setVinNote("");
+    setVinQuantite(1);
+    setVinType(1);
+    setVinDateAchat(moment().format("YYYY-MM-DD"));
+    setErreur([]);
   }
   /**
    * Gère le bouton 'Ajouter'
    */
-
   function gererAjoutBouteille() {
-    if (value || erreur.length === 0) {
-      fetchAjouterVin();
-    } else console.log("form invalid");
-  }
+    // console.log("error[]:", erreur);
+    // console.log("vin_id:", value.id);
+    // console.log("cellier_id:", vinCellier);
+    // console.log("quantite:", vinQuantite);
+    // console.log("Date_achat:", vinDateAchat);
+    // console.log("Garde:", vinGarde);
+    // console.log("notes:", value ? value.notes : vinNote);
+    // console.log("personnalise(0 ou 1):", value ? value.personnalise : 1);
+    // console.log("Nom: ", vinNom);
+    // console.log("Image: ", vinImage);
+    // console.log("Pays: ", vinPays);
+    // console.log("Description: ", vinDescription);
+    // console.log("Prix: ", vinPrix);
+    // console.log("format: ", vinFormat);
+    // console.log("type_id: ", vinType);
+    // console.log("Millesime: ", vinMillesime);
+    // console.log("error:", erreur);
+    // si l'usager a bien choisi une bouteille par l'autocomplete (l'objet 'value' n'est pas vide) et le formulaire est valide
 
-  /**
-   *  Gère l'input du select de cellier
-   */
-  function gererInputCellier(e) {
-    setVinCellier(e.target.value);
-    console.log(e.target.value);
+    if (value || erreur.length === 0) {
+      // let vinIndex = gereAjoutRedondance();
+
+      // if (vinIndex < 0) {
+        // console.log("ajout en cours", vinCellier);
+        fetchAjouterVin();
+
+        // props.setCellier(vinCellier);
+        
+        // navigate(`/cellier/${vinCellier}/vins`, { replace: true });
+    } else console.log("form invalid");
+  
+  //     // }
+  //   } else console.log("Formulaire invalid!");
+  // }
+  // /**
+  //  * Gère l'ajout d'une bouteille existé déjà dans le cellier choisi, faut faire l'option de ce cellier désactivé
+  //  */
+  // function gereAjoutRedondance() {
+  //   // vérifie que la bouteille à ajouter a déjà existé dans le cellier choisi, si oui on afficher une message à l'usager, Si non, on enregistra cette bouteille en DB
+  //   if (vinsTest.length > 0) {
+  //     let vinsAjout = { vin_id: value.id, cellier_id: vinCellier };
+  //     console.log("vinsTest:",vinsTest)
+  //     console.log("celliers", props.celliers)
+  //     let vinsAjoutIndex = (vinsTest || []).findIndex(
+  //       (vin) => vin.id === vinsAjout.vin_id
+  //     );
+     
+  //     // setErreur({ ajout: "Bouteille existe! Veuillez choisir un autre cellier! " });
+  //    return vinsAjoutIndex; // si return >=0, qui représent la bouteille  exist dans ce cellier
+  //   } else {
+     
+  //     // delete erreur["ajout"];
+  //      return -1;
+  //   }
   }
   /**
    * Ajouter une nouvelle bouteille à la BD
@@ -199,24 +292,22 @@ export default function FrmAjoutBouteille(props) {
       });
   }
   const imgUrl = () => {
-    let ok = "https://www.saq.com/media/wysiwyg/placeholder/category/06.png";
+    let ok = placeholderSaq;
     if (value) {
       if (value.image && value.image.indexOf("pastille_gout") < 0) {
         ok = value.image;
-      } else
-        ok = "https://www.saq.com/media/wysiwyg/placeholder/category/06.png";
+      } else ok = placeholderSaq;
     }
     return ok;
   };
   console.log(props);
   return (
     <div className="FrmAjoutBouteille">
-      <div className="btnClose">
+      {/* <div className="btnClose">
         <IconButton>
           <CloseIcon />
         </IconButton>
-      </div>
-
+      </div> */}
       <div className="EnteteAjoutBouteille">
         <h2>AJOUTER UNE BOUTEILLE</h2>
         <BtnGroup
@@ -231,7 +322,7 @@ export default function FrmAjoutBouteille(props) {
 
       <div className="FrmAjoutNouvelle">
         <div className="img--wrap">
-          <img src={imgUrl() ? imgUrl() : ""} alt="" />
+          <img src={imgUrl() ? imgUrl() : { placeholderSaq }} alt="" />
         </div>
         {/* Apparaîte uniquement en important de la bouteille du SAQ */}
         <div className={btnState ? "hidden" : ""}>
@@ -245,7 +336,6 @@ export default function FrmAjoutBouteille(props) {
             getOptionLabel={(option) => option.nom}
             disablePortal
             size="small"
-            blurOnSelect={true}
             noOptionsText={"La bouteille n'existe pas"}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             // Gère du boutton clear 'X' , faut nettoyer tous les champs du formulaire
@@ -258,7 +348,8 @@ export default function FrmAjoutBouteille(props) {
             }}
             // Gère du changement de l'option
             onChange={(event, newValue) => {
-              setValue(newValue);
+               setValue(newValue);
+              // gereAjoutRedondance();
             }}
             renderOption={(props, option) => {
               return (
@@ -267,7 +358,7 @@ export default function FrmAjoutBouteille(props) {
                 </li>
               );
             }}
-            renderInput={(params) => <TextField {...params} size="small" />}
+            renderInput={(params) => <TextField {...params}  size="small" />}
           />
         </div>
         {/* Autocomplete fin */}
@@ -298,6 +389,9 @@ export default function FrmAjoutBouteille(props) {
               error={vinNom === ""}
               helperText={vinNom === "" ? "* Champ obligatoire!" : " "}
             />
+            {/* <p className={erreur["nom"] ? "active" : "hidden"}>
+              ✳ {erreur["nom"]}{" "}
+            </p> */}
           </Grid>
           <Grid item xs={6} sm={6} md={3} lg={3}>
             <label>Millesime</label>
@@ -342,9 +436,10 @@ export default function FrmAjoutBouteille(props) {
                   ? setErreur({ prix: "champ obligatoire" })
                   : delete erreur["prix"];
               }}
-              error={vinPrix === ""}
-              helperText={vinPrix === "" ? "* Champ obligatoire!" : " "}
             />
+            <p className={erreur["prix"] ? "active" : "hidden"}>
+              ✳ {erreur["prix"]}{" "}
+            </p>
           </Grid>
           <Grid item xs={6} sm={6} md={3} lg={3}>
             <label>format(ml)</label>
@@ -359,10 +454,9 @@ export default function FrmAjoutBouteille(props) {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={6}>
+          <Grid item xs={12} sm={12} md={12}>
             <label>Description</label>
             <TextField
-              // style={{ height: 20 }}
               fullWidth
               size="small"
               type="text"
@@ -432,13 +526,13 @@ export default function FrmAjoutBouteille(props) {
             <TextField
               fullWidth
               size="small"
-              type={"number"}
+              type="number"
               inputProps={{
                 min: 1,
                 inputMode: "numeric",
                 pattern: "/^+?[1-9]d*$/",
               }}
-              defaultValue={1}
+              // defaultValue={1}
               name="quantite"
               required
               value={vinQuantite}
@@ -448,17 +542,17 @@ export default function FrmAjoutBouteille(props) {
                   ? setErreur({ quantite: "champ obligatoire" })
                   : delete erreur["quantite"];
               }}
-              error={vinQuantite === ""}
-              helperText={vinQuantite === "" ? "* Champ obligatoire!" : " "}
-              // onChange={gererQuantiteChange}
             />
+            <p className={erreur["quantite"] ? "active" : "hidden"}>
+              ✳ {erreur["quantite"]}{" "}
+            </p>
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={3}>
             <label>Cellier</label>
             <TextField
               select
               value={vinCellier}
-              onChange={gererInputCellier}
+              onChange={(e)=>{setVinCellier(e.target.value)}}
               SelectProps={{
                 native: true,
               }}
@@ -468,25 +562,20 @@ export default function FrmAjoutBouteille(props) {
             >
               {props.celliers.map((cellier) => (
                 <option key={cellier.id} value={cellier.id}>
+               {/* <option key={cellier.id} value={cellier.id} disabled={cellier.id==redondance? true:false}> */}
                   {cellier.nom}
                 </option>
               ))}
             </TextField>
+            <p className={erreur["ajout"] ? "active" : "hidden"}>
+              ✳ {erreur["ajout"]}{" "}
+            </p>
           </Grid>
           <Grid item xs={12}>
-            <Box display="flex" justifyContent="flex-end" m={2}>
-              <Button
-                onClick={gererAjoutBouteille}
-                variant="contained"
-                style={{
-                  borderRadius: 2,
-                  backgroundColor: "#cc4240",
-                  padding: "10px 36px",
-                  fontSize: "14px",
-                }}
-              >
-                AJOUTER
-              </Button>
+            <Box display="flex" justifyContent="flex-end" alignItems="center" mt={2} mb={2}>
+              <button className="btn--ajouter" onClick={gererAjoutBouteille}>
+                Ajouter
+              </button>
             </Box>
           </Grid>
         </Grid>

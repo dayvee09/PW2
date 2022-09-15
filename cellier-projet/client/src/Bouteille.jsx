@@ -33,6 +33,11 @@ export default function Bouteille(props) {
     }
     setOpenAlert(false);
   };
+   /**
+   *  État des messageRetour et severity
+   */
+  const [messageRetour, setMessageRetour] = useState([]);
+  const [severity, setSeverity] = useState([]);
 
   /**
    *  État des styles des composants MUI
@@ -85,11 +90,9 @@ export default function Bouteille(props) {
    * État de la date de garde et la date de garde précédente
    */
   const [dateGarde, setDateGarde] = useState(props.garde_jusqua);
-  const [messageRetour, setMessageRetour] = useState([]);
-  const [severity, setSeverity] = useState([]);
 
   /**
-   * Gestion du menu contextuel d'action d'un cellier
+   * Gestion du menu contextuel d'action d'un bouteille
    * @param {*} evt
    */
   function gererMenuContextuel(evt) {
@@ -97,14 +100,14 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Gestion de la fermeture du menu contextuel d'action d'un cellier
+   * Gestion de la fermeture du menu contextuel d'action d'une bouteille
    */
   function gererFermerMenuContextuel() {
     setEltAncrage(null);
   }
 
   /**
-   * Gère la fermeture de la boite de dialogue de supression du profil
+   * Gère la fermeture de la boite de dialogue de supression de la bouteille
    */
   function viderFermerFrm() {
     setFrmSuppressionOuvert(false);
@@ -112,11 +115,18 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Gère l'ouverture de la boite de dialogue de supression du cellier
+   * Gère l'ouverture de la boite de dialogue de supression d'une bouteille
    */
   function gererSupprimer() {
     setFrmSuppressionOuvert(true);
   }
+
+   /**
+   * Gère la suppression de la bouteille
+   */
+    function gererSoumettre() {
+      fetchSupprimerBouteille();
+    }
 
   /**
    * Gère la suppression du cellier
@@ -248,7 +258,7 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Supprime le cellier
+   * Supprime la bouteille
    */
   async function fetchSupprimerBouteille() {
     await fetch(
@@ -286,7 +296,7 @@ export default function Bouteille(props) {
           <img
             onClick={gererVoir}
             src={
-              props.image.indexOf("pastille_gout") < 0
+              (props.image&&props.image.indexOf("pastille_gout") < 0)
                 ? props.image
                 : placeholderSaq
             }
