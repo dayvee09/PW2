@@ -24,10 +24,11 @@ class VinsModele extends AccesBd
         (?, ?, ?, ?, ?, ?)", [$vin->vino__bouteille_id, $vin->vino__cellier_id, $vin->quantite, $vin->date_achat, $vin->garde_jusqua, $vin->notes]);
     }
 
-    public function retirer($id)
+    public function retirer($params, $idEntite)
     {
         return $this->supprimer("DELETE FROM vino__bouteille_has_vino__cellier WHERE vino__bouteille_has_vino__cellier.	
-        vino__bouteille_id=:vin_id", ['vin_id' => $id["supprimer"]]);
+        vino__bouteille_id=:vin_id AND vino__bouteille_has_vino__cellier.	
+        vino__cellier_id=:cellier_id", ['vin_id' => $params["supprimer"], 'cellier_id' => $idEntite["cellier"]]);
     }
 
     // Gère la modification de l'ensemble des colonnes pour une bouteille donnée. Dans le cas d'une bouteille créée par un utilisateur, le paramètre admin est a false. Pour une bouteille provenant de la Saq, le paramètre admin doit être à true (condition if)
