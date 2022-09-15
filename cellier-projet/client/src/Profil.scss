@@ -72,11 +72,16 @@ a:link {
 }
 
 .amplify-input:disabled {
-  /* color: var(--amplify-components-fieldcontrol-disabled-color); */
   cursor: var(--amplify-components-fieldcontrol-disabled-cursor);
   border-color: #f1ab50;
-  background-color: var(--amplify-components-fieldcontrol-disabled-background-color);
+  background-color:#d3d7dd;
 }
+
+// .amplify-input:disabled {
+//   cursor: var(--amplify-components-fieldcontrol-disabled-cursor);
+//   border-color: #d3d7dd;
+//   background-color: transparent;
+// }
 
 .infos-profil {
   display: flex;
