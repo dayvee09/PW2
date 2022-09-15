@@ -47,7 +47,6 @@ function FrmModifierCellier({ fetchCelliers, URI, error, setError }) {
    * Modifier le cellier
    */
   async function fetchModifierCellier(nouvNomCellier) {
-    console.log("mo");
     await fetch(URI + `/cellier/${idCellier}/celliers`, {
       method: "PATCH",
       body: JSON.stringify({ nom: nouvNomCellier }),
