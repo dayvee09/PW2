@@ -4,6 +4,7 @@ import Axios from "axios";
 import MuiButton from "@mui/material/Button";
 import Bouteille from "./Bouteille";
 import { useNavigate, NavLink } from "react-router-dom";
+import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -20,13 +21,11 @@ function ListeBouteilles(props) {
         <div className="ListeBouteilles">
           <div className="navigation">
             <div className="menu-celliers">
-              {location !== "/" && (
                 <div>
                   <NavLink to={`/`}>
-                    <button>Retour aux Celliers</button>
+                  	<button className="retour"><img src={rowIcone} alt="icone-row-left" width={15}></img>Retour aux Celliers</button>
                   </NavLink>
                 </div>
-              )}
             </div>
           </div>
           <div className="ListeBouteille--grid">
@@ -48,6 +47,11 @@ function ListeBouteilles(props) {
     } else if (props.bouteilles.length > 0) {
       return (
         <div className="ListeBouteilles">
+		  <div>
+			<NavLink to={`/`}>
+				<button className="retour"><img src={rowIcone} alt="icone-row-left" width={15}></img>Retour aux Celliers</button>
+			</NavLink>
+		  </div>
           <div className="Bouteille">
             <Bouteille
               {...props.bouteilles[0]}
@@ -68,12 +72,17 @@ function ListeBouteilles(props) {
       );
     } else {
       return (
-        <div className="ListeBouteilles--default">
+		  <div className="ListeBouteilles--default">
+		  <div>
+			<NavLink to={`/`}>
+				<button className="retour"><img src={rowIcone} alt="icone-row-left" width={15}></img>Retour aux Celliers</button>
+			</NavLink>
+		  </div>
           <h1 className="aucune-bouteille">
             Pas de bouteilles dans ce cellier
           </h1>
           <NavLink to="/vins">
-            <button>Ajouter une bouteille</button>
+            <p>+ Ajouter une bouteille</p>
           </NavLink>
         </div>
       );

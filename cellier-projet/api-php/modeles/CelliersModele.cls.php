@@ -21,8 +21,11 @@ class CelliersModele extends AccesBd
         return $this->supprimer("DELETE FROM vino__cellier WHERE vino__cellier.id=:id", ['id' => $id["cellier"]]);
     }
 
-    public function remplacer($id, $cellier)
+    public function changer($id, $cellier, $fragmentCellier)
     {
-        return $this->modifier("UPDATE vino__cellier SET vino__cellier.nom=:cellier  WHERE vino__cellier.id=:id", ['id' => $id["cellier"], 'cellier' => $cellier->nom]);
+        return $this->modifier("UPDATE vino__cellier SET vino__cellier.nom=:nom WHERE vino__cellier.id=:id", [
+			'id' => $id["cellier"],
+			'nom' => $fragmentCellier->nom
+		   ]);
     }
 }
