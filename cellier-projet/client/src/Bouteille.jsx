@@ -108,7 +108,7 @@ export default function Bouteille(props) {
    */
   function viderFermerFrm() {
     setFrmSuppressionOuvert(false);
-    gererFermerMenuContextuel();
+    // gererFermerMenuContextuel();
   }
 
   /**
@@ -133,6 +133,7 @@ export default function Bouteille(props) {
     setDateAchat(bouteille.date_achat);
     setDateGarde(bouteille.garde_jusqua);
     setFrmOuvert(true);
+    gererFermerMenuContextuel();
   }
 
   /**
@@ -303,7 +304,7 @@ export default function Bouteille(props) {
           <div className="description">
             <div className="description-originale">
               <p className="nom">{props.nom} </p>
-              <p className="nom">Quantité: {props.quantite} </p>
+              <p className="nom">Quantité: {bouteille.quantite} </p>
             </div>
           </div>
         </div>

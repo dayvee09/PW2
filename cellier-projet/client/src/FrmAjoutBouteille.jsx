@@ -208,7 +208,6 @@ export default function FrmAjoutBouteille(props) {
     }
     return ok;
   };
-  console.log(props);
   return (
     <div className="FrmAjoutBouteille">
       <div className="btnClose">
