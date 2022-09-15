@@ -38,6 +38,7 @@ const Appli = () => {
   const [utilisateur, setUtilisateur] = useState([]);
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [celliers, setCelliers] = useState([]);
+  const [indexNav, setIndexNav] = useState(0);
   const [errorMessages, setErrorMessages] = useState({});
   const [isLogged, setIsLogged] = useState(false);
   const ENV = "dev";
@@ -207,6 +208,9 @@ const Appli = () => {
   function gererCellier(idCellier) {
     setCellier(idCellier);
   }
+  function gererIndexNav(index) {
+    setIndexNav(index);
+  }
 
   // -------------------------- Requêtes Fetch ------------------------------------------------------
 
@@ -299,6 +303,7 @@ const Appli = () => {
         setCelliers("");
         setEmailUtilisateur("");
         setUsername("");
+        gererIndexNav(0);
         DATA = undefined;
       })
       .catch((err) => console.log("Erreur lors de la déconnexion", err));
@@ -344,6 +349,7 @@ const Appli = () => {
   // console.log(Auth.user)
   // ------------------Gestion de l'importation de bouteilles de la SAQ-----------------------
 
+  console.log(indexNav);
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
@@ -520,6 +526,8 @@ const Appli = () => {
           Auth={Auth}
           emailUtilisateur={emailUtilisateur}
           utilisateur={utilisateur}
+          gererIndexNav={gererIndexNav}
+          indexNav={indexNav}
         />
       </div>
       <PiedDePage />
