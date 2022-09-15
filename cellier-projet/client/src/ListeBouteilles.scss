@@ -1,10 +1,9 @@
 .ListeBouteille--grid {
-  margin-top: 30px;
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  list-style: none;
+	display: grid;
+	width: 100%;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 20px;
+	list-style: none;
 }
 @media only screen and (min-width: 940px) {
   .ListeBouteille--grid {
@@ -13,30 +12,38 @@
 }
 
 @media only screen and (min-width: 1200px) {
+<<<<<<< HEAD
   .ListeBouteille--grid {
     grid-template-columns: repeat(4, 1fr);
   }
+=======
+	.ListeBouteille--grid {
+		grid-template-columns: repeat(4, 1fr);
+	}
+>>>>>>> 02c4d2c9ae2e54c1ed4ab7d2d831bf5a607ce470
 }
 .ListeBouteilles--default {
 
-	.retour {
-		background-color: #152440;
-		border: none;
-		border-radius: 4px;
-		color: #f3f5eb;
-		font-family: Alata;
-		text-transform: uppercase;
-		padding: 10px;
+.retour {
+	background-color: #152440;
+	border: none;
+	border-radius: 4px;
+	color: #f3f5eb;
+	font-family: Alata;
+	text-transform: uppercase;
+	padding: 10px;
+	margin-bottom: 50px;
+	margin-top: 25px;
 
-		&:hover {
-			background-color: #cc4240;
-			cursor: pointer;
-		}
-
-		img {
-			padding-right: 10px;
-		}
+	&:hover {
+		background-color: #cc4240;
+		cursor: pointer;
 	}
+
+	img {
+		padding-right: 10px;
+	}
+}
 
  	p {
 		font-size: 12px;

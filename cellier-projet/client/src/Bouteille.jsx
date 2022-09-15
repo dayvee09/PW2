@@ -148,7 +148,7 @@ export default function Bouteille(props) {
    * Gère l'affichage du formulaire quand click du bouton "Fiche"
    */
   function gererVoir() {
-    fetchVinUn()
+    fetchVinUn();
     setVoirFiche(true);
     setFrmOuvert(true);
   }
@@ -309,8 +309,8 @@ export default function Bouteille(props) {
         <div className="bouteille--info-container">
           <div className="description">
             <div className="description-originale">
-              <p className="nom titre">{props.nom} </p>
-              <p className="nom">Quantité: {bouteille.quantite} </p>
+              <p className="nom">{props.nom} </p>
+              <p className="nom">Quantité: {props.quantite} </p>
             </div>
           </div>
         </div>
@@ -367,7 +367,7 @@ export default function Bouteille(props) {
           </DialogTitle>
           <DialogActions>
             <Button onClick={viderFermerFrm}>Annuler</Button>
-            <Button onClick={gererSoumettre}>Soumettre</Button>
+            <Button onClick={gererSoumettre}>Supprimer</Button>
           </DialogActions>
         </Dialog>
         <FrmBouteille
