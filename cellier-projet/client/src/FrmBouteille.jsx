@@ -11,7 +11,7 @@ import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
-
+import placeholderSaq from "./img/png/placeholder-saq.png";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
 
@@ -55,22 +55,22 @@ export default function FrmBouteille({
 
   return (
     <div>
-      <Dialog open={frmOuvert} onClose={viderFermerFrm}>
+      <Dialog open={frmOuvert} onClose={viderFermerFrm} PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}>
         {/* {voirFiche === false ? (
           <DialogTitle> Modifier la quantité de la bouteille</DialogTitle>
         ) : (
           <DialogTitle> {bouteille_nom}</DialogTitle>
         )} */}
         <DialogContent>
-          <div className="img">
-            <img src={bouteille.image} alt="bouteille" />
+          <div className="img-wrap">
+            <img src={(bouteille.image&&bouteille.image.indexOf("pastille_gout") < 0)? bouteille.image : placeholderSaq} alt="bouteille" />
           </div>
           <div className="description">
             <h2 className="nom">{bouteille.nom} </h2>
             <p className="type">
               {bouteille_type} - {bouteille.format} - {bouteille.pays}
             </p>
-            <hr />
+            <div className="hr"></div>
             <p className="description">Description : {bouteille.description}</p>
             <p className="millesime">Millesime : {bouteille.millesime}</p>
             <p className="millesime">Prix : {bouteille.prix_saq}.00$</p>
