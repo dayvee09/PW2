@@ -1,10 +1,9 @@
 .ListeBouteille--grid {
-  margin-top: 30px;
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  list-style: none;
+	display: grid;
+	width: 100%;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 20px;
+	list-style: none;
 }
 
 @media only screen and (min-width: 940px) {
@@ -14,30 +13,14 @@
 }
   
 @media only screen and (min-width: 1200px) {
-  .ListeBouteille--grid {
-	  grid-template-columns: repeat(4, 1fr);
-  }
+	.ListeBouteille--grid {
+		grid-template-columns: repeat(4, 1fr);
+	}
 }
 
 .ListeBouteilles--default {
-
-	.retour {
-		background-color: #152440;
-		border: none;
-		border-radius: 4px;
-		color: #f3f5eb;
-		font-family: Alata;
-		text-transform: uppercase;
-		padding: 10px;
-
-		&:hover {
-			background-color: #cc4240;
-			cursor: pointer;
-		}
-
-		img {
-			padding-right: 10px;
-		}
+	h1 {
+		font-size: 20px;
 	}
 
  	p {
@@ -51,52 +34,29 @@
 	}
 }
 
-.menu-celliers {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    width: 75%;
-    padding-left: 10px;
-    button {
-      width: 180px;
-      height: 40px;
-	  background-color:#cc4240;
-	  color: #f3f5eb;
-	  text-decoration: none;
-	  border-radius:4px;
-	  font-family: Alata;
-	  border: none;
-	  font-size: 15px;
-	  margin-left: -0.7rem;
-	  padding: 10px 20px;
+.retour {
+	background-color: #152440;
+	border: none;
+	border-radius: 4px;
+	color: #f3f5eb;
+	font-family: Alata;
+	text-transform: uppercase;
+	padding: 10px;
+	margin-bottom: 50px;
+	margin-top: 25px;
 
-	  &:hover {
-		background-color: #f1ab50;
-		color: #f3f5eb;
-	  }
-    }
+	&:hover {
+		background-color: #cc4240;
+		cursor: pointer;
+	}
+
+	img {
+		padding-right: 10px;
+	}
 }
 
-//   color: "#f3f5eb",
-  //   backgroundColor: "#cc4240",
-  //   textDecoration: "none",
-  //   borderRadius:"4px",
-  //   fontFamily: "Alata",
-  //   fontSize: "12px",
-  //   width: "10rem",
-  //   marginLeft: "-0.7rem",
-  //   padding: "10px 20px",
-  //     "&:hover": {
-  //       backgroundColor: "#f1ab50",
-  //       color: "#f3f5eb",
-  //     },
-
-// .aucune-bouteille {
-//   margin-top: 50px;
-//   align-self: center;
-//  }
-// @media only screen and (min-width: 768px) {
-// 	.ListeBouteilles {
-// 		grid-template-columns: repeat(3, 1fr);
-// 	}
-//   }
+@media only screen and (min-width: 768px) {
+    .retour {
+		margin-top: 0;
+	}
+}
