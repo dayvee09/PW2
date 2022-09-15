@@ -552,7 +552,7 @@ export default function FrmAjoutBouteille(props) {
             <TextField
               select
               value={vinCellier}
-              onChange={gererInputCellier}
+              onChange={(e)=>{setVinCellier(e.target.value)}}
               SelectProps={{
                 native: true,
               }}
