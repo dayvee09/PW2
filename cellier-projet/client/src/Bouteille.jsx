@@ -108,6 +108,7 @@ export default function Bouteille(props) {
    */
   function viderFermerFrm() {
     setFrmSuppressionOuvert(false);
+    gererFermerMenuContextuel();
   }
 
   /**
@@ -268,7 +269,6 @@ export default function Bouteille(props) {
         setSeverity("success");
         setOpenAlert(true);
         setTimeout(() => {
-          gererFermerMenuContextuel();
           setOpenAlert(false);
           viderFermerFrm();
           props.fetchVins();
