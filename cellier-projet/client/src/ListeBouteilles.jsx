@@ -20,16 +20,21 @@ function ListeBouteilles(props) {
       return (
         <div className="ListeBouteilles">
           <div className="navigation">
-		  <div>
-			<NavLink to={`/`}>
-				<button className="retour"><img src={rowIcone} alt="icone-row-left" width={15}></img>Retour aux Celliers</button>
-			</NavLink>
-		  </div>
+            <div>
+              <NavLink to={`/`}>
+                <button className="retour">
+                  <img src={rowIcone} alt="icone-row-left" width={15}></img>
+                  Retour aux Celliers
+                </button>
+              </NavLink>
+            </div>
           </div>
           <div className="ListeBouteille--grid">
             {props.bouteilles.map((bouteille) => (
               <Bouteille
                 {...bouteille}
+                fetchVins={props.fetchVins}
+                fetchVin={props.fetchVin}
                 gererBouteille={props.gererBouteille}
                 gererBouteilles={props.gererBouteilles}
                 bouteilles={props.bouteilles}
@@ -45,11 +50,14 @@ function ListeBouteilles(props) {
     } else if (props.bouteilles.length > 0) {
       return (
         <div className="ListeBouteilles">
-		  <div>
-			<NavLink to={`/`}>
-				<button className="retour"><img src={rowIcone} alt="icone-row-left" width={15}></img>Retour aux Celliers</button>
-			</NavLink>
-		  </div>
+          <div>
+            <NavLink to={`/`}>
+              <button className="retour">
+                <img src={rowIcone} alt="icone-row-left" width={15}></img>Retour
+                aux Celliers
+              </button>
+            </NavLink>
+          </div>
           <div className="Bouteille">
             <Bouteille
               {...props.bouteilles[0]}
@@ -70,12 +78,15 @@ function ListeBouteilles(props) {
       );
     } else {
       return (
-		  <div className="ListeBouteilles--default">
-			<div>
-			<NavLink to={`/`}>
-				<button className="retour"><img src={rowIcone} alt="icone-row-left" width={15}></img>Retour aux Celliers</button>
-			</NavLink>
-		  </div>
+        <div className="ListeBouteilles--default">
+          <div>
+            <NavLink to={`/`}>
+              <button className="retour">
+                <img src={rowIcone} alt="icone-row-left" width={15}></img>Retour
+                aux Celliers
+              </button>
+            </NavLink>
+          </div>
           <h1 className="aucune-bouteille">
             Pas de bouteilles dans ce cellier
           </h1>

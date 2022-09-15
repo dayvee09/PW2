@@ -42,7 +42,9 @@ export default function FrmAjoutBouteille(props) {
   /**
    * État du cellier choisi
    */
-  const [vinCellier, setVinCellier] = React.useState(props.celliers[0].id);
+  const [vinCellier, setVinCellier] = React.useState(
+    props.cellier ? props.cellier : props.celliers[0].id
+  );
   /**
    * État de la quantité choisie
    */
@@ -113,46 +115,23 @@ export default function FrmAjoutBouteille(props) {
     setValue((value) => {
       value = [];
     });
-
-    setMillesime("");
-    setVinPays("");
-    setVinCellier(props.celliers[0].id);
-    setVinFormat("");
-    setVinPrix(0);
-    setVinDescription("");
-    setVinGarde(moment().get("year").toString());
-    setVinImage("");
-    setVinNom("#");
-    setVinNote("");
-    setVinQuantite(1);
-    setVinType(1);
-    setVinDateAchat(moment().format("YYYY-MM-DD"));
   }
   /**
    * Gère le bouton 'Ajouter'
    */
 
   function gererAjoutBouteille() {
-    // console.log("error[]:", erreur);
-    // console.log("vin_id:", value.id);
-    // console.log("cellier_id:", vinCellier);
-    // console.log("quantite:", vinQuantite);
-    // console.log("Date_achat:", vinDateAchat);
-    // console.log("Garde:", vinGarde);
-    // console.log("notes:", value ? value.notes : vinNote);
-    // console.log("personnalise(0 ou 1):", value ? value.personnalise : 1);
-    // console.log("Nom: ", vinNom);
-    // console.log("Image: ", vinImage);
-    // console.log("Pays: ", vinPays);
-    // console.log("Description: ", vinDescription);
-    // console.log("Prix: ", vinPrix);
-    // console.log("format: ", vinFormat);
-    // console.log("type_id: ", vinType);
-    // console.log("Millesime: ", vinMillesime);
-
     if (value || erreur.length === 0) {
       fetchAjouterVin();
     } else console.log("form invalid");
+  }
+
+  /**
+   *  Gère l'input du select de cellier
+   */
+  function gererInputCellier(e) {
+    setVinCellier(e.target.value);
+    console.log(e.target.value);
   }
   /**
    * Ajouter une nouvelle bouteille à la BD
@@ -212,7 +191,7 @@ export default function FrmAjoutBouteille(props) {
       })
       .then((data) => {
         props.fetchVins();
-        navigate(`/cellier/${vinCellier}/vins`, { replace: true });
+        navigate(`/cellier/${props.cellier}/vins`, { replace: true });
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -229,7 +208,7 @@ export default function FrmAjoutBouteille(props) {
     }
     return ok;
   };
-  console.log(props.bouteilles);
+  console.log(props);
   return (
     <div className="FrmAjoutBouteille">
       <div className="btnClose">
@@ -479,7 +458,7 @@ export default function FrmAjoutBouteille(props) {
             <TextField
               select
               value={vinCellier}
-              onChange={(e) => setVinCellier(e.target.value)}
+              onChange={gererInputCellier}
               SelectProps={{
                 native: true,
               }}
