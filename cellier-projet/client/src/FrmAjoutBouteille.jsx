@@ -44,7 +44,9 @@ export default function FrmAjoutBouteille(props) {
   /**
    * État du cellier choisi
    */
-  const [vinCellier, setVinCellier] = React.useState(props.cellier? props.cellier : props.celliers[0].id);
+  const [vinCellier, setVinCellier] = React.useState(
+    props.cellier ? props.cellier : props.cellier? props.cellier : props.celliers[0].id
+  );
   /**
    * État de la quantité choisie
    */
@@ -282,7 +284,7 @@ export default function FrmAjoutBouteille(props) {
       })
       .then((data) => {
         props.fetchVins();
-        navigate(`/cellier/${vinCellier}/vins`, { replace: true });
+        navigate(`/cellier/${props.cellier}/vins`, { replace: true });
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -298,7 +300,7 @@ export default function FrmAjoutBouteille(props) {
     }
     return ok;
   };
-  console.log(props.bouteilles);
+  console.log(props);
   return (
     <div className="FrmAjoutBouteille">
       {/* <div className="btnClose">
@@ -550,7 +552,7 @@ export default function FrmAjoutBouteille(props) {
             <TextField
               select
               value={vinCellier}
-              onChange={(e) => setVinCellier(e.target.value)}
+              onChange={gererInputCellier}
               SelectProps={{
                 native: true,
               }}
