@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import vinExemple from "./img/png/vin-default.png";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -14,9 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import MuiButton from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-
 import placeholderSaq from "./img/png/placeholder-saq.png";
-
 // import format from 'date-fns/format';
 // import moment from 'moment';
 // import { keyframes } from "@emotion/react";

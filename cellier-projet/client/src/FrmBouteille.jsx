@@ -11,7 +11,7 @@ import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Collapse from "@mui/material/Collapse";
-import vinExemple from "./img/png/vin-default.png";
+import placeholderSaq from "./img/png/placeholder-saq.png";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
 
@@ -63,7 +63,7 @@ export default function FrmBouteille({
         )} */}
         <DialogContent>
           <div className="img-wrap">
-            <img src={(bouteille.image&&bouteille.image.indexOf("pastille_gout") < 0)? bouteille.image : vinExemple} alt="bouteille" />
+            <img src={(bouteille.image&&bouteille.image.indexOf("pastille_gout") < 0)? bouteille.image : placeholderSaq} alt="bouteille" />
           </div>
           <div className="description">
             <h2 className="nom">{bouteille.nom} </h2>
