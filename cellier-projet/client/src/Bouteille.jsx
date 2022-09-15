@@ -148,6 +148,7 @@ export default function Bouteille(props) {
    * Gère l'affichage du formulaire quand click du bouton "Fiche"
    */
   function gererVoir() {
+    fetchVinUn()
     setVoirFiche(true);
     setFrmOuvert(true);
   }
@@ -256,7 +257,6 @@ export default function Bouteille(props) {
   }
 
   /**
-<<<<<<< HEAD
    * Supprime la bouteille
    */
    async function fetchSupprimerBouteille() {
