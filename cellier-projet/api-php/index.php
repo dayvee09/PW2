@@ -125,8 +125,8 @@ class Routeur
                     }
                     break;
                 case 'DELETE':
-                    if (is_numeric($idEntite)) {
-                        $controleur->retirer($idEntite);
+                    if (isset($idEntite)) {
+                        $controleur->retirer($params, $idEntite);
                     } else {
                         $controleur->retirer($params);
                     }

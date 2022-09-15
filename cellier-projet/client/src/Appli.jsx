@@ -261,7 +261,8 @@ const Appli = () => {
         throw response;
       })
       .then((data) => {
-        setUtilisateur(data[0]);
+        // console.log("dataJSON:", data[0]);
+         setUtilisateur(data[0]);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -305,8 +306,9 @@ const Appli = () => {
   }
 
   // ---------------------------------- Gestion des celliers -----------------------------
-
+  // console.log("user_id:", emailUtilisateur);
   async function fetchCelliers() {
+  
     await fetch(URI + "/" + "user_id" + "/" + id + "/" + "celliers")
       .then((response) => {
         if (response.ok) {
@@ -316,6 +318,7 @@ const Appli = () => {
       })
       .then((data) => {
         setCelliers(data);
+        // console.log(data);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -433,6 +436,9 @@ const Appli = () => {
                       gererBouteilles={gererBouteilles}
                       cellier={cellier}
                       URI={URI}
+                      error={error}
+                      setError={setError}
+                      fetchUtilisateur={fetchUtilisateur}
                     />
                   }
                 />
