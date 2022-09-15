@@ -14,6 +14,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import MuiButton from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
+
+import placeholderSaq from "./img/png/placeholder-saq.png";
+
 // import format from 'date-fns/format';
 // import moment from 'moment';
 // import { keyframes } from "@emotion/react";
@@ -33,6 +36,9 @@ export default function Bouteille(props) {
     }
     setOpenAlert(false);
   };
+   /**
+   *  État des messageRetour et severity
+   */
   const [messageRetour, setMessageRetour] = useState([]);
   const [severity, setSeverity] = useState([]);
 
@@ -52,6 +58,7 @@ export default function Bouteille(props) {
       color: "#f3f5eb",
     },
   }));
+
   /**
    *  État de la boite de dialogue de suppression
    */
@@ -108,6 +115,7 @@ export default function Bouteille(props) {
   function viderFermerFrm() {
     setFrmSuppressionOuvert(false);
   }
+
   /**
    * Gère l'ouverture de la boite de dialogue de supression d'une bouteille
    */
@@ -121,6 +129,13 @@ export default function Bouteille(props) {
     function gererSoumettre() {
       fetchSupprimerBouteille();
     }
+
+  /**
+   * Gère la suppression du cellier
+   */
+  function gererSoumettre() {
+    fetchSupprimerBouteille();
+  }
 
   /**
    * Gère l'affichage du formulaire quand click du bouton "Modifier"
@@ -155,7 +170,11 @@ export default function Bouteille(props) {
     if (quantite > 0) {
       setQuantite((quantite) => parseInt(quantite) - 1);
       fetchPutVinUn(parseInt(quantite) - 1, dateAchat, dateGarde);
-    } else setOpenAlert(true);
+    } else {
+      setMessageRetour("En rupture de stock");
+      setSeverity("error");
+      setOpenAlert(true);
+    }
   }
 
   /**
@@ -240,6 +259,7 @@ export default function Bouteille(props) {
   }
 
   /**
+<<<<<<< HEAD
    * Supprime la bouteille
    */
    async function fetchSupprimerBouteille() {
@@ -257,9 +277,7 @@ export default function Bouteille(props) {
         setSeverity("success");
         setOpenAlert(true);
         setTimeout(() => {
-          // props.fetchUtilisateur();
-          //  props.fetchCelliers();
-          // props.fetchVins();
+           props.fetchVins();
         }, 2000);
       })
       .catch((error) => {
@@ -275,8 +293,8 @@ export default function Bouteille(props) {
             onClick={gererVoir}
             src={
               (props.image&&props.image.indexOf("pastille_gout") < 0)
-                ? props.image
-                : vinExemple
+                ? props.imag
+                : placeholderSaq
             }
             alt="bouteille"
           />
@@ -307,10 +325,10 @@ export default function Bouteille(props) {
         >
           <Alert
             onClose={handleCloseAlert}
-            severity="error"
+            severity={severity}
             sx={{ width: "100%" }}
           >
-            En rupture de stock!
+            {messageRetour}
           </Alert>
         </Snackbar>
 
@@ -344,7 +362,7 @@ export default function Bouteille(props) {
         >
           <DialogTitle>
             {" "}
-            Voulez-vous vraiment supprimer cette bouteille?
+            Voulez-vous vraiment supprimer cette bouteille ?
           </DialogTitle>
           <DialogActions>
             <Button onClick={viderFermerFrm}>Annuler</Button>

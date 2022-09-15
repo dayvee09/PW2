@@ -326,11 +326,6 @@ const Appli = () => {
       });
   }
 
-  async function modifierCellier(idCellier, cellierNom) {
-    console.log(idCellier);
-    console.log(cellierNom);
-  }
-
   // --------------------------------- Gestion des bouteilles ------------------------------------
 
   async function fetchVins() {
@@ -515,8 +510,10 @@ const Appli = () => {
                   path={`/modifier-cellier`}
                   element={
                     <FrmModifierCellier
-                      modifierCellier={modifierCellier}
-                      URI={URI}
+                      fetchCelliers={fetchCelliers}
+											URI={URI}
+											error={error}
+											setError={setError}
                     />
                   }
                 />
