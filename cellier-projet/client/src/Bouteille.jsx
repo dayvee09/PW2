@@ -278,8 +278,11 @@ export default function Bouteille(props) {
         setSeverity("success");
         setOpenAlert(true);
         setTimeout(() => {
-           props.fetchVins();
-        }, 2000);
+          gererFermerMenuContextuel();
+          setOpenAlert(false);
+          viderFermerFrm();
+          props.fetchVins();
+        }, 1000);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
