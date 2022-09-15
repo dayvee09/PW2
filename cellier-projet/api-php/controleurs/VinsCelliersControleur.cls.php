@@ -31,9 +31,9 @@ class VinsCelliersControleur extends Controleur
         $this->reponse['corps'] = $this->modele->changer($params, $idEntite, json_decode($fragmentEntite));
     }
 
-    public function retirer($id)
+    public function retirer($params, $idEntite)
     {
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
-        $this->reponse['corps'] = ['nombre' => $this->modele->retirer($id)];
+        $this->reponse['corps'] = ['nombre' => $this->modele->retirer($params, $idEntite)];
     }
 }
