@@ -25,7 +25,6 @@ export default function NavMobile({
     gererIndexNav(value);
   }, [value]);
 
-  console.log(value);
   return (
     <div>
       <div className={Auth.user ? "NavMobile" : "Hidden"}>

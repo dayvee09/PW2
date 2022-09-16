@@ -25,6 +25,7 @@ export default function Bouteille(props) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const [eltAncrage, setEltAncrage] = useState(null);
+  const [compteur, setCompteur] = useState(false);
   const menuContextuelOuvert = Boolean(eltAncrage);
   const [openAlert, setOpenAlert] = React.useState(false);
   const handleCloseAlert = (event, reason) => {
@@ -94,6 +95,11 @@ export default function Bouteille(props) {
    */
   function gererMenuContextuel(evt) {
     setEltAncrage(evt.currentTarget);
+    if (compteur === true) {
+      setQuantite(quantite);
+    } else {
+      setQuantite(props.quantite);
+    }
   }
 
   /**
@@ -107,6 +113,7 @@ export default function Bouteille(props) {
    * Gère la fermeture de la boite de dialogue de supression du profil
    */
   function viderFermerFrm() {
+    gererFermerMenuContextuel();
     setFrmSuppressionOuvert(false);
   }
 
@@ -128,9 +135,6 @@ export default function Bouteille(props) {
    * Gère l'affichage du formulaire quand click du bouton "Modifier"
    */
   function gererModifier() {
-    setQuantite(bouteille.quantite);
-    setDateAchat(bouteille.date_achat);
-    setDateGarde(bouteille.garde_jusqua);
     setFrmOuvert(true);
   }
 
@@ -138,6 +142,11 @@ export default function Bouteille(props) {
    * Gère l'affichage du formulaire quand click du bouton "Fiche"
    */
   function gererVoir() {
+    if (compteur === true) {
+      setQuantite(quantite);
+    } else {
+      setQuantite(props.quantite);
+    }
     fetchVinUn();
     setVoirFiche(true);
     setFrmOuvert(true);
@@ -147,14 +156,15 @@ export default function Bouteille(props) {
    * Gère le bouton 'ajouter'
    */
   function gererAjouter() {
+    fetchVinUn();
     setQuantite((quantite) => parseInt(quantite) + 1);
     fetchPutVinUn(parseInt(quantite) + 1, dateAchat, dateGarde);
   }
-
   /**
    * Gère le bouton 'Boire'
    */
   function gererBoire() {
+    fetchVinUn();
     if (quantite > 0) {
       setQuantite((quantite) => parseInt(quantite) - 1);
       fetchPutVinUn(parseInt(quantite) - 1, dateAchat, dateGarde);
@@ -212,9 +222,20 @@ export default function Bouteille(props) {
           garde_jusqua: NouveauDateGarde,
         }),
       }
-    );
-    let reponseJson = await reponse.json();
-    fetchVinUn();
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        fetchVinUn();
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        // setError(error);
+      });
   }
   async function fetchVinUn() {
     //Route API: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7, collection->'vins', params-> 'cellier'=> 6, idEntite-> 'bouteille'=> 7
@@ -238,6 +259,7 @@ export default function Bouteille(props) {
         throw response;
       })
       .then((data) => {
+        setCompteur(true);
         setBouteille(data);
       })
       .catch((error) => {
@@ -269,7 +291,8 @@ export default function Bouteille(props) {
         setOpenAlert(true);
         setTimeout(() => {
           props.fetchVins();
-        }, 2000);
+          viderFermerFrm();
+        }, 1000);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -300,7 +323,10 @@ export default function Bouteille(props) {
           <div className="description">
             <div className="description-originale">
               <p className="nom">{props.nom} </p>
-              <p className="nom">Quantité: {bouteille.quantite} </p>
+              <p className="nom">
+                Quantité:{" "}
+                {compteur === true ? bouteille.quantite : props.quantite}{" "}
+              </p>
             </div>
           </div>
         </div>

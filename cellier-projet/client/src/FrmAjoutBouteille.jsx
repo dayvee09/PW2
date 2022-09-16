@@ -45,7 +45,11 @@ export default function FrmAjoutBouteille(props) {
    * État du cellier choisi
    */
   const [vinCellier, setVinCellier] = React.useState(
-    props.cellier ? props.cellier : props.cellier? props.cellier : props.celliers[0].id
+    props.cellier
+      ? parseInt(props.cellier)
+      : parseInt(props.cellier)
+      ? parseInt(props.cellier)
+      : parseInt(props.celliers[0].id)
   );
   /**
    * État de la quantité choisie
@@ -126,7 +130,6 @@ export default function FrmAjoutBouteille(props) {
       .then((data) => {
         setVinsListe(data);
       });
-      
   }, []);
 
   // useEffect(() => {
@@ -154,7 +157,7 @@ export default function FrmAjoutBouteille(props) {
     });
     setMillesime("");
     setVinPays("");
-    setVinCellier(props.cellier? props.cellier : props.celliers[0].id);
+    setVinCellier(props.cellier ? props.cellier : props.celliers[0].id);
     setVinFormat("");
     setVinPrix(1);
     setVinDescription("");
@@ -194,37 +197,37 @@ export default function FrmAjoutBouteille(props) {
       // let vinIndex = gereAjoutRedondance();
 
       // if (vinIndex < 0) {
-        // console.log("ajout en cours", vinCellier);
-        fetchAjouterVin();
+      // console.log("ajout en cours", vinCellier);
+      fetchAjouterVin();
 
-        // props.setCellier(vinCellier);
-        
-        // navigate(`/cellier/${vinCellier}/vins`, { replace: true });
+      // props.setCellier(vinCellier);
+
+      // navigate(`/cellier/${vinCellier}/vins`, { replace: true });
     } else console.log("form invalid");
-  
-  //     // }
-  //   } else console.log("Formulaire invalid!");
-  // }
-  // /**
-  //  * Gère l'ajout d'une bouteille existé déjà dans le cellier choisi, faut faire l'option de ce cellier désactivé
-  //  */
-  // function gereAjoutRedondance() {
-  //   // vérifie que la bouteille à ajouter a déjà existé dans le cellier choisi, si oui on afficher une message à l'usager, Si non, on enregistra cette bouteille en DB
-  //   if (vinsTest.length > 0) {
-  //     let vinsAjout = { vin_id: value.id, cellier_id: vinCellier };
-  //     console.log("vinsTest:",vinsTest)
-  //     console.log("celliers", props.celliers)
-  //     let vinsAjoutIndex = (vinsTest || []).findIndex(
-  //       (vin) => vin.id === vinsAjout.vin_id
-  //     );
-     
-  //     // setErreur({ ajout: "Bouteille existe! Veuillez choisir un autre cellier! " });
-  //    return vinsAjoutIndex; // si return >=0, qui représent la bouteille  exist dans ce cellier
-  //   } else {
-     
-  //     // delete erreur["ajout"];
-  //      return -1;
-  //   }
+
+    //     // }
+    //   } else console.log("Formulaire invalid!");
+    // }
+    // /**
+    //  * Gère l'ajout d'une bouteille existé déjà dans le cellier choisi, faut faire l'option de ce cellier désactivé
+    //  */
+    // function gereAjoutRedondance() {
+    //   // vérifie que la bouteille à ajouter a déjà existé dans le cellier choisi, si oui on afficher une message à l'usager, Si non, on enregistra cette bouteille en DB
+    //   if (vinsTest.length > 0) {
+    //     let vinsAjout = { vin_id: value.id, cellier_id: vinCellier };
+    //     console.log("vinsTest:",vinsTest)
+    //     console.log("celliers", props.celliers)
+    //     let vinsAjoutIndex = (vinsTest || []).findIndex(
+    //       (vin) => vin.id === vinsAjout.vin_id
+    //     );
+
+    //     // setErreur({ ajout: "Bouteille existe! Veuillez choisir un autre cellier! " });
+    //    return vinsAjoutIndex; // si return >=0, qui représent la bouteille  exist dans ce cellier
+    //   } else {
+
+    //     // delete erreur["ajout"];
+    //      return -1;
+    //   }
   }
   /**
    * Ajouter une nouvelle bouteille à la BD
@@ -347,7 +350,7 @@ export default function FrmAjoutBouteille(props) {
             }}
             // Gère du changement de l'option
             onChange={(event, newValue) => {
-               setValue(newValue);
+              setValue(newValue);
               // gereAjoutRedondance();
             }}
             renderOption={(props, option) => {
@@ -357,7 +360,7 @@ export default function FrmAjoutBouteille(props) {
                 </li>
               );
             }}
-            renderInput={(params) => <TextField {...params}  size="small" />}
+            renderInput={(params) => <TextField {...params} size="small" />}
           />
         </div>
         {/* Autocomplete fin */}
@@ -551,7 +554,9 @@ export default function FrmAjoutBouteille(props) {
             <TextField
               select
               value={vinCellier}
-              onChange={(e)=>{setVinCellier(e.target.value)}}
+              onChange={(e) => {
+                setVinCellier(e.target.value);
+              }}
               SelectProps={{
                 native: true,
               }}
@@ -561,7 +566,7 @@ export default function FrmAjoutBouteille(props) {
             >
               {props.celliers.map((cellier) => (
                 <option key={cellier.id} value={cellier.id}>
-               {/* <option key={cellier.id} value={cellier.id} disabled={cellier.id==redondance? true:false}> */}
+                  {/* <option key={cellier.id} value={cellier.id} disabled={cellier.id==redondance? true:false}> */}
                   {cellier.nom}
                 </option>
               ))}
@@ -571,7 +576,13 @@ export default function FrmAjoutBouteille(props) {
             </p>
           </Grid>
           <Grid item xs={12}>
-            <Box display="flex" justifyContent="flex-end" alignItems="center" mt={2} mb={2}>
+            <Box
+              display="flex"
+              justifyContent="flex-end"
+              alignItems="center"
+              mt={2}
+              mb={2}
+            >
               <button className="btn--ajouter" onClick={gererAjoutBouteille}>
                 Ajouter
               </button>
