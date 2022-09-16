@@ -47,7 +47,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -290,17 +290,23 @@ const Appli = () => {
     let reponseJson = await reponse.json();
   }
 
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
   async function gererSignOut() {
     await Auth.signOut()
       .then(() => {
-        setId("");
-        setUtilisateur("");
-        setBouteilles("");
-        setCelliers("");
-        setEmailUtilisateur("");
-        setUsername("");
-        setIndexNav(0);
+        // setId("");
+        // setUtilisateur("");
+        // setBouteilles("");
+        // setCelliers("");
+        // setEmailUtilisateur("");
+        // setUsername("");
+        // setIndexNav(0);
         DATA = undefined;
+        refreshPage()
+        window.location.pathname="/"
       })
       .catch((err) => console.log("Erreur lors de la déconnexion", err));
   }
