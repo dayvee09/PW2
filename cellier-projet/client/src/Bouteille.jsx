@@ -1,8 +1,7 @@
 import * as React from "react";
 import "./Bouteille.scss";
 import FrmBouteille from "./FrmBouteille";
-import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -14,9 +13,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import MuiButton from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import placeholderSaq from "./img/png/placeholder-saq.png";
-// import format from 'date-fns/format';
-// import moment from 'moment';
-// import { keyframes } from "@emotion/react";
 export default function Bouteille(props) {
   /**
    *  API MUI https://mui.com/material-ui/react-snackbar/
@@ -25,7 +21,7 @@ export default function Bouteille(props) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const [eltAncrage, setEltAncrage] = useState(null);
-  const [compteur, setCompteur] = useState(false);
+  const [contexteModif, setContexteModif] = useState(false);
   const menuContextuelOuvert = Boolean(eltAncrage);
   const [openAlert, setOpenAlert] = React.useState(false);
   const handleCloseAlert = (event, reason) => {
@@ -95,7 +91,7 @@ export default function Bouteille(props) {
    */
   function gererMenuContextuel(evt) {
     setEltAncrage(evt.currentTarget);
-    if (compteur === true) {
+    if (contexteModif === true) {
       setQuantite(quantite);
     } else {
       setQuantite(props.quantite);
@@ -136,13 +132,14 @@ export default function Bouteille(props) {
    */
   function gererModifier() {
     setFrmOuvert(true);
+    gererFermerMenuContextuel();
   }
 
   /**
    * Gère l'affichage du formulaire quand click du bouton "Fiche"
    */
   function gererVoir() {
-    if (compteur === true) {
+    if (contexteModif === true) {
       setQuantite(quantite);
     } else {
       setQuantite(props.quantite);
@@ -199,10 +196,7 @@ export default function Bouteille(props) {
     NouveauDateAchat,
     NouveauDateGarde
   ) {
-    //Route API: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7,
-    //           Execute dans l'ordre 'VinsControleur.cls.php'->'VinsModele.cls.php'->function changer($params, $idEntite, $fragmentVin),'fragmentVin'-> body
     let reponse = await fetch(
-      // "http://localhost/PW2/cellier-projet/api-php" +
       props.URI +
         "/" +
         "cellier" +
@@ -238,7 +232,6 @@ export default function Bouteille(props) {
       });
   }
   async function fetchVinUn() {
-    //Route API: localhost/PW2/cellier-projet/api-php/cellier/3/vins/6/bouteille/7, collection->'vins', params-> 'cellier'=> 6, idEntite-> 'bouteille'=> 7
     await fetch(
       props.URI +
         "/" +
@@ -259,12 +252,11 @@ export default function Bouteille(props) {
         throw response;
       })
       .then((data) => {
-        setCompteur(true);
+        setContexteModif(true);
         setBouteille(data);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
-        // setError(error);
       });
   }
 
@@ -325,7 +317,7 @@ export default function Bouteille(props) {
               <p className="nom">{props.nom} </p>
               <p className="nom">
                 Quantité:{" "}
-                {compteur === true ? bouteille.quantite : props.quantite}{" "}
+                {contexteModif === true ? bouteille.quantite : props.quantite}{" "}
               </p>
             </div>
           </div>
