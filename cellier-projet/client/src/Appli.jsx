@@ -266,7 +266,7 @@ const Appli = () => {
       })
       .then((data) => {
         // console.log("dataJSON:", data[0]);
-         setUtilisateur(data[0]);
+        setUtilisateur(data[0]);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -313,7 +313,6 @@ const Appli = () => {
   // ---------------------------------- Gestion des celliers -----------------------------
   // console.log("user_id:", emailUtilisateur);
   async function fetchCelliers() {
-  
     await fetch(URI + "/" + "user_id" + "/" + id + "/" + "celliers")
       .then((response) => {
         if (response.ok) {
@@ -350,9 +349,7 @@ const Appli = () => {
       });
   }
   // console.log(Auth.user)
-  // ------------------Gestion de l'importation de bouteilles de la SAQ-----------------------
 
-  console.log(indexNav);
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
@@ -364,7 +361,7 @@ const Appli = () => {
           username={username}
         />
       )}
-      
+
       <div className="appli--container ">
         <img
           className={Auth.user ? "Hidden" : "logo"}

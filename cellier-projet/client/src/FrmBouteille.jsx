@@ -52,10 +52,13 @@ export default function FrmBouteille({
       if (quantite < 0) setOpenErr(true);
     }
   }
-
   return (
     <div>
-      <Dialog open={frmOuvert} onClose={viderFermerFrm} PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}>
+      <Dialog
+        open={frmOuvert}
+        onClose={viderFermerFrm}
+        PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
+      >
         {/* {voirFiche === false ? (
           <DialogTitle> Modifier la quantité de la bouteille</DialogTitle>
         ) : (
@@ -63,7 +66,14 @@ export default function FrmBouteille({
         )} */}
         <DialogContent>
           <div className="img-wrap">
-            <img src={(bouteille.image&&bouteille.image.indexOf("pastille_gout") < 0)? bouteille.image : placeholderSaq} alt="bouteille" />
+            <img
+              src={
+                bouteille.image && bouteille.image.indexOf("pastille_gout") < 0
+                  ? bouteille.image
+                  : placeholderSaq
+              }
+              alt="bouteille"
+            />
           </div>
           <div className="description">
             <h2 className="nom">{bouteille.nom} </h2>
@@ -78,7 +88,7 @@ export default function FrmBouteille({
               <a href={bouteille.url_saq}>Voir SAQ</a>
             </p>
             <div className={voirFiche === false ? "hidden" : ""}>
-              <p className="quantite">Quantité : {bouteille.quantite}</p>
+              <p className="quantite">Quantité : {quantite}</p>
               <p className="date_achat">Date achat : {bouteille.date_achat}</p>
               <p className="date_achat">
                 Date jusqu'à : {bouteille.garde_jusqua}
@@ -110,6 +120,7 @@ export default function FrmBouteille({
             bouteille={bouteille}
             voirFiche={voirFiche}
             setQuantite={setQuantite}
+            quantite={quantite}
           />
           <div className={voirFiche === true ? "hidden" : ""}>
             <label>Date d'achat: </label>
