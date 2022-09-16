@@ -39,8 +39,6 @@ const Appli = () => {
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [celliers, setCelliers] = useState([]);
   const [indexNav, setIndexNav] = useState(0);
-  const [errorMessages, setErrorMessages] = useState({});
-  const [isLogged, setIsLogged] = useState(false);
   const ENV = "dev";
   const [URI, setURI] = useState([]);
 
@@ -49,7 +47,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -208,9 +206,6 @@ const Appli = () => {
   function gererCellier(idCellier) {
     setCellier(idCellier);
   }
-  function gererIndexNav(index) {
-    setIndexNav(index);
-  }
 
   // -------------------------- Requêtes Fetch ------------------------------------------------------
 
@@ -304,7 +299,7 @@ const Appli = () => {
         setCelliers("");
         setEmailUtilisateur("");
         setUsername("");
-        gererIndexNav(0);
+        setIndexNav(0);
         DATA = undefined;
       })
       .catch((err) => console.log("Erreur lors de la déconnexion", err));
@@ -530,7 +525,7 @@ const Appli = () => {
           Auth={Auth}
           emailUtilisateur={emailUtilisateur}
           utilisateur={utilisateur}
-          gererIndexNav={gererIndexNav}
+          setIndexNav={setIndexNav}
           indexNav={indexNav}
         />
       </div>
