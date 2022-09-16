@@ -33,11 +33,6 @@ export default function Bouteille(props) {
     }
     setOpenAlert(false);
   };
-   /**
-   *  État des messageRetour et severity
-   */
-  const [messageRetour, setMessageRetour] = useState([]);
-  const [severity, setSeverity] = useState([]);
 
   /**
    *  État des styles des composants MUI
@@ -90,9 +85,11 @@ export default function Bouteille(props) {
    * État de la date de garde et la date de garde précédente
    */
   const [dateGarde, setDateGarde] = useState(props.garde_jusqua);
+  const [messageRetour, setMessageRetour] = useState([]);
+  const [severity, setSeverity] = useState([]);
 
   /**
-   * Gestion du menu contextuel d'action d'un bouteille
+   * Gestion du menu contextuel d'action d'un cellier
    * @param {*} evt
    */
   function gererMenuContextuel(evt) {
@@ -100,33 +97,25 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Gestion de la fermeture du menu contextuel d'action d'une bouteille
+   * Gestion de la fermeture du menu contextuel d'action d'un cellier
    */
   function gererFermerMenuContextuel() {
     setEltAncrage(null);
   }
 
   /**
-   * Gère la fermeture de la boite de dialogue de supression de la bouteille
+   * Gère la fermeture de la boite de dialogue de supression du profil
    */
   function viderFermerFrm() {
     setFrmSuppressionOuvert(false);
-    // gererFermerMenuContextuel();
   }
 
   /**
-   * Gère l'ouverture de la boite de dialogue de supression d'une bouteille
+   * Gère l'ouverture de la boite de dialogue de supression du cellier
    */
   function gererSupprimer() {
     setFrmSuppressionOuvert(true);
   }
-
-   /**
-   * Gère la suppression de la bouteille
-   */
-    function gererSoumettre() {
-      fetchSupprimerBouteille();
-    }
 
   /**
    * Gère la suppression du cellier
@@ -143,7 +132,6 @@ export default function Bouteille(props) {
     setDateAchat(bouteille.date_achat);
     setDateGarde(bouteille.garde_jusqua);
     setFrmOuvert(true);
-    gererFermerMenuContextuel();
   }
 
   /**
@@ -259,7 +247,7 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Supprime la bouteille
+   * Supprime le cellier
    */
   async function fetchSupprimerBouteille() {
     await fetch(
@@ -280,10 +268,8 @@ export default function Bouteille(props) {
         setSeverity("success");
         setOpenAlert(true);
         setTimeout(() => {
-          setOpenAlert(false);
-          viderFermerFrm();
           props.fetchVins();
-        }, 1000);
+        }, 2000);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -297,7 +283,7 @@ export default function Bouteille(props) {
           <img
             onClick={gererVoir}
             src={
-              (props.image&&props.image.indexOf("pastille_gout") < 0)
+              props.image.indexOf("pastille_gout") < 0
                 ? props.image
                 : placeholderSaq
             }
@@ -371,7 +357,7 @@ export default function Bouteille(props) {
           </DialogTitle>
           <DialogActions>
             <Button onClick={viderFermerFrm}>Annuler</Button>
-			<button onClick={gererSoumettre} className="action">Supprimer</button>
+            <Button onClick={gererSoumettre}>Supprimer</Button>
           </DialogActions>
         </Dialog>
         <FrmBouteille
