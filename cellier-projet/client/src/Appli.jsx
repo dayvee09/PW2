@@ -38,8 +38,7 @@ const Appli = () => {
   const [utilisateur, setUtilisateur] = useState([]);
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [celliers, setCelliers] = useState([]);
-  const [errorMessages, setErrorMessages] = useState({});
-  const [isLogged, setIsLogged] = useState(false);
+  const [indexNav, setIndexNav] = useState(0);
   const ENV = "dev";
   const [URI, setURI] = useState([]);
 
@@ -261,6 +260,7 @@ const Appli = () => {
         throw response;
       })
       .then((data) => {
+        // console.log("dataJSON:", data[0]);
         setUtilisateur(data[0]);
       })
       .catch((error) => {
@@ -299,13 +299,14 @@ const Appli = () => {
         setCelliers("");
         setEmailUtilisateur("");
         setUsername("");
+        setIndexNav(0);
         DATA = undefined;
       })
       .catch((err) => console.log("Erreur lors de la déconnexion", err));
   }
 
   // ---------------------------------- Gestion des celliers -----------------------------
-
+  // console.log("user_id:", emailUtilisateur);
   async function fetchCelliers() {
     await fetch(URI + "/" + "user_id" + "/" + id + "/" + "celliers")
       .then((response) => {
@@ -316,6 +317,7 @@ const Appli = () => {
       })
       .then((data) => {
         setCelliers(data);
+        // console.log(data);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -342,7 +344,6 @@ const Appli = () => {
       });
   }
   // console.log(Auth.user)
-  // ------------------Gestion de l'importation de bouteilles de la SAQ-----------------------
 
   // ---------------------------------- Rendering -----------------------------------------
   return (
@@ -426,6 +427,9 @@ const Appli = () => {
                       gererBouteilles={gererBouteilles}
                       cellier={cellier}
                       URI={URI}
+                      error={error}
+                      setError={setError}
+                      fetchUtilisateur={fetchUtilisateur}
                     />
                   }
                 />
@@ -440,6 +444,7 @@ const Appli = () => {
                       gererBouteilles={gererBouteilles}
                       celliers={celliers}
                       cellier={cellier}
+                      setCellier={setCellier}
                       URI={URI}
                       error={error}
                       setError={setError}
@@ -519,6 +524,8 @@ const Appli = () => {
           Auth={Auth}
           emailUtilisateur={emailUtilisateur}
           utilisateur={utilisateur}
+          setIndexNav={setIndexNav}
+          indexNav={indexNav}
         />
       </div>
       <PiedDePage />

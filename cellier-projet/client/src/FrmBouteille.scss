@@ -1,11 +1,17 @@
-.FrmBouteille {
+.css-1cdjfa1-MuiPaper-root-MuiDialog-paper {
+  
+  width: 100%;
+  .img-wrap {
+    width: 200px;
+  }
   img {
     object-fit: contain;
-    width: 200px;
-    height: 200px;
+    overflow: hidden;
+  }
+  .hr {
+      border: .2px solid gray;
   }
 }
-
 .hidden {
   display: none;
 }
