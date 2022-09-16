@@ -1,13 +1,18 @@
 import "./NavDesktop.scss";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Logo from "./img/png/logo-bleu.png";
 import AddBottleImage from "./img/svg/add_bottle_blue_filled.svg";
 import Image from "./img/svg/icone_profil_blue_line.svg";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
-export default function NavDesktop({ user, gererSignOut, utilisateur, username }) {
+export default function NavDesktop({
+  user,
+  gererSignOut,
+  utilisateur,
+  username,
+}) {
   const [eltAncrage, setEltAncrage] = useState(null);
   const menuContextuelOuvert = Boolean(eltAncrage);
   const navigate = useNavigate();
@@ -68,20 +73,36 @@ export default function NavDesktop({ user, gererSignOut, utilisateur, username }
           }}
         >
           {utilisateur && utilisateur.privilege === "admin" ? (
-            <MenuItem component={Link} to={`/admin/${user.attributes.email}`}>
+            <MenuItem
+              onClick={gererFermerMenuContextuel}
+              component={Link}
+              to={`/admin/${user.attributes.email}`}
+            >
               <span>Menu Admin</span>
             </MenuItem>
           ) : (
-            <MenuItem component={Link} to={`/profil/${user.attributes.email}`}>
+            <MenuItem
+              onClick={gererFermerMenuContextuel}
+              component={Link}
+              to={`/profil/${user.attributes.email}`}
+            >
               <span>Mon Profil</span>
             </MenuItem>
           )}
           <hr></hr>
-          <MenuItem component={Link} to={`/`}>
+          <MenuItem
+            onClick={gererFermerMenuContextuel}
+            component={Link}
+            to={`/`}
+          >
             <span>Mes Celliers</span>
           </MenuItem>
           <hr></hr>
-          <MenuItem component={Link} to={``}>
+          <MenuItem
+            onClick={gererFermerMenuContextuel}
+            component={Link}
+            to={``}
+          >
             <span>Mes Favoris</span>
           </MenuItem>
           <hr></hr>

@@ -109,7 +109,7 @@ export default function FrmBouteille({
                   </IconButton>
                 }
               >
-                Invalid!
+                Champ invalide
               </Alert>
             </Dialog>
           </div>
