@@ -41,21 +41,22 @@ hr {
 }
 
 .action {
-	background-color: transparent;
-	color: #152440;
-	border: 1px solid #f1ab50;
+	background-color: #152440;
+	color: #f3f5eb;
+	border: 1px solid #152440;
 	padding: 11px 20px;
 	font-size: 12px;
 	text-transform: uppercase;
 	text-decoration: "none";
 	font-family: Alata;
 	border-radius: 4px;
-
+	
 	&:hover {
-		background-color: #152440;
+		background-color: #f1ab50;
+		color: #152440;
 		cursor: pointer;
-		color: #f3f5eb;
-		border: 1px solid #152440;
+		border: 1px solid #f1ab50;
+		
 	}
 }
 

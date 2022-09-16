@@ -355,7 +355,6 @@ const Appli = () => {
           username={username}
         />
       )}
-      ;
       <div className="appli--container ">
         <img
           className={Auth.user ? "Hidden" : "logo"}
