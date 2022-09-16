@@ -49,7 +49,7 @@ export default function Cellier(props) {
     padding: "10px 20px",
     "&:hover": {
       backgroundColor: "#f1ab50",
-      color: "#f3f5eb",
+      color: "#152440",
     },
   }));
 
