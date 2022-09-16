@@ -15,14 +15,14 @@ export default function NavMobile({
   Auth,
   emailUtilisateur,
   utilisateur,
-  gererIndexNav,
+  setIndexNav,
   indexNav,
 }) {
   // état du BottomNavigation
   const [value, setValue] = useState(indexNav);
 
   useEffect(() => {
-    gererIndexNav(value);
+    setIndexNav(value);
   }, [value]);
 
   return (
@@ -35,7 +35,7 @@ export default function NavMobile({
         >
           <BottomNavigation
             className="BottomNav"
-            value={value}
+            value={indexNav}
             onChange={(event, newValue) => {
               setValue(newValue);
             }}
