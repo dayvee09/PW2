@@ -2,6 +2,8 @@
 
 # Fichier contenant l'objet de configuration Firebase
 /src/code/config.js
+package-lock.json
+package.json
 
 # Ignorer .eslintcache
 .eslintcache

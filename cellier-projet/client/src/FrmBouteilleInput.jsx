@@ -6,7 +6,12 @@ export default function FrmBouteilleInput(props) {
     props.setQuantite(e.target.value);
   }
   return (
-    <div className={["FrmBouteilleInput", props.voirFiche === true? "hidden" : ""].join(' ')} >
+    <div
+      className={[
+        "FrmBouteilleInput",
+        props.voirFiche === true ? "hidden" : "",
+      ].join(" ")}
+    >
       <TextField
         fullWidth
         size="small"
@@ -16,7 +21,7 @@ export default function FrmBouteilleInput(props) {
         type={"number"}
         min={0}
         inputProps={{ min: 0 }}
-        defaultValue={props.bouteille.quantite}
+        defaultValue={props.quantite}
       />
     </div>
   );

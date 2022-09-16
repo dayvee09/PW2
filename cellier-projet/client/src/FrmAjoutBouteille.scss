@@ -22,22 +22,34 @@
     }
   }
   .FrmAjoutNouvelle {
-    margin: 20px;
+     margin: 20px;
     label {
       margin-top: 10px;
       display: block;
       font-size: 14px;
     }
-    * + label {
-      margin-bottom: 0px;
-    }
     .img--wrap {
-    
-      display: flex;
-      justify-content: center;
+      background-color: #d3d7dd;
+      height: 180px;
       img {
-        width: 240px;
-        height: 250px;
+        object-fit: contain;
+        height: 100%;
+        width: 100%;
+      }
+    }
+    .btn--ajouter {
+      background-color: #cc4240;
+      border: none;
+      border-radius: 4px;
+      color: #f3f5eb;
+      font-family: Alata;
+      text-transform: uppercase;
+      padding: 10px 30px;
+  
+      &:hover {
+        background-color: #f1ab50;
+        color: #101e33;
+        cursor: pointer;
       }
     }
   }
@@ -46,8 +58,11 @@
     padding: 10px;
     background-color: #cc4240;
   }
-  // .hidden {
-  //   display: none;
-  // }
-  
+  .active {
+    color: #cc4240;
+  }
+  .Grid p {
+    font-size: 12px;
+    margin-top: 0;
+  }
 }

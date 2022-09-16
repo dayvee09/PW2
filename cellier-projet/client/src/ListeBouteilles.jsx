@@ -42,6 +42,9 @@ function ListeBouteilles(props) {
                 cellier={props.cellier}
                 bouteille={bouteille}
                 URI={props.URI}
+                error={props.error}
+                setError={props.setError}
+                fetchUtilisateur={props.sfetchUtilisateur}
               />
             ))}
           </div>
@@ -72,6 +75,7 @@ function ListeBouteilles(props) {
               bouteille={props.bouteilles[0]}
               setBouteilles={props.setBouteilles}
               URI={props.URI}
+              fetchUtilisateur={props.sfetchUtilisateur}
             />
           </div>
         </div>

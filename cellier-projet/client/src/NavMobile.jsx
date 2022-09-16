@@ -1,5 +1,6 @@
 import "./NavMobile.scss";
 import * as React from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import BottomNavigation from "@mui/material/BottomNavigation";
@@ -10,9 +11,19 @@ import { ReactComponent as FavorisIcone } from "./img/svg/icone_favorite_blue_li
 import { ReactComponent as AideIcone } from "./img/svg/icone_help_blue_line.svg";
 import { ReactComponent as AddBottleIcone } from "./img/svg/add_bottle_blue_filled.svg";
 
-export default function NavMobile({ Auth, emailUtilisateur, utilisateur }) {
+export default function NavMobile({
+  Auth,
+  emailUtilisateur,
+  utilisateur,
+  setIndexNav,
+  indexNav,
+}) {
   // état du BottomNavigation
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(indexNav);
+
+  useEffect(() => {
+    setIndexNav(value);
+  }, [value]);
 
   return (
     <div>
@@ -24,14 +35,14 @@ export default function NavMobile({ Auth, emailUtilisateur, utilisateur }) {
         >
           <BottomNavigation
             className="BottomNav"
-            value={value}
+            value={indexNav}
             onChange={(event, newValue) => {
               setValue(newValue);
             }}
             showLabels
           >
             <BottomNavigationAction
-			      className="IconeHome"
+              className="IconeHome"
               label="ACCUEIL"
               icon={<HomeIcone />}
               component={Link}
