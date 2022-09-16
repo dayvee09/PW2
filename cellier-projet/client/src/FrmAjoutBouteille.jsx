@@ -8,15 +8,23 @@ import Autocomplete from "@mui/material/Autocomplete";
 import BtnGroup from "./ToggleBtn";
 import Grid from "@material-ui/core/Grid";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
 import moment from "moment";
 import placeholderSaq from "./img/png/placeholder-saq.png";
 import { useNavigate } from "react-router-dom";
-import Bouteille from "./Bouteille";
+import Dialog from "@mui/material/Dialog";
+import Alert from "@mui/material/Alert";
 
 export default function FrmAjoutBouteille(props) {
+  /**
+   * L‘état d'erreur
+   */
+  const [openErr, setOpenErr] = React.useState(false);
+  /**
+   * L‘état de message d'erreur
+   */
+  const [messageErr, setMessageErr] = React.useState("");
   /**
    * État de bouton, false- importer , true- créer
    */
@@ -74,7 +82,7 @@ export default function FrmAjoutBouteille(props) {
   /**
    * État du nom de la bouteille
    */
-  const [vinNom, setVinNom] = React.useState("#");
+  const [vinNom, setVinNom] = React.useState("");
   /**
    * État du prix de la bouteille
    */
@@ -99,23 +107,14 @@ export default function FrmAjoutBouteille(props) {
    * État de l'image de la bouteille
    */
   const [vinImage, setVinImage] = React.useState("");
-  // /**
-  //  * Collection des vins dans un cellier spécifié par son cellier_id
-  //  */
-  // const [vinsTest, setVinsTest] = React.useState([]);
-  // /**
-  //  * État d'identifiant d'un cellier où la bouteille à ajouter existe déjà
-  //  */
-  // const [redondance, setRedondance] = React.useState("");
-  // /**
-  //  * État de la navigation (sert à redirection)
-  //  */
+  /**
+   * Collection des vins dans un cellier spécifié par son cellier_id
+   */
+  const [vinsTest, setVinsTest] = React.useState(props.bouteilles);
+  /**
+   * État de la navigation (sert à redirection)
+   */
   const navigate = useNavigate();
-
-  // /**
-  //  * Variable
-  //  */
-  // let redon;
   /**
    *  Fetch la liste de la bouteilles de la BD pour préparer à injecter à la liste du composant 'Autocomplete'
    */
@@ -131,26 +130,24 @@ export default function FrmAjoutBouteille(props) {
         setVinsListe(data);
       });
   }, []);
-
-  // useEffect(() => {
-  //   fetch(props.URI + `/cellier/${vinCellier}/vins`)
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         return response.json();
-  //       }
-  //       throw response;
-  //     })
-  //     .then((data) => {
-  //       setVinsTest(data);
-  //     });
-
-  //     if(gereAjoutRedondance() === -1 ){
-  //       setRedondance();
-  //     }else{
-  //       setRedondance(vinCellier);
-  //     }
-  // }, [vinCellier,value]);
-
+  /**
+   *  Fetch le cellier choisi ayant des bouteilles pour vérifier si la bouteille choisie existe déjà
+   */
+  useEffect(() => {
+    fetch(props.URI + `/cellier/${vinCellier}/vins`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setVinsTest(data);
+      });
+  }, [vinCellier]);
+  /**
+   * Purifier le formulaire quand on bascule entre le bouton 'importer' et 'créer'
+   */
   function clearForm() {
     setValue((value) => {
       value = [];
@@ -163,7 +160,7 @@ export default function FrmAjoutBouteille(props) {
     setVinDescription("");
     setVinGarde(moment().get("year").toString());
     setVinImage("");
-    setVinNom("#");
+    setVinNom("");
     setVinNote("");
     setVinQuantite(1);
     setVinType(1);
@@ -172,71 +169,58 @@ export default function FrmAjoutBouteille(props) {
   }
   /**
    * Gère le bouton 'Ajouter'
+   * si l'usager a bien choisi une bouteille par l'autocomplete (l'objet 'value' n'est pas vide) et le formulaire est valide
    */
   function gererAjoutBouteille() {
-    // console.log("error[]:", erreur);
-    // console.log("vin_id:", value.id);
-    // console.log("cellier_id:", vinCellier);
-    // console.log("quantite:", vinQuantite);
-    // console.log("Date_achat:", vinDateAchat);
-    // console.log("Garde:", vinGarde);
-    // console.log("notes:", value ? value.notes : vinNote);
-    // console.log("personnalise(0 ou 1):", value ? value.personnalise : 1);
-    // console.log("Nom: ", vinNom);
-    // console.log("Image: ", vinImage);
-    // console.log("Pays: ", vinPays);
-    // console.log("Description: ", vinDescription);
-    // console.log("Prix: ", vinPrix);
-    // console.log("format: ", vinFormat);
-    // console.log("type_id: ", vinType);
-    // console.log("Millesime: ", vinMillesime);
-    // console.log("error:", erreur);
-    // si l'usager a bien choisi une bouteille par l'autocomplete (l'objet 'value' n'est pas vide) et le formulaire est valide
+    if (!btnState) {
+      //importer
+      if (value.length !== 0) {
+        let vinIndex = gereAjoutRedondance();
+        if (vinIndex < 0) {
+          fetchAjouterVin();
+        } else {
+          setOpenErr(true);
+          setMessageErr(
+            `La bouteille "${value ? value.nom : ""}" existe dans ce cellier !!`
+          );
+        }
+      } else {
+        setOpenErr(true);
+        setMessageErr(`Veuillez choisir une bouteille à ajouter !!`);
+      }
+    } else {
+      //creer
+      if (erreur.length === 0 && vinNom !== "") {
+        fetchAjouterVin();
+      } else {
+        setOpenErr(true);
+        setMessageErr(`Formulaire invalide!!`);
+      }
+    }
+  }
+  /**
+   * Gère l'ajout d'une bouteille existé déjà dans le cellier choisi, faut faire l'option de ce cellier désactivé
+   * vérifie que la bouteille à ajouter a déjà existé dans le cellier choisi, si oui on afficher une message à l'usager, Si non, on enregistra cette bouteille en DB
+   * @returns  >=0, qui représent la bouteille  exist dans ce cellier, si non on pourrait l'ajouter
+   */
+  function gereAjoutRedondance() {
+    if (vinsTest.length > 0 && value != undefined) {
+      let vinsAjout = { vin_id: value.id, cellier_id: vinCellier };
 
-    if (value || erreur.length === 0) {
-      // let vinIndex = gereAjoutRedondance();
-
-      // if (vinIndex < 0) {
-      // console.log("ajout en cours", vinCellier);
-      fetchAjouterVin();
-
-      // props.setCellier(vinCellier);
-
-      // navigate(`/cellier/${vinCellier}/vins`, { replace: true });
-    } else console.log("form invalid");
-
-    //     // }
-    //   } else console.log("Formulaire invalid!");
-    // }
-    // /**
-    //  * Gère l'ajout d'une bouteille existé déjà dans le cellier choisi, faut faire l'option de ce cellier désactivé
-    //  */
-    // function gereAjoutRedondance() {
-    //   // vérifie que la bouteille à ajouter a déjà existé dans le cellier choisi, si oui on afficher une message à l'usager, Si non, on enregistra cette bouteille en DB
-    //   if (vinsTest.length > 0) {
-    //     let vinsAjout = { vin_id: value.id, cellier_id: vinCellier };
-    //     console.log("vinsTest:",vinsTest)
-    //     console.log("celliers", props.celliers)
-    //     let vinsAjoutIndex = (vinsTest || []).findIndex(
-    //       (vin) => vin.id === vinsAjout.vin_id
-    //     );
-
-    //     // setErreur({ ajout: "Bouteille existe! Veuillez choisir un autre cellier! " });
-    //    return vinsAjoutIndex; // si return >=0, qui représent la bouteille  exist dans ce cellier
-    //   } else {
-
-    //     // delete erreur["ajout"];
-    //      return -1;
-    //   }
+      let vinsAjoutIndex = (vinsTest || []).findIndex(
+        (vin) => vin.id === vinsAjout.vin_id
+      );
+      return vinsAjoutIndex;
+    } else {
+      return -1; // ajout dans un cellier vide.
+    }
   }
   /**
    * Ajouter une nouvelle bouteille à la BD
-   *
+   * Route API: localhost/PW2/cellier-projet/api-php/cellier/3/vins
    */
   async function fetchAjouterVin() {
-    //Route API: localhost/PW2/cellier-projet/api-php/cellier/3/vins,
     // les données（payload） à ajouter pour l'importation du SAQ, servi au table 'vino__bouteille_has_vino__cellier', le key "personnalise" = 0
-
     let formData = {};
     if (btnState === false) {
       formData = {
@@ -269,7 +253,6 @@ export default function FrmAjoutBouteille(props) {
         notes: vinNote,
       };
     }
-
     // Fetch API d'ajouter une bouteille , soit l'importation du SAQ soit la création personnalisé
     let fetchAjoutBouteille = await fetch(
       // "http://localhost/PW2/cellier-projet/api-php" +
@@ -287,13 +270,18 @@ export default function FrmAjoutBouteille(props) {
       })
       .then((data) => {
         props.fetchVins();
-        navigate(`/cellier/${props.cellier}/vins`, { replace: true });
+        props.setCellier(vinCellier);
+        navigate(`/cellier/${vinCellier}/vins`, { replace: true });
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
         props.setError(error);
       });
   }
+  /**
+   * gérer l'affichage de l'image de bouteille, l'image par défaut va être à la place de l'image associé si elle n'existe pas  
+   * @returns URL de l'image
+   */
   const imgUrl = () => {
     let ok = placeholderSaq;
     if (value) {
@@ -406,9 +394,6 @@ export default function FrmAjoutBouteille(props) {
               onChange={(e) => {
                 setMillesime(e.target.value);
               }}
-              // inputProps={
-              //   { readOnly: true, }
-              // }
             />
           </Grid>
           <Grid item xs={6} sm={6} md={3} lg={3}>
@@ -588,6 +573,24 @@ export default function FrmAjoutBouteille(props) {
               </button>
             </Box>
           </Grid>
+          <Dialog open={openErr}>
+            <Alert
+              severity="error"
+              action={
+                <IconButton
+                  aria-label="close"
+                  size="small"
+                  onClick={() => {
+                    setOpenErr(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              {messageErr}
+            </Alert>
+          </Dialog>
         </Grid>
       </div>
     </div>
