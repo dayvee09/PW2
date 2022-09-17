@@ -1,24 +1,7 @@
 .Appli {
-	
   .appli--container {
     padding: 0 1.25rem 75px 1.25rem;
     min-height: 85vh;
-  }
-
-  .navigation {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .menu-celliers {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    width: 75%;
-    button {
-      width: 180px;
-      height: 40px;
-    }
   }
 }
 
