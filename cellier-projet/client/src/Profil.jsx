@@ -157,7 +157,6 @@ export default function Profil(props) {
             id="username"
             type={"text"}
             variant="outlined"
-            defaultValue={props.username}
             value={props.username}
             disabled
           />
@@ -174,7 +173,6 @@ export default function Profil(props) {
             id="email"
             type={"text"}
             variant="outlined"
-            defaultValue={props.emailUtilisateur}
             value={props.emailUtilisateur}
             disabled
           />
@@ -212,7 +210,6 @@ export default function Profil(props) {
           utilisateur={props.utilisateur}
           emailUtilisateur={props.emailUtilisateur}
           setEmailUtilisateur={props.setEmailUtilisateur}
-          fetchUtilisateur={props.fetchUtilisateur}
           URI={props.URI}
           setNouvelEmailUtilisateur={setNouvelEmailUtilisateur}
           NouvelEmailUtilisateur={NouvelEmailUtilisateur}
