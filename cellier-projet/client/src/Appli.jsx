@@ -290,23 +290,23 @@ const Appli = () => {
     let reponseJson = await reponse.json();
   }
 
-  function refreshPage() {
-    window.location.reload(false);
-  }
+  // function refreshPage() {
+  //   window.location.reload(false);
+  // }
 
   async function gererSignOut() {
     await Auth.signOut()
       .then(() => {
-        // setId("");
-        // setUtilisateur("");
-        // setBouteilles("");
-        // setCelliers("");
-        // setEmailUtilisateur("");
-        // setUsername("");
-        // setIndexNav(0);
+        setId("");
+        setUtilisateur("");
+        setBouteilles("");
+        setCelliers("");
+        setEmailUtilisateur("");
+        setUsername("");
+        setIndexNav(0);
         DATA = undefined;
-        refreshPage()
-        window.location.pathname="/"
+        // refreshPage()
+        // window.location.pathname="/"
       })
       .catch((err) => console.log("Erreur lors de la déconnexion", err));
   }
@@ -350,7 +350,7 @@ const Appli = () => {
       });
   }
   // console.log(Auth.user)
-
+console.log(indexNav);
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
