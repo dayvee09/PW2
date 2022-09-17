@@ -23,7 +23,6 @@ export default function FrmEmail({
   setNouvelEmailUtilisateur,
   frmEmailOuvert,
   setFrmEmailOuvert,
-  fetchUtilisateur,
   URI
 }) {
   /**
@@ -35,8 +34,8 @@ export default function FrmEmail({
     textDecoration: "none",
     borderRadius:"4px",
     fontFamily: "Alata",
-	padding: "10px 20px",
-	fontSize: "12px",
+    padding: "10px 20px",
+    fontSize: "12px",
     "&:hover": {
       backgroundColor: "#f1ab50",
       color: "#152440",
@@ -130,9 +129,7 @@ export default function FrmEmail({
         }
       );
       let reponseJson = await reponse.json();
-      console.log(reponseJson);
       setEmailUtilisateur(NouvelEmailUtilisateur)
-      fetchUtilisateur();
       navigate(`/profil/${NouvelEmailUtilisateur}`, { replace: true })
     }
     return result
