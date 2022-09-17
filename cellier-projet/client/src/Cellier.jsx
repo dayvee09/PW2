@@ -191,9 +191,13 @@ export default function Cellier(props) {
             },
           }}
         >
-          <MenuItem onClick={gererModifier}>Modifier</MenuItem>
-          <hr></hr>
-          <MenuItem onClick={gererSupprimer}>Supprimer</MenuItem>
+		<MenuItem onClick={gererModifier}>Modifier</MenuItem>
+		<hr></hr>
+		{ props.celliers.length > 1 ?
+		<MenuItem onClick={gererSupprimer}>Supprimer</MenuItem>
+		:
+		<MenuItem disabled>Supprimer</MenuItem>
+		}
         </Menu>
         <Dialog
           PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
