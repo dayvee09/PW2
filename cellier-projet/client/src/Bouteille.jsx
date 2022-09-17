@@ -304,7 +304,7 @@ export default function Bouteille(props) {
             }
             alt="bouteille"
           />
-          <div className="options" data-id="{id_bouteille_cellier}">
+          <div data-id="{id_bouteille_cellier}">
             <MoreVertIcon
               className="bouteille--gestion-dots"
               onClick={gererMenuContextuel}

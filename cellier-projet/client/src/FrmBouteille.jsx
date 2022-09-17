@@ -85,7 +85,7 @@ export default function FrmBouteille({
             <p className="millesime">Millesime : {bouteille.millesime}</p>
             <p className="millesime">Prix : {bouteille.prix_saq}.00$</p>
             <p>
-              <a href={bouteille.url_saq}>Voir SAQ</a>
+              <a href={bouteille.url_saq} target="_blank">Voir SAQ</a>
             </p>
             <div className={voirFiche === false ? "hidden" : ""}>
               <p className="quantite">Quantité : {quantite}</p>
