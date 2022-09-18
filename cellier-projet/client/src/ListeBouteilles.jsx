@@ -65,7 +65,7 @@ function ListeBouteilles(props) {
 			<div>
 				<h1 className="aucune-bouteille">Pas de bouteilles dans ce cellier</h1>
 				<NavLink to="/vins">
-					<p>+ Ajouter une bouteille</p>
+					<p className="ListeBouteille--default-button">+ Ajouter une bouteille</p>
 				</NavLink>
 			</div>
 			}

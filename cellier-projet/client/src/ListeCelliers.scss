@@ -1,6 +1,5 @@
 .ListeCelliers {
   width: 100%;
-  cursor: pointer;
   padding-top: 10px;
 
   .Cellier:first-of-type .cellier {
@@ -29,7 +28,7 @@
 	cursor: pointer;
 	font-family: Raleway;
 	font-size: 15px;
-	padding-top: 35px;
+	padding-top: 58px;
     text-underline-offset: 5px;
     text-decoration: underline 1px;
 
@@ -49,6 +48,12 @@
     display: grid;
     gap: 30px;
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .liste-cellier--entete {
+	button {
+		padding-top: 15px;
+	}
   }
 }
 

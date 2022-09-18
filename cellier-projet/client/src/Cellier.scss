@@ -3,6 +3,7 @@
 		margin-top: 25px;
 		border: 1px solid #d3d7dd;
 		border-radius: 4px 4px 0 0;
+		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
 		
 		&:hover {
 			background-color: #d3d7dd37;
@@ -13,6 +14,10 @@
 			justify-content: space-between;
 			padding: 10px 20px;
 
+			&:hover {
+				cursor: pointer;
+			}
+
 			.cellier--gestion-container {
 				width: 100%;
 			}
@@ -20,6 +25,7 @@
 			.cellier--gestion-dots {
 				color: #cc4240;
 				margin-right: -10px;
+				border-radius: 20px;
 
 				&:hover {
 					background-color: #d3d7dd78;

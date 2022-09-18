@@ -8,7 +8,7 @@
 	}
 
 	.bouteille--gestion {
-		background-color: #d3d7dd;
+		background-color: #d3d7dd78;
 		cursor: pointer;
 		display: flex;
 		height: 180px;
@@ -27,6 +27,7 @@
 
 		.bouteille--gestion-dots {
 			color: #cc4240;
+			border-radius: 20px;
 			position: absolute;
 			top: 5px;
 			right: 5px;
@@ -51,5 +52,6 @@
 }
 
 .Bouteille--solo  {
-	max-width: 500px;
+	max-width: 325px;
+	
 }
