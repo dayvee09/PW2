@@ -39,6 +39,7 @@ const Appli = () => {
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [celliers, setCelliers] = useState([]);
   const [indexNav, setIndexNav] = useState(0);
+  const [resetBottomNav, setResetBottomNav] = useState(false);
   const ENV = "dev";
   const [URI, setURI] = useState([]);
 
@@ -297,6 +298,7 @@ const Appli = () => {
   async function gererSignOut() {
     await Auth.signOut()
       .then(() => {
+		setResetBottomNav(false);
         setId("");
         setUtilisateur("");
         setBouteilles("");
@@ -349,8 +351,7 @@ const Appli = () => {
         setError(error);
       });
   }
-  // console.log(Auth.user)
-console.log(indexNav);
+
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
@@ -362,7 +363,7 @@ console.log(indexNav);
           username={username}
         />
       )}
-      <div className="appli--container ">
+      <div className="Appli--container ">
         <img
           className={Auth.user ? "Hidden" : "logo"}
           src={Logo}
@@ -532,6 +533,8 @@ console.log(indexNav);
           utilisateur={utilisateur}
           setIndexNav={setIndexNav}
           indexNav={indexNav}
+		  setResetBottomNav={setResetBottomNav}
+		  resetBottomNav={resetBottomNav}
         />
       </div>
       <PiedDePage />

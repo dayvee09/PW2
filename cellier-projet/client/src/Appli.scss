@@ -1,5 +1,5 @@
 .Appli {
-  .appli--container {
+  .Appli--container {
     padding: 0 1.25rem 75px 1.25rem;
     min-height: 85vh;
   }
@@ -115,6 +115,14 @@
   }
 }
 
+@media only screen and (min-width: 560px) {
+	.Appli {
+	  .Appli--container {
+		padding: 0 3rem 75px 3rem;
+	  }
+	}
+  }
+
 @media only screen and (min-width: 768px) {
   .Authenticator {
     width: 600px;
@@ -122,7 +130,7 @@
   }
 
   .Appli {
-    .appli--container {
+    .Appli--container {
 	  padding: 0 5rem 75px 5rem;
     }
   }
