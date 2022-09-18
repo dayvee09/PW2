@@ -33,7 +33,11 @@ const Appli = () => {
   const [bouteilles, setBouteilles] = useState([]);
   const [emailUtilisateur, setEmailUtilisateur] = useState([]);
   const [id, setId] = useState([]);
-  const [cellier, setCellier] = useState([]);
+  const [cellier, setCellier] = useState(() => {
+    const savedCellier = localStorage.getItem("cellier");
+    const initialValueCellier = JSON.parse(savedCellier);
+    return initialValueCellier || "";
+  });
   const [username, setUsername] = useState([]);
   const [utilisateur, setUtilisateur] = useState([]);
   const [utilisateurs, setUtilisateurs] = useState([]);
