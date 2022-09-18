@@ -1,17 +1,44 @@
-.css-1cdjfa1-MuiPaper-root-MuiDialog-paper {
-  
-  width: 100%;
-  .img-wrap {
-    width: 200px;
-  }
-  img {
-    object-fit: contain;
-    overflow: hidden;
-  }
-  .hr {
-      border: .2px solid gray;
-  }
+.FormBouteille {
+	.css-1cdjfa1-MuiPaper-root-MuiDialog-paper {
+		width: 100%;
+		.img-wrap {
+			width: 200px;
+		}
+		img {
+			object-fit: contain;
+			overflow: hidden;
+		}
+		.hr {
+			border: .2px solid gray;
+		}
+	}
+	.hidden {
+		display: none;
+	}
 }
-.hidden {
-  display: none;
+
+.FormBouteille--button {
+	&:nth-child(1) {
+		background-color: #cc4240;
+		color: #f3f5eb;
+		font-size: 12px;
+		padding: 10px 20px;
+		&:hover {
+			background-color: #f1ab50;
+			color: #152440;
+			cursor: pointer;
+		}
+	}
+
+	&:nth-child(2) {
+		background-color: #152440;
+		color: #f3f5eb;
+		font-size: 12px;
+		padding: 10px 20px;
+		&:hover {
+			background-color: #f1ab50;
+			color: #152440;
+			cursor: pointer;
+		}
+	}
 }
