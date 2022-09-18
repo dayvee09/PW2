@@ -89,7 +89,6 @@ export default function NavDesktop({
               <span>Mon Profil</span>
             </MenuItem>
           )}
-          <hr></hr>
           <MenuItem
             onClick={gererFermerMenuContextuel}
             component={Link}
@@ -97,7 +96,6 @@ export default function NavDesktop({
           >
             <span>Mes Celliers</span>
           </MenuItem>
-          <hr></hr>
           <MenuItem
             onClick={gererFermerMenuContextuel}
             component={Link}

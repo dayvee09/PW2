@@ -17,27 +17,42 @@ export default function NavMobile({
   utilisateur,
   setIndexNav,
   indexNav,
+  setResetBottomNav,
+  resetBottomNav
 }) {
-  // état du BottomNavigation
-  const [value, setValue] = useState(indexNav);
+	// console.log('value is, on path', window.location.pathname);
+	
+  	// état du BottomNavigation
+	const [value, setValue] = useState(indexNav);
 
-  useEffect(() => {
-    setIndexNav(value);
-  }, [value]);
+    useEffect(() => {
+	  setIndexNav(value);
+	}, [value]);
 
-  return (
-    <div>
+	// Gestion du reset du BottomNavigation lors de la déconnexion
+	if(Auth.user == null ) {
+		if(resetBottomNav == false) {
+			setResetBottomNav(true);
+			if(value == 1) {
+				setIndexNav(0)
+				setValue(0);
+			}
+		}
+	}
+
+	return (
+	<div>
       <div className={Auth.user ? "NavMobile" : "Hidden"}>
         <AppBar
           position="fixed"
           color="primary"
           sx={{ top: "auto", bottom: 0 }}
-        >
+		  >
           <BottomNavigation
             className="BottomNav"
             value={indexNav}
             onChange={(event, newValue) => {
-              setValue(newValue);
+				setValue(newValue);
             }}
             showLabels
           >
