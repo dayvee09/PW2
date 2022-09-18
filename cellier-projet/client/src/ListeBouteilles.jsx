@@ -23,7 +23,8 @@ function ListeBouteilles(props) {
 			</div>
 			{props.bouteilles.length > 1 &&
 			<div className="ListeBouteille--grid">
-				{props.bouteilles.map((bouteille) => (
+				{props.bouteilles.map((bouteille, index) => (
+				<div key={index}>
 					<Bouteille
 					{...bouteille}
 					fetchVins={props.fetchVins}
@@ -39,6 +40,7 @@ function ListeBouteilles(props) {
 					setError={props.setError}
 					fetchUtilisateur={props.sfetchUtilisateur}
 					/>
+				</div>
 				))}
 			</div>
 			}
