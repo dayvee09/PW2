@@ -15,6 +15,7 @@ import placeholderSaq from "./img/png/placeholder-saq.png";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
 
+
 export default function FrmBouteille({
   bouteille,
   frmOuvert,
@@ -53,7 +54,7 @@ export default function FrmBouteille({
     }
   }
   return (
-    <div>
+    <div className="FormBouteille">
       <Dialog
         open={frmOuvert}
         onClose={viderFermerFrm}
@@ -143,8 +144,8 @@ export default function FrmBouteille({
         </DialogContent>
         {voirFiche === false ? (
           <DialogActions>
-            <Button onClick={viderFermerFrm}>Annuler</Button>
-            <Button onClick={gererSoumettre}>Soumettre</Button>
+            <Button className={"FormBouteille--button"} onClick={viderFermerFrm}>Annuler</Button>
+            <Button className={"FormBouteille--button"} onClick={gererSoumettre}>Soumettre</Button>
           </DialogActions>
         ) : (
           <DialogActions>
