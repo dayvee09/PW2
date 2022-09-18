@@ -48,7 +48,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -298,7 +298,7 @@ const Appli = () => {
   async function gererSignOut() {
     await Auth.signOut()
       .then(() => {
-		setResetBottomNav(false);
+        setResetBottomNav(false);
         setId("");
         setUtilisateur("");
         setBouteilles("");
@@ -533,8 +533,8 @@ const Appli = () => {
           utilisateur={utilisateur}
           setIndexNav={setIndexNav}
           indexNav={indexNav}
-		  setResetBottomNav={setResetBottomNav}
-		  resetBottomNav={resetBottomNav}
+          setResetBottomNav={setResetBottomNav}
+          resetBottomNav={resetBottomNav}
         />
       </div>
       <PiedDePage />
