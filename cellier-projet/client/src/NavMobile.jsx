@@ -84,7 +84,7 @@ export default function NavMobile({
               component={Link}
               to={`/vins`}
             />
-            <BottomNavigationAction disabled={true} />
+            <BottomNavigationAction className="disabledIcone" disabled={true} />
             <BottomNavigationAction
               label="FAVORIS"
               icon={<FavorisIcone />}

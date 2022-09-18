@@ -41,6 +41,10 @@
 	}
 }
 
+.Profil--container {
+	max-width: 1000px;
+}
+
 .boutonSupprimer {
 	border: none;
 	background-color:transparent;
@@ -51,7 +55,7 @@
 	display: flex;
 	justify-content: flex-start;
 	margin-left: -0.1rem;
-	margin-top: 1.3rem;
+	margin-top: 10px;
 	margin-bottom: 2rem;
 	&:hover {
 	color:#cc4240;
@@ -92,12 +96,14 @@ a:link {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding-top: 50px;
+	margin-top: 50px;
 
 	.icone-profil {
 		@media only screen and (min-width: 768px) {
 			width: 8rem;    
 			padding: 1.6rem;
+			margin-top: 0px;
+
 		}
 
 		box-shadow: none;

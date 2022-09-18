@@ -9,11 +9,14 @@
 .ListeBouteilles--default {
 	h1 {
 		font-size: 20px;
+		padding-top:0;
 	}
 
 	.ListeBouteille--default-button {
-		font-size: 12px;
+		font-size: 15px;
 		color: #152440;
+		text-underline-offset: 5px;
+		text-decoration: underline 1px;
 
 		&:hover {
 			color: #cc4240;
