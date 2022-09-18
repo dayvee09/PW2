@@ -129,6 +129,17 @@ INSERT INTO `vino__cellier` (`id`, `nom`, `vino__utilisateur_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `vino__favoris`
+--
+
+CREATE TABLE `vino__favoris` (
+  `vino__bouteille__id` int(11) NOT NULL,
+  `vino__utilisateur_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `vino__type`
 --
 
@@ -196,6 +207,13 @@ ALTER TABLE `vino__cellier`
   ADD KEY `fk_vino__cellier_vino__utilisateur1_idx` (`vino__utilisateur_id`);
 
 --
+-- Index pour la table `vino__favoris`
+--
+ALTER TABLE `vino__favoris`
+  ADD PRIMARY KEY (`vino__bouteille__id`,`vino__utilisateur_id`),
+  ADD KEY `vino__utilisateur_id` (`vino__utilisateur_id`);
+
+--
 -- Index pour la table `vino__type`
 --
 ALTER TABLE `vino__type`
@@ -223,6 +241,7 @@ ALTER TABLE `vino__bouteille`
 --
 ALTER TABLE `vino__cellier`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 
 --
 -- AUTO_INCREMENT pour la table `vino__utilisateur`
@@ -252,7 +271,15 @@ ALTER TABLE `vino__bouteille_has_vino__cellier`
 --
 ALTER TABLE `vino__cellier`
   ADD CONSTRAINT `fk_vino__cellier_vino__utilisateur1` FOREIGN KEY (`vino__utilisateur_id`) REFERENCES `vino__utilisateur` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `vino__favoris`
+--
+ALTER TABLE `vino__favoris`
+  ADD CONSTRAINT `vino__favoris_ibfk_1` FOREIGN KEY (`vino__bouteille__id`) REFERENCES `vino__bouteille` (`id`),
+  ADD CONSTRAINT `vino__favoris_ibfk_2` FOREIGN KEY (`vino__utilisateur_id`) REFERENCES `vino__utilisateur` (`id`);
 COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
