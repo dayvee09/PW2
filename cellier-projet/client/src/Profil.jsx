@@ -141,58 +141,60 @@ export default function Profil(props) {
         <img src={Image} className="icone-profil" alt="icone-profil"></img>
         <p>{props.username}</p>
       </div>
-      <div className="signOut">
-        <Button onClick={redirectionAccueil}>Déconnexion</Button>
-      </div>
-      <div className="Profil">
-        <div className="description-username">
-          <div className="infos-modification">
-            <p>Nom d'usager</p>
-            <button className="modifier" onClick={gererModifierUsername}>
-              Modifier
-            </button>
-          </div>
-          <TextField
-            style={{ width: "100%" }}
-            id="username"
-            type={"text"}
-            variant="outlined"
-            value={props.username}
-            disabled
-          />
-        </div>
-        <div className="description-courriel">
-          <div className="infos-modification">
-            <p>Adresse Courriel</p>
-            <button className="modifier" onClick={gererModifierEmail}>
-              Modifier
-            </button>
-          </div>
-          <TextField
-            style={{ width: "100%" }}
-            id="email"
-            type={"text"}
-            variant="outlined"
-            value={props.emailUtilisateur}
-            disabled
-          />
-        </div>
-        <div className="description-password">
-          <div className="infos-modification">
-            <p>Mot de passe</p>
-            <button className="modifier" onClick={gererModifierPassword}>
-              Modifier
-            </button>
-          </div>
-          <TextField
-            style={{ width: "100%" }}
-            id="password"
-            type={"password"}
-            variant="outlined"
-            defaultValue={"**********"}
-            disabled
-          />
-        </div>
+	  <div className="Profil--container">
+		<div className="signOut">
+			<Button onClick={redirectionAccueil}>Déconnexion</Button>
+		</div>
+		<div className="Profil">
+			<div className="description-username">
+			<div className="infos-modification">
+				<p>Nom d'usager</p>
+				<button className="modifier" onClick={gererModifierUsername}>
+				Modifier
+				</button>
+			</div>
+			<TextField
+				style={{ width: "100%" }}
+				id="username"
+				type={"text"}
+				variant="outlined"
+				value={props.username}
+				disabled
+			/>
+			</div>
+			<div className="description-courriel">
+			<div className="infos-modification">
+				<p>Adresse Courriel</p>
+				<button className="modifier" onClick={gererModifierEmail}>
+				Modifier
+				</button>
+			</div>
+			<TextField
+				style={{ width: "100%" }}
+				id="email"
+				type={"text"}
+				variant="outlined"
+				value={props.emailUtilisateur}
+				disabled
+			/>
+			</div>
+			<div className="description-password">
+			<div className="infos-modification">
+				<p>Mot de passe</p>
+				<button className="modifier" onClick={gererModifierPassword}>
+				Modifier
+				</button>
+			</div>
+			<TextField
+				style={{ width: "100%" }}
+				id="password"
+				type={"password"}
+				variant="outlined"
+				defaultValue={"**********"}
+				disabled
+			/>
+			</div>
+		</div>
         <FrmUsername
           emailUtilisateur={props.emailUtilisateur}
           frmUsernameOuvert={frmUsernameOuvert}
