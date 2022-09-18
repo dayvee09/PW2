@@ -181,7 +181,7 @@ export default function FrmAjoutBouteille(props) {
         } else {
           setOpenErr(true);
           setMessageErr(
-            `La bouteille "${value ? value.nom : ""}" existe dans ce cellier !!`
+            `La bouteille "${value ? value.nom : ""}" existe dans ce cellier !`
           );
         }
       } else {
@@ -279,7 +279,7 @@ export default function FrmAjoutBouteille(props) {
       });
   }
   /**
-   * gérer l'affichage de l'image de bouteille, l'image par défaut va être à la place de l'image associé si elle n'existe pas  
+   * gérer l'affichage de l'image de bouteille, l'image par défaut va être à la place de l'image associé si elle n'existe pas
    * @returns URL de l'image
    */
   const imgUrl = () => {
