@@ -4,10 +4,10 @@ body {
 	margin: auto;
 	font-family: raleway;
 	padding-bottom: 75px;
-	// Overwrite the default style of the Amplify UI 
-	//( Le css injecté en inline à l'ouverture des popOver)
-	overflow-y: scroll !important;
-	padding-right: 0 !important;
+}
+
+html::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
 }
 
 h1 {

@@ -12,7 +12,7 @@
 	text-align: left;
 	width: 100%;
 	background-position: center;
-	// background-repeat: no-repeat;
+	background-repeat: no-repeat;
 	background-size: cover;
 	background-image: linear-gradient(
 		to top,
@@ -29,6 +29,7 @@
 
 .Login .PiedDePage {
 	background-color: #cc4240;
+	background-image: none;
 
 	justify-content: center; 
 	.nav-link-help {
@@ -37,11 +38,19 @@
 }
 
 @media only screen and (min-width: 768px) {
-
 	.Login .PiedDePage {
 		position: fixed;
 		background-color: #152440;
 		justify-content: space-between; 
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-image: linear-gradient(
+			to top,
+			rgba(16, 30, 51, 0.97) 50%,
+			rgba(16, 30, 51, 0.97) 50%
+		),
+		url(./img/jpg/background-accueil.jpg);
  	}
 	
 	.PiedDePage {
