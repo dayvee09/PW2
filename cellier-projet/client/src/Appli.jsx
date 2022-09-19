@@ -243,7 +243,7 @@ const Appli = () => {
           username={username}
         />
       )}
-      <div className="Appli--container ">
+      <div>
         <img
           className={Auth.user ? "Hidden" : "logo"}
           src={Logo}
@@ -313,6 +313,7 @@ const Appli = () => {
                       fetchVins={fetchVins}
                       gererBouteilles={gererBouteilles}
                       cellier={cellier}
+					  celliers={celliers}
                       URI={URI}
                       error={error}
                       setError={setError}
