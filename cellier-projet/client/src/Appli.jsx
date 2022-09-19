@@ -202,7 +202,7 @@ const Appli = () => {
   }, [id]);
 
   useEffect(() => {
-    fetchVins();
+    fetchVins(cellier);
   }, [cellier]);
 
   function gererBouteilles(idBouteilles) {
@@ -339,7 +339,7 @@ const Appli = () => {
 
   // --------------------------------- Gestion des bouteilles ------------------------------------
 
-  async function fetchVins() {
+  async function fetchVins(cellier) {
     await fetch(URI + "/" + "cellier" + "/" + cellier + "/" + "vins")
       .then((response) => {
         if (response.ok) {
@@ -466,6 +466,8 @@ const Appli = () => {
                   path={`/`}
                   element={
                     <ListeCelliers
+                      bouteilles={bouteilles}
+                      setBouteilles={setBouteilles}
                       celliers={celliers}
                       setCelliers={setCelliers}
                       cellier={cellier}

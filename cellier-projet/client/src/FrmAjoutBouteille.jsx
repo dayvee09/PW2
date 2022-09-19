@@ -269,7 +269,7 @@ export default function FrmAjoutBouteille(props) {
         throw response;
       })
       .then((data) => {
-        props.fetchVins();
+        props.fetchVins(vinCellier);
         props.setCellier(vinCellier);
         navigate(`/cellier/${vinCellier}/vins`, { replace: true });
       })
