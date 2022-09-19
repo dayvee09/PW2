@@ -12,11 +12,19 @@ html::-webkit-scrollbar {
 
 h1 {
 	font-family: Alata;
-	font-size: 25px;
+	font-size: 22px;
 	text-transform: uppercase;
 	margin: 0;
 	padding-bottom: 25px;
 	padding-top: 50px;
+}
+
+h2 {
+	margin: 0;
+	padding-bottom: 25px;
+	font-family: Raleway;
+	font-weight: 400;
+	font-size: 15px;
 }
 
 img {

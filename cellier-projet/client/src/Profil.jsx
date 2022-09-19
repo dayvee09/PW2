@@ -14,6 +14,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "@aws-amplify/ui-react";
+import { NavLink } from "react-router-dom";
 
 export default function Profil(props) {
 
@@ -136,63 +137,70 @@ export default function Profil(props) {
   };
 
   return (
-    <>
-      <div className="infos-profil">
-        <img src={Image} className="icone-profil" alt="icone-profil"></img>
-        <p>{props.username}</p>
-      </div>
-	  <div className="Profil--container">
-		<div className="signOut">
-			<Button onClick={redirectionAccueil}>Déconnexion</Button>
+    <>	
+	  <div className="Appli--entete">
+		<div className="Appli--signOut-container">
+			<button className="Appli--signOut"  onClick={redirectionAccueil}>Déconnexion</button>
 		</div>
-		<div className="Profil">
-			<div className="description-username">
-			<div className="infos-modification">
-				<p>Nom d'usager</p>
-				<button className="modifier" onClick={gererModifierUsername}>
-				Modifier
-				</button>
-			</div>
-			<TextField
-				style={{ width: "100%" }}
-				id="username"
-				type={"text"}
-				variant="outlined"
-				value={props.username}
-				disabled
-			/>
-			</div>
-			<div className="description-courriel">
-			<div className="infos-modification">
-				<p>Adresse Courriel</p>
-				<button className="modifier" onClick={gererModifierEmail}>
-				Modifier
-				</button>
-			</div>
-			<TextField
-				style={{ width: "100%" }}
-				id="email"
-				type={"text"}
-				variant="outlined"
-				value={props.emailUtilisateur}
-				disabled
-			/>
-			</div>
-			<div className="description-password">
-			<div className="infos-modification">
-				<p>Mot de passe</p>
-				<button className="modifier" onClick={gererModifierPassword}>
-				Modifier
-				</button>
-			</div>
-			<TextField
-				style={{ width: "100%" }}
-				id="password"
-				type={"password"}
-				variant="outlined"
-				defaultValue={"**********"}
-				disabled
-			/>
+	  </div>
+	  <div  className="Appli--container">
+		<div className="infos-profil">
+			<img src={Image} className="icone-profil" alt="icone-profil"></img>
+			<p>{props.username}</p>
+		</div>
+		<div className="Profil--container">
+			{/* <div className="signOut">
+				<Button onClick={redirectionAccueil}>Déconnexion</Button>
+			</div> */}
+			<div className="Profil">
+				<div className="description-username">
+				<div className="infos-modification">
+					<p>Nom d'usager</p>
+					<button className="modifier" onClick={gererModifierUsername}>
+					Modifier
+					</button>
+				</div>
+				<TextField
+					style={{ width: "100%" }}
+					id="username"
+					type={"text"}
+					variant="outlined"
+					value={props.username}
+					disabled
+					/>
+				</div>
+				<div className="description-courriel">
+				<div className="infos-modification">
+					<p>Adresse Courriel</p>
+					<button className="modifier" onClick={gererModifierEmail}>
+					Modifier
+					</button>
+				</div>
+				<TextField
+					style={{ width: "100%" }}
+					id="email"
+					type={"text"}
+					variant="outlined"
+					value={props.emailUtilisateur}
+					disabled
+					/>
+				</div>
+				<div className="description-password">
+				<div className="infos-modification">
+					<p>Mot de passe</p>
+					<button className="modifier" onClick={gererModifierPassword}>
+					Modifier
+					</button>
+				</div>
+				<TextField
+					style={{ width: "100%" }}
+					id="password"
+					type={"password"}
+					variant="outlined"
+					defaultValue={"**********"}
+					disabled
+				/>
+				</div>
 			</div>
 		</div>
         <FrmUsername
