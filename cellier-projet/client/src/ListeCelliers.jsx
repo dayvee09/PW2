@@ -1,11 +1,21 @@
 import "./ListeCelliers.scss";
 import Cellier from "./Cellier";
 import { NavLink } from "react-router-dom";
+import rowIcone from "./img/svg/icone-search-bar-white.svg";
 
 function ListeCelliers(props) {
   if (props.celliers.length > 0) {
     return (
       <>
+	  <div className="Appli--entete">
+		<div className="Appli--search-bar-container">
+			<input className="Appli--search-bar" placeholder="Trouver une bouteille" />
+			<div className="test">
+				<img className="testimage" src={rowIcone} alt="icone-row-left" width={15}></img>
+			</div>
+		</div>
+	  </div>
+	  <div className="Appli--container">
         <div className="liste-cellier--entete">
           <h1>Mes Celliers</h1>
           <NavLink to="/cellier/ajout/celliers">
@@ -37,6 +47,7 @@ function ListeCelliers(props) {
             </div>
           ))}
         </div>
+	  </div>
       </>
     );
   }
