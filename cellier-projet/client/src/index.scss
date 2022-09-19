@@ -4,7 +4,10 @@ body {
 	margin: auto;
 	font-family: raleway;
 	padding-bottom: 75px;
-	
+	// Overwrite the default style of the Amplify UI 
+	//( Le css injecté en inline à l'ouverture des popOver)
+	overflow-y: scroll !important;
+	padding-right: 0 !important;
 }
 
 h1 {
@@ -34,12 +37,6 @@ hr {
 // 	border: red 1px dashed;
 // }
 
-@media only screen and (min-width: 768px) {
-    h1 {
-		padding-top: 0;
-	}
-}
-
 .action {
 	background-color: #152440;
 	color: #f3f5eb;
@@ -66,11 +63,17 @@ hr {
 	.MuiAlert-message {
 		font-family: raleway;
 	}
-
+	
 	button {
 		&:hover {
 			background-color: #f1ab50;
 			color: #152440;
 		}
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	h1 {
+		padding-top: 0;
 	}
 }
