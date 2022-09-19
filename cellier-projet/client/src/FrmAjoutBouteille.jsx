@@ -118,6 +118,13 @@ export default function FrmAjoutBouteille(props) {
   /**
    *  Fetch la liste de la bouteilles de la BD pour préparer à injecter à la liste du composant 'Autocomplete'
    */
+
+  useEffect(() => {
+  if (localStorage.getItem("vins") !== null) {
+    setVinsListe(JSON.parse(localStorage.getItem("vins")));
+  }
+  }, []);
+
   useEffect(() => {
     fetch(props.URI + "/cellier/1/vins")
       .then((response) => {
@@ -127,12 +134,17 @@ export default function FrmAjoutBouteille(props) {
         throw response;
       })
       .then((data) => {
-        setVinsListe(data);
+        // setVinsListe(data);
+        if (data["erreur"] === undefined) {
+          localStorage.setItem("vins", JSON.stringify(data));
+          setVinsListe(JSON.parse(localStorage.getItem("vins")));
+        }
       });
   }, []);
   /**
    *  Fetch le cellier choisi ayant des bouteilles pour vérifier si la bouteille choisie existe déjà
    */
+  
   useEffect(() => {
     fetch(props.URI + `/cellier/${vinCellier}/vins`)
       .then((response) => {
