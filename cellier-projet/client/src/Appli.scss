@@ -1,4 +1,114 @@
 .Appli {
+	.Appli--entete {
+		background-color: #152440;
+		border-bottom: #cc4240 5px solid;
+		color: #f3f5eb;
+		padding: 40px 1.25rem 20px 1.25rem;
+		margin-top: -15px;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-image: linear-gradient(
+			to top,
+			rgba(16, 30, 51, 0.95) 50%,
+			rgba(16, 30, 51, 0.95) 50%
+		),
+		url(./img/jpg/background-accueil.jpg);
+
+		.Appli--search-bar-container {
+			display: flex;
+			.Appli--search-bar {
+				background-color: #f3f5eb;
+				border: 1px solid #cc4240;
+				border-radius: 4px;
+				color: #152440;
+				font-family: Raleway;
+				padding: 10px 10px 10px 10px;
+				margin-bottom: 5px;
+				outline: none;
+				width: 70%;
+
+				&:focus {
+					border-color: #f1ab50;
+					box-shadow: none;
+				}
+			}
+
+			.test {
+				background-color: #cc4240;
+				padding: 11px;
+				border-radius: 100px;
+				height: 40px;
+				width: 40px;
+				margin-left: 10px;
+				.testimage{
+					display: block;
+					margin: auto;
+				}
+			
+				&:hover {
+					background-color: #f1ab50;
+					color: #f3f5eb;
+					cursor: pointer;	  
+				}
+			}	
+		}
+
+		.Appli--tri-container {		
+			select {
+				margin-top: 10px;
+				min-width: 180px;
+				background-color: #f1ab50;
+				border: #f1ab50 1px solid;
+				outline: none;
+				// border:none;
+				color:#152440;
+				-webkit-appearance: none;
+				-moz-appearance: none;
+				background-image: url("./img/svg/icone_row_down_blue.svg");
+				background-size: 6% 50%;
+				background-repeat: no-repeat;
+				background-position-x: 95%;
+				background-position-y: 10px;
+			}
+
+			@media only screen and (min-width: 365px) {
+				select {
+					margin-left: 10px;
+				}
+			}
+
+			@media only screen and (min-width: 390px) {
+				display: flex;
+				select {
+					margin-top: 0px;
+					margin-left: 10px;
+				}
+			}
+	
+		}
+
+		.Appli--signOut-container {
+			.Appli--signOut {
+				background-color: #cc4240;
+				border: 1px solid #cc4240;
+				border-radius: 4px;
+				color: #f3f5eb;
+				font-family: Alata;
+				text-transform: uppercase;
+				padding: 10px 15px 10px 15px;
+				font-size: 11px;
+
+				&:hover {
+					background-color: #f1ab50;
+					border: 1px solid #f1ab50;
+					color: #152440;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+
 	.Appli--container {
 		padding: 0 1.25rem 75px 1.25rem;
 		min-height: 85vh;
@@ -121,6 +231,10 @@
 
 @media only screen and (min-width: 560px) {
 	.Appli {
+		.Appli--entete {
+			padding: 40px 3rem 20px 3rem;
+		}
+
 		.Appli--container {
 		padding: 0 3rem 75px 3rem;
 		}
@@ -134,8 +248,37 @@
 	}
 
 	.Appli {
+		.Appli--entete {
+			padding: 90px 5vw 10px 5vw;
+			margin-top: 0;
+			margin-bottom:  50px;
+
+			.Appli--search-bar-container {
+				.Appli--search-bar {
+					width: 40%
+				}
+			}
+
+			.Appli--signOut {
+				margin-bottom: 5px;
+			}
+		}
+
 		.Appli--container {
-			padding: 150px 5rem 75px 5rem;
+			padding: 0 5vw 75px 5vw;
+		}
+
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.Appli {
+		.Appli--entete {
+			padding: 90px 12vw 10px 12vw;
+		}
+
+		.Appli--container {
+			padding: 0 12vw 75px 12vw;
 		}
 	}
 }
