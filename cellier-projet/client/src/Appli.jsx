@@ -66,14 +66,21 @@ const Appli = () => {
     DATA = true;
   });
 
-  useEffect(() => {
-    setCellier(
-      JSON.parse(localStorage.getItem("cellier"))
-    )
-  },[]);
+  // useEffect(() => {
+  //   console.log(cellier);
+  //   setCellier(
+  //     JSON.parse(localStorage.getItem("cellier"))
+  //   )
+  //   console.log(cellier);
+  // },[]);
 
   useEffect(() => {
     fetchCelliers();
+    console.log(cellier);
+    setCellier(
+      JSON.parse(localStorage.getItem("cellier"))
+    )
+    console.log(cellier);
   }, [id]);
 
   useEffect(() => {
