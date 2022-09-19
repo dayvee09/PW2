@@ -66,21 +66,12 @@ const Appli = () => {
     DATA = true;
   });
 
-  // useEffect(() => {
-  //   console.log(cellier);
-  //   setCellier(
-  //     JSON.parse(localStorage.getItem("cellier"))
-  //   )
-  //   console.log(cellier);
-  // },[]);
-
   useEffect(() => {
     fetchCelliers();
-    console.log(cellier);
-    setCellier(
-      JSON.parse(localStorage.getItem("cellier"))
-    )
-    console.log(cellier);
+    setCellier(JSON.parse(localStorage.getItem("cellier")))
+    if (localStorage.getItem("celliers") !== null) {
+      setCelliers(JSON.parse(localStorage.getItem("celliers")));
+    }
   }, [id]);
 
   useEffect(() => {
@@ -210,8 +201,10 @@ const Appli = () => {
         throw response;
       })
       .then((data) => {
-        setCelliers(data);
-        // console.log(data);
+        if (data["erreur"] === undefined) {
+          localStorage.setItem("celliers", JSON.stringify(data));
+          setCelliers(JSON.parse(localStorage.getItem("celliers")));
+        }
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
