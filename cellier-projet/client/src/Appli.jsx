@@ -69,7 +69,9 @@ const Appli = () => {
   useEffect(() => {
     fetchCelliers();
     setCellier(JSON.parse(localStorage.getItem("cellier")))
-    // setCelliers(JSON.parse(localStorage.getItem("celliers")));
+    if (localStorage.getItem("celliers") !== null) {
+      setCelliers(JSON.parse(localStorage.getItem("celliers")));
+    }
   }, [id]);
 
   useEffect(() => {
@@ -199,9 +201,9 @@ const Appli = () => {
         throw response;
       })
       .then((data) => {
-        setCelliers(data)
         if (data["erreur"] === undefined) {
           localStorage.setItem("celliers", JSON.stringify(data));
+          setCelliers(JSON.parse(localStorage.getItem("celliers")));
         }
       })
       .catch((error) => {
