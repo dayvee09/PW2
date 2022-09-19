@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 
 function ListeCelliers(props) {
   if (props.celliers.length > 0) {
-    // console.log("celliers:", props.celliers);
     return (
       <>
         <div className="liste-cellier--entete">
@@ -19,8 +18,11 @@ function ListeCelliers(props) {
             <div key={cellier.id} className="Cellier">
               <Cellier
                 {...cellier}
+                bouteilles={props.bouteilles}
+                setBouteilles={props.setBouteilles}
                 fetchVins={props.fetchVins}
                 celliers={props.celliers}
+                setCelliers={props.setCelliers}
                 cellier={props.cellier}
                 setCellier={props.setCellier}
                 emailUtilisateur={props.emailUtilisateur}

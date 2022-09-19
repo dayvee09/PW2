@@ -15,6 +15,7 @@ import { styled } from "@mui/material/styles";
 
 export default function Cellier(props) {
   const [cellier, setCellier] = useState([props.id]);
+  const [statsCellier, setStatsCellier] = useState([]);
   const [selection, setSelection] = useState("fond-normal");
   const [eltAncrage, setEltAncrage] = useState(null);
   const menuContextuelOuvert = Boolean(eltAncrage);
@@ -32,7 +33,7 @@ export default function Cellier(props) {
   const handleClickCellier = () => {
     setCellier(props.id);
     localStorage.setItem("cellier", JSON.stringify(cellier));
-    setCellier(JSON.parse(localStorage.getItem('cellier')));
+    setCellier(JSON.parse(localStorage.getItem("cellier")));
     setTimeout(() => {
       navigate(`/cellier/${cellier}/vins`, { replace: true });
     }, 100);
@@ -73,6 +74,10 @@ export default function Cellier(props) {
   useEffect(() => {
     props.gererCellier(cellier);
   }, [cellier]);
+
+  useEffect(() => {
+    fetchStatsCellier();
+  }, []);
 
   /**
    * Gestion du menu contextuel d'action d'un cellier
@@ -121,6 +126,26 @@ export default function Cellier(props) {
     });
   }
 
+  // Va chercher les stats d'un cellier
+  async function fetchStatsCellier() {
+    await fetch(
+      props.URI + "/" + "cellier" + "/" + cellier + "/" + "vinsCelliers"
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setStatsCellier(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        props.setError(error);
+      });
+  }
+
   /**
    * Supprime le cellier
    */
@@ -147,7 +172,6 @@ export default function Cellier(props) {
         props.setError(props.error);
       });
   }
-
   return (
     <>
       <div
@@ -171,10 +195,25 @@ export default function Cellier(props) {
           />
         </div>
         <div className="cellier--description">
-          <p>12 bouteilles</p>
-          <p>Valeur totale : 20 000$ </p>
-          {/* <p>ID : {props.id}</p> 
-          			<p>Id Utilisateur : {props.vino__utilisateur_id}</p> */}
+          <p>
+            {statsCellier.length === 1 && statsCellier[0].compte !== undefined
+              ? statsCellier[0].compte
+              : 0}
+            {statsCellier.length === 1 &&
+            statsCellier[0].compte !== undefined &&
+            statsCellier[0].compte > 1
+              ? ` bouteilles`
+              : ` bouteille`}
+          </p>
+          <p>
+            Valeur totale :{" "}
+            {statsCellier.length === 1 &&
+            statsCellier[0].somme !== undefined &&
+            statsCellier[0].somme !== null
+              ? statsCellier[0].somme
+              : 0}
+            $
+          </p>
         </div>
         <Menu
           open={menuContextuelOuvert}
@@ -193,13 +232,13 @@ export default function Cellier(props) {
             },
           }}
         >
-		<MenuItem onClick={gererModifier}>Modifier</MenuItem>
-		<hr></hr>
-		{ props.celliers.length > 1 ?
-		<MenuItem onClick={gererSupprimer}>Supprimer</MenuItem>
-		:
-		<MenuItem disabled>Supprimer</MenuItem>
-		}
+          <MenuItem onClick={gererModifier}>Modifier</MenuItem>
+          <hr></hr>
+          {props.celliers.length > 1 ? (
+            <MenuItem onClick={gererSupprimer}>Supprimer</MenuItem>
+          ) : (
+            <MenuItem disabled>Supprimer</MenuItem>
+          )}
         </Menu>
         <Dialog
           PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}

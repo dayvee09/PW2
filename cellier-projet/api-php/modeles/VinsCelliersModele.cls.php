@@ -4,7 +4,7 @@ class VinsCelliersModele extends AccesBd
     public function tout($params)
     {
 
-        return $this->lire("SELECT  vino__cellier.vino__utilisateur_id as user_id, vino__bouteille.id, vino__bouteille.nom, vino__cellier_id, quantite, date_achat, garde_jusqua, notes FROM vino__bouteille JOIN vino__bouteille_has_vino__cellier ON vino__bouteille.id=vino__bouteille_has_vino__cellier.vino__bouteille_id JOIN vino__type ON vino__bouteille.vino__type_id=vino__type.id JOIN vino__cellier ON vino__cellier.id =vino__bouteille_has_vino__cellier.vino__cellier_id where vino__cellier.vino__utilisateur_id =:user_id ORDER BY vino__bouteille.id ASC", ['user_id' => $params['user_id']]);
+        return $this->lire("SELECT count(*) as compte, sum(prix_saq * quantite) as somme FROM vino__bouteille JOIN vino__bouteille_has_vino__cellier ON vino__bouteille.id=vino__bouteille_has_vino__cellier.vino__bouteille_id JOIN vino__type ON vino__bouteille.vino__type_id=vino__type.id JOIN vino__cellier ON vino__cellier.id =vino__bouteille_has_vino__cellier.vino__cellier_id where vino__bouteille_has_vino__cellier.vino__cellier_id =:cellier ORDER BY vino__bouteille.id ASC", ['cellier' => $params['cellier']]);
     }
 
     public function un($params, $idEntite)
@@ -16,7 +16,6 @@ class VinsCelliersModele extends AccesBd
 
     public function ajouter($vin)
     {
-        
     }
 
     public function retirer($id)
