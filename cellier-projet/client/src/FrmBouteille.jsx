@@ -15,7 +15,6 @@ import placeholderSaq from "./img/png/placeholder-saq.png";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
 
-
 export default function FrmBouteille({
   bouteille,
   frmOuvert,
@@ -60,11 +59,6 @@ export default function FrmBouteille({
         onClose={viderFermerFrm}
         PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
       >
-        {/* {voirFiche === false ? (
-          <DialogTitle> Modifier la quantité de la bouteille</DialogTitle>
-        ) : (
-          <DialogTitle> {bouteille_nom}</DialogTitle>
-        )} */}
         <DialogContent>
           <div className="img-wrap">
             <img
@@ -86,7 +80,9 @@ export default function FrmBouteille({
             <p className="millesime">Millesime : {bouteille.millesime}</p>
             <p className="millesime">Prix : {bouteille.prix_saq}.00$</p>
             <p>
-              <a href={bouteille.url_saq} target="_blank">Voir SAQ</a>
+              <a href={bouteille.url_saq} target="_blank">
+                Voir SAQ
+              </a>
             </p>
             <div className={voirFiche === false ? "hidden" : ""}>
               <p className="quantite">Quantité : {quantite}</p>
@@ -144,8 +140,18 @@ export default function FrmBouteille({
         </DialogContent>
         {voirFiche === false ? (
           <DialogActions>
-            <Button className={"FormBouteille--button"} onClick={viderFermerFrm}>Annuler</Button>
-            <Button className={"FormBouteille--button"} onClick={gererSoumettre}>Soumettre</Button>
+            <Button
+              className={"FormBouteille--button"}
+              onClick={viderFermerFrm}
+            >
+              Annuler
+            </Button>
+            <Button
+              className={"FormBouteille--button"}
+              onClick={gererSoumettre}
+            >
+              Soumettre
+            </Button>
           </DialogActions>
         ) : (
           <DialogActions>

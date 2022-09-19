@@ -3,14 +3,12 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./FrmSaq.scss";
 import FrmSaqInput from "./FrmSaqInput";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Collapse from "@mui/material/Collapse";
 
 export default function FrmSaq({
   frmOuvert,
@@ -86,30 +84,8 @@ export default function FrmSaq({
           />
         </DialogContent>
         <DialogActions>
-          <Button
-            // sx={[
-            //   {
-            //     "&:hover": {
-            //       color: "#f1ab50",
-            //     },
-            //   },
-            // ]}
-            onClick={viderFermerFrm}
-          >
-            Annuler
-          </Button>
-          <Button
-            // sx={[
-            //   {
-            //     "&:hover": {
-            //       color: "#f1ab50",
-            //     },
-            //   },
-            // ]}
-            onClick={gererSoumettre}
-          >
-            Soumettre
-          </Button>
+          <Button onClick={viderFermerFrm}>Annuler</Button>
+          <Button onClick={gererSoumettre}>Soumettre</Button>
         </DialogActions>
       </Dialog>
     </div>
