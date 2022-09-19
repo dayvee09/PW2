@@ -82,7 +82,7 @@ export default function FrmAjoutBouteille(props) {
   /**
    * État du nom de la bouteille
    */
-  const [vinNom, setVinNom] = React.useState("");
+  const [vinNom, setVinNom] = React.useState("#");
   /**
    * État du prix de la bouteille
    */
@@ -160,7 +160,7 @@ export default function FrmAjoutBouteille(props) {
     setVinDescription("");
     setVinGarde(moment().get("year").toString());
     setVinImage("");
-    setVinNom("");
+    setVinNom("#");
     setVinNote("");
     setVinQuantite(1);
     setVinType(1);
@@ -229,12 +229,12 @@ export default function FrmAjoutBouteille(props) {
         quantite: vinQuantite,
         date_achat: vinDateAchat,
         garde_jusqua: vinGarde,
-        notes: value.notes,
+        notes: vinNote,
         personnalise: 0,
       };
     } else {
       formData = {
-        nom: vinNom,
+        nom: vinNom || "",
         image: vinImage,
         code_saq: "",
         pays: vinPays,
@@ -253,6 +253,7 @@ export default function FrmAjoutBouteille(props) {
         notes: vinNote,
       };
     }
+    console.log(formData)
     // Fetch API d'ajouter une bouteille , soit l'importation du SAQ soit la création personnalisé
     let fetchAjoutBouteille = await fetch(
       // "http://localhost/PW2/cellier-projet/api-php" +
@@ -390,6 +391,8 @@ export default function FrmAjoutBouteille(props) {
               size="small"
               type="text"
               name="millesime"
+              disabled= {btnState? false: true}
+              className={!btnState? "nonSelect" : ""}
               value={value ? value.millesime : vinMillesime}
               onChange={(e) => {
                 setMillesime(e.target.value);
@@ -403,6 +406,8 @@ export default function FrmAjoutBouteille(props) {
               size="small"
               type="text"
               name="pays"
+              disabled= {btnState? false: true}
+              className={!btnState? "nonSelect" : ""}
               value={value ? value.pays : vinPays}
               onChange={(e) => {
                 setVinPays(e.target.value);
@@ -416,6 +421,8 @@ export default function FrmAjoutBouteille(props) {
               size="small"
               type="number"
               name="prix"
+              disabled= {btnState? false: true}
+              className={!btnState? "nonSelect" : ""}
               value={value ? value.prix_saq : vinPrix}
               onChange={(e) => {
                 setVinPrix(e.target.value);
@@ -435,6 +442,8 @@ export default function FrmAjoutBouteille(props) {
               size="small"
               type="text"
               name="format"
+              disabled= {btnState? false: true}
+              className={!btnState? "nonSelect" : ""}
               value={value ? value.format : vinFormat}
               onChange={(e) => {
                 setVinFormat(e.target.value);
@@ -451,6 +460,8 @@ export default function FrmAjoutBouteille(props) {
               multiline
               rows={2}
               // maxRows={3}
+              disabled= {btnState? false: true}
+              className={!btnState? "nonSelect" : ""}
               value={value ? value.description : vinDescription}
               onChange={(e) => {
                 setVinDescription(e.target.value);
@@ -471,6 +482,8 @@ export default function FrmAjoutBouteille(props) {
               fullWidth
               size="small"
               name="type"
+              className={!btnState? "nonSelect" : ""}
+              disabled= {btnState? false: true}
             >
               {types.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -502,7 +515,7 @@ export default function FrmAjoutBouteille(props) {
               size="small"
               type="text"
               name="notes"
-              value={value ? value.notes : vinNote}
+              value={vinNote}
               onChange={(e) => {
                 setVinNote(e.target.value);
               }}
