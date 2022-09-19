@@ -25,24 +25,30 @@
 	}
 }
 
+.ListeBouteille--cellier-nom {
+	padding-bottom: 50px;
+}
+
 .retour {
-	background-color: #152440;
-	border: none;
+	background-color: transparent;
+	border: 1px solid #cc4240;
 	border-radius: 4px;
 	color: #f3f5eb;
 	font-family: Alata;
 	text-transform: uppercase;
-	padding: 10px;
-	margin-bottom: 50px;
-	margin-top: 50px;
+	padding: 10px 10px 10px 10px;
+	margin-bottom: 5px;
+	// margin-top: 5px;
 
 	&:hover {
 		background-color: #cc4240;
+		border: 1px solid #cc4240;
 		cursor: pointer;
 	}
 
-  img {
+    img {
 		padding-right: 10px;
+		display: inline-block;
 	}
 }
 
@@ -50,7 +56,7 @@
 	.ListeBouteille--grid {
 		grid-template-columns: repeat(3, 1fr);
 	}
-  }
+}
   
 @media only screen and (min-width: 1200px) {
 	.ListeBouteille--grid {
