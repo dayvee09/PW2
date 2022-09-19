@@ -1,137 +1,141 @@
 .Appli {
-  .Appli--container {
-    padding: 0 1.25rem 75px 1.25rem;
-    min-height: 85vh;
-  }
+	.Appli--container {
+		padding: 0 1.25rem 75px 1.25rem;
+		min-height: 85vh;
+	}
 }
 
 // Gestion du formulaire de connexion
 .Login {
-  overflow: auto;
-  background-position: top;
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: #152440;
-  font-family: "Raleway", sans-serif;
-  font-weight: 200;
-  padding-top: 25px;
-  padding-bottom: 25px;
-  text-align: center;
-  background-image: linear-gradient(
-      to top,
-      rgb(204, 66, 64) 60%,
-      rgba(16, 30, 51, 0.95) 50%
-    ),
-    url(./img/jpg/background-accueil.jpg);
+	color: #152440;
+	font-family: "Raleway", sans-serif;
+	font-weight: 200;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	text-align: center;
+	background-position: top;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-image: linear-gradient(
+		to top,
+		rgb(204, 66, 64) 60%,
+		rgba(16, 30, 51, 0.95) 50%
+		),
+		url(./img/jpg/background-accueil.jpg);
+		
+	position: fixed;
+	bottom: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+	overflow: auto;
+		
+	&::-webkit-scrollbar {
+		display: none; /* for Chrome, Safari, and Opera */
+	}
+	
+	.logo {
+		width: 200px;
+		padding-bottom: 25px;
+	}
 
-  position: fixed;
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
+	.Auth-sub-title {
+		padding-bottom: 25px;
+		font-weight: 200;
+		font-size: 15px;
+		color: #f3f5eb;
+	}
 
-  .logo {
-    width: 200px;
-    padding-bottom: 25px;
-  }
+	small {
+		font-size: 0.9em;
+		color: #f3f5eb;
+	}
 
-  .Auth-sub-title {
-    padding-bottom: 25px;
-    font-weight: 200;
-    font-size: 15px;
-    color: #f3f5eb;
-  }
+	.Authenticator {
+		padding-bottom: 25px;
 
-  small {
-    font-size: 0.9em;
-    color: #f3f5eb;
-  }
+	.amplify-heading {
+		font-size: 15px;
+	}
 
-  .Authenticator {
-    padding-bottom: 25px;
+	div:first-child {
+		background-color: #f3f5eb;
+		width: 100%;
+	}
 
-    .amplify-heading {
-      font-size: 15px;
-    }
+	input {
+		text-align: left;
 
-    div:first-child {
-      background-color: #f3f5eb;
-      width: 100%;
-    }
-
-    input {
-      text-align: left;
-
-      &:focus {
-        border-color: #f1ab50;
-        box-shadow: none;
-      }
-    }
+		&:focus {
+		border-color: #f1ab50;
+		box-shadow: none;
+		}
+	}
 
     .amplify-button--primary {
-      background-color: #f1ab50;
-      color: #152440;
-      font-weight: 200;
+		background-color: #f1ab50;
+		color: #152440;
+		font-weight: 200;
 
-      &:hover {
-        background-color: #152440;
-        color: #f3f5eb;
-      }
+		&:hover {
+		background-color: #152440;
+		color: #f3f5eb;
+		}
     }
 
     .amplify-button--link {
-      color: #152440;
-      text-underline-offset: 5px;
-      text-decoration: underline 1px;
+		color: #152440;
+		text-underline-offset: 5px;
+		text-decoration: underline 1px;
 
-      &:hover {
-        background-color: #f3f5eb;
-        color: #cc4240;
-      }
+		&:hover {
+			background-color: #f3f5eb;
+			color: #cc4240;
+		}
     }
 
     .amplify-tabs-item {
-      background-color: #f3f5eb;
-      color: #cc4240;
-      font-weight: 500;
-      border: 1px solid #e2e2e273;
+		background-color: #f3f5eb;
+		color: #cc4240;
+		font-weight: 500;
+		border: 1px solid #e2e2e273;
     }
 
     .amplify-alert--error {
-      background-color: #f3f5eb;
-      color: #cc4240;
-      font-weight: 500;
-      border: 1px solid #cc4240;
+		background-color: #f3f5eb;
+		color: #cc4240;
+		font-weight: 500;
+		border: 1px solid #cc4240;
     }
 
     button[data-state="inactive"] {
-      background-color: #f3f5eb86;
-      color: #152440;
+		background-color: #f3f5eb86;
+		color: #152440;
     }
 
     button[data-state="active"] {
-      border-top: 3px solid #f1ab50;
+		border-top: 3px solid #f1ab50;
     }
   }
 }
 
 @media only screen and (min-width: 560px) {
 	.Appli {
-	  .Appli--container {
+		.Appli--container {
 		padding: 0 3rem 75px 3rem;
-	  }
+		}
 	}
-  }
+}
 
 @media only screen and (min-width: 768px) {
-  .Authenticator {
-    width: 600px;
-    margin: auto;
-  }
+	.Authenticator {
+		width: 600px;
+		margin: auto;
+	}
 
-  .Appli {
-    .Appli--container {
-	  padding: 150px 5rem 75px 5rem;
-    }
-  }
+	.Appli {
+		.Appli--container {
+			padding: 150px 5rem 75px 5rem;
+		}
+	}
 }
