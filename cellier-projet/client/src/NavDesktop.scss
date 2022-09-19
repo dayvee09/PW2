@@ -1,5 +1,8 @@
 .NavDesktop {
   display: none;
+  position: fixed;
+  width: 100%;
+  z-index: 10;
 
   .MuiList-root {
     display: none;
@@ -13,7 +16,6 @@
     justify-content: space-between;
 	padding: 25px 5rem 25px 5rem;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
-	margin-bottom: 50px;
 
     .logo,
     .iconeAddBottle {

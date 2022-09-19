@@ -3,11 +3,6 @@
   border-radius: 4px 4px 0 0;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
 
-  .bouteille--info-container {
-    padding: 10px;
-    min-height: 110px;
-  }
-
   .bouteille--gestion {
     background-color: #d3d7dd78;
     cursor: pointer;
@@ -32,20 +27,30 @@
       position: absolute;
       top: 5px;
       right: 5px;
-
-      &:hover {
-        background-color: #d3d7dd78;
-        border-radius: 20px;
-        cursor: pointer;
-      }
     }
   }
 
-  .bouteille--description {
-    .bouteille--nom {
-      font-size: 12px;
-      font-weight: 500;
+  .quantite--container {
+    position: absolute;
+
+    .quantite {
+      text-align: center;
+      min-width: 40px;
+      background-color: #f1ab50;
+      font-weight: 600;
+      padding: 10px 10px;
+      border-radius: 140px;
+      margin: 5px;
+      color: #152440;
+      font-family: Raleway;
+      font-size: 14px;
     }
+  }
+
+  .snackbar-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 
   .quantite--container {
@@ -78,4 +83,15 @@
 
 .Bouteille--solo {
   max-width: 325px;
+}
+
+.bouteille--info-container {
+  padding: 10px;
+  min-height: 140px;
+}
+
+@media only screen and (min-width: 380px) {
+  .bouteille--info-container {
+    min-height: 110px;
+  }
 }
