@@ -37,7 +37,7 @@ const Appli = () => {
   const [username, setUsername] = useState([]);
   const [utilisateur, setUtilisateur] = useState([]);
   const [utilisateurs, setUtilisateurs] = useState([]);
-  const [celliers, setCelliers] = useState([]);
+  const [celliers, setCelliers] = useState([JSON.parse(localStorage.getItem("celliers"))]);
   const [indexNav, setIndexNav] = useState(0);
   const [resetBottomNav, setResetBottomNav] = useState(false);
   const ENV = "dev";
@@ -66,21 +66,10 @@ const Appli = () => {
     DATA = true;
   });
 
-  // useEffect(() => {
-  //   console.log(cellier);
-  //   setCellier(
-  //     JSON.parse(localStorage.getItem("cellier"))
-  //   )
-  //   console.log(cellier);
-  // },[]);
-
   useEffect(() => {
     fetchCelliers();
-    console.log(cellier);
-    setCellier(
-      JSON.parse(localStorage.getItem("cellier"))
-    )
-    console.log(cellier);
+    setCellier(JSON.parse(localStorage.getItem("cellier")))
+    setCelliers(JSON.parse(localStorage.getItem("celliers")));
   }, [id]);
 
   useEffect(() => {
@@ -210,8 +199,9 @@ const Appli = () => {
         throw response;
       })
       .then((data) => {
-        setCelliers(data);
-        // console.log(data);
+        if (data["erreur"] === undefined) {
+          localStorage.setItem("celliers", JSON.stringify(data));
+        }
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
