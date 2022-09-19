@@ -295,6 +295,12 @@ export default function Bouteille(props) {
     <>
       <div className="Bouteille" data-quantite="">
         <div className="bouteille--gestion">
+		<div className="quantite--container">
+			<p className="quantite">
+			{" "}
+			{contexteModif === true ? bouteille.quantite : props.quantite}{" "}
+			</p>
+		</div>
           <img
             onClick={gererVoir}
             src={
@@ -312,14 +318,9 @@ export default function Bouteille(props) {
           </div>
         </div>
         <div className="bouteille--info-container">
-          <div className="description">
-            <div className="description-originale">
-              <p className="nom">{props.nom} </p>
-              <p className="nom">
-                Quantité:{" "}
-                {contexteModif === true ? bouteille.quantite : props.quantite}{" "}
-              </p>
-            </div>
+          <div className="bouteille--description">
+              <p className="bouteille--nom">{props.nom} </p>
+			  <p className="bouteille--info">{props.type} - {props.format} - {props.millesime}</p>
           </div>
         </div>
         <Snackbar
@@ -375,7 +376,7 @@ export default function Bouteille(props) {
           </DialogTitle>
           <DialogActions>
             <Button onClick={viderFermerFrm}>Annuler</Button>
-            <Button onClick={gererSoumettre}>Supprimer</Button>
+            <button onClick={gererSoumettre}  className="action">Supprimer</button>
           </DialogActions>
         </Dialog>
         <FrmBouteille
