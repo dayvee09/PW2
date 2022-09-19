@@ -69,7 +69,7 @@ const Appli = () => {
   useEffect(() => {
     fetchCelliers();
     setCellier(JSON.parse(localStorage.getItem("cellier")))
-    setCelliers(JSON.parse(localStorage.getItem("celliers")));
+    // setCelliers(JSON.parse(localStorage.getItem("celliers")));
   }, [id]);
 
   useEffect(() => {
