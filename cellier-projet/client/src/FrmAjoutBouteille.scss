@@ -51,7 +51,11 @@
         cursor: pointer;
       }
     }
-  }
+  } 
+  .nonSelect {
+      opacity:0.7;
+      cursor: none;
+    }
   .bandeRouge {
     width: auto;
     padding: 10px;
