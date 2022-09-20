@@ -15,42 +15,53 @@ for(let i = 0; i < props.celliers.length; i++){
   }
 }
 
+/**
+ *  État des bouteilles au tri
+ */
 const [data, setData] = useState([]);
 const [sortType, setSortType] = useState("default");
 
+/**
+ *  État des bouteilles au tri
+ */
 const sortedData = useMemo(() => {
   let result = data;
   if (sortType === "qt-decroissante") {
 	result = [...props.bouteilles].sort((a, b) => {
-	  return b.nom.localeCompare(a.nom);
+	  return b.quantite.localeCompare(a.quantite);
 	});
   } else if (sortType === "qt-croissante") {
 	result = [...props.bouteilles].sort((a, b) => {
+	  return a.quantite.localeCompare(b.quantite);
+	});
+  } else if (sortType === "alph-croissant") {
+	result = [...props.bouteilles].sort((a, b) => {
 	  return a.nom.localeCompare(b.nom);
+	});
+  } else if (sortType === "alph-decroissant") {
+	result = [...props.bouteilles].sort((a, b) => {
+	  return b.nom.localeCompare(a.nom);
 	});
   } else if (sortType === "vin-rouge") {
 	result = [];
 	for (let index = 0; index < props.bouteilles.length; index++) {
-	if (props.bouteilles[index]["type"] === "Vin rouge") {
-		result.push(props.bouteilles[index])
-		console.log(result);
-	}
+		if (props.bouteilles[index]["type"] === "Vin rouge") {
+			result.push(props.bouteilles[index])
+		}
 	}
   } else if (sortType === "vin-blanc") {
 	result = [];
 	for (let index = 0; index < props.bouteilles.length; index++) {
-	   if (props.bouteilles[index]["type"] === "Vin blanc") {
-		   result.push(props.bouteilles[index])
-		   console.log(result);
-	   }
+		if (props.bouteilles[index]["type"] === "Vin blanc") {
+			result.push(props.bouteilles[index])
+		}
 	}
   } else if (sortType === "vin-rose") {
 	result = [];
 	for (let index = 0; index < props.bouteilles.length; index++) {
-	   if (props.bouteilles[index]["type"] === "Vin rose") {
-		   result.push(props.bouteilles[index])
-		   console.log(result);
-	   }
+		if (props.bouteilles[index]["type"] === "Vin rose") {
+			result.push(props.bouteilles[index])
+		}
 	}
   } else {
 	result = props.bouteilles;
@@ -81,6 +92,8 @@ const sortedData = useMemo(() => {
 					<option value="vin-rose">Vin Rosé</option>
 					<option value="qt-decroissante">Quantité décroissante</option>
 					<option value="qt-croissante">Quantité croissante</option>
+					<option value="alph-decroissant">Nom décroissant</option>
+					<option value="alph-croissant">Nom croissant</option>
 				</select>
 			</div>
 	  </div>
@@ -141,6 +154,18 @@ const sortedData = useMemo(() => {
 			<div>
 				<h2 className="aucune-bouteille">
 				Aucune bouteille dans ce cellier.
+				</h2>
+				<NavLink to="/vins">
+				<p className="ListeBouteille--default-button">
+					+ Ajouter une bouteille
+				</p>
+				</NavLink>
+			</div>
+			)}
+			{sortedData.length == 0 && (
+			<div>
+				<h2 className="aucune-bouteille">
+				Aucune bouteille dans ce type dans ce cellier.
 				</h2>
 				<NavLink to="/vins">
 				<p className="ListeBouteille--default-button">
