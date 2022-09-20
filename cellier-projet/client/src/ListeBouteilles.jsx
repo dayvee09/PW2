@@ -28,6 +28,30 @@ const sortedData = useMemo(() => {
 	result = [...props.bouteilles].sort((a, b) => {
 	  return a.nom.localeCompare(b.nom);
 	});
+  } else if (sortType === "vin-rouge") {
+	result = [];
+	for (let index = 0; index < props.bouteilles.length; index++) {
+	if (props.bouteilles[index]["type"] === "Vin rouge") {
+		result.push(props.bouteilles[index])
+		console.log(result);
+	}
+	}
+  } else if (sortType === "vin-blanc") {
+	result = [];
+	for (let index = 0; index < props.bouteilles.length; index++) {
+	   if (props.bouteilles[index]["type"] === "Vin blanc") {
+		   result.push(props.bouteilles[index])
+		   console.log(result);
+	   }
+	}
+  } else if (sortType === "vin-rose") {
+	result = [];
+	for (let index = 0; index < props.bouteilles.length; index++) {
+	   if (props.bouteilles[index]["type"] === "Vin rose") {
+		   result.push(props.bouteilles[index])
+		   console.log(result);
+	   }
+	}
   } else {
 	result = props.bouteilles;
   }
