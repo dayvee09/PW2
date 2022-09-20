@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./ListeBouteilles.scss";
 import Bouteille from "./Bouteille";
 import { NavLink } from "react-router-dom";
@@ -14,6 +14,25 @@ for(let i = 0; i < props.celliers.length; i++){
 	var nomCellier = props.celliers[i].nom
   }
 }
+
+const [data, setData] = useState([]);
+const [sortType, setSortType] = useState("default");
+
+const sortedData = useMemo(() => {
+  let result = data;
+  if (sortType === "qt-decroissante") {
+	result = [...props.bouteilles].sort((a, b) => {
+	  return b.nom.localeCompare(a.nom);
+	});
+  } else if (sortType === "qt-croissante") {
+	result = [...props.bouteilles].sort((a, b) => {
+	  return a.nom.localeCompare(b.nom);
+	});
+  }
+  return result;
+}, [props.bouteilles, sortType]);
+
+
   if (props.bouteilles) {
     return (
 	<div>
@@ -24,9 +43,13 @@ for(let i = 0; i < props.celliers.length; i++){
 					<img src={rowIcone} alt="icone-row-left" width={15}></img>Retour&nbsp;aux&nbsp;Celliers&nbsp;
 					</button>
 				</NavLink>
-				<select className="retour" name="tri" id="tri">
+				<select 
+					className="retour" name="tri" id="tri"
+					defaultValue="default"
+					onChange={(e) => setSortType(e.target.value)}
+				>
 				<img src={rowIcone} alt="icone-row-down" width={15}></img>
-					<option selected value="volvo">Tout</option>
+					<option selected value="tout">Tout</option>
 					<option value="vin-rouge">Vin Rouge</option>
 					<option value="vin-blanc">Vin Blanc</option>
 					<option value="vin-rose">Vin Rosé</option>
@@ -45,10 +68,11 @@ for(let i = 0; i < props.celliers.length; i++){
 				}
 			>
 			<div>
-			</div>
-			{props.bouteilles.length > 1 && (
+			</div>	{props.bouteilles.length > 1 && (
+		
 			<div className="ListeBouteille--grid">
-				{props.bouteilles.map((bouteille, index) => (
+				{sortedData.map((bouteille, index) => (
+				console.log(bouteille),
 				<div key={index}>
 					<Bouteille
 					{...bouteille}
