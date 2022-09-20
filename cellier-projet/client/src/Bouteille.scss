@@ -42,6 +42,14 @@
 	.bouteille--info-container {
 		padding: 10px;
 		min-height: 180px;
+
+		.bouteille--btn-favoris {
+			float: right;
+			&:hover  {
+				cursor: pointer;
+				filter: invert(39%) sepia(68%) saturate(920%) hue-rotate(322deg) brightness(83%) contrast(93%);
+			}
+		}
 	}
 
 	.quantite--container {
@@ -51,15 +59,15 @@
 		
 		.quantite {
 			text-align: center;
-			min-width: 40px;
+			min-width: 35px;
 			background-color: #f1ab50;
 			font-weight: 600;
-			padding: 10px 10px;
+			padding: 8px 8px;
 			border-radius: 140px;
 			margin: 5px;
 			color: #152440;
 			font-family: Raleway;
-			font-size: 14px;
+			font-size: 13px;
 		}
 	}
 
@@ -81,12 +89,21 @@
 @media only screen and (min-width: 300px) {
 	.Bouteille {
 		.bouteille--info-container {
-			min-height: 150px;
+			min-height: 170px;
 		}
 	}
 }
 
 @media only screen and (min-width: 400px) {
+	.Bouteille {
+		.bouteille--info-container {
+			min-height: 140px;
+		}
+	}
+}
+
+
+@media only screen and (min-width: 768px) {
 	.Bouteille {
 		.bouteille--info-container {
 			min-height: 120px;
