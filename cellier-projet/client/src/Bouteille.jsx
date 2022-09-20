@@ -13,6 +13,9 @@ import DialogTitle from "@mui/material/DialogTitle";
 import MuiButton from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import placeholderSaq from "./img/png/placeholder-saq.png";
+import favoriteIconeLine from "./img/svg/icone_favorite_blue_line.svg";
+import favoriteIconeFilled from "./img/svg/icone_favorite_blue_filled.svg";
+
 export default function Bouteille(props) {
   /**
    *  API MUI https://mui.com/material-ui/react-snackbar/
@@ -84,8 +87,8 @@ export default function Bouteille(props) {
   const [dateGarde, setDateGarde] = useState(props.garde_jusqua);
   const [messageRetour, setMessageRetour] = useState([]);
   const [severity, setSeverity] = useState([]);
-console.log(props.image)
-console.log(placeholderSaq)
+// console.log(props.image)
+// console.log(placeholderSaq)
   /**
    * Gestion du menu contextuel d'action d'un cellier
    * @param {*} evt
@@ -158,6 +161,7 @@ console.log(placeholderSaq)
     setQuantite((quantite) => parseInt(quantite) + 1);
     fetchPutVinUn(parseInt(quantite) + 1, dateAchat, dateGarde);
   }
+
   /**
    * Gère le bouton 'Boire'
    */
@@ -171,6 +175,27 @@ console.log(placeholderSaq)
       setSeverity("error");
       setOpenAlert(true);
     }
+  }
+  
+  /**
+   * Gère l'ajout d'une bouteille au favoris
+   */
+  function gererFavoris(e, idBouteille) {
+	let iconeFavoris = document.querySelectorAll('.bouteille--btn-favoris')
+	let url = window.location.protocol + '//' + window.location.host
+	let favoriteIconeLineUrl = url + "/PW2/cellier-projet/static/media/icone_favorite_blue_line.1497cb6ab627fa7efc52a978b1de0507.svg"
+	let favoriteIconeFilledUrl = url + "/PW2/cellier-projet/static/media/icone_favorite_blue_filled.4a820c77bc0a5c4a3f0fb93d65b4a9f6.svg"
+
+	for(let i = 0; i < iconeFavoris.length; i++) {
+		if(idBouteille == iconeFavoris[i].id) {
+			if(iconeFavoris[i].src == favoriteIconeLineUrl) {
+				iconeFavoris[i].src = favoriteIconeFilled;
+			} 
+			else if (iconeFavoris[i].src == favoriteIconeFilledUrl) {
+				iconeFavoris[i].src = favoriteIconeLine;
+			}
+		}
+	}
   }
 
   /**
@@ -292,6 +317,7 @@ console.log(placeholderSaq)
         props.setError(props.error);
       });
   }
+
   return (
     <>
       <div className="Bouteille" data-quantite="">
@@ -326,6 +352,7 @@ console.log(placeholderSaq)
             <p className="bouteille--info">
               {props.type} - {props.format} - {props.millesime}
             </p>
+			<img className="bouteille--btn-favoris" src={favoriteIconeLine} alt="icone-row-left" width={20} onClick={(e) => gererFavoris(e, props.id)} id={props.id}></img>
           </div>
         </div>
         <Snackbar
