@@ -98,7 +98,6 @@ const sortedData = useMemo(() => {
 		
 			<div className="ListeBouteille--grid">
 				{sortedData.map((bouteille, index) => (
-				console.log(bouteille),
 				<div key={index}>
 					<Bouteille
 					{...bouteille}
