@@ -87,8 +87,10 @@ export default function Bouteille(props) {
   const [dateGarde, setDateGarde] = useState(props.garde_jusqua);
   const [messageRetour, setMessageRetour] = useState([]);
   const [severity, setSeverity] = useState([]);
-// console.log(props.image)
-// console.log(placeholderSaq)
+
+console.log(props.image)
+console.log(placeholderSaq)
+
   /**
    * Gestion du menu contextuel d'action d'un cellier
    * @param {*} evt
@@ -333,7 +335,7 @@ export default function Bouteille(props) {
           <img
             onClick={gererVoir}
             src={
-              props.image.indexOf("pastille_gout") < 0
+              props.image && props.image.indexOf("pastille_gout") < 0
                 ? props.image
                 : placeholderSaq
             }
