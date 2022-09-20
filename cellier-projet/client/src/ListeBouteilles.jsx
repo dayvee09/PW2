@@ -28,6 +28,8 @@ const sortedData = useMemo(() => {
 	result = [...props.bouteilles].sort((a, b) => {
 	  return a.nom.localeCompare(b.nom);
 	});
+  } else {
+	result = props.bouteilles;
   }
   return result;
 }, [props.bouteilles, sortType]);
