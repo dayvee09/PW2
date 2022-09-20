@@ -29,6 +29,21 @@
 	padding-bottom: 50px;
 }
 
+.ListeBouteille--cellier-btn-modif {
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+	font-family: Raleway;
+	font-size: 15px;
+
+    text-underline-offset: 5px;
+    text-decoration: underline 1px;
+
+	&:hover {
+		color: #cc4240;
+	}
+}
+
 .retour {
 	background-color: transparent;
 	border: 1px solid #cc4240;
@@ -38,7 +53,6 @@
 	text-transform: uppercase;
 	padding: 10px 10px 10px 10px;
 	margin-bottom: 5px;
-	// margin-top: 5px;
 
 	&:hover {
 		background-color: #cc4240;
@@ -52,6 +66,16 @@
 	}
 }
 
+@media only screen and (min-width: 768px) {
+	.retour {
+		margin-top: 0;
+	}
+
+	.ListeBouteille--cellier-btn-modif {
+		margin-top: -40px;
+	}
+}
+
 @media only screen and (min-width: 940px) {
 	.ListeBouteille--grid {
 		grid-template-columns: repeat(3, 1fr);
@@ -61,11 +85,5 @@
 @media only screen and (min-width: 1200px) {
 	.ListeBouteille--grid {
 		grid-template-columns: repeat(4, 1fr);
-	}
-}
-
-@media only screen and (min-width: 768px) {
-	.retour {
-		margin-top: 0;
 	}
 }

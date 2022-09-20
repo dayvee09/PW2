@@ -1,7 +1,7 @@
 import "./ListeCelliers.scss";
 import Cellier from "./Cellier";
 import { NavLink } from "react-router-dom";
-import rowIcone from "./img/svg/icone-search-bar-white.svg";
+import rowIcone from "./img/svg/icone_search_bar_white.svg";
 
 function ListeCelliers(props) {
   if (props.celliers.length > 0) {
@@ -19,7 +19,7 @@ function ListeCelliers(props) {
         <div className="liste-cellier--entete">
           <h1>Mes Celliers</h1>
           <NavLink to="/cellier/ajout/celliers">
-            <button>+ Ajouter</button>
+            <button className="liste-cellier--btn-ajout">+ Ajouter</button>
           </NavLink>
         </div>
         <span className="liste-cellier--message-retour"></span>
