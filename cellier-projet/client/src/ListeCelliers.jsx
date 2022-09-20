@@ -10,8 +10,8 @@ function ListeCelliers(props) {
 	  <div className="Appli--entete">
 		<div className="Appli--search-bar-container">
 			<input className="Appli--search-bar" placeholder="Trouver une bouteille" />
-			<div className="test">
-				<img className="testimage" src={rowIcone} alt="icone-row-left" width={15}></img>
+			<div className="Appli--search-bar-icone">
+				<img className="Appli--search-bar-icone-search" src={rowIcone} alt="icone-row-left" width={15}></img>
 			</div>
 		</div>
 	  </div>
