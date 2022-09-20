@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./ListeBouteilles.scss";
 import Bouteille from "./Bouteille";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
+
 
 function ListeBouteilles(props) {
   useEffect(() => {
@@ -20,6 +21,7 @@ for(let i = 0; i < props.celliers.length; i++){
  */
 const [data, setData] = useState([]);
 const [sortType, setSortType] = useState("default");
+const navigate = useNavigate();
 
 /**
  *  État des bouteilles au tri
@@ -70,6 +72,17 @@ const sortedData = useMemo(() => {
 }, [props.bouteilles, sortType]);
 
 
+  /**
+   * Redirection vers la modificiation du cellier
+   */
+   function gererModifier() {
+    navigate(`/modifier-cellier`, {
+      state: { id: props.cellier[0], nom: nomCellier },
+      replace: true,
+    });
+  }
+
+
   if (props.bouteilles) {
     return (
 	<div>
@@ -98,7 +111,10 @@ const sortedData = useMemo(() => {
 			</div>
 	  </div>
 	   <div className="Appli--container">
-			<h1 className="ListeBouteille--cellier-nom">{nomCellier}</h1>
+			<div className="liste-cellier--entete">
+				<h1 className="ListeBouteille--cellier-nom">{nomCellier}</h1>
+				<button className="ListeBouteille--cellier-btn-modif" onClick={gererModifier}>Modifier</button>
+			</div>
 			<div
 				className={
 				props.bouteilles.length == 1
@@ -111,6 +127,9 @@ const sortedData = useMemo(() => {
 		
 			<div className="ListeBouteille--grid">
 				{sortedData.map((bouteille, index) => (
+
+				console.log(bouteille),
+
 				<div key={index}>
 					<Bouteille
 					{...bouteille}
