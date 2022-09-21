@@ -300,3 +300,16 @@
 		}
 	}
 }
+
+
+@media only screen and (min-width: 1800px) {
+	.Appli {
+		.Appli--entete {
+			padding: 90px 22vw 10px 22vw;
+		}
+
+		.Appli--container {
+			padding: 0 22vw 75px 22vw;
+		}
+	}
+}
