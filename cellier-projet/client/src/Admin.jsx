@@ -121,7 +121,7 @@ export default function Admin(props) {
     }, 2000);
     return () => clearTimeout(timer);
   };
-  console.log(nbBouteillesSaq);
+  // console.log(nbBouteillesSaq);
   return (
     <>
       <div className="Admin">
