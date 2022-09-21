@@ -48,7 +48,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -68,7 +68,7 @@ const Appli = () => {
 
   useEffect(() => {
     fetchCelliers();
-    setCellier(JSON.parse(localStorage.getItem("cellier")))
+    setCellier(JSON.parse(localStorage.getItem("cellier")));
     if (localStorage.getItem("celliers") !== null) {
       setCelliers(JSON.parse(localStorage.getItem("celliers")));
     }
@@ -140,7 +140,7 @@ const Appli = () => {
       .then((data) => {
         // console.log("dataJSON:", data[0]);
         setUtilisateur(data[0]);
-        console.log(utilisateur)
+        console.log(utilisateur);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -313,7 +313,7 @@ const Appli = () => {
                       fetchVins={fetchVins}
                       gererBouteilles={gererBouteilles}
                       cellier={cellier}
-					  celliers={celliers}
+                      celliers={celliers}
                       URI={URI}
                       error={error}
                       setError={setError}
