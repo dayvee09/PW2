@@ -55,9 +55,7 @@ export default function FrmAjoutBouteille(props) {
    * État du cellier choisi
    */
   const [vinCellier, setVinCellier] = React.useState(
-    props.cellier
-      ? parseInt(props.cellier)
-      : parseInt(props.cellier)
+    props.cellier!=undefined
       ? parseInt(props.cellier)
       : parseInt(props.celliers[0].id)
   );
@@ -168,7 +166,7 @@ export default function FrmAjoutBouteille(props) {
     });
     setMillesime("");
     setVinPays("");
-    setVinCellier(props.cellier ? props.cellier : props.celliers[0].id);
+    setVinCellier(props.cellier!=undefined ? props.cellier : props.celliers[0].id);
     setVinFormat("");
     setVinPrix(1);
     setVinDescription("");
@@ -204,7 +202,7 @@ export default function FrmAjoutBouteille(props) {
       }
     } else {
       //creer
-      if (erreur.length === 0 && vinNom !== "") {
+      if (Object.keys(erreur).length === 0 && vinNom.trim() !== "") {
         fetchAjouterVin();
       } else {
         setOpenErr(true);
@@ -248,7 +246,7 @@ export default function FrmAjoutBouteille(props) {
       };
     } else {
       formData = {
-        nom: vinNom || "",
+        nom: vinNom,
         image: vinImage,
         code_saq: "",
         pays: vinPays,
@@ -258,7 +256,7 @@ export default function FrmAjoutBouteille(props) {
         url_img: "",
         format: vinFormat,
         vino__type_id: vinType,
-        millesime: vinMillesime,
+        millesime: parseInt(vinMillesime),
         personnalise: 1,
         vino__cellier_id: vinCellier,
         quantite: vinQuantite,

@@ -11,9 +11,7 @@ import "./FrmUsername.scss";
 import MuiButton from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import {
-  useNavigate,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function FrmEmail({
   username,
@@ -23,7 +21,7 @@ export default function FrmEmail({
   setUsername,
   frmUsernameOuvert,
   setFrmUsernameOuvert,
-  URI
+  URI,
 }) {
   /**
    *  État des styles des composants MUI
@@ -32,7 +30,7 @@ export default function FrmEmail({
     color: "#f3f5eb",
     backgroundColor: "#cc4240",
     textDecoration: "none",
-    borderRadius:"4px",
+    borderRadius: "4px",
     fontFamily: "Alata",
     padding: "10px 20px",
     fontSize: "12px",
@@ -89,8 +87,8 @@ export default function FrmEmail({
   const [openAlert, setOpenAlert] = React.useState(false);
   const navigate = useNavigate();
   const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
+    if (reason === "clickaway") {
+      return;
     }
     setOpenAlert(false);
     setFrmUsernameOuvert(false);
@@ -114,17 +112,16 @@ export default function FrmEmail({
    * requête de modification de l'email utilisateur
    */
   async function fetchPatchUtilisateurUsername(NouveauUsername) {
-      console.log(NouveauUsername);
-      let reponse = await fetch(
-        URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
-        {
-          method: "PATCH",
-          body: JSON.stringify({nom: NouveauUsername }),
-        }
-      );
-      let reponseJson = await reponse.json();
-      setUsername(NouveauUsername)
-      navigate(`/profil/${emailUtilisateur}`, { replace: true })
+    let reponse = await fetch(
+      URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
+      {
+        method: "PATCH",
+        body: JSON.stringify({ nom: NouveauUsername }),
+      }
+    );
+    let reponseJson = await reponse.json();
+    setUsername(NouveauUsername);
+    navigate(`/profil/${emailUtilisateur}`, { replace: true });
   }
 
   /**
@@ -132,7 +129,8 @@ export default function FrmEmail({
    */
   function gererSoumettre() {
     setSeverity("");
-    var reg = /^(?=[a-zA-Z0-9._àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
+    var reg =
+      /^(?=[a-zA-Z0-9._àâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ]{8,20}$)(?!.*[_.]{2})[^_.].*[^_.]$/;
     setNouveauUsername(NouveauUsername);
     if (reg.test(NouveauUsername)) {
       fetchPatchUtilisateurUsername(NouveauUsername);
@@ -140,7 +138,9 @@ export default function FrmEmail({
       setSeverity("success");
       setOpenAlert(true);
     } else {
-      setMessageRetour("Le nom d'usager doit contenir au moins huit caractères. Les . et _ ne sont pas acceptés au début et à la fin du nom d'usager. Les caractères spéciaux ne sont pas acceptés.");
+      setMessageRetour(
+        "Le nom d'usager doit contenir au moins huit caractères. Les . et _ ne sont pas acceptés au début et à la fin du nom d'usager. Les caractères spéciaux ne sont pas acceptés."
+      );
       setSeverity("error");
       setOpenAlert(true);
     }
@@ -189,7 +189,9 @@ export default function FrmEmail({
         </DialogContent>
         <DialogActions>
           <Button onClick={viderFermerFrm}>Annuler</Button>
-          <button onClick={gererSoumettre} className="action">Enregistrer</button>
+          <button onClick={gererSoumettre} className="action">
+            Enregistrer
+          </button>
         </DialogActions>
       </Dialog>
     </div>
