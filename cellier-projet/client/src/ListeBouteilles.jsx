@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./ListeBouteilles.scss";
 import Bouteille from "./Bouteille";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 
 function ListeBouteilles(props) {
@@ -25,6 +25,70 @@ function ListeBouteilles(props) {
       var nomCellier = props.celliers[i].nom;
     }
   }
+  /**
+   *  État des bouteilles au tri
+   */
+  const [data, setData] = useState([]);
+  const [sortType, setSortType] = useState("default");
+  const navigate = useNavigate();
+
+  /**
+   *  État des bouteilles au tri
+   */
+  const sortedData = useMemo(() => {
+    let result = data;
+    if (sortType === "qt-decroissante") {
+      result = [...props.bouteilles].sort((a, b) => {
+        return b.quantite.localeCompare(a.quantite);
+      });
+    } else if (sortType === "qt-croissante") {
+      result = [...props.bouteilles].sort((a, b) => {
+        return a.quantite.localeCompare(b.quantite);
+      });
+    } else if (sortType === "alph-croissant") {
+      result = [...props.bouteilles].sort((a, b) => {
+        return a.nom.localeCompare(b.nom);
+      });
+    } else if (sortType === "alph-decroissant") {
+      result = [...props.bouteilles].sort((a, b) => {
+        return b.nom.localeCompare(a.nom);
+      });
+    } else if (sortType === "vin-rouge") {
+      result = [];
+      for (let index = 0; index < props.bouteilles.length; index++) {
+        if (props.bouteilles[index]["type"] === "Vin rouge") {
+          result.push(props.bouteilles[index]);
+        }
+      }
+    } else if (sortType === "vin-blanc") {
+      result = [];
+      for (let index = 0; index < props.bouteilles.length; index++) {
+        if (props.bouteilles[index]["type"] === "Vin blanc") {
+          result.push(props.bouteilles[index]);
+        }
+      }
+    } else if (sortType === "vin-rose") {
+      result = [];
+      for (let index = 0; index < props.bouteilles.length; index++) {
+        if (props.bouteilles[index]["type"] === "Vin rose") {
+          result.push(props.bouteilles[index]);
+        }
+      }
+    } else {
+      result = props.bouteilles;
+    }
+    return result;
+  }, [props.bouteilles, sortType]);
+
+  /**
+   * Redirection vers la modificiation du cellier
+   */
+  function gererModifier() {
+    navigate(`/modifier-cellier`, {
+      state: { id: props.cellier[0], nom: nomCellier },
+      replace: true,
+    });
+  }
   if (props.bouteilles) {
     return (
       <div>
@@ -36,9 +100,15 @@ function ListeBouteilles(props) {
                 Retour&nbsp;aux&nbsp;Celliers&nbsp;
               </button>
             </NavLink>
-            <select className="retour" name="tri" id="tri">
+            <select
+              className="retour"
+              name="tri"
+              id="tri"
+              defaultValue="default"
+              onChange={(e) => setSortType(e.target.value)}
+            >
               <img src={rowIcone} alt="icone-row-down" width={15}></img>
-              <option selected value="volvo">
+              <option selected value="tout">
                 Tout
               </option>
               <option value="vin-rouge">Vin Rouge</option>
@@ -46,6 +116,8 @@ function ListeBouteilles(props) {
               <option value="vin-rose">Vin Rosé</option>
               <option value="qt-decroissante">Quantité décroissante</option>
               <option value="qt-croissante">Quantité croissante</option>
+              <option value="alph-decroissant">Nom décroissant</option>
+              <option value="alph-croissant">Nom croissant</option>
             </select>
           </div>
         </div>
@@ -61,7 +133,7 @@ function ListeBouteilles(props) {
             <div></div>
             {props.bouteilles.length > 1 && (
               <div className="ListeBouteille--grid">
-                {props.bouteilles.slice(debut, fin).map((bouteille, index) => (
+                {sortedData.slice(debut, fin).map((bouteille, index) => (
                   <div key={index}>
                     <Bouteille
                       {...bouteille}
@@ -105,6 +177,18 @@ function ListeBouteilles(props) {
               <div>
                 <h2 className="aucune-bouteille">
                   Aucune bouteille dans ce cellier.
+                </h2>
+                <NavLink to="/vins">
+                  <p className="ListeBouteille--default-button">
+                    + Ajouter une bouteille
+                  </p>
+                </NavLink>
+              </div>
+            )}
+            {sortedData.length == 0 && (
+              <div>
+                <h2 className="aucune-bouteille">
+                  Aucune bouteille dans ce type dans ce cellier.
                 </h2>
                 <NavLink to="/vins">
                   <p className="ListeBouteille--default-button">

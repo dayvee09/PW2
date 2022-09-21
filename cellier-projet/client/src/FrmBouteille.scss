@@ -1,23 +1,54 @@
-.FormBouteille {
-	.css-1cdjfa1-MuiPaper-root-MuiDialog-paper {
+.css-ypiqx9-MuiDialogContent-root {
+	padding: 40px 60px 60px 60px !important;
+	background-color: #d3d7dd78;
+}
+
+.css-1cdjfa1-MuiPaper-root-MuiDialog-paper {
+	width: 100%;
+	.img-wrap {
+		height: 200px;
+		margin-bottom: 25px;
+	}
+
+	img {
+		object-fit: contain;
+		height: 100%;
 		width: 100%;
-		.img-wrap {
-			width: 200px;
-		}
-		img {
-			object-fit: contain;
-			overflow: hidden;
-		}
-		.hr {
-			border: .2px solid gray;
+
+		&:hover {
+			cursor: zoom-in;;
 		}
 	}
-	.hidden {
-		display: none;
+}
+
+.nom  {
+	text-align: center;
+	font-weight: 500;
+	padding-bottom: 5px;
+}
+
+.type  {
+	text-align: center;
+}
+
+.lien_saq {
+	padding-top: 25px;
+	background-color: transparent;
+	cursor: pointer;
+	font-family: Raleway;
+	font-size: 12px;
+    text-underline-offset: 5px;
+    text-decoration: underline 1px;
+	a  {
+		color: #152440;
+		&:hover {
+			color: #cc4240;
+		}
 	}
 }
 
 .FormBouteille--button {
+	font-family: Alata;
 	&:nth-child(1) {
 		background-color: #cc4240;
 		color: #f3f5eb;
@@ -29,7 +60,7 @@
 			cursor: pointer;
 		}
 	}
-
+	
 	&:nth-child(2) {
 		background-color: #152440;
 		color: #f3f5eb;
@@ -41,4 +72,28 @@
 			cursor: pointer;
 		}
 	}
+}
+	
+.img-container {
+	overflow: hidden;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-image: linear-gradient(
+		to top,
+		#d3d7dd 60%,
+		#d3d7dd 50%
+	)
+}
+
+.img-container img {
+	width: 450px;
+	transition: transform 0.3s;
+}
+
+.img-container img:hover {
+	transform: scale(1.5);
+}
+
+.hidden {
+	display: none;
 }

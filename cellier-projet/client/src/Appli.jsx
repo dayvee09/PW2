@@ -140,7 +140,6 @@ const Appli = () => {
       .then((data) => {
         // console.log("dataJSON:", data[0]);
         setUtilisateur(data[0]);
-        console.log(utilisateur);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
