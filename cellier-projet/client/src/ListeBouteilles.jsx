@@ -39,11 +39,11 @@ function ListeBouteilles(props) {
     let result = data;
     if (sortType === "qt-decroissante") {
       result = [...props.bouteilles].sort((a, b) => {
-        return b.quantite.localeCompare(a.quantite);
+        return parseInt(b.quantite) - parseInt(a.quantite);
       });
     } else if (sortType === "qt-croissante") {
       result = [...props.bouteilles].sort((a, b) => {
-        return a.quantite.localeCompare(b.quantite);
+        return parseInt(a.quantite) - parseInt(b.quantite);
       });
     } else if (sortType === "alph-croissant") {
       result = [...props.bouteilles].sort((a, b) => {
