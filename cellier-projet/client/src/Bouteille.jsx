@@ -335,7 +335,7 @@ console.log(placeholderSaq)
           <img
             onClick={gererVoir}
             src={
-              props.image && props.image.indexOf("pastille_gout") < 0
+				props.image && props.image.indexOf("pastille_gout") < 0
                 ? props.image
                 : placeholderSaq
             }
