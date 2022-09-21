@@ -9,7 +9,7 @@
 		height: 200px;
 		margin-bottom: 25px;
 	}
-	
+
 	img {
 		object-fit: contain;
 		height: 100%;
@@ -48,6 +48,7 @@
 }
 
 .FormBouteille--button {
+	font-family: Alata;
 	&:nth-child(1) {
 		background-color: #cc4240;
 		color: #f3f5eb;
