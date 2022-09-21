@@ -54,11 +54,9 @@ export default function FrmAjoutBouteille(props) {
   /**
    * État du cellier choisi
    */
-  
-
   const [vinCellier, setVinCellier] = React.useState(
     props.cellier!=undefined
-      ? parseInt(props.cellier[0])
+      ? parseInt(props.cellier)
       : parseInt(props.celliers[0].id)
   );
   /**
@@ -168,7 +166,7 @@ export default function FrmAjoutBouteille(props) {
     });
     setMillesime("");
     setVinPays("");
-    setVinCellier(props.cellier!=undefined? props.cellier[0] : props.celliers[0].id);
+    setVinCellier(props.cellier!=undefined ? props.cellier : props.celliers[0].id);
     setVinFormat("");
     setVinPrix(1);
     setVinDescription("");
@@ -267,7 +265,6 @@ export default function FrmAjoutBouteille(props) {
         notes: vinNote,
       };
     }
-	console.log(JSON.stringify(formData));
     // Fetch API d'ajouter une bouteille , soit l'importation du SAQ soit la création personnalisé
     let fetchAjoutBouteille = await fetch(
       // "http://localhost/PW2/cellier-projet/api-php" +
@@ -284,7 +281,6 @@ export default function FrmAjoutBouteille(props) {
         throw response;
       })
       .then((data) => {
-		console.log(data);
         props.fetchVins(vinCellier);
         props.setCellier(vinCellier);
         navigate(`/cellier/${vinCellier}/vins`, { replace: true });
