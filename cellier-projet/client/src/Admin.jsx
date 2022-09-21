@@ -121,76 +121,78 @@ export default function Admin(props) {
     }, 2000);
     return () => clearTimeout(timer);
   };
-  // console.log(nbBouteillesSaq);
   return (
     <>
-      <div className="Admin">
-        <div className="content-admin">
-          <h1>Bienvenue sur l'interface d'admin!</h1>
-          <div>
-            <button className="importer-admin" onClick={gererSaq}>
-              Importer des bouteilles de la Saq
-            </button>
-          </div>
-        </div>
-        <div className="signOut-admin">
-          <button className="deconnexion-admin" onClick={redirectionAccueil}>
+      <div className="Appli--container">
+        <div className="Admin">
+          <div className="deconnexion-admin" onClick={redirectionAccueil}>
             Déconnexion
-          </button>
-        </div>
-        <Snackbar
-          sx={{ height: "75%" }}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-          open={openAlert}
-          autoHideDuration={3000}
-          onClose={handleCloseAlert}
-        >
-          <Alert
+          </div>
+          <div className="content-admin">
+            <h1>Bienvenue sur l'interface d'admin!</h1>
+            <div>
+              <button className="importer-admin" onClick={gererSaq}>
+                Importer des bouteilles de la Saq
+              </button>
+            </div>
+          </div>
+          <Snackbar
+            sx={{ height: "100%" }}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            open={openAlert}
+            autoHideDuration={3000}
             onClose={handleCloseAlert}
-            severity="success"
-            sx={{ width: "100%" }}
           >
-            L'importation des bouteilles de vin de la SAQ a été faite avec
-            succès!
-          </Alert>
-        </Snackbar>
-        <Snackbar
-          sx={{ height: "75%" }}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-          open={openAlertLoading}
-          onClose={handleCloseAlertLoading}
-        >
-          <Alert
+            <Alert
+              onClose={handleCloseAlert}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              L'importation des bouteilles de vin de la SAQ a été faite avec
+              succès!
+            </Alert>
+          </Snackbar>
+          <Snackbar
+            sx={{ height: "100%" }}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            open={openAlertLoading}
             onClose={handleCloseAlertLoading}
-            severity="success"
-            sx={{ width: "100%" }}
           >
-            <p>Importation en cours, veuillez patienter.</p>
-            {nbBouteillesSaq === undefined ? (
-              <p>Initialisation...</p>
-            ) : (
-              <div>
-                <p>
-                  Chargement de {nbBouteillesSaq} bouteilles de vin {prevGo}
-                </p>
-                <p>Total de bouteilles: {compteur}</p>
-              </div>
-            )}
-          </Alert>
-        </Snackbar>
-        <FrmSaq
-          go={go}
-          setGo={setGo}
-          frmOuvert={frmOuvert}
-          setFrmOuvert={setFrmOuvert}
-          setOpenAlertLoading={setOpenAlertLoading}
-        />
+            <Alert
+              onClose={handleCloseAlertLoading}
+              severity="success"
+              sx={{ width: "100%" }}
+            >
+              <p>Importation en cours, veuillez patienter.</p>
+              {nbBouteillesSaq < 1 ? (
+                <p className="contenu--alert">Initialisation...</p>
+              ) : (
+                <div>
+                  <p className="contenu--alert">
+                    Chargement de {nbBouteillesSaq} bouteilles de vin {prevGo}
+                    ...
+                  </p>
+                  <p className="contenu--alert">
+                    Bouteilles importées au total: {compteur}
+                  </p>
+                </div>
+              )}
+            </Alert>
+          </Snackbar>
+          <FrmSaq
+            go={go}
+            setGo={setGo}
+            frmOuvert={frmOuvert}
+            setFrmOuvert={setFrmOuvert}
+            setOpenAlertLoading={setOpenAlertLoading}
+          />
+        </div>
       </div>
     </>
   );
