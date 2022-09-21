@@ -32,7 +32,7 @@ export default function Cellier(props) {
    */
   const handleClickCellier = () => {
     setCellier(props.id);
-    localStorage.setItem("cellier", JSON.stringify(cellier));
+    localStorage.setItem("cellier", cellier);
     setCellier(JSON.parse(localStorage.getItem("cellier")));
     setTimeout(() => {
       navigate(`/cellier/${cellier}/vins`, { replace: true });
