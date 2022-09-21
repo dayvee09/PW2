@@ -1,95 +1,154 @@
 .Bouteille {
-	border: 0.5px solid #d3d7dd;
-	border-radius: 4px 4px 0 0;
-	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+  border: 0.5px solid #d3d7dd;
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
 
-	.bouteille--gestion {
-		background-color: #d3d7dd78;
-		cursor: pointer;
-		display: flex;
-		height: 180px;
-		justify-content: space-between;
-		position: relative;
+  .bouteille--gestion {
+    background-color: #d3d7dd78;
+    cursor: pointer;
+    display: flex;
+    height: 180px;
+    justify-content: space-between;
+    position: relative;
 
-		img {
-			object-fit: contain;
-			height: 100%;
-			width: 100%;
-		}
-	
-		.bouteille--gestion-dots {
-			color: #cc4240;
-			border-radius: 20px;
-			position: absolute;
-			top: 10px;
-			right: 5px;
-			
-			&:hover {
-				background-color: #d3d7dd78;
-				border-radius: 20px;
-				cursor: pointer;
-			}
-		}
-	}
+    img {
+      object-fit: contain;
+      height: 100%;
+      width: 100%;
+    }
 
-	.bouteille--description  {
-		.bouteille--nom  {
-			font-size: 12px;
-			font-weight: 500;
-		}
-	}
+    .bouteille--gestion-dots {
+      color: #cc4240;
+      border-radius: 20px;
+      position: absolute;
+      top: 10px;
+      right: 5px;
+    }
+  }
 
-	.bouteille--info-container {
-		padding: 10px;
-		min-height: 180px;
-	}
+  .bouteille--info-container {
+    padding: 10px;
+    min-height: 160px;
 
-	.quantite--container {
-		position: absolute;
-		top: 5px;
-		left: 5px;
-		
-		.quantite {
-			text-align: center;
-			min-width: 40px;
-			background-color: #f1ab50;
-			font-weight: 600;
-			padding: 10px 10px;
-			border-radius: 140px;
-			margin: 5px;
-			color: #152440;
-			font-family: Raleway;
-			font-size: 14px;
-		}
-	}
+    .bouteille--info,
+    .bouteille--nom {
+      min-height: 60px;
+      margin: 0px;
+    }
 
-	.snackbar-wrapper {
-		position: absolute;
-		top: 0;
-		right: 0;
-	}
+    .bouteille--btn-favoris {
+      float: right;
+      &:hover {
+        cursor: pointer;
+        filter: invert(39%) sepia(68%) saturate(920%) hue-rotate(322deg)
+          brightness(83%) contrast(93%);
+      }
+    }
+  }
 
-	&:hover {
-		background-color: #d3d7dd40;
-	}
+  .quantite--container {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+
+    .quantite {
+      text-align: center;
+      min-width: 35px;
+      background-color: #f1ab50;
+      font-weight: 600;
+      padding: 8px 8px;
+      border-radius: 140px;
+      margin: 5px;
+      color: #152440;
+      font-family: Raleway;
+      font-size: 13px;
+    }
+  }
+
+  .bouteille--info-container {
+    padding: 10px;
+    min-height: 180px;
+  }
+
+  .quantite--container {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+
+    .quantite {
+      text-align: center;
+      min-width: 40px;
+      background-color: #f1ab50;
+      font-weight: 600;
+      padding: 10px 10px;
+      border-radius: 140px;
+      margin: 5px;
+      color: #152440;
+      font-family: Raleway;
+      font-size: 14px;
+    }
+  }
+
+  .snackbar-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .quantite--container {
+    position: absolute;
+
+    .quantite {
+      text-align: center;
+      min-width: 40px;
+      background-color: #f1ab50;
+      padding: 10px 10px;
+      border-radius: 120px;
+      margin: 5px;
+      color: #152440;
+      font-family: raleway;
+      font-weight: 700;
+      font-size: 14px;
+      //   border: 1px solid #f1ab50;
+    }
+  }
+  .snackbar-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  &:hover {
+    background-color: #d3d7dd40;
+  }
 }
 
-.Bouteille--solo  {
-	max-width: 325px;
+.Bouteille--solo {
+  max-width: 325px;
 }
 
 @media only screen and (min-width: 300px) {
-	.Bouteille {
-		.bouteille--info-container {
-			min-height: 150px;
-		}
-	}
+  .Bouteille {
+    .bouteille--info-container {
+      min-height: 150px;
+
+      .bouteille--info,
+      .bouteille--nom {
+        min-height: 50px;
+      }
+    }
+  }
 }
 
 @media only screen and (min-width: 400px) {
-	.Bouteille {
-		.bouteille--info-container {
-			min-height: 120px;
-		}
-	}
+  .Bouteille {
+    .bouteille--info-container {
+      min-height: 130px;
+
+      .bouteille--info,
+      .bouteille--nom {
+        min-height: 40px;
+      }
+    }
+  }
 }
