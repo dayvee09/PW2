@@ -11,9 +11,7 @@ import "./FrmEmail.scss";
 import MuiButton from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import {
-  useNavigate,
-} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function FrmEmail({
   username,
@@ -23,7 +21,7 @@ export default function FrmEmail({
   setNouvelEmailUtilisateur,
   frmEmailOuvert,
   setFrmEmailOuvert,
-  URI
+  URI,
 }) {
   /**
    *  État des styles des composants MUI
@@ -32,7 +30,7 @@ export default function FrmEmail({
     color: "#f3f5eb",
     backgroundColor: "#cc4240",
     textDecoration: "none",
-    borderRadius:"4px",
+    borderRadius: "4px",
     fontFamily: "Alata",
     padding: "10px 20px",
     fontSize: "12px",
@@ -89,8 +87,8 @@ export default function FrmEmail({
   const [openAlert, setOpenAlert] = React.useState(false);
   const navigate = useNavigate();
   const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
+    if (reason === "clickaway") {
+      return;
     }
     setOpenAlert(false);
     setFrmEmailOuvert(false);
@@ -119,20 +117,18 @@ export default function FrmEmail({
       email: NouvelEmailUtilisateur,
     });
     if (result === "SUCCESS") {
-      console.log(NouvelEmailUtilisateur);
-      console.log(username);
       let reponse = await fetch(
         URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
         {
           method: "PATCH",
-          body: JSON.stringify({email: NouvelEmailUtilisateur}),
+          body: JSON.stringify({ email: NouvelEmailUtilisateur }),
         }
       );
       let reponseJson = await reponse.json();
-      setEmailUtilisateur(NouvelEmailUtilisateur)
-      navigate(`/profil/${NouvelEmailUtilisateur}`, { replace: true })
+      setEmailUtilisateur(NouvelEmailUtilisateur);
+      navigate(`/profil/${NouvelEmailUtilisateur}`, { replace: true });
     }
-    return result
+    return result;
   }
 
   /**
@@ -196,7 +192,9 @@ export default function FrmEmail({
         </DialogContent>
         <DialogActions>
           <Button onClick={viderFermerFrm}>Annuler</Button>
-          <button onClick={gererSoumettre} className="action">Enregistrer</button>
+          <button onClick={gererSoumettre} className="action">
+            Enregistrer
+          </button>
         </DialogActions>
       </Dialog>
     </div>

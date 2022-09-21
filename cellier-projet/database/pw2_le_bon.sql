@@ -133,7 +133,7 @@ INSERT INTO `vino__cellier` (`id`, `nom`, `vino__utilisateur_id`) VALUES
 --
 
 CREATE TABLE `vino__favoris` (
-  `vino__bouteille__id` int(11) NOT NULL,
+  `vino__bouteille_id` int(11) NOT NULL,
   `vino__utilisateur_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -210,7 +210,7 @@ ALTER TABLE `vino__cellier`
 -- Index pour la table `vino__favoris`
 --
 ALTER TABLE `vino__favoris`
-  ADD PRIMARY KEY (`vino__bouteille__id`,`vino__utilisateur_id`),
+  ADD PRIMARY KEY (`vino__bouteille_id`,`vino__utilisateur_id`),
   ADD KEY `vino__utilisateur_id` (`vino__utilisateur_id`);
 
 --
@@ -276,7 +276,7 @@ ALTER TABLE `vino__cellier`
 -- Contraintes pour la table `vino__favoris`
 --
 ALTER TABLE `vino__favoris`
-  ADD CONSTRAINT `vino__favoris_ibfk_1` FOREIGN KEY (`vino__bouteille__id`) REFERENCES `vino__bouteille` (`id`),
+  ADD CONSTRAINT `vino__favoris_ibfk_1` FOREIGN KEY (`vino__bouteille_id`) REFERENCES `vino__bouteille` (`id`),
   ADD CONSTRAINT `vino__favoris_ibfk_2` FOREIGN KEY (`vino__utilisateur_id`) REFERENCES `vino__utilisateur` (`id`);
 COMMIT;
 

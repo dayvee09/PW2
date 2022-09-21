@@ -79,6 +79,8 @@ class SaqControleur extends Controleur
         $doc->recover = true;
         $doc->strictErrorChecking = false;
         @$doc->loadHTML(self::$_webpage);
+        $elResults = $doc->getElementById("toolbar-amount");
+        $nbResults = intVal($elResults->getElementsByTagName("span")->item(2)->textContent);
         $elements = $doc->getElementsByTagName("li");
         $i = 0;
         foreach ($elements as $key => $noeud) {
@@ -87,6 +89,8 @@ class SaqControleur extends Controleur
             if (strpos($noeud->getAttribute('class'), "product-item") !== false) {
 
                 $info = self::recupereInfo($noeud);
+                // var_dump($info);
+                // die();
                 $retour = $this->ajouteProduit($info);
                 if ($retour->succes == false) {
                 } else {
@@ -114,15 +118,24 @@ class SaqControleur extends Controleur
     }
     private function recupereInfo($noeud)
     {
-
         $info = new stdClass();
-        $info->img = $noeud->getElementsByTagName("img")->item(0)->getAttribute('src'); //TODO : Nettoyer le lien
+        if (strpos($noeud->getElementsByTagName("img")->item(0)->getAttribute('src'), "pastille") !== false) {
+            $info->img = $noeud->getElementsByTagName("img")->item(1)->getAttribute('src');
+        } else {
+            $info->img = $noeud->getElementsByTagName("img")->item(0)->getAttribute('src');
+        }
+            //TODO : Nettoyer le lien
         ;
         $a_titre = $noeud->getElementsByTagName("a")->item(0);
         $info->url = $a_titre->getAttribute('href');
 
         //var_dump($noeud -> getElementsByTagName("a")->item(1)->textContent);
         $nom = $noeud->getElementsByTagName("a")->item(1)->textContent;
+        // $note = trim($noeud->getElementsByTagName("a")->item(2)->textContent);
+        // $nbEval = $noeud->getElementsByTagName("a")->item(3)->textContent;
+        // $nbEval = str_replace(array('(', ')'), '', $nbEval);
+        // $info->note = $note;
+        // $info->nbEval = $nbEval;
         //var_dump($a_titre);
         $info->nom = self::nettoyerEspace(trim($nom));
         //var_dump($info -> nom);
@@ -193,11 +206,37 @@ class SaqControleur extends Controleur
         return $retour;
     }
 
-    public function tout($groupe)
+    public function tout($type)
     {
-        // $groupe = false;
+        $type = $type["admin"];
+        $s = curl_init();
+        $url = "https://www.saq.com/fr/produits/vin/vin-$type?p=1&product_list_limit=96&product_list_order=name_asc";
+        curl_setopt_array($s, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:60.0) Gecko/20100101 Firefox/60.0',
+            CURLOPT_ENCODING => 'gzip, deflate',
+            CURLOPT_HTTPHEADER => array(
+                'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Language: en-US,en;q=0.5',
+                'Accept-Encoding: gzip, deflate',
+                'Connection: keep-alive',
+                'Upgrade-Insecure-Requests: 1',
+            ),
+        ));
+
+        self::$_webpage = curl_exec($s);
+        self::$_status = curl_getinfo($s, CURLINFO_HTTP_CODE);
+        curl_close($s);
+
+        $doc = new DOMDocument();
+        $doc->recover = true;
+        $doc->strictErrorChecking = false;
+        @$doc->loadHTML(self::$_webpage);
+        $elResults = $doc->getElementById("toolbar-amount");
+        $nbResults = intVal($elResults->getElementsByTagName("span")->item(2)->textContent);
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
-        $this->reponse['corps'] = $this->modele->tout($groupe);
+        $this->reponse['corps'] = $nbResults;
     }
 
     public function un($params, $idEntite)

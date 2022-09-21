@@ -24,7 +24,7 @@ import MuiButton from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import Logo from "./img/png/logo-jaune.png";
 import FrmAjoutBouteille from "./FrmAjoutBouteille";
-import {dict, formFields } from "./aws-form-traduction.js";
+import { dict, formFields } from "./aws-form-traduction.js";
 
 let DATA;
 
@@ -68,7 +68,7 @@ const Appli = () => {
 
   useEffect(() => {
     fetchCelliers();
-    setCellier(JSON.parse(localStorage.getItem("cellier")))
+    setCellier(JSON.parse(localStorage.getItem("cellier")));
     if (localStorage.getItem("celliers") !== null) {
       setCelliers(JSON.parse(localStorage.getItem("celliers")));
     }
@@ -140,7 +140,6 @@ const Appli = () => {
       .then((data) => {
         // console.log("dataJSON:", data[0]);
         setUtilisateur(data[0]);
-        console.log(utilisateur)
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -313,7 +312,7 @@ const Appli = () => {
                       fetchVins={fetchVins}
                       gererBouteilles={gererBouteilles}
                       cellier={cellier}
-					  celliers={celliers}
+                      celliers={celliers}
                       URI={URI}
                       error={error}
                       setError={setError}
