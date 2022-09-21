@@ -5,7 +5,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { useState } from "react";
 import "./FrmSaq.scss";
-import FrmSaqInput from "./FrmSaqInput";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
@@ -13,17 +12,6 @@ import CloseIcon from "@mui/icons-material/Close";
 export default function FrmSaq({
   frmOuvert,
   setFrmOuvert,
-  nombre_p,
-  nombre,
-  setNombre,
-  page,
-  setPage,
-  page_p,
-  type,
-  setType,
-  type_p,
-  importerSaq,
-  go,
   setGo,
   setOpenAlertLoading,
 }) {
@@ -36,9 +24,6 @@ export default function FrmSaq({
    */
   function viderFermerFrm() {
     setFrmOuvert(false);
-    setNombre(nombre_p);
-    setPage(page_p);
-    setType(type_p);
   }
   /**
    * Gère l'action de soumettre
@@ -47,8 +32,6 @@ export default function FrmSaq({
     setGo("rouge");
     setOpenAlertLoading(true);
     setFrmOuvert(false);
-
-    if (nombre < 0) setOpenErr(true);
   }
 
   return (
@@ -79,17 +62,6 @@ export default function FrmSaq({
             Vous allez mettre à jour le catalogue de la SAQ. Cette opération
             pourrait prendre plusieurs minutes.{" "}
           </div>
-          {/* <FrmSaqInput
-            nombre_p={nombre_p}
-            nombre={nombre}
-            setNombre={setNombre}
-            page={page}
-            setPage={setPage}
-            page_p={page_p}
-            type={type}
-            setType={setType}
-            type_p={type_p}
-          /> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={viderFermerFrm}>Annuler</Button>
