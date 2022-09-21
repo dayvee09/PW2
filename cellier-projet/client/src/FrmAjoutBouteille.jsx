@@ -122,9 +122,9 @@ export default function FrmAjoutBouteille(props) {
    */
 
   useEffect(() => {
-  if (localStorage.getItem("vins") !== null) {
-    setVinsListe(JSON.parse(localStorage.getItem("vins")));
-  }
+    if (localStorage.getItem("vins") !== null) {
+      setVinsListe(JSON.parse(localStorage.getItem("vins")));
+    }
   }, []);
 
   useEffect(() => {
@@ -136,9 +136,9 @@ export default function FrmAjoutBouteille(props) {
         throw response;
       })
       .then((data) => {
-        // setVinsListe(data);
-        if (data["erreur"] === undefined) {
-          localStorage.setItem("vins", JSON.stringify(data));
+        setVinsListe(data);
+        localStorage.setItem("vins", JSON.stringify(data.slice(0, 1000)));
+        if (data["erreur"]) {
           setVinsListe(JSON.parse(localStorage.getItem("vins")));
         }
       });
@@ -146,7 +146,7 @@ export default function FrmAjoutBouteille(props) {
   /**
    *  Fetch le cellier choisi ayant des bouteilles pour vérifier si la bouteille choisie existe déjà
    */
-  
+
   useEffect(() => {
     fetch(props.URI + `/cellier/${vinCellier}/vins`)
       .then((response) => {
@@ -267,7 +267,6 @@ export default function FrmAjoutBouteille(props) {
         notes: vinNote,
       };
     }
-    console.log(formData)
     // Fetch API d'ajouter une bouteille , soit l'importation du SAQ soit la création personnalisé
     let fetchAjoutBouteille = await fetch(
       // "http://localhost/PW2/cellier-projet/api-php" +
@@ -307,321 +306,325 @@ export default function FrmAjoutBouteille(props) {
     return ok;
   };
   return (
-	<div>
-		<div className="Appli--entete">
-			<div className="Appli--addBottle-container">
-				<BtnGroup
-				className="Appli--addBottle-btnGroup"
-				btnState={btnState}
-				setBtnState={setBtnState}
-				clearForm={clearForm}
-				setMillesime={setMillesime}
-				VinMillesime={vinMillesime}
-				/>
-			</div>
-		</div>
-		<div className="Appli--container">
-			<div className="FrmAjoutBouteille">
-				<h1>AJOUTER UNE BOUTEILLE</h1>
-				<div className="FrmAjoutNouvelle">
-				<div className="img--wrap">
-				<img src={imgUrl() ? imgUrl() : { placeholderSaq }} alt="" />
-				</div>
-				{/* Apparaîte uniquement en important de la bouteille du SAQ */}
-				<div className={btnState ? "hidden" : ""}>
-				<label  className="formInputNom">Nom {value ? value.nom : ""}</label>
-				</div>
-				{/* Autocomplete début */}
-				<div className={btnState ? "hidden" : ""}>
-				<label htmlFor="">Recherche </label>
-				<Autocomplete
-					options={vinsListe}
-					getOptionLabel={(option) => option.nom}
-					disablePortal
-					size="small"
-					noOptionsText={"La bouteille n'existe pas"}
-					isOptionEqualToValue={(option, value) => option.id === value.id}
-					// Gère du boutton clear 'X' , faut nettoyer tous les champs du formulaire
-					onInputChange={(event, newValue, reason) => {
-					if (reason === "clear" || newValue === "") {
-						setValue((value) => {
-						value = [];
-						});
-					}
-					}}
-					// Gère du changement de l'option
-					onChange={(event, newValue) => {
-					setValue(newValue);
-					// gereAjoutRedondance();
-					}}
-					renderOption={(props, option) => {
-					return (
-						<li {...props} key={option.id}>
-						{option.nom} - {option.format}
-						</li>
-					);
-					}}
-					renderInput={(params) => <TextField {...params} size="small" />}
-				/>
-				</div>
-				{/* Autocomplete fin */}
+    <div>
+      <div className="Appli--entete">
+        <div className="Appli--addBottle-container">
+          <BtnGroup
+            className="Appli--addBottle-btnGroup"
+            btnState={btnState}
+            setBtnState={setBtnState}
+            clearForm={clearForm}
+            setMillesime={setMillesime}
+            VinMillesime={vinMillesime}
+          />
+        </div>
+      </div>
+      <div className="Appli--container">
+        <div className="FrmAjoutBouteille">
+          <h1>AJOUTER UNE BOUTEILLE</h1>
+          <div className="FrmAjoutNouvelle">
+            <div className="img--wrap">
+              <img src={imgUrl() ? imgUrl() : { placeholderSaq }} alt="" />
+            </div>
+            {/* Apparaîte uniquement en important de la bouteille du SAQ */}
+            <div className={btnState ? "hidden" : ""}>
+              <label className="formInputNom">
+                Nom {value ? value.nom : ""}
+              </label>
+            </div>
+            {/* Autocomplete début */}
+            <div className={btnState ? "hidden" : ""}>
+              <label htmlFor="">Recherche </label>
+              <Autocomplete
+                options={vinsListe}
+                getOptionLabel={(option) => option.nom}
+                disablePortal
+                size="small"
+                noOptionsText={"La bouteille n'existe pas"}
+                isOptionEqualToValue={(option, value) => option.id === value.id}
+                // Gère du boutton clear 'X' , faut nettoyer tous les champs du formulaire
+                onInputChange={(event, newValue, reason) => {
+                  if (reason === "clear" || newValue === "") {
+                    setValue((value) => {
+                      value = [];
+                    });
+                  }
+                }}
+                // Gère du changement de l'option
+                onChange={(event, newValue) => {
+                  setValue(newValue);
+                  // gereAjoutRedondance();
+                }}
+                renderOption={(props, option) => {
+                  return (
+                    <li {...props} key={option.id}>
+                      {option.nom} - {option.format}
+                    </li>
+                  );
+                }}
+                renderInput={(params) => <TextField {...params} size="small" />}
+              />
+            </div>
+            {/* Autocomplete fin */}
 
-				<Grid container spacing={1}>
-				{/* min-width -- (desktop)lg:1200px - md:992px - sm:768px, xs(mobile)-max-width:768px */}
-				<Grid
-					item
-					xs={12}
-					sm={12}
-					md={12}
-					lg={6}
-					className={btnState ? "" : "hidden"}
-				>
-					<label className="formInputNom">Nom</label>
-					<TextField
-					fullWidth
-					size="small"
-					type="text"
-					name="nom"
-					value={vinNom}
-					onChange={(e) => {
-						setVinNom(e.target.value);
-						e.target.value === ""
-						? setErreur({ nom: "champ obligatoire" })
-						: delete erreur["nom"];
-					}}
-					error={vinNom === ""}
-					helperText={vinNom === "" ? "* Champ obligatoire!" : " "}
-					/>
-					{/* <p className={erreur["nom"] ? "active" : "hidden"}>
+            <Grid container spacing={1}>
+              {/* min-width -- (desktop)lg:1200px - md:992px - sm:768px, xs(mobile)-max-width:768px */}
+              <Grid
+                item
+                xs={12}
+                sm={12}
+                md={12}
+                lg={6}
+                className={btnState ? "" : "hidden"}
+              >
+                <label className="formInputNom">Nom</label>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="text"
+                  name="nom"
+                  value={vinNom}
+                  onChange={(e) => {
+                    setVinNom(e.target.value);
+                    e.target.value === ""
+                      ? setErreur({ nom: "champ obligatoire" })
+                      : delete erreur["nom"];
+                  }}
+                  error={vinNom === ""}
+                  helperText={vinNom === "" ? "* Champ obligatoire!" : " "}
+                />
+                {/* <p className={erreur["nom"] ? "active" : "hidden"}>
 					✳ {erreur["nom"]}{" "}
 					</p> */}
-				</Grid>
-				<Grid item xs={6} sm={6} md={3} lg={3}>
-					<label>Millesime</label>
-					<TextField
-					fullWidth
-					size="small"
-					type="text"
-					name="millesime"
-					disabled= {btnState? false: true}
-					className={!btnState? "nonSelect" : ""}
-					value={value ? value.millesime : vinMillesime}
-					onChange={(e) => {
-						setMillesime(e.target.value);
-					}}
-					/>
-				</Grid>
-				<Grid item xs={6} sm={6} md={3} lg={3}>
-					<label>Pays</label>
-					<TextField
-					fullWidth
-					size="small"
-					type="text"
-					name="pays"
-					disabled= {btnState? false: true}
-					className={!btnState? "nonSelect" : ""}
-					value={value ? value.pays : vinPays}
-					onChange={(e) => {
-						setVinPays(e.target.value);
-					}}
-					/>
-				</Grid>
-				<Grid item xs={6} sm={6} md={3} lg={3}>
-					<label>Prix</label>
-					<TextField
-					fullWidth
-					size="small"
-					type="number"
-					name="prix"
-					disabled= {btnState? false: true}
-					className={!btnState? "nonSelect" : ""}
-					value={value ? value.prix_saq : vinPrix}
-					onChange={(e) => {
-						setVinPrix(e.target.value);
-						e.target.value === ""
-						? setErreur({ prix: "champ obligatoire" })
-						: delete erreur["prix"];
-					}}
-					/>
-					<p className={erreur["prix"] ? "active" : "hidden"}>
-					✳ {erreur["prix"]}{" "}
-					</p>
-				</Grid>
-				<Grid item xs={6} sm={6} md={3} lg={3}>
-					<label>format(ml)</label>
-					<TextField
-					fullWidth
-					size="small"
-					type="text"
-					name="format"
-					disabled= {btnState? false: true}
-					className={!btnState? "nonSelect" : ""}
-					value={value ? value.format : vinFormat}
-					onChange={(e) => {
-						setVinFormat(e.target.value);
-					}}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={12} md={12}>
-					<label>Description</label>
-					<TextField
-					fullWidth
-					size="small"
-					type="text"
-					name="description"
-					multiline
-					rows={2}
-					// maxRows={3}
-					disabled= {btnState? false: true}
-					className={!btnState? "nonSelect" : ""}
-					value={value ? value.description : vinDescription}
-					onChange={(e) => {
-						setVinDescription(e.target.value);
-					}}
-					/>
-				</Grid>
-				<Grid item xs={12} sm={12} md={4} lg={3}>
-					<label>Type</label>
-					<TextField
-					select
-					value={value ? value.vino__type_id : vinType}
-					onChange={(e) => {
-						setVinType(e.target.value);
-					}}
-					SelectProps={{
-						native: true,
-					}}
-					fullWidth
-					size="small"
-					name="type"
-					className={!btnState? "nonSelect" : ""}
-					disabled= {btnState? false: true}
-					>
-					{types.map((option) => (
-						<option key={option.value} value={option.value}>
-						{option.label}
-						</option>
-					))}
-					</TextField>
-				</Grid>
+              </Grid>
+              <Grid item xs={6} sm={6} md={3} lg={3}>
+                <label>Millesime</label>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="text"
+                  name="millesime"
+                  disabled={btnState ? false : true}
+                  className={!btnState ? "nonSelect" : ""}
+                  value={value ? value.millesime : vinMillesime}
+                  onChange={(e) => {
+                    setMillesime(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={3} lg={3}>
+                <label>Pays</label>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="text"
+                  name="pays"
+                  disabled={btnState ? false : true}
+                  className={!btnState ? "nonSelect" : ""}
+                  value={value ? value.pays : vinPays}
+                  onChange={(e) => {
+                    setVinPays(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={3} lg={3}>
+                <label>Prix</label>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="number"
+                  name="prix"
+                  disabled={btnState ? false : true}
+                  className={!btnState ? "nonSelect" : ""}
+                  value={value ? value.prix_saq : vinPrix}
+                  onChange={(e) => {
+                    setVinPrix(e.target.value);
+                    e.target.value === ""
+                      ? setErreur({ prix: "champ obligatoire" })
+                      : delete erreur["prix"];
+                  }}
+                />
+                <p className={erreur["prix"] ? "active" : "hidden"}>
+                  ✳ {erreur["prix"]}{" "}
+                </p>
+              </Grid>
+              <Grid item xs={6} sm={6} md={3} lg={3}>
+                <label>format(ml)</label>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="text"
+                  name="format"
+                  disabled={btnState ? false : true}
+                  className={!btnState ? "nonSelect" : ""}
+                  value={value ? value.format : vinFormat}
+                  onChange={(e) => {
+                    setVinFormat(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={12}>
+                <label>Description</label>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="text"
+                  name="description"
+                  multiline
+                  rows={2}
+                  // maxRows={3}
+                  disabled={btnState ? false : true}
+                  className={!btnState ? "nonSelect" : ""}
+                  value={value ? value.description : vinDescription}
+                  onChange={(e) => {
+                    setVinDescription(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={4} lg={3}>
+                <label>Type</label>
+                <TextField
+                  select
+                  value={value ? value.vino__type_id : vinType}
+                  onChange={(e) => {
+                    setVinType(e.target.value);
+                  }}
+                  SelectProps={{
+                    native: true,
+                  }}
+                  fullWidth
+                  size="small"
+                  name="type"
+                  className={!btnState ? "nonSelect" : ""}
+                  disabled={btnState ? false : true}
+                >
+                  {types.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </TextField>
+              </Grid>
 
-				<Grid item xs={6} sm={6} md={4} lg={3}>
-					<label>Date d'achat</label>
-					<DateSelecteur
-					dateAchat={vinDateAchat}
-					setDateAchat={setVinDateAchat}
-					/>
-				</Grid>
-				<Grid item xs={6} sm={6} md={4} lg={3}>
-					<label>Garde</label>
-					<DateSelecteurAnnee
-					dateGarde={vinGarde}
-					setDateGarde={setVinGarde}
-					/>
-				</Grid>
+              <Grid item xs={6} sm={6} md={4} lg={3}>
+                <label>Date d'achat</label>
+                <DateSelecteur
+                  dateAchat={vinDateAchat}
+                  setDateAchat={setVinDateAchat}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={4} lg={3}>
+                <label>Garde</label>
+                <DateSelecteurAnnee
+                  dateGarde={vinGarde}
+                  setDateGarde={setVinGarde}
+                />
+              </Grid>
 
-				<Grid item xs={6} sm={6} md={4} lg={3}>
-					<label>Note</label>
-					<TextField
-					fullWidth
-					size="small"
-					type="text"
-					name="notes"
-					value={vinNote}
-					onChange={(e) => {
-						setVinNote(e.target.value);
-					}}
-					/>
-				</Grid>
-				<Grid item xs={6} sm={6} md={4} lg={3}>
-					<label>Quantite</label>
-					<TextField
-					fullWidth
-					size="small"
-					type="number"
-					inputProps={{
-						min: 1,
-						inputMode: "numeric",
-						pattern: "/^+?[1-9]d*$/",
-					}}
-					// defaultValue={1}
-					name="quantite"
-					required
-					value={vinQuantite}
-					onChange={(e) => {
-						setVinQuantite(e.target.value);
-						e.target.value === ""
-						? setErreur({ quantite: "champ obligatoire" })
-						: delete erreur["quantite"];
-					}}
-					/>
-					<p className={erreur["quantite"] ? "active" : "hidden"}>
-					✳ {erreur["quantite"]}{" "}
-					</p>
-				</Grid>
-				<Grid item xs={12} sm={12} md={4} lg={3}>
-					<label>Cellier</label>
-					<TextField
-					select
-					value={vinCellier}
-					onChange={(e) => {
-						setVinCellier(e.target.value);
-					}}
-					SelectProps={{
-						native: true,
-					}}
-					fullWidth
-					size="small"
-					name="cellier"
-					>
-					{props.celliers.map((cellier) => (
-						<option key={cellier.id} value={cellier.id}>
-						{/* <option key={cellier.id} value={cellier.id} disabled={cellier.id==redondance? true:false}> */}
-						{cellier.nom}
-						</option>
-					))}
-					</TextField>
-					<p className={erreur["ajout"] ? "active" : "hidden"}>
-					✳ {erreur["ajout"]}{" "}
-					</p>
-				</Grid>
-				<Grid item xs={12}>
-					<Box
-					display="flex"
-					justifyContent="flex-end"
-					alignItems="center"
-					mt={2}
-					mb={2}
-					>
-					<button className="btn--ajouter" onClick={gererAjoutBouteille}>
-						Ajouter
-					</button>
-					</Box>
-				</Grid>
-				<Dialog open={openErr}>
-					<Alert
-					severity="error"
-					action={
-						<IconButton
-						aria-label="close"
-						size="small"
-						onClick={() => {
-							setOpenErr(false);
-						}}
-						>
-						<CloseIcon fontSize="inherit" />
-						</IconButton>
-					}
-					>
-					{messageErr}
-					</Alert>
-				</Dialog>
-				</Grid>
-			</div>
-			</div>
-		</div>
-	</div>
-	
+              <Grid item xs={6} sm={6} md={4} lg={3}>
+                <label>Note</label>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="text"
+                  name="notes"
+                  value={vinNote}
+                  onChange={(e) => {
+                    setVinNote(e.target.value);
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6} sm={6} md={4} lg={3}>
+                <label>Quantite</label>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="number"
+                  inputProps={{
+                    min: 1,
+                    inputMode: "numeric",
+                    pattern: "/^+?[1-9]d*$/",
+                  }}
+                  // defaultValue={1}
+                  name="quantite"
+                  required
+                  value={vinQuantite}
+                  onChange={(e) => {
+                    setVinQuantite(e.target.value);
+                    e.target.value === ""
+                      ? setErreur({ quantite: "champ obligatoire" })
+                      : delete erreur["quantite"];
+                  }}
+                />
+                <p className={erreur["quantite"] ? "active" : "hidden"}>
+                  ✳ {erreur["quantite"]}{" "}
+                </p>
+              </Grid>
+              <Grid item xs={12} sm={12} md={4} lg={3}>
+                <label>Cellier</label>
+                <TextField
+                  select
+                  value={vinCellier}
+                  onChange={(e) => {
+                    setVinCellier(e.target.value);
+                  }}
+                  SelectProps={{
+                    native: true,
+                  }}
+                  fullWidth
+                  size="small"
+                  name="cellier"
+                >
+                  {props.celliers.map((cellier) => (
+                    <option key={cellier.id} value={cellier.id}>
+                      {/* <option key={cellier.id} value={cellier.id} disabled={cellier.id==redondance? true:false}> */}
+                      {cellier.nom}
+                    </option>
+                  ))}
+                </TextField>
+                <p className={erreur["ajout"] ? "active" : "hidden"}>
+                  ✳ {erreur["ajout"]}{" "}
+                </p>
+              </Grid>
+              <Grid item xs={12}>
+                <Box
+                  display="flex"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                  mt={2}
+                  mb={2}
+                >
+                  <button
+                    className="btn--ajouter"
+                    onClick={gererAjoutBouteille}
+                  >
+                    Ajouter
+                  </button>
+                </Box>
+              </Grid>
+              <Dialog open={openErr}>
+                <Alert
+                  severity="error"
+                  action={
+                    <IconButton
+                      aria-label="close"
+                      size="small"
+                      onClick={() => {
+                        setOpenErr(false);
+                      }}
+                    >
+                      <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                  }
+                >
+                  {messageErr}
+                </Alert>
+              </Dialog>
+            </Grid>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 const types = [

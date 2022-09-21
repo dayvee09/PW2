@@ -8,41 +8,72 @@ import MuiAlert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 
 export default function Admin(props) {
-  const [nombre, setNombre] = useState(24);
-  const [nombre_p, setNombre_p] = useState(nombre);
-  const [page, setPage] = useState(props.page);
-  const [page_p, setPage_p] = useState(page);
-  const [type, setType] = useState("rouge");
-  const [type_p, setType_p] = useState(type);
+  const [nbBouteillesSaq, setNbBouteillesSaq] = useState([]);
+  const [go, setGo] = useState(false);
+  const [prevGo, setPrevGo] = useState(false);
+  const [compteur, setCompteur] = useState(0);
   const [frmOuvert, setFrmOuvert] = useState(false);
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const [openAlert, setOpenAlert] = React.useState(false);
+  const [openAlertLoading, setOpenAlertLoading] = React.useState(false);
   const handleCloseAlert = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setOpenAlert(false);
   };
+  const handleCloseAlertLoading = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenAlertLoading(false);
+  };
   const navigate = useNavigate();
 
   // ----------------------- Gestion de l'admin ------------------------------------------------
 
   function gererSaq() {
-    setNombre_p(nombre);
-    setPage_p(page);
-    setType_p(type);
     setFrmOuvert(true);
   }
 
-  function importerSaq(nouveauNombre, nouvellePage, nouveauType) {
-    var reg = /^[1-9]+[0-9]*]*$/;
-    if (reg.test(nouveauNombre)) {
-      setNombre(nouveauNombre);
+  useEffect(() => {
+    if (go) {
+      fetchNbVinsSaq(go);
     }
-    fetchSaq(nombre, nouvellePage, nouveauType);
-  }
+  }, [go]);
+
+  useEffect(() => {
+    if (nbBouteillesSaq) {
+      let nbPages = Math.ceil(nbBouteillesSaq / 96);
+      for (let i = 0; i <= nbPages; i++) {
+        fetchSaq(96, i, go);
+      }
+      switch (go) {
+        case "rouge": {
+          setCompteur(compteur + nbBouteillesSaq);
+          setGo("blanc");
+          setPrevGo("rouge");
+          break;
+        }
+        case "blanc": {
+          setCompteur(compteur + nbBouteillesSaq);
+          setGo("rose");
+          setPrevGo("blanc");
+          break;
+        }
+        case "rose": {
+          setCompteur(compteur + nbBouteillesSaq);
+          setGo(false);
+          setPrevGo("rosé");
+          setOpenAlertLoading(false);
+          setOpenAlert(true);
+          break;
+        }
+      }
+    }
+  }, [nbBouteillesSaq]);
 
   async function fetchSaq(nouveauNombre, nouvellePage, nouveauType) {
     await fetch(props.URI + "/admin/importer/saq", {
@@ -59,8 +90,23 @@ export default function Admin(props) {
         }
         throw response;
       })
+      .then((data) => {})
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        props.setError(error);
+      });
+  }
+
+  async function fetchNbVinsSaq(type) {
+    await fetch(props.URI + `/admin/${type}/saq`)
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
       .then((data) => {
-        setOpenAlert(true);
+        setNbBouteillesSaq(data);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -75,7 +121,7 @@ export default function Admin(props) {
     }, 2000);
     return () => clearTimeout(timer);
   };
-
+  console.log(nbBouteillesSaq);
   return (
     <>
       <div className="Admin">
@@ -93,13 +139,13 @@ export default function Admin(props) {
           </button>
         </div>
         <Snackbar
-          sx={{ height: "100%" }}
+          sx={{ height: "75%" }}
           anchorOrigin={{
             vertical: "top",
             horizontal: "center",
           }}
           open={openAlert}
-          autoHideDuration={1000}
+          autoHideDuration={3000}
           onClose={handleCloseAlert}
         >
           <Alert
@@ -107,23 +153,43 @@ export default function Admin(props) {
             severity="success"
             sx={{ width: "100%" }}
           >
-            Importation de {nombre} bouteilles de vin {type} dans la page {page}{" "}
-            du catalogue de la SAQ réussie!
+            L'importation des bouteilles de vin de la SAQ a été faite avec
+            succès!
+          </Alert>
+        </Snackbar>
+        <Snackbar
+          sx={{ height: "75%" }}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          open={openAlertLoading}
+          onClose={handleCloseAlertLoading}
+        >
+          <Alert
+            onClose={handleCloseAlertLoading}
+            severity="success"
+            sx={{ width: "100%" }}
+          >
+            <p>Importation en cours, veuillez patienter.</p>
+            {nbBouteillesSaq === undefined ? (
+              <p>Initialisation...</p>
+            ) : (
+              <div>
+                <p>
+                  Chargement de {nbBouteillesSaq} bouteilles de vin {prevGo}
+                </p>
+                <p>Total de bouteilles: {compteur}</p>
+              </div>
+            )}
           </Alert>
         </Snackbar>
         <FrmSaq
+          go={go}
+          setGo={setGo}
           frmOuvert={frmOuvert}
           setFrmOuvert={setFrmOuvert}
-          nombre_p={nombre_p}
-          nombre={nombre}
-          setNombre={setNombre}
-          page={page}
-          setPage={setPage}
-          page_p={page_p}
-          type={type}
-          setType={setType}
-          type_p={type_p}
-          importerSaq={importerSaq}
+          setOpenAlertLoading={setOpenAlertLoading}
         />
       </div>
     </>

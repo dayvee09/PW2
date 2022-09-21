@@ -23,6 +23,9 @@ export default function FrmSaq({
   setType,
   type_p,
   importerSaq,
+  go,
+  setGo,
+  setOpenAlertLoading,
 }) {
   /**
    * L‘état d'erreur
@@ -41,7 +44,8 @@ export default function FrmSaq({
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
-    importerSaq(nombre, page, type);
+    setGo("rouge");
+    setOpenAlertLoading(true);
     setFrmOuvert(false);
 
     if (nombre < 0) setOpenErr(true);
@@ -71,7 +75,11 @@ export default function FrmSaq({
               </Alert>
             </Dialog>
           </div>
-          <FrmSaqInput
+          <div className="maj--confirmation">
+            Vous allez mettre à jour le catalogue de la SAQ. Cette opération
+            pourrait prendre plusieurs minutes.{" "}
+          </div>
+          {/* <FrmSaqInput
             nombre_p={nombre_p}
             nombre={nombre}
             setNombre={setNombre}
@@ -81,7 +89,7 @@ export default function FrmSaq({
             type={type}
             setType={setType}
             type_p={type_p}
-          />
+          /> */}
         </DialogContent>
         <DialogActions>
           <Button onClick={viderFermerFrm}>Annuler</Button>
