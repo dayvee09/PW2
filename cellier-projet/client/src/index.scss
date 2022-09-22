@@ -79,16 +79,7 @@ hr {
   }
 }
 
-.css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
-input {
-	
-}
-
-}
-
 .Mui-focused .MuiOutlinedInput-notchedOutline {
-	// border: none !important;
-	// border-color: rgba(0, 0, 0, 0.23) !important;
 	border-color: #f1ab50 !important;
 	border-width: 1px !important;
 }
@@ -98,3 +89,11 @@ input {
     padding-top: 0;
   }
 }
+
+// @media only screen and (min-width: 1280px) {
+// .MuiGrid-grid-lg-6 {
+//     flex-grow: 0;
+//     max-width: 100%;
+//     flex-basis: 100%;
+// }
+// }
