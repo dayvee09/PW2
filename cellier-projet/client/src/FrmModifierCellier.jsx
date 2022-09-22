@@ -36,7 +36,6 @@ function FrmModifierCellier({ fetchCelliers, URI, error, setError }) {
    */
   function gererModifierCellier() {
     let nouvNomCellier = document.getElementById("nomCellier").value;
-    // console.log(nouvNomCellier);
     if (nouvNomCellier === "") {
       let error = document.querySelector("span");
       error.innerText = "Veuillez entrer un nouveau nom de cellier.";

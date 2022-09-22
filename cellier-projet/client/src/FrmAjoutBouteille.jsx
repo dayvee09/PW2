@@ -82,7 +82,7 @@ export default function FrmAjoutBouteille(props) {
   /**
    * État du nom de la bouteille
    */
-  const [vinNom, setVinNom] = React.useState("#");
+  const [vinNom, setVinNom] = React.useState(" ");
   /**
    * État du prix de la bouteille
    */
@@ -172,7 +172,7 @@ export default function FrmAjoutBouteille(props) {
     setVinDescription("");
     setVinGarde(moment().get("year").toString());
     setVinImage("");
-    setVinNom("#");
+    setVinNom(" ");
     setVinNote("");
     setVinQuantite(1);
     setVinType(1);
@@ -303,6 +303,7 @@ export default function FrmAjoutBouteille(props) {
     }
     return ok;
   };
+
   return (
     <div>
       <div className="Appli--entete">
@@ -327,12 +328,12 @@ export default function FrmAjoutBouteille(props) {
             {/* Apparaîte uniquement en important de la bouteille du SAQ */}
             <div className={btnState ? "hidden" : ""}>
               <label className="formInputNom">
-                Nom {value ? value.nom : ""}
+                Nom: {value ? value.nom : ""}
               </label>
             </div>
             {/* Autocomplete début */}
-            <div className={btnState ? "hidden" : ""}>
-              <label htmlFor="">Recherche </label>
+            <div className={btnState ? "hidden" : "autocomplete"}>
+            <p className="instruction">Recherchez et importez une bouteille de la SAQ </p>
               <Autocomplete
                 options={vinsListe}
                 getOptionLabel={(option) => option.nom}
@@ -375,7 +376,8 @@ export default function FrmAjoutBouteille(props) {
                 lg={6}
                 className={btnState ? "" : "hidden"}
               >
-                <label className="formInputNom">Nom</label>
+				<label className="formInputNom creer">Nom</label>
+                <p className="instruction">Créer une bouteille personnalisée</p>
                 <TextField
                   fullWidth
                   size="small"
@@ -389,7 +391,7 @@ export default function FrmAjoutBouteille(props) {
                       : delete erreur["nom"];
                   }}
                   error={vinNom === ""}
-                  helperText={vinNom === "" ? "* Champ obligatoire!" : " "}
+                  helperText={vinNom === "" ? "* Champ obligatoire!" : ""}
                 />
                 {/* <p className={erreur["nom"] ? "active" : "hidden"}>
 					✳ {erreur["nom"]}{" "}
