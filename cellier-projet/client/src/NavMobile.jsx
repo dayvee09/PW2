@@ -8,7 +8,7 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import { ReactComponent as HomeIcone } from "./img/svg/icone_home_blue_line.svg";
 import { ReactComponent as ProfilIcone } from "./img/svg/icone_profil_blue_line.svg";
 import { ReactComponent as FavorisIcone } from "./img/svg/icone_favorite_blue_line.svg";
-import { ReactComponent as AideIcone } from "./img/svg/icone_help_blue_line.svg";
+import { ReactComponent as InventaireIcone } from "./img/svg/icone_inventaire_blue_line.svg";
 import { ReactComponent as AddBottleIcone } from "./img/svg/add_bottle_blue_filled.svg";
 
 export default function NavMobile({
@@ -92,8 +92,8 @@ export default function NavMobile({
               to="."
             />
             <BottomNavigationAction
-              label="AIDE"
-              icon={<AideIcone />}
+              label="INVENTAIRE"
+              icon={<InventaireIcone />}
               component={Link}
               to="."
             />

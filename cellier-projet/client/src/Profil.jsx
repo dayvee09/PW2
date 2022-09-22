@@ -22,17 +22,18 @@ export default function Profil(props) {
    *  État des styles des composants MUI
    */
   const Button = styled(MuiButton)((props) => ({
-    color: "#f3f5eb",
-    backgroundColor: "#cc4240",
+	color: "#152440",
+	border: "1px solid #cc4240",
     textDecoration: "none",
-    borderRadius:"4px",
+    borderRadius: "4px",
     fontFamily: "Alata",
     fontSize: "12px",
     padding: "10px 20px",
-      "&:hover": {
-        backgroundColor: "#f1ab50",
-        color: "#152440",
-      },
+    "&:hover": {
+      backgroundColor: "#f1ab50",
+	  border: "1px solid #f1ab50",
+      color: "#152440",
+    },
   }));
 
   /**
@@ -233,7 +234,6 @@ export default function Profil(props) {
           passwordNouveau={passwordNouveau}
           setPasswordNouveau={setPasswordNouveau}
         />
-      </div>
       {props.utilisateur && props.utilisateur.privilege !== "admin" && (
         <div className="boutonSupprimer" data-id="">
           <button className="boutonSupprimer" onClick={gererSupprimer}>
@@ -241,6 +241,7 @@ export default function Profil(props) {
           </button>
         </div>
       )}
+      </div>
       <Dialog
         PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
         open={frmSuppressionOuvert}
@@ -251,7 +252,7 @@ export default function Profil(props) {
           Voulez-vous vraiment supprimer votre profil ?
         </DialogTitle>
         <DialogActions>
-          <Button onClick={viderFermerFrm}>Annuler</Button>
+          <Button onClick={viderFermerFrm} className="cancel">Annuler</Button>
           <button onClick={gererSoumettre} className="action">Supprimer</button>
         </DialogActions>
       </Dialog>

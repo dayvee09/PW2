@@ -191,7 +191,7 @@ export default function FrmEmail({
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={viderFermerFrm}>Annuler</Button>
+          <Button onClick={viderFermerFrm} className="cancel">Annuler</Button>
           <button onClick={gererSoumettre} className="action">
             Enregistrer
           </button>

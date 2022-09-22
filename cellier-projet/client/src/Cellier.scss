@@ -75,10 +75,9 @@
 .MuiList-root {
 	background-color: transparent;
 	li {
-		&:first-of-type {
-			margin-left: 8px;
-		}
-
+		font-family: Raleway;
+		font-size: 14px;
+		
 		&:hover {
 			color: #cc4240;
 			background-color: transparent;
