@@ -14,6 +14,9 @@ export default function FrmSaq({
   setFrmOuvert,
   setGo,
   setOpenAlertLoading,
+  setNbBouteillesSaq,
+  setCycleImportation,
+  setPrevGo,
 }) {
   /**
    * L‘état d'erreur
@@ -29,7 +32,10 @@ export default function FrmSaq({
    * Gère l'action de soumettre
    */
   function gererSoumettre() {
+    setNbBouteillesSaq(0);
+    setCycleImportation(0);
     setGo("rouge");
+    setPrevGo(false);
     setOpenAlertLoading(true);
     setFrmOuvert(false);
   }
