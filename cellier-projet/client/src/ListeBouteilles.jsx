@@ -10,6 +10,7 @@ function ListeBouteilles(props) {
 
   useEffect(() => {
     props.fetchVins(props.cellier);
+    setSortType("tout");
   }, []);
 
   function gererVoirPlus() {
@@ -29,7 +30,7 @@ function ListeBouteilles(props) {
    *  État des bouteilles au tri
    */
   const [data, setData] = useState([]);
-  const [sortType, setSortType] = useState("default");
+  const [sortType, setSortType] = useState([]);
   const navigate = useNavigate();
 
   /**
@@ -37,23 +38,30 @@ function ListeBouteilles(props) {
    */
   const sortedData = useMemo(() => {
     let result = data;
+    console.log(props.bouteilles);
     if (sortType === "qt-decroissante") {
-      props.fetchVins(props.cellier);
       result = [...props.bouteilles].sort((a, b) => {
         return parseInt(b.quantite) - parseInt(a.quantite);
       });
     } else if (sortType === "qt-croissante") {
-          props.fetchVins(props.cellier);
       result = [...props.bouteilles].sort((a, b) => {
         return parseInt(a.quantite) - parseInt(b.quantite);
       });
-    } else if (sortType === "alph-croissant") {
+    } if (sortType === "prix-decroissant") {
       result = [...props.bouteilles].sort((a, b) => {
-        return a.nom.localeCompare(b.nom);
+        return parseInt(b.prix_saq) - parseInt(a.prix_saq);
+      });
+    } else if (sortType === "prix-croissant") {
+      result = [...props.bouteilles].sort((a, b) => {
+        return parseInt(a.prix_saq) - parseInt(b.prix_saq);
       });
     } else if (sortType === "alph-decroissant") {
       result = [...props.bouteilles].sort((a, b) => {
         return b.nom.localeCompare(a.nom);
+      });
+    } else if (sortType === "alph-croissant") {
+      result = [...props.bouteilles].sort((a, b) => {
+        return a.nom.localeCompare(b.nom);
       });
     } else if (sortType === "vin-rouge") {
       result = [];
@@ -76,11 +84,11 @@ function ListeBouteilles(props) {
           result.push(props.bouteilles[index]);
         }
       }
-    } else {
+    } else if (sortType === "tout") {
       result = props.bouteilles;
     }
     return result;
-  }, [props.bouteilles, sortType]);
+  }, [sortType,props.bouteilles]);
 
   /**
    * Redirection vers la modificiation du cellier
@@ -106,7 +114,7 @@ function ListeBouteilles(props) {
               className="retour"
               name="tri"
               id="tri"
-              defaultValue="default"
+              defaultValue="tout"
               onChange={(e) => setSortType(e.target.value)}
             >
               <img src={rowIcone} alt="icone-row-down" width={15}></img>
@@ -117,6 +125,9 @@ function ListeBouteilles(props) {
               <option value="vin-blanc">Vin Blanc</option>
               <option value="vin-rose">Vin Rosé</option>
               <option value="qt-decroissante">Quantité décroissante</option>
+              <option value="qt-croissante">Quantité croissante</option>
+              <option value="prix-decroissant">Prix-décroissant</option>
+              <option value="prix-croissant">Prix-croissant</option>
               <option value="qt-croissante">Quantité croissante</option>
               <option value="alph-decroissant">Nom décroissant</option>
               <option value="alph-croissant">Nom croissant</option>
