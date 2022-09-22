@@ -1,12 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./ListeBouteilles.scss";
 import Bouteille from "./Bouteille";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 
 function ListeBouteilles(props) {
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
+  const location = useLocation();
+  // récupérer le nom du cellier reçu en paramètres 
+  var nomCellier = location.state.nom;
 
   useEffect(() => {
     props.fetchVins(props.cellier);
@@ -21,11 +24,6 @@ function ListeBouteilles(props) {
     }
   }
 
-  for (let i = 0; i < props.celliers.length; i++) {
-    if (props.celliers[i].id === props.cellier[0]) {
-      var nomCellier = props.celliers[i].nom;
-    }
-  }
   /**
    *  État des bouteilles au tri
    */

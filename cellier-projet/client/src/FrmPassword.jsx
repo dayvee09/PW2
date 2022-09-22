@@ -24,15 +24,16 @@ export default function FrmPassword({
    *  État des styles des composants MUI
    */
   const Button = styled(MuiButton)((props) => ({
-    color: "#f3f5eb",
-    backgroundColor: "#cc4240",
+	color: "#152440",
+	border: "1px solid #cc4240",
     textDecoration: "none",
-    borderRadius:"4px",
+    borderRadius: "4px",
     fontFamily: "Alata",
-	padding: "10px 20px",
-	fontSize: "12px",
+    fontSize: "12px",
+    padding: "10px 20px",
     "&:hover": {
       backgroundColor: "#f1ab50",
+	  border: "1px solid #f1ab50",
       color: "#152440",
     },
   }));
@@ -173,7 +174,7 @@ export default function FrmPassword({
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={viderFermerFrm}>Annuler</Button>
+          <Button onClick={viderFermerFrm} className="cancel">Annuler</Button>
 		  <button onClick={gererSoumettre} className="action">Enregistrer</button>
         </DialogActions>
       </Dialog>

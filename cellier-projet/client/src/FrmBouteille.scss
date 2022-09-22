@@ -1,5 +1,5 @@
 .css-ypiqx9-MuiDialogContent-root {
-	padding: 40px 60px 60px 60px !important;
+	padding: 20px 20px 20px 20px !important;
 	background-color: #d3d7dd78;
 }
 
@@ -11,13 +11,12 @@
 	}
 
 	img {
+		padding: 5px 0 5px 0;
 		object-fit: contain;
 		height: 100%;
 		width: 100%;
-
-		&:hover {
-			cursor: zoom-in;;
-		}
+		max-height: 250px;
+		mix-blend-mode: multiply;
 	}
 }
 
@@ -48,32 +47,38 @@
 }
 
 .FormBouteille--button {
-	font-family: Alata;
 	&:nth-child(1) {
-		background-color: #cc4240;
-		color: #f3f5eb;
+		font-family: Alata;
+		background-color: transparent;
+		border: 1px solid #cc4240;
+		color: #152440;
 		font-size: 12px;
 		padding: 10px 20px;
 		&:hover {
 			background-color: #f1ab50;
+			border: 1px solid #f1ab50;
 			color: #152440;
 			cursor: pointer;
 		}
 	}
 	
 	&:nth-child(2) {
+		font-family: Alata;
 		background-color: #152440;
+		border: 1px solid #152440;
 		color: #f3f5eb;
 		font-size: 12px;
 		padding: 10px 20px;
 		&:hover {
 			background-color: #f1ab50;
+			border: 1px solid #f1ab50;
 			color: #152440;
 			cursor: pointer;
 		}
 	}
+
 }
-	
+
 .img-container {
 	overflow: hidden;
 	background-repeat: no-repeat;
@@ -85,15 +90,9 @@
 	)
 }
 
-.img-container img {
-	width: 450px;
-	transition: transform 0.3s;
-}
-
-.img-container img:hover {
-	transform: scale(1.5);
-}
-
-.hidden {
-	display: none;
+@media only screen and (min-width: 768px) {
+	.css-ypiqx9-MuiDialogContent-root {
+		padding: 40px 60px 60px 60px !important;
+		background-color: #d3d7dd78;
+	}
 }

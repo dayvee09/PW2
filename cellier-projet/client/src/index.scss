@@ -79,8 +79,21 @@ hr {
   }
 }
 
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+	border-color: #f1ab50 !important;
+	border-width: 1px !important;
+}
+
 @media only screen and (min-width: 768px) {
   h1 {
     padding-top: 0;
   }
 }
+
+// @media only screen and (min-width: 1280px) {
+// .MuiGrid-grid-lg-6 {
+//     flex-grow: 0;
+//     max-width: 100%;
+//     flex-basis: 100%;
+// }
+// }
