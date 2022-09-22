@@ -25,12 +25,14 @@ import { styled } from "@mui/material/styles";
 import Logo from "./img/png/logo-jaune.png";
 import FrmAjoutBouteille from "./FrmAjoutBouteille";
 import { dict, formFields } from "./aws-form-traduction.js";
+import ListeBouteillesInventaire from "./ListeBouteillesInventaire";
 
 let DATA;
 
 const Appli = () => {
   const [error, setError] = useState([]);
   const [bouteilles, setBouteilles] = useState([]);
+  const [bouteillesInventaire, setBouteillesInventaire] = useState([]);
   const [emailUtilisateur, setEmailUtilisateur] = useState([]);
   const [id, setId] = useState([]);
   const [cellier, setCellier] = useState([]);
@@ -48,7 +50,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -153,6 +155,7 @@ const Appli = () => {
         setId("");
         setUtilisateur("");
         setBouteilles("");
+        setBouteillesInventaire("");
         setCelliers("");
         setEmailUtilisateur("");
         setUsername("");
@@ -179,6 +182,7 @@ const Appli = () => {
         setId("");
         setUtilisateur("");
         setBouteilles("");
+        setBouteillesInventaire("");
         setCelliers("");
         setEmailUtilisateur("");
         setUsername("");
@@ -224,6 +228,24 @@ const Appli = () => {
       })
       .then((data) => {
         setBouteilles(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      });
+  }
+  // --------------------------------- Gestion des différentes bouteilles comprises dans tous mes celliers ------------------------------------
+
+  async function fetchVinsInventaire() {
+    await fetch(URI + "/" + "user_id" + "/" + id + "/" + "vinsInventaire")
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setBouteillesInventaire(data);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -333,6 +355,20 @@ const Appli = () => {
                       celliers={celliers}
                       cellier={cellier}
                       setCellier={setCellier}
+                      URI={URI}
+                      error={error}
+                      setError={setError}
+                    />
+                  }
+                />
+                <Route
+                  path={`/vinsInventaire`}
+                  element={
+                    <ListeBouteillesInventaire
+                      bouteillesInventaire={bouteillesInventaire}
+                      setBouteillesInventaire={setBouteillesInventaire}
+                      fetchVinsInventaire={fetchVinsInventaire}
+                      user_id={id}
                       URI={URI}
                       error={error}
                       setError={setError}
