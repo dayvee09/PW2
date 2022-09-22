@@ -55,8 +55,12 @@
   .MuiList-root {
     a span {
 		padding-top:5px;
-    //   margin: 0 auto;
     }
+
+	span {
+		font-family: Raleway;
+		font-size: 14px;
+	}
     a:hover {
       color: #cc4240;
       background-color: transparent;
