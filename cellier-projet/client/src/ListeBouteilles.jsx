@@ -38,10 +38,12 @@ function ListeBouteilles(props) {
   const sortedData = useMemo(() => {
     let result = data;
     if (sortType === "qt-decroissante") {
+      props.fetchVins(props.cellier);
       result = [...props.bouteilles].sort((a, b) => {
         return parseInt(b.quantite) - parseInt(a.quantite);
       });
     } else if (sortType === "qt-croissante") {
+          props.fetchVins(props.cellier);
       result = [...props.bouteilles].sort((a, b) => {
         return parseInt(a.quantite) - parseInt(b.quantite);
       });
@@ -185,7 +187,7 @@ function ListeBouteilles(props) {
                 </NavLink>
               </div>
             )}
-            {sortedData.length == 0 && (
+            {sortedData.length == 0 && props.bouteilles.length !== undefined && (
               <div>
                 <h2 className="aucune-bouteille">
                   Aucune bouteille dans ce type dans ce cellier.
