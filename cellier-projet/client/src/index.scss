@@ -79,6 +79,20 @@ hr {
   }
 }
 
+.css-1n4twyu-MuiInputBase-input-MuiOutlinedInput-input {
+input {
+	
+}
+
+}
+
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+	// border: none !important;
+	// border-color: rgba(0, 0, 0, 0.23) !important;
+	border-color: #f1ab50 !important;
+	border-width: 1px !important;
+}
+
 @media only screen and (min-width: 768px) {
   h1 {
     padding-top: 0;

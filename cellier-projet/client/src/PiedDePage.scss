@@ -22,8 +22,13 @@
 	  url(./img/jpg/background-accueil.jpg);
 
 
-	.nav-link-help {
-		display: none;
+	  .nav-link-help {
+		font-size: 12px;
+
+		&:hover {
+			color: #f1ab50;
+			cursor: pointer;
+		}
 	}
 }
 
@@ -56,14 +61,5 @@
 	.PiedDePage {
 		position: fixed;
 		padding: 25px 50px 25px 50px;
-		.nav-link-help {
-			display: block;
-			font-size: 12px;
-
-			&:hover {
-				color: #f1ab50;
-				cursor: pointer;
-			}
-		}
 	}
 }
