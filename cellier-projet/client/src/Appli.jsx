@@ -300,6 +300,7 @@ const Appli = () => {
                       error={error}
                       setError={setError}
                       gererSignOut={gererSignOut}
+                      fetchVins={fetchVins}
                     />
                   }
                 />

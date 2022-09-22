@@ -6,12 +6,13 @@ import FrmSaq from "./FrmSaq";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
+import { selectUnstyledClasses } from "@mui/base";
 
 export default function Admin(props) {
-  const [nbBouteillesSaq, setNbBouteillesSaq] = useState([]);
+  const [nbBouteillesSaq, setNbBouteillesSaq] = useState(0);
   const [go, setGo] = useState(false);
   const [prevGo, setPrevGo] = useState(false);
-  const [compteur, setCompteur] = useState(0);
+  const [cycleImportation, setCycleImportation] = useState(0);
   const [frmOuvert, setFrmOuvert] = useState(false);
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -31,6 +32,8 @@ export default function Admin(props) {
     setOpenAlertLoading(false);
   };
   const navigate = useNavigate();
+  let nb = 0;
+  let progression = 0;
 
   // ----------------------- Gestion de l'admin ------------------------------------------------
 
@@ -45,30 +48,44 @@ export default function Admin(props) {
   }, [go]);
 
   useEffect(() => {
-    if (nbBouteillesSaq) {
+    if (prevGo) {
+      setCycleImportation(0);
+    }
+  }, [prevGo]);
+
+  useEffect(() => {
+    if (nbBouteillesSaq !== 0 && go === false) {
+      const test = setTimeout(() => {
+        setOpenAlertLoading(false);
+        setOpenAlert(true);
+        setNbBouteillesSaq(0);
+      }, 10000);
+      return () => {
+        clearTimeout(test);
+      };
+    }
+  }, [cycleImportation]);
+
+  useEffect(() => {
+    if (nbBouteillesSaq && go !== false) {
       let nbPages = Math.ceil(nbBouteillesSaq / 96);
       for (let i = 0; i <= nbPages; i++) {
         fetchSaq(96, i, go);
       }
       switch (go) {
         case "rouge": {
-          setCompteur(compteur + nbBouteillesSaq);
           setGo("blanc");
           setPrevGo("rouge");
           break;
         }
         case "blanc": {
-          setCompteur(compteur + nbBouteillesSaq);
           setGo("rose");
           setPrevGo("blanc");
           break;
         }
         case "rose": {
-          setCompteur(compteur + nbBouteillesSaq);
           setGo(false);
           setPrevGo("rosé");
-          setOpenAlertLoading(false);
-          setOpenAlert(true);
           break;
         }
       }
@@ -90,7 +107,14 @@ export default function Admin(props) {
         }
         throw response;
       })
-      .then((data) => {})
+      .then((data) => {
+        nb = nb + 96;
+        progression = Math.floor((nb * 100) / nbBouteillesSaq);
+        if (progression > 100) {
+          progression = 100;
+        }
+        setCycleImportation(progression);
+      })
       .catch((error) => {
         console.error("Error fetching data: ", error);
         props.setError(error);
@@ -132,7 +156,7 @@ export default function Admin(props) {
             <h1>Bienvenue sur l'interface d'admin!</h1>
             <div>
               <button className="importer-admin" onClick={gererSaq}>
-                Importer des bouteilles de la Saq
+                Synchroniser avec la base de données de la Saq
               </button>
             </div>
           </div>
@@ -151,8 +175,8 @@ export default function Admin(props) {
               severity="success"
               sx={{ width: "100%" }}
             >
-              L'importation des bouteilles de vin de la SAQ a été faite avec
-              succès!
+              La synchronisation avec la base de données de la SAQ a été faite
+              avec succès!
             </Alert>
           </Snackbar>
           <Snackbar
@@ -169,7 +193,7 @@ export default function Admin(props) {
               severity="success"
               sx={{ width: "100%" }}
             >
-              <p>Importation en cours, veuillez patienter.</p>
+              <p>Synchronisation en cours, veuillez patienter.</p>
               {nbBouteillesSaq < 1 ? (
                 <p className="contenu--alert">Initialisation...</p>
               ) : (
@@ -179,15 +203,18 @@ export default function Admin(props) {
                     ...
                   </p>
                   <p className="contenu--alert">
-                    Bouteilles importées au total: {compteur}
+                    Progression vin {prevGo}: {cycleImportation}%
                   </p>
                 </div>
               )}
             </Alert>
           </Snackbar>
           <FrmSaq
+            setCycleImportation={setCycleImportation}
+            setNbBouteillesSaq={setNbBouteillesSaq}
             go={go}
             setGo={setGo}
+            setPrevGo={setPrevGo}
             frmOuvert={frmOuvert}
             setFrmOuvert={setFrmOuvert}
             setOpenAlertLoading={setOpenAlertLoading}
