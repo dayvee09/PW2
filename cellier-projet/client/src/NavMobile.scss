@@ -11,17 +11,17 @@
 
 	.MuiPaper-root {
 		background-color: #f3f5eb;
-		padding: 20px 20px 0 20px;
+		padding: 0 20px 0 20px;
 	}
 	
 	.BottomNav {
-		padding-bottom: 15px;
+		padding-bottom: 5px;
 		position: relative;
 		background-color: #f3f5eb;
 		
 		a  {
-			padding-top: 20px;
-			margin-top: -20px;
+			padding-top: 10px;
+			// margin-top: -5px;
 			min-width: 60px;
 		}
 
@@ -40,8 +40,8 @@
 		}
 		
 		.AddBottleIcone {
-		width: 90px;
-		height: 110px;
+		width: 85px;
+		height: 80px;
 		position: absolute;
 		bottom: 0;
 		border-radius: 60px;
@@ -70,3 +70,7 @@
 		}	
 	}
 }
+
+// #navbar {
+// 	transition: bottom 0.3s;
+// }
