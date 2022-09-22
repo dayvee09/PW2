@@ -38,8 +38,10 @@ export default function FrmBouteille({
    *  Gère l'action d'annuler
    */
   function viderFermerFrm() {
-    setFrmOuvert(false);
-    setVoirFiche(false);
+	  setFrmOuvert(false);
+	  setTimeout(() => {
+		  setVoirFiche(false);
+	  }, 200);
   }
   /**
    * Gère l'action de soumettre
