@@ -35,7 +35,10 @@ export default function Cellier(props) {
     localStorage.setItem("cellier", cellier);
     setCellier(JSON.parse(localStorage.getItem("cellier")));
     setTimeout(() => {
-      navigate(`/cellier/${cellier}/vins`, { replace: true });
+	  navigate(`/cellier/${cellier}/vins`, {
+		state: { nom: props.nom },
+		replace: true,
+	  });
     }, 100);
   };
 
@@ -43,8 +46,8 @@ export default function Cellier(props) {
    *  État des styles des composants MUI
    */
   const Button = styled(MuiButton)((props) => ({
-    color: "#f3f5eb",
-    backgroundColor: "#cc4240",
+	color: "#152440",
+	border: "1px solid #cc4240",
     textDecoration: "none",
     borderRadius: "4px",
     fontFamily: "Alata",
@@ -52,6 +55,7 @@ export default function Cellier(props) {
     padding: "10px 20px",
     "&:hover": {
       backgroundColor: "#f1ab50",
+	  border: "1px solid #f1ab50",
       color: "#152440",
     },
   }));
@@ -250,7 +254,7 @@ export default function Cellier(props) {
             Voulez-vous vraiment supprimer ce cellier ?
           </DialogTitle>
           <DialogActions>
-            <Button onClick={viderFermerFrm}>Annuler</Button>
+            <Button onClick={viderFermerFrm} className="cancel">Annuler</Button>
             <button onClick={gererSoumettre} className="action">
               Supprimer
             </button>
