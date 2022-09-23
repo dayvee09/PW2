@@ -18,9 +18,12 @@ function ListeCelliers(props) {
 	  <div className="Appli--container">
         <div className="liste-cellier--entete">
           <h1>Mes Celliers</h1>
+          <NavLink to="/vinsInventaire">
+            <button className="liste-cellier--btn-ajout">Mes bouteilles</button>
+          </NavLink>
           <NavLink to="/cellier/ajout/celliers">
             <button className="liste-cellier--btn-ajout">+ Ajouter</button>
-          </NavLink>
+          </NavLink>      
         </div>
         <span className="liste-cellier--message-retour"></span>
         <div className="ListeCelliers">
