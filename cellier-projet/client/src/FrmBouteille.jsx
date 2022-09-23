@@ -38,10 +38,10 @@ export default function FrmBouteille({
    *  Gère l'action d'annuler
    */
   function viderFermerFrm() {
-	  setFrmOuvert(false);
-	  setTimeout(() => {
-		  setVoirFiche(false);
-	  }, 200);
+    setFrmOuvert(false);
+    setTimeout(() => {
+      setVoirFiche(false);
+    }, 200);
   }
   /**
    * Gère l'action de soumettre
@@ -57,7 +57,6 @@ export default function FrmBouteille({
   return (
     <div className="FormBouteille">
       <Dialog
-
         open={frmOuvert}
         onClose={viderFermerFrm}
         PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
@@ -74,13 +73,13 @@ export default function FrmBouteille({
             />
           </div>
           <div className="description">
-			<div className="description--entete">
-				<h2 className="nom">{bouteille.nom} </h2>
-				<p className="type">
-				{bouteille_type} - {bouteille.format} - {bouteille.pays}
-				</p>
-			</div>
-			<hr></hr>
+            <div className="description--entete">
+              <h2 className="nom">{bouteille.nom} </h2>
+              <p className="type">
+                {bouteille_type} - {bouteille.format} - {bouteille.pays}
+              </p>
+            </div>
+            <hr></hr>
             <div className="hr"></div>
             <p className="description">Description : {bouteille.description}</p>
             <p className="millesime">Millesime : {bouteille.millesime}</p>
@@ -91,20 +90,20 @@ export default function FrmBouteille({
               <p className="date_achat">
                 Date jusqu'à : {bouteille.garde_jusqua}
               </p>
-				<p className="lien_saq">
-					<a href={bouteille.url_saq} target="_blank">
-					Voir SAQ
-					</a>
-				</p>
+              <p className="lien_saq">
+                <a href={bouteille.url_saq} target="_blank">
+                  Voir SAQ
+                </a>
+              </p>
             </div>
             <Dialog open={openErr}>
               <Alert
                 severity="error"
                 action={
                   <IconButton
-				  aria-label="close"
-				  size="small"
-				  onClick={() => {
+                    aria-label="close"
+                    size="small"
+                    onClick={() => {
                       setOpenErr(false);
                     }}
                   >
@@ -161,7 +160,9 @@ export default function FrmBouteille({
           </DialogActions>
         ) : (
           <DialogActions>
-            <Button className="FormBouteille--button" onClick={viderFermerFrm}>OK</Button>
+            <Button className="FormBouteille--button" onClick={viderFermerFrm}>
+              OK
+            </Button>
           </DialogActions>
         )}
       </Dialog>

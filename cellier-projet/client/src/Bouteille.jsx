@@ -39,7 +39,7 @@ export default function Bouteille(props) {
    */
   const Button = styled(MuiButton)((props) => ({
     color: "#152440",
-	border: "1px solid #cc4240",
+    border: "1px solid #cc4240",
     textDecoration: "none",
     borderRadius: "4px",
     fontFamily: "Alata",
@@ -47,7 +47,7 @@ export default function Bouteille(props) {
     padding: "10px 20px",
     "&:hover": {
       backgroundColor: "#f1ab50",
-	  border: "1px solid #f1ab50",
+      border: "1px solid #f1ab50",
       color: "#152440",
     },
   }));
@@ -100,6 +100,7 @@ export default function Bouteille(props) {
     } else {
       setQuantite(props.quantite);
     }
+    fetchVinUn();
   }
 
   /**
@@ -158,8 +159,8 @@ export default function Bouteille(props) {
    */
   function gererAjouter() {
     fetchVinUn();
-    setQuantite((quantite) => parseInt(quantite) + 1);
-    fetchPutVinUn(parseInt(quantite) + 1, dateAchat, dateGarde);
+    // setQuantite((quantite) => parseInt(quantite) + 1);
+    fetchPutVinUn(parseInt(props.quantite) + 1, dateAchat, dateGarde);
   }
 
   /**
@@ -168,13 +169,13 @@ export default function Bouteille(props) {
   function gererBoire() {
     fetchVinUn();
     if (quantite > 0) {
-      setQuantite((quantite) => parseInt(quantite) - 1);
-      fetchPutVinUn(parseInt(quantite) - 1, dateAchat, dateGarde);
+      // setQuantite((quantite) => parseInt(quantite) - 1);
+      fetchPutVinUn(parseInt(props.quantite) - 1, dateAchat, dateGarde);
     } else {
-    //   setMessageRetour("En rupture de stock");
-    //   setSeverity("error");
-    //   setOpenAlert(true);
-	setFrmSuppressionOuvert(true);
+      //   setMessageRetour("En rupture de stock");
+      //   setSeverity("error");
+      //   setOpenAlert(true);
+      setFrmSuppressionOuvert(true);
     }
   }
 
@@ -254,6 +255,7 @@ export default function Bouteille(props) {
         throw response;
       })
       .then((data) => {
+        props.setChangementBouteille(Math.random());
         fetchVinUn();
       })
       .catch((error) => {
@@ -321,17 +323,17 @@ export default function Bouteille(props) {
         props.setError(props.error);
       });
   }
-
   return (
     <>
       <div className="Bouteille" data-quantite="">
         <div className="bouteille--gestion">
           <div className="quantite--container">
             <p className="quantite">
-              {" "}
+              {/* {" "}
               {contexteModif === true
                 ? bouteille.quantite
-                : props.quantite}{" "}
+                : props.quantite}{" "} */}
+              {props.quantite}
             </p>
           </div>
           <img
@@ -418,7 +420,9 @@ export default function Bouteille(props) {
             Voulez-vous vraiment supprimer cette bouteille ?
           </DialogTitle>
           <DialogActions>
-            <Button onClick={viderFermerFrm} className="cancel">Annuler</Button>
+            <Button onClick={viderFermerFrm} className="cancel">
+              Annuler
+            </Button>
             <button onClick={gererSoumettre} className="action">
               Supprimer
             </button>
@@ -431,7 +435,7 @@ export default function Bouteille(props) {
           voirFiche={voirFiche}
           setVoirFiche={setVoirFiche}
           bouteille_type={props.type}
-          quantite={quantite}
+          quantite={props.quantite}
           setQuantite={setQuantite}
           dateAchat={dateAchat}
           setDateAchat={setDateAchat}
@@ -439,7 +443,7 @@ export default function Bouteille(props) {
           setDateGarde={setDateGarde}
           modifierBouteille={modifierBouteille}
         />
-      </div> 
+      </div>
     </>
   );
 }

@@ -7,24 +7,11 @@ import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 function ListeBouteilles(props) {
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
+  const [changementBouteille, setChangementBouteille] = useState(false);
+  const [bouteillesTri, setBouteillesTri] = useState(props.bouteilles);
   // const location = useLocation();
   // récupérer le nom du cellier reçu en paramètres
   // var nomCellier = location.state.nom;
-
-  useEffect(() => {
-    props.fetchVins(props.cellier);
-    props.fetchNomCellier(props.cellier);
-    setSortType("tout");
-  }, []);
-
-  function gererVoirPlus() {
-    if (props.bouteilles.length > fin) {
-      setFin(fin + 200);
-    } else if (props.bouteilles.length <= fin) {
-      setFin(props.bouteilles.length);
-    }
-  }
-
   /**
    *  État des bouteilles au tri
    */
@@ -35,7 +22,7 @@ function ListeBouteilles(props) {
   /**
    *  État des bouteilles au tri
    */
-  const sortedData = useMemo(() => {
+  useEffect(() => {
     let result = data;
     switch (sortType) {
       case "qt-decroissante": {
@@ -105,8 +92,26 @@ function ListeBouteilles(props) {
         result = props.bouteilles;
       }
     }
-    return result;
+    setBouteillesTri(result);
   }, [sortType, props.bouteilles]);
+
+  useEffect(() => {
+    props.fetchVins(props.cellier);
+    props.fetchNomCellier(props.cellier);
+    setSortType("tout");
+  }, []);
+
+  useEffect(() => {
+    props.fetchVins(props.cellier);
+  }, [changementBouteille]);
+
+  function gererVoirPlus() {
+    if (props.bouteilles.length > fin) {
+      setFin(fin + 200);
+    } else if (props.bouteilles.length <= fin) {
+      setFin(props.bouteilles.length);
+    }
+  }
 
   /**
    * Redirection vers la modificiation du cellier
@@ -165,16 +170,17 @@ function ListeBouteilles(props) {
             <div></div>
             {props.bouteilles.length > 1 && (
               <div className="ListeBouteille--grid">
-                {sortedData.slice(debut, fin).map((bouteille, index) => (
+                {bouteillesTri.slice(debut, fin).map((bouteille, index) => (
                   <div key={index}>
                     <Bouteille
                       {...bouteille}
+                      setChangementBouteille={setChangementBouteille}
                       fetchVins={props.fetchVins}
                       fetchVin={props.fetchVin}
                       gererBouteille={props.gererBouteille}
                       gererBouteilles={props.gererBouteilles}
-                      bouteilles={props.bouteilles}
-                      setBouteilles={props.setBouteilles}
+                      bouteilles={props.bouteillesTri}
+                      setBouteilles={props.setBouteillesTri}
                       cellier={props.cellier}
                       bouteille={bouteille}
                       URI={props.URI}
@@ -217,18 +223,19 @@ function ListeBouteilles(props) {
                 </NavLink>
               </div>
             )}
-            {sortedData.length == 0 && props.bouteilles.length !== undefined && (
-              <div>
-                <h2 className="aucune-bouteille">
-                  Aucune bouteille dans ce type dans ce cellier.
-                </h2>
-                <NavLink to="/vins">
-                  <p className="ListeBouteille--default-button">
-                    + Ajouter une bouteille
-                  </p>
-                </NavLink>
-              </div>
-            )}
+            {props.bouteilles.length == 0 &&
+              props.bouteilles.length !== undefined && (
+                <div>
+                  <h2 className="aucune-bouteille">
+                    Aucune bouteille dans ce type dans ce cellier.
+                  </h2>
+                  <NavLink to="/vins">
+                    <p className="ListeBouteille--default-button">
+                      + Ajouter une bouteille
+                    </p>
+                  </NavLink>
+                </div>
+              )}
             {props.bouteilles.length > fin ? (
               <div className="fin--liste cliquable" onClick={gererVoirPlus}>
                 Voir plus
