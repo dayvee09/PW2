@@ -218,7 +218,7 @@ const Appli = () => {
   }
 
   // console.log("user_id:", emailUtilisateur);
-  async function fetchCellier() {
+  async function fetchNomCellier() {
     await fetch(
       URI +
         "/" +
@@ -367,7 +367,7 @@ const Appli = () => {
                     <ListeBouteilles
                       nomCellier={nomCellier}
                       setNomCellier={setNomCellier}
-                      fetchCellier={fetchCellier}
+                      fetchNomCellier={fetchNomCellier}
                       bouteilles={bouteilles}
                       setBouteilles={setBouteilles}
                       fetchVins={fetchVins}
