@@ -8,19 +8,11 @@ function ListeCelliers(props) {
     return (
       <>
 	  <div className="Appli--entete">
-		<div className="Appli--search-bar-container">
-			<input className="Appli--search-bar" placeholder="Trouver une bouteille" />
-			<div className="Appli--search-bar-icone">
-				<img className="Appli--search-bar-icone-search" src={rowIcone} alt="icone-row-left" width={15}></img>
-			</div>
-		</div>
+	
 	  </div>
 	  <div className="Appli--container">
         <div className="liste-cellier--entete">
           <h1>Mes Celliers</h1>
-          <NavLink to="/vinsInventaire">
-            <button className="liste-cellier--btn-ajout">Mes bouteilles</button>
-          </NavLink>
           <NavLink to="/cellier/ajout/celliers">
             <button className="liste-cellier--btn-ajout">+ Ajouter</button>
           </NavLink>      
