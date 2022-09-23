@@ -8,7 +8,7 @@ class CelliersModele extends AccesBd
 
     public function un($params, $idEntite)
     {
-        return $this->lireUn("SELECT vino__cellier.id, vino__cellier.nom, vino__utilisateur_id FROM vino__cellier JOIN vino__utilisateur ON vino__utilisateur.id =vino__cellier.vino__utilisateur_id where vino__cellier.id =:cellier_id", ['cellier_id' => $idEntite["cellier"]]);
+        return $this->lireUn("SELECT  vino__cellier.nom FROM vino__cellier WHERE vino__cellier.id =:cellier_id", ['cellier_id' => $idEntite["cellier"]]);
     }
 
     public function ajouter($cellier)
@@ -24,8 +24,8 @@ class CelliersModele extends AccesBd
     public function changer($id, $cellier, $fragmentCellier)
     {
         return $this->modifier("UPDATE vino__cellier SET vino__cellier.nom=:nom WHERE vino__cellier.id=:id", [
-			'id' => $id["cellier"],
-			'nom' => $fragmentCellier->nom
-		   ]);
+            'id' => $id["cellier"],
+            'nom' => $fragmentCellier->nom
+        ]);
     }
 }
