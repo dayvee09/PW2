@@ -36,6 +36,7 @@ const Appli = () => {
   const [emailUtilisateur, setEmailUtilisateur] = useState([]);
   const [id, setId] = useState([]);
   const [cellier, setCellier] = useState([]);
+  const [nomCellier, setNomCellier] = useState([]);
   const [username, setUsername] = useState([]);
   const [utilisateur, setUtilisateur] = useState([]);
   const [utilisateurs, setUtilisateurs] = useState([]);
@@ -50,7 +51,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -216,6 +217,40 @@ const Appli = () => {
       });
   }
 
+  // console.log("user_id:", emailUtilisateur);
+  async function fetchCellier() {
+    await fetch(
+      URI +
+        "/" +
+        "user_id" +
+        "/" +
+        id +
+        "/" +
+        "celliers" +
+        "/" +
+        "cellier" +
+        "/" +
+        cellier
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setNomCellier(data.nom);
+        if (data["erreur"] === undefined) {
+          localStorage.setItem("nomCellier", JSON.stringify(data));
+          setNomCellier(JSON.parse(localStorage.getItem("nomCellier")));
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      });
+  }
+
   // --------------------------------- Gestion des bouteilles ------------------------------------
 
   async function fetchVins(cellier) {
@@ -330,6 +365,9 @@ const Appli = () => {
                   path={`/cellier/${cellier}/vins`}
                   element={
                     <ListeBouteilles
+                      nomCellier={nomCellier}
+                      setNomCellier={setNomCellier}
+                      fetchCellier={fetchCellier}
                       bouteilles={bouteilles}
                       setBouteilles={setBouteilles}
                       fetchVins={fetchVins}

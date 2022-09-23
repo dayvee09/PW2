@@ -8,11 +8,13 @@ function ListeBouteilles(props) {
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
   const location = useLocation();
-  // récupérer le nom du cellier reçu en paramètres 
-  var nomCellier = location.state.nom;
+  // récupérer le nom du cellier reçu en paramètres
+  console.log(props.nomCellier.nom);
+  // var nomCellier = location.state.nom;
 
   useEffect(() => {
     props.fetchVins(props.cellier);
+    props.fetchCellier(props.cellier);
     setSortType("tout");
   }, []);
 
@@ -45,7 +47,8 @@ function ListeBouteilles(props) {
       result = [...props.bouteilles].sort((a, b) => {
         return parseInt(a.quantite) - parseInt(b.quantite);
       });
-    } if (sortType === "prix-decroissant") {
+    }
+    if (sortType === "prix-decroissant") {
       result = [...props.bouteilles].sort((a, b) => {
         return parseInt(b.prix_saq) - parseInt(a.prix_saq);
       });
@@ -86,14 +89,14 @@ function ListeBouteilles(props) {
       result = props.bouteilles;
     }
     return result;
-  }, [sortType,props.bouteilles]);
+  }, [sortType, props.bouteilles]);
 
   /**
    * Redirection vers la modificiation du cellier
    */
   function gererModifier() {
     navigate(`/modifier-cellier`, {
-      state: { id: props.cellier[0], nom: nomCellier },
+      state: { id: props.cellier[0], nom: props.nomCellier.nom },
       replace: true,
     });
   }
@@ -133,7 +136,9 @@ function ListeBouteilles(props) {
           </div>
         </div>
         <div className="Appli--container">
-          <h1 className="ListeBouteille--cellier-nom">{nomCellier}</h1>
+          <h1 className="ListeBouteille--cellier-nom">
+            {props.nomCellier.nom}
+          </h1>
           <div
             className={
               props.bouteilles.length == 1
