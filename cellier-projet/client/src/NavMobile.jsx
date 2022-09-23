@@ -95,7 +95,7 @@ export default function NavMobile({
               label="INVENTAIRE"
               icon={<InventaireIcone />}
               component={Link}
-              to="."
+              to="/vinsInventaire"
             />
           </BottomNavigation>
         </AppBar>
