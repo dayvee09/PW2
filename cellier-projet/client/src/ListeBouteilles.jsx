@@ -7,7 +7,7 @@ import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 function ListeBouteilles(props) {
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
-  const location = useLocation();
+  // const location = useLocation();
   // récupérer le nom du cellier reçu en paramètres
   // var nomCellier = location.state.nom;
 
@@ -37,54 +37,73 @@ function ListeBouteilles(props) {
    */
   const sortedData = useMemo(() => {
     let result = data;
-    if (sortType === "qt-decroissante") {
-      result = [...props.bouteilles].sort((a, b) => {
-        return parseInt(b.quantite) - parseInt(a.quantite);
-      });
-    } else if (sortType === "qt-croissante") {
-      result = [...props.bouteilles].sort((a, b) => {
-        return parseInt(a.quantite) - parseInt(b.quantite);
-      });
-    }
-    if (sortType === "prix-decroissant") {
-      result = [...props.bouteilles].sort((a, b) => {
-        return parseInt(b.prix_saq) - parseInt(a.prix_saq);
-      });
-    } else if (sortType === "prix-croissant") {
-      result = [...props.bouteilles].sort((a, b) => {
-        return parseInt(a.prix_saq) - parseInt(b.prix_saq);
-      });
-    } else if (sortType === "alph-decroissant") {
-      result = [...props.bouteilles].sort((a, b) => {
-        return b.nom.localeCompare(a.nom);
-      });
-    } else if (sortType === "alph-croissant") {
-      result = [...props.bouteilles].sort((a, b) => {
-        return a.nom.localeCompare(b.nom);
-      });
-    } else if (sortType === "vin-rouge") {
-      result = [];
-      for (let index = 0; index < props.bouteilles.length; index++) {
-        if (props.bouteilles[index]["type"] === "Vin rouge") {
-          result.push(props.bouteilles[index]);
-        }
+    switch (sortType) {
+      case "qt-decroissante": {
+        result = [...props.bouteilles].sort((a, b) => {
+          return parseInt(b.quantite) - parseInt(a.quantite);
+        });
+        break;
       }
-    } else if (sortType === "vin-blanc") {
-      result = [];
-      for (let index = 0; index < props.bouteilles.length; index++) {
-        if (props.bouteilles[index]["type"] === "Vin blanc") {
-          result.push(props.bouteilles[index]);
-        }
+      case "qt-croissante": {
+        result = [...props.bouteilles].sort((a, b) => {
+          return parseInt(a.quantite) - parseInt(b.quantite);
+        });
+        break;
       }
-    } else if (sortType === "vin-rose") {
-      result = [];
-      for (let index = 0; index < props.bouteilles.length; index++) {
-        if (props.bouteilles[index]["type"] === "Vin rose") {
-          result.push(props.bouteilles[index]);
-        }
+      case "prix-decroissant": {
+        result = [...props.bouteilles].sort((a, b) => {
+          return parseInt(b.prix_saq) - parseInt(a.prix_saq);
+        });
+        break;
       }
-    } else if (sortType === "tout") {
-      result = props.bouteilles;
+      case "prix-croissant": {
+        result = [...props.bouteilles].sort((a, b) => {
+          return parseInt(a.prix_saq) - parseInt(b.prix_saq);
+        });
+        break;
+      }
+      case "alph-decroissant": {
+        result = [...props.bouteilles].sort((a, b) => {
+          return b.nom.localeCompare(a.nom);
+        });
+        break;
+      }
+      case "alph-croissant": {
+        result = [...props.bouteilles].sort((a, b) => {
+          return a.nom.localeCompare(b.nom);
+        });
+        break;
+      }
+      case "vin-rouge": {
+        result = [];
+        for (let index = 0; index < props.bouteilles.length; index++) {
+          if (props.bouteilles[index]["type"] === "Vin rouge") {
+            result.push(props.bouteilles[index]);
+          }
+        }
+        break;
+      }
+      case "vin-blanc": {
+        result = [];
+        for (let index = 0; index < props.bouteilles.length; index++) {
+          if (props.bouteilles[index]["type"] === "Vin blanc") {
+            result.push(props.bouteilles[index]);
+          }
+        }
+        break;
+      }
+      case "vin-rose": {
+        result = [];
+        for (let index = 0; index < props.bouteilles.length; index++) {
+          if (props.bouteilles[index]["type"] === "Vin rose") {
+            result.push(props.bouteilles[index]);
+          }
+        }
+        break;
+      }
+      default: {
+        result = props.bouteilles;
+      }
     }
     return result;
   }, [sortType, props.bouteilles]);
@@ -127,7 +146,6 @@ function ListeBouteilles(props) {
               <option value="qt-croissante">Quantité croissante</option>
               <option value="prix-decroissant">Prix-décroissant</option>
               <option value="prix-croissant">Prix-croissant</option>
-              <option value="qt-croissante">Quantité croissante</option>
               <option value="alph-decroissant">Nom décroissant</option>
               <option value="alph-croissant">Nom croissant</option>
             </select>
