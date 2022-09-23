@@ -9,12 +9,11 @@ function ListeBouteilles(props) {
   const [fin, setFin] = useState(200);
   const location = useLocation();
   // récupérer le nom du cellier reçu en paramètres
-  console.log(props.nomCellier.nom);
   // var nomCellier = location.state.nom;
 
   useEffect(() => {
     props.fetchVins(props.cellier);
-    props.fetchCellier(props.cellier);
+    props.fetchNomCellier(props.cellier);
     setSortType("tout");
   }, []);
 
@@ -38,7 +37,6 @@ function ListeBouteilles(props) {
    */
   const sortedData = useMemo(() => {
     let result = data;
-    console.log(props.bouteilles);
     if (sortType === "qt-decroissante") {
       result = [...props.bouteilles].sort((a, b) => {
         return parseInt(b.quantite) - parseInt(a.quantite);
