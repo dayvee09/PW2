@@ -115,6 +115,7 @@ export default function FrmAjoutBouteille(props) {
    * État de la navigation (sert à redirection)
    */
   const navigate = useNavigate();
+
   /**
    *  Fetch la liste de la bouteilles de la BD pour préparer à injecter à la liste du composant 'Autocomplete'
    */
@@ -283,7 +284,10 @@ export default function FrmAjoutBouteille(props) {
       .then((data) => {
         props.fetchVins(vinCellier);
         props.setCellier(vinCellier);
-        navigate(`/cellier/${vinCellier}/vins`, { replace: true });
+        navigate(`/cellier/${vinCellier}/vins`, {
+			state: { nom: nomCellier },
+			replace: true,
+		 });
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -303,6 +307,15 @@ export default function FrmAjoutBouteille(props) {
     }
     return ok;
   };
+
+  // Récupérer le nom du cellier pour la redirection après l'ajout d'une bouteille
+  for(let i = 0; i < props.celliers.length; i++){
+	if(props.celliers[i].id == vinCellier){
+		var nomCellier = props.celliers[i].nom
+	}
+	// console.log(props.celliers)
+	// console.log(props.cellier)
+}
 
   return (
     <div>
@@ -567,6 +580,7 @@ export default function FrmAjoutBouteille(props) {
                   value={vinCellier}
                   onChange={(e) => {
                     setVinCellier(e.target.value);
+					console.log(vinCellier)
                   }}
                   SelectProps={{
                     native: true,
