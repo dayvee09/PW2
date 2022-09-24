@@ -147,39 +147,16 @@ export default function BouteilleInventaire(props) {
               },
             }}
           /> */}
-        <SwipeableDrawer
-          container={container}
-          anchor="left"
-          open={open}
-          onClose={toggleDrawer(false)}
-          onOpen={toggleDrawer(true)}
-          swipeAreaWidth={drawerBleeding}
-          disableSwipeToOpen={true}
-          ModalProps={{
-            keepMounted: true,
-          }}
-        >
-          <StyledBox
-            sx={{
-              position: "absolute",
-              top: -drawerBleeding,
-              borderTopLeftRadius: 8,
-              borderTopRightRadius: 8,
-              visibility: "visible",
-              right: 0,
-              left: 0,
-            }}
-          ></StyledBox>
-          <Puller />
-          <Typography sx={{ p: 4, color: "text.secondary" }}>
-            Cette bouteille est dans {listeInventaire.length} de vos celliers{" "}
-          </Typography>
-          <StyledBox
-            sx={{
-              px: 2,
-              pb: 2,
-              height: "100%",
-              overflow: "auto",
+          <SwipeableDrawer
+            container={container}
+            anchor="left"
+            open={open}
+            onClose={toggleDrawer(false)}
+            onOpen={toggleDrawer(true)}
+            swipeAreaWidth={drawerBleeding}
+            disableSwipeToOpen={true}
+            ModalProps={{
+              keepMounted: true,
             }}
           >
             <StyledBox
@@ -214,5 +191,5 @@ export default function BouteilleInventaire(props) {
           </Root>
           {/* Fin composant drawer */}
 		</>
-	);
+	)
 }
