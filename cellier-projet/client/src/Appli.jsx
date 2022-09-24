@@ -289,7 +289,6 @@ const Appli = () => {
         setError(error);
       });
   }
-
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>

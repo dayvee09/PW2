@@ -13,11 +13,11 @@ import ListeInventaire from "./ListeInventaire";
 const drawerBleeding = 56;
 
 const Root = styled("div")(({ theme }) => ({
-//   height: "100%",
-//   backgroundColor:
-//     theme.palette.mode === "light"
-//       ? grey[100]
-//       : theme.palette.background.default,
+  //   height: "100%",
+  //   backgroundColor:
+  //     theme.palette.mode === "light"
+  //       ? grey[100]
+  //       : theme.palette.background.default,
 }));
 
 const StyledBox = styled(Box)(({ theme }) => ({
@@ -38,6 +38,7 @@ export default function BouteilleInventaire(props) {
   /**
    *  MUI component drawer
    */
+
    const { window } = props;
    const [open, setOpen] = React.useState(false);
  
@@ -49,37 +50,38 @@ export default function BouteilleInventaire(props) {
      window !== undefined ? () => window().document.body : undefined;
  
    /**
+
    *  État de la liste d'inventaire
    */
-    const [listeInventaire, setListeInventaire] = React.useState([]);
+  const [listeInventaire, setListeInventaire] = React.useState([]);
 
-	/**
-	 *  État des styles des composants MUI
-	 */
-	const Button = styled(MuiButton)((props) => ({
-	color: "#f3f5eb",
-	backgroundColor: "#152440",
-	textDecoration: "none",
-	borderRadius: "4px",
-	fontFamily: "Alata",
-	fontSize: "12px",
-	padding: "10px 20px",
-	"&:hover": {
-		backgroundColor: "#f1ab50",
-		color: "#152440",
-	},
-	}));
-
-   /**
-   * Fectch la liste 
+  /**
+   *  État des styles des composants MUI
    */
-    useEffect(() => {
-      fetchListeInventaire();
-    }, []);
+  const Button = styled(MuiButton)((props) => ({
+    color: "#f3f5eb",
+    backgroundColor: "#152440",
+    textDecoration: "none",
+    borderRadius: "4px",
+    fontFamily: "Alata",
+    fontSize: "12px",
+    padding: "10px 20px",
+    "&:hover": {
+      backgroundColor: "#f1ab50",
+      color: "#152440",
+    },
+  }));
 
-   /**
-    * fetch la liste des inventaires d'une bouteille
-    */
+  /**
+   * Fectch la liste
+   */
+  useEffect(() => {
+    fetchListeInventaire();
+  }, []);
+
+  /**
+   * fetch la liste des inventaires d'une bouteille
+   */
   async function fetchListeInventaire() {
 	  await fetch(props.URI +"/" +"user_id" + "/" + props.user_id +"/" + "vinsInventaire" +"/" + "vin_id" + "/" + props.bouteilleInventaire.id)
 	  .then((response) => {
@@ -145,16 +147,39 @@ export default function BouteilleInventaire(props) {
               },
             }}
           /> */}
-          <SwipeableDrawer
-            container={container}
-            anchor="left"
-            open={open}
-            onClose={toggleDrawer(false)}
-            onOpen={toggleDrawer(true)}
-            swipeAreaWidth={drawerBleeding}
-            disableSwipeToOpen={true}
-            ModalProps={{
-              keepMounted: true,
+        <SwipeableDrawer
+          container={container}
+          anchor="left"
+          open={open}
+          onClose={toggleDrawer(false)}
+          onOpen={toggleDrawer(true)}
+          swipeAreaWidth={drawerBleeding}
+          disableSwipeToOpen={true}
+          ModalProps={{
+            keepMounted: true,
+          }}
+        >
+          <StyledBox
+            sx={{
+              position: "absolute",
+              top: -drawerBleeding,
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
+              visibility: "visible",
+              right: 0,
+              left: 0,
+            }}
+          ></StyledBox>
+          <Puller />
+          <Typography sx={{ p: 4, color: "text.secondary" }}>
+            Cette bouteille est dans {listeInventaire.length} de vos celliers{" "}
+          </Typography>
+          <StyledBox
+            sx={{
+              px: 2,
+              pb: 2,
+              height: "100%",
+              overflow: "auto",
             }}
           >
             <StyledBox
@@ -189,5 +214,5 @@ export default function BouteilleInventaire(props) {
           </Root>
           {/* Fin composant drawer */}
 		</>
-	)
+	);
 }

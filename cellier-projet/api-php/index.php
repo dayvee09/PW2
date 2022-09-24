@@ -87,7 +87,7 @@ class Routeur
 
         // //http://localhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
         // if (count($partiesRoute) > 9 && trim(urldecode($partiesRoute[9])) != '') {
-        //     //$collection = VinsCelliers
+        //     //$collection = Stats
         //     $collection = trim(urldecode($partiesRoute[8])).trim(urldecode($partiesRoute[6]));
         //     // idEntite = ['celliers'=>6, 'vins'=>'7']
         //     $idEntite = [$partiesRoute[6] => trim(urldecode($partiesRoute[7])), 
