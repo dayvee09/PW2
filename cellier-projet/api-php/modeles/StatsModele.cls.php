@@ -1,5 +1,5 @@
 <?php
-class VinsCelliersModele extends AccesBd
+class StatsModele extends AccesBd
 {
     public function tout($params)
     {
