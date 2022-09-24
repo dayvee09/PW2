@@ -43,7 +43,6 @@ export default function BouteilleInventaire(props) {
  
    const toggleDrawer = (newOpen) => () => {
      setOpen(newOpen);
-     
    };
  
    const container =
@@ -82,15 +81,15 @@ export default function BouteilleInventaire(props) {
     * fetch la liste des inventaires d'une bouteille
     */
   async function fetchListeInventaire() {
-	await fetch(props.URI +"/" +"user_id" + "/" + props.user_id +"/" + "vinsInventaire" +"/" + "vin_id" + "/" + props.bouteilleInventaire.id)
-		.then((response) => {
-		if (response.ok) {
-			return response.json();
-		}
-		throw response;
+	  await fetch(props.URI +"/" +"user_id" + "/" + props.user_id +"/" + "vinsInventaire" +"/" + "vin_id" + "/" + props.bouteilleInventaire.id)
+	  .then((response) => {
+		  if (response.ok) {
+			  return response.json();
+			}
+			throw response;
 		})
 		.then((data) => {
-		setListeInventaire(data);
+			setListeInventaire(data)
 		})
 		.catch((error) => {
 		console.erro("Error fetching data: ", error);
@@ -123,9 +122,9 @@ export default function BouteilleInventaire(props) {
 							<div>
 								<p className="bouteille--nom">{props.nom}</p>
 								<p className="bouteille--info">{props.type} - {props.format} - {props.millesime}</p>
-								<hr></hr>
 							</div>
 						</div>
+						<hr></hr>
 						<div className="prix--container">
 							<p className="prix">Valeur&nbsp;totale&nbsp;:&nbsp;{props.bouteilleInventaire.prix_total || 0}&nbsp;$</p>
 						</div>
@@ -170,9 +169,9 @@ export default function BouteilleInventaire(props) {
               }}
             ></StyledBox>
             <Puller />
-            <Typography sx={{ p: 4, color: "text.secondary" }}>
+            <Typography sx={{ p: 4, color: "text.secondary", fontFamily: "raleway", fontSize: "12px" }}>
               Cette bouteille est dans {" "}
-              {listeInventaire.length} de vos celliers{" "}
+              {listeInventaire.length} de vos celliers.{" "}
             </Typography>
             <StyledBox
               sx={{

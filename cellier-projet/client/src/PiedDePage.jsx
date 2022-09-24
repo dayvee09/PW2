@@ -6,7 +6,7 @@ export default function PiedDePage(props) {
     <>
       <div className="PiedDePage">
     	<p><small className="">© Mon Vino 2022, Tous droits réservés</small></p>
-		    <NavLink to="/">
+		<NavLink to="/aide">
         	<p className="nav-link-help">Aide</p>
         </NavLink>
       </div>
