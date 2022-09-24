@@ -7,19 +7,19 @@ import { TextField } from "@mui/material";
 
 function ListeBouteillesInventaire(props) {
   const [toSearch, setToSearch] = useState("");
-  const [results, setResults] = useState(props.bouteillesInventaire);
+  const [results, setResults] = useState([]);
 
   /**
    * Fectch la liste de tous les bouteilles dans tout différentes celliers
    */
   useEffect(() => {
     props.fetchVinsInventaire();
-  }, [toSearch]);
+  }, []);
 
   function gererInputRecherche(e) {
     setToSearch(e.target.value);
+    console.log(e.target.value)
     setResults(filtreBouteilles(props.bouteillesInventaire, toSearch));
-    console.log(results);
   }
 
   function filtreBouteilles(array, string) {
@@ -28,6 +28,10 @@ function ListeBouteillesInventaire(props) {
   }
 
   if (props.bouteillesInventaire.length > 0) {
+    if (results === []) {
+      console.log(props.bouteillesInventaire)
+      setResults(props.bouteillesInventaire);
+    }
     return (
       <>
         <div className="Appli--entete">
