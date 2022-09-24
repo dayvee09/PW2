@@ -374,7 +374,7 @@ export default function FrmAjoutBouteille(props) {
                 xs={12}
                 sm={12}
                 md={12}
-                lg={6}
+                lg={12}
                 className={btnState ? "" : "hidden"}
               >
 				<label className="formInputNom creer">Nom</label>
