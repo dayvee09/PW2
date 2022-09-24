@@ -124,9 +124,9 @@ export default function BouteilleInventaire(props) {
 							<div>
 								<p className="bouteille--nom">{props.nom}</p>
 								<p className="bouteille--info">{props.type} - {props.format} - {props.millesime}</p>
+								<hr></hr>
 							</div>
 						</div>
-						<hr></hr>
 						<div className="prix--container">
 							<p className="prix">Valeur&nbsp;totale&nbsp;:&nbsp;{props.bouteilleInventaire.prix_total || 0}&nbsp;$</p>
 						</div>
@@ -147,39 +147,16 @@ export default function BouteilleInventaire(props) {
               },
             }}
           /> */}
-        <SwipeableDrawer
-          container={container}
-          anchor="left"
-          open={open}
-          onClose={toggleDrawer(false)}
-          onOpen={toggleDrawer(true)}
-          swipeAreaWidth={drawerBleeding}
-          disableSwipeToOpen={true}
-          ModalProps={{
-            keepMounted: true,
-          }}
-        >
-          <StyledBox
-            sx={{
-              position: "absolute",
-              top: -drawerBleeding,
-              borderTopLeftRadius: 8,
-              borderTopRightRadius: 8,
-              visibility: "visible",
-              right: 0,
-              left: 0,
-            }}
-          ></StyledBox>
-          <Puller />
-          <Typography sx={{ p: 4, color: "text.secondary" }}>
-            Cette bouteille est dans {listeInventaire.length} de vos celliers{" "}
-          </Typography>
-          <StyledBox
-            sx={{
-              px: 2,
-              pb: 2,
-              height: "100%",
-              overflow: "auto",
+          <SwipeableDrawer
+            container={container}
+            anchor="left"
+            open={open}
+            onClose={toggleDrawer(false)}
+            onOpen={toggleDrawer(true)}
+            swipeAreaWidth={drawerBleeding}
+            disableSwipeToOpen={true}
+            ModalProps={{
+              keepMounted: true,
             }}
           >
             <StyledBox
@@ -194,9 +171,9 @@ export default function BouteilleInventaire(props) {
               }}
             ></StyledBox>
             <Puller />
-            <Typography sx={{ p: 4, color: "text.secondary", fontFamily: "raleway", fontSize: "12px" }}>
+            <Typography sx={{ p: 4, color: "text.secondary" }}>
               Cette bouteille est dans {" "}
-              {listeInventaire.length} de vos celliers.{" "}
+              {listeInventaire.length} de vos celliers{" "}
             </Typography>
             <StyledBox
               sx={{
@@ -214,5 +191,5 @@ export default function BouteilleInventaire(props) {
           </Root>
           {/* Fin composant drawer */}
 		</>
-	);
+	)
 }
