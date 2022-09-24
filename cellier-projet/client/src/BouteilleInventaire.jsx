@@ -38,17 +38,19 @@ export default function BouteilleInventaire(props) {
   /**
    *  MUI component drawer
    */
-  const { window } = props;
-  const [open, setOpen] = React.useState(false);
 
-  const toggleDrawer = (newOpen) => () => {
-    setOpen(newOpen);
-  };
+   const { window } = props;
+   const [open, setOpen] = React.useState(false);
+ 
+   const toggleDrawer = (newOpen) => () => {
+     setOpen(newOpen);
+   };
+ 
+   const container =
+     window !== undefined ? () => window().document.body : undefined;
+ 
+   /**
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
-  /**
    *  État de la liste d'inventaire
    */
   const [listeInventaire, setListeInventaire] = React.useState([]);
@@ -81,82 +83,63 @@ export default function BouteilleInventaire(props) {
    * fetch la liste des inventaires d'une bouteille
    */
   async function fetchListeInventaire() {
-    await fetch(
-      props.URI +
-        "/" +
-        "user_id" +
-        "/" +
-        props.user_id +
-        "/" +
-        "vinsInventaire" +
-        "/" +
-        "vin_id" +
-        "/" +
-        props.bouteilleInventaire.id
-    )
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        setListeInventaire(data);
-      })
-      .catch((error) => {
-        console.erro("Error fetching data: ", error);
-        props.setError(error);
-      });
-  }
+	  await fetch(props.URI +"/" +"user_id" + "/" + props.user_id +"/" + "vinsInventaire" +"/" + "vin_id" + "/" + props.bouteilleInventaire.id)
+	  .then((response) => {
+		  if (response.ok) {
+			  return response.json();
+			}
+			throw response;
+		})
+		.then((data) => {
+			setListeInventaire(data)
+		})
+		.catch((error) => {
+		console.erro("Error fetching data: ", error);
+		props.setError(error);
+		});
+	}
 
-  return (
-    <>
-      <div className="BouteilleInventaire" data-quantite="">
-        <div className="bouteille--gestion">
-          <div className="quantite--container">
-            <p className="quantite">
-              {" "}
-              {props.bouteilleInventaire.quantite_total}{" "}
-            </p>
-          </div>
-          <img
-            src={
-              props.image && props.image.indexOf("pastille_gout") < 0
-                ? props.image
-                : placeholderSaq
-            }
-            alt="bouteille"
-          />
-        </div>
-        <div className="bouteille--info-container">
-          <div className="bouteille--description">
-            <div className="detail--container">
-              <div>
-                <p className="bouteille--nom">{props.nom}</p>
-                <p className="bouteille--info">
-                  {props.type} - {props.format} - {props.millesime}
-                </p>
-                <hr></hr>
-              </div>
-            </div>
-            <div className="prix--container">
-              <p className="prix">
-                Valeur&nbsp;totale&nbsp;:&nbsp;
-                {props.bouteilleInventaire.prix_total || 0}&nbsp;$
-              </p>
-            </div>
-            <p className="bouteille--info">
-              <button className="action" onClick={toggleDrawer(true)}>
-                Consulter les stocks
-              </button>
-            </p>
-          </div>
-        </div>
-      </div>
-      {/* Mui composant drawer  */}
-      <Root>
-        {/* <CssBaseline /> */}
-        {/* <Global
+	return (
+		<>
+			<div className="BouteilleInventaire" data-quantite="">
+				<div className="bouteille--gestion">
+					<div className="quantite--container">
+						<p className="quantite">
+							{" "}
+							{props.bouteilleInventaire.quantite_total}{" "}
+						</p>
+					</div>
+					<img
+						src={
+						props.image && props.image.indexOf("pastille_gout") < 0
+							? props.image
+							: placeholderSaq
+						}
+						alt="bouteille"
+					/>
+				</div>
+				<div className="bouteille--info-container">
+					<div className="bouteille--description">
+						<div className="detail--container">
+							<div>
+								<p className="bouteille--nom">{props.nom}</p>
+								<p className="bouteille--info">{props.type} - {props.format} - {props.millesime}</p>
+							</div>
+						</div>
+						<hr></hr>
+						<div className="prix--container">
+							<p className="prix">Valeur&nbsp;totale&nbsp;:&nbsp;{props.bouteilleInventaire.prix_total || 0}&nbsp;$</p>
+						</div>
+						<p className="bouteille--info">
+							<button className="action" onClick={toggleDrawer(true)}>Consulter les stocks</button>
+						</p>
+					</div>
+				</div>
+			</div>
+		  {/* Mui composant drawer  */}
+		  <Root>
+          {/* <CssBaseline /> */}
+          {/* <Global
             styles={{
               ".MuiDrawer-root > .MuiPaper-root": {
                 height: `calc(50% - ${drawerBleeding}px)`,
@@ -199,11 +182,37 @@ export default function BouteilleInventaire(props) {
               overflow: "auto",
             }}
           >
-            <ListeInventaire listeInventaire={listeInventaire} />
-          </StyledBox>
-        </SwipeableDrawer>
-      </Root>
-      {/* Fin composant drawer */}
-    </>
-  );
+            <StyledBox
+              sx={{
+                position: "absolute",
+                top: -drawerBleeding,
+                borderTopLeftRadius: 8,
+                borderTopRightRadius: 8,
+                visibility: "visible",
+                right: 0,
+                left: 0,
+              }}
+            ></StyledBox>
+            <Puller />
+            <Typography sx={{ p: 4, color: "text.secondary", fontFamily: "raleway", fontSize: "12px" }}>
+              Cette bouteille est dans {" "}
+              {listeInventaire.length} de vos celliers.{" "}
+            </Typography>
+            <StyledBox
+              sx={{
+                px: 2,
+                pb: 2,
+                height: "100%",
+                overflow: "auto",
+              }}
+            >
+              <ListeInventaire 
+                 listeInventaire={listeInventaire}
+              />
+            </StyledBox>
+          </SwipeableDrawer>
+          </Root>
+          {/* Fin composant drawer */}
+		</>
+	);
 }
