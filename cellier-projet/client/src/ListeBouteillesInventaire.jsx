@@ -3,15 +3,29 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_search_bar_white.svg";
 import BouteilleInventaire from "./BouteilleInventaire";
+import { TextField } from "@mui/material";
 
 function ListeBouteillesInventaire(props) {
-  
+  const [toSearch, setToSearch] = useState("");
+  const [results, setResults] = useState(props.bouteillesInventaire);
+
   /**
    * Fectch la liste de tous les bouteilles dans tout différentes celliers
    */
   useEffect(() => {
     props.fetchVinsInventaire();
-  }, []);
+  }, [toSearch]);
+
+  function gererInputRecherche(e) {
+    setToSearch(e.target.value);
+    setResults(filtreBouteilles(props.bouteillesInventaire, toSearch));
+    console.log(results);
+  }
+
+  function filtreBouteilles(array, string) {
+    return array.filter(o =>
+        Object.keys(o).some(k => o[k].toLowerCase().includes(string.toLowerCase())));
+  }
 
   if (props.bouteillesInventaire.length > 0) {
     return (
@@ -21,6 +35,7 @@ function ListeBouteillesInventaire(props) {
             <input
               className="Appli--search-bar"
               placeholder="Trouver une bouteille"
+              onChange={gererInputRecherche}
             />
             <div className="Appli--search-bar-icone">
               <img
@@ -38,7 +53,7 @@ function ListeBouteillesInventaire(props) {
           </div>
           <span className="liste-cellier--message-retour"></span>
           <div className="ListeBouteillesInventaire">
-            {props.bouteillesInventaire.map((bouteilleInventaire) => (
+            {results.map((bouteilleInventaire) => (
               <div key={bouteilleInventaire.id} >
                 <BouteilleInventaire
                   {...bouteilleInventaire}
