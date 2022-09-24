@@ -99,9 +99,17 @@ export default function NavDesktop({
           <MenuItem
             onClick={gererFermerMenuContextuel}
             component={Link}
-            to={``}
+            to={`/favoris`}
           >
             <span>Mes Favoris</span>
+          </MenuItem>
+
+		  <MenuItem
+            onClick={gererFermerMenuContextuel}
+            component={Link}
+            to={`/vinsInventaire`}
+          >
+            <span>Mon Inventaire</span>
           </MenuItem>
           <hr></hr>
           <MenuItem>

@@ -89,13 +89,13 @@ export default function NavMobile({
               label="FAVORIS"
               icon={<FavorisIcone />}
               component={Link}
-              to="."
+              to="/favoris"
             />
             <BottomNavigationAction
               label="INVENTAIRE"
               icon={<InventaireIcone />}
               component={Link}
-              to="."
+              to="/vinsInventaire"
             />
           </BottomNavigation>
         </AppBar>

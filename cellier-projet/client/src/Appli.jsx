@@ -17,6 +17,8 @@ import Admin from "./Admin";
 import ListeCelliers from "./ListeCelliers";
 import Utilisateur, { user } from "./Utilisateur.jsx";
 import Profil from "./Profil.jsx";
+import Favoris from "./Favoris";
+import Aide from "./Aide";
 import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
 import Bouteille from "./Bouteille";
@@ -287,7 +289,6 @@ const Appli = () => {
         setError(error);
       });
   }
-
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
@@ -471,6 +472,26 @@ const Appli = () => {
                   element={
                     <FrmModifierCellier
                       fetchCelliers={fetchCelliers}
+                      URI={URI}
+                      error={error}
+                      setError={setError}
+                    />
+                  }
+                />
+				 <Route
+                  path={`/favoris`}
+                  element={
+                    <Favoris
+                      URI={URI}
+                      error={error}
+                      setError={setError}
+                    />
+                  }
+                />
+				 <Route
+                  path={`/aide`}
+                  element={
+                    <Aide
                       URI={URI}
                       error={error}
                       setError={setError}

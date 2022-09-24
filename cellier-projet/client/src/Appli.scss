@@ -5,6 +5,7 @@
 		color: #f3f5eb;
 		padding: 40px 1.25rem 20px 1.25rem;
 		margin-top: -15px;
+		min-height: 110px;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -72,6 +73,7 @@
 				background-position-y: 10px;
 			}
 
+	
 			@media only screen and (min-width: 365px) {
 				select {
 					margin-left: 10px;
@@ -117,6 +119,9 @@
 	.Appli--container {
 		padding: 0 1.25rem 75px 1.25rem;
 		min-height: 85vh;
+		h1 {
+			padding-top: 50px;
+		}
 	}
 }
 
@@ -269,7 +274,8 @@
 		.Appli--entete {
 			padding: 90px 5vw 10px 5vw;
 			margin-top: 0;
-			margin-bottom:  50px;
+			// margin-bottom: 50px;
+			min-height: 150px;
 
 			.Appli--search-bar-container {
 				.Appli--search-bar {
@@ -284,6 +290,7 @@
 
 		.Appli--container {
 			padding: 0 5vw 75px 5vw;
+			// padding-top: 50px;
 		}
 
 	}
@@ -305,11 +312,11 @@
 @media only screen and (min-width: 1800px) {
 	.Appli {
 		.Appli--entete {
-			padding: 90px 22vw 10px 22vw;
+			padding: 90px 20vw 10px 20vw;
 		}
 
 		.Appli--container {
-			padding: 0 22vw 75px 22vw;
+			padding: 0 20vw 75px 20vw;
 		}
 	}
 }
