@@ -96,33 +96,21 @@ export default function BouteilleInventaire(props) {
    * fetch la liste des inventaires d'une bouteille
    */
   async function fetchListeInventaire() {
-    await fetch(
-      props.URI +
-        "/" +
-        "user_id" +
-        "/" +
-        props.user_id +
-        "/" +
-        "vinsInventaire" +
-        "/" +
-        "vin_id" +
-        "/" +
-        props.bouteilleInventaire.id
-    )
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        setListeInventaire(data);
-      })
-      .catch((error) => {
-        console.erro("Error fetching data: ", error);
-        props.setError(error);
-      });
-  }
+	  await fetch(props.URI +"/" +"user_id" + "/" + props.user_id +"/" + "vinsInventaire" +"/" + "vin_id" + "/" + props.bouteilleInventaire.id)
+	  .then((response) => {
+		  if (response.ok) {
+			  return response.json();
+			}
+			throw response;
+		})
+		.then((data) => {
+			setListeInventaire(data)
+		})
+		.catch((error) => {
+		console.erro("Error fetching data: ", error);
+		props.setError(error);
+		});
+	}
 
   return (
     <>

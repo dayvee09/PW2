@@ -4,16 +4,14 @@ import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_search_bar_white.svg";
 import BouteilleInventaire from "./BouteilleInventaire";
 
-
-function ListeBouteillesInventaire(props) {
-  
+function ListeBouteillesInventaire(props) {  
 	/**
 	 * Fetch la liste de tous les bouteilles dans tout différentes celliers
 	 */
 	useEffect(() => {
 	  props.fetchVinsInventaire();
 	}, []);
-console.log(props.bouteillesInventaire.length)
+// console.log(props.bouteillesInventaire.length)
 	return (
 		<>
 			<div className="Appli--entete">
@@ -57,7 +55,7 @@ console.log(props.bouteillesInventaire.length)
 				)}
 				{props.bouteillesInventaire.length == undefined && (
 					<div className="ListeBouteillesInventaire" >
-						<p>Aucune bouteille dans l'inventaire</p>
+						<p className="ListeBouteillesInventaire--default-text">Aucune bouteille dans l'inventaire.</p>
 					</div>
 				)}
 			</div>
