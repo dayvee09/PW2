@@ -284,10 +284,7 @@ export default function FrmAjoutBouteille(props) {
       .then((data) => {
         props.fetchVins(vinCellier);
         props.setCellier(vinCellier);
-        navigate(`/cellier/${vinCellier}/vins`, {
-			state: { nom: nomCellier },
-			replace: true,
-		 });
+        navigate(`/cellier/${vinCellier}/vins`, { replace: true});
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -307,15 +304,6 @@ export default function FrmAjoutBouteille(props) {
     }
     return ok;
   };
-
-  // Récupérer le nom du cellier pour la redirection après l'ajout d'une bouteille
-  for(let i = 0; i < props.celliers.length; i++){
-	if(props.celliers[i].id == vinCellier){
-		var nomCellier = props.celliers[i].nom
-	}
-	// console.log(props.celliers)
-	// console.log(props.cellier)
-}
 
   return (
     <div>
@@ -386,7 +374,7 @@ export default function FrmAjoutBouteille(props) {
                 xs={12}
                 sm={12}
                 md={12}
-                lg={6}
+                lg={12}
                 className={btnState ? "" : "hidden"}
               >
 				<label className="formInputNom creer">Nom</label>

@@ -133,27 +133,29 @@ function ListeBouteilles(props) {
                 Retour&nbsp;aux&nbsp;Celliers&nbsp;
               </button>
             </NavLink>
-            <select
-              className="retour"
-              name="tri"
-              id="tri"
-              defaultValue="tout"
-              onChange={(e) => setSortType(e.target.value)}
-            >
-              <img src={rowIcone} alt="icone-row-down" width={15}></img>
-              <option selected value="tout">
-                Tout
-              </option>
-              <option value="vin-rouge">Vin Rouge</option>
-              <option value="vin-blanc">Vin Blanc</option>
-              <option value="vin-rose">Vin Rosé</option>
-              <option value="qt-decroissante">Quantité décroissante</option>
-              <option value="qt-croissante">Quantité croissante</option>
-              <option value="prix-decroissant">Prix-décroissant</option>
-              <option value="prix-croissant">Prix-croissant</option>
-              <option value="alph-decroissant">Nom décroissant</option>
-              <option value="alph-croissant">Nom croissant</option>
-            </select>
+            {props.bouteilles.length > 1 && (
+              <select
+                className="retour"
+                name="tri"
+                id="tri"
+                defaultValue="tout"
+                onChange={(e) => setSortType(e.target.value)}
+              >
+                <img src={rowIcone} alt="icone-row-down" width={15}></img>
+                <option selected value="tout">
+                  Tout
+                </option>
+                <option value="vin-rouge">Vin Rouge</option>
+                <option value="vin-blanc">Vin Blanc</option>
+                <option value="vin-rose">Vin Rosé</option>
+                <option value="qt-decroissante">Quantité décroissante</option>
+                <option value="qt-croissante">Quantité croissante</option>
+                <option value="prix-decroissant">Prix-décroissant</option>
+                <option value="prix-croissant">Prix-croissant</option>
+                <option value="alph-decroissant">Nom décroissant</option>
+                <option value="alph-croissant">Nom croissant</option>
+              </select>
+            )}
           </div>
         </div>
         <div className="Appli--container">
@@ -196,6 +198,7 @@ function ListeBouteilles(props) {
               <div className="Bouteille Bouteille--solo">
                 <Bouteille
                   {...props.bouteilles[0]}
+                  setChangementBouteille={setChangementBouteille}
                   fetchVins={props.fetchVins}
                   fetchVin={props.fetchVin}
                   celliers={props.celliers}

@@ -1,5 +1,5 @@
 <?php
-class VinsCelliersControleur extends Controleur
+class StatsControleur extends Controleur
 {
     public function tout($params)
     {
