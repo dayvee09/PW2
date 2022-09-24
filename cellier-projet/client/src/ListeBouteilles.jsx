@@ -198,6 +198,7 @@ function ListeBouteilles(props) {
               <div className="Bouteille Bouteille--solo">
                 <Bouteille
                   {...props.bouteilles[0]}
+                  setChangementBouteille={setChangementBouteille}
                   fetchVins={props.fetchVins}
                   fetchVin={props.fetchVin}
                   celliers={props.celliers}

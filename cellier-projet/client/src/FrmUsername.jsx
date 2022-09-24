@@ -160,6 +160,7 @@ export default function FrmEmail({
             <p className="">Nom d'usager : {username}</p>
             <ThemeProvider theme={theme}>
               <TextField
+			  	fullWidth={true}
                 onChange={gererInput}
                 autoFocus
                 id="username"

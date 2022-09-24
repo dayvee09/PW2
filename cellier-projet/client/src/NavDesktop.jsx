@@ -99,7 +99,7 @@ export default function NavDesktop({
           <MenuItem
             onClick={gererFermerMenuContextuel}
             component={Link}
-            to={``}
+            to={`/favoris`}
           >
             <span>Mes Favoris</span>
           </MenuItem>
