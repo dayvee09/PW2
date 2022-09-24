@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./Bouteille.scss";
 import FrmBouteille from "./FrmBouteille";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -56,6 +56,11 @@ export default function Bouteille(props) {
    *  État de la boite de dialogue de suppression
    */
   const [frmSuppressionOuvert, setFrmSuppressionOuvert] = useState(false);
+  
+  /**
+   *  État de la boite de dialogue de suppression
+   */
+  const [messageDialog, setMessageDialog] = useState("");
 
   /**
    *  État d'affichage de la fiche de bouteille
@@ -122,6 +127,7 @@ export default function Bouteille(props) {
    * Gère l'ouverture de la boite de dialogue de supression du cellier
    */
   function gererSupprimer() {
+    setMessageDialog("Voulez-vous vraiment supprimer cette bouteille ?");
     setFrmSuppressionOuvert(true);
   }
 
@@ -159,7 +165,7 @@ export default function Bouteille(props) {
    */
   function gererAjouter() {
     fetchVinUn();
-    // setQuantite((quantite) => parseInt(quantite) + 1);
+    setQuantite((quantite) => parseInt(quantite) + 1);
     fetchPutVinUn(parseInt(props.quantite) + 1, dateAchat, dateGarde);
   }
 
@@ -169,13 +175,14 @@ export default function Bouteille(props) {
   function gererBoire() {
     fetchVinUn();
     if (quantite > 0) {
-      // setQuantite((quantite) => parseInt(quantite) - 1);
+      setQuantite((quantite) => parseInt(quantite) - 1);
       fetchPutVinUn(parseInt(props.quantite) - 1, dateAchat, dateGarde);
     } else {
-      //   setMessageRetour("En rupture de stock");
-      //   setSeverity("error");
-      //   setOpenAlert(true);
+      setMessageDialog("En rupture de stock! Voulez-vous vraiment supprimer cette bouteille ?");
       setFrmSuppressionOuvert(true);
+      // setMessageRetour("En rupture de stock");
+      // setSeverity("error");
+      // setOpenAlert(true);
     }
   }
 
@@ -417,7 +424,8 @@ export default function Bouteille(props) {
         >
           <DialogTitle>
             {" "}
-            Voulez-vous vraiment supprimer cette bouteille ?
+            { messageDialog }
+            {/* Voulez-vous vraiment supprimer cette bouteille ? */}
           </DialogTitle>
           <DialogActions>
             <Button onClick={viderFermerFrm} className="cancel">
