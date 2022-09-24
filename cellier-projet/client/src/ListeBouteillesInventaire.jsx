@@ -4,9 +4,7 @@ import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_search_bar_white.svg";
 import BouteilleInventaire from "./BouteilleInventaire";
 
-
-function ListeBouteillesInventaire(props) {
-  
+function ListeBouteillesInventaire(props) {  
 	/**
 	 * Fetch la liste de tous les bouteilles dans tout différentes celliers
 	 */
