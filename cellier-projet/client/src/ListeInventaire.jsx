@@ -22,7 +22,6 @@ export default function ListeInventaire(props) {
       });
     }
   }, [idCellier]);
-
   return (
     <List className="ListeInventaire" sx={{ width: "100%" }}>
       {props.listeInventaire.map((chaqueInventaire) => (
