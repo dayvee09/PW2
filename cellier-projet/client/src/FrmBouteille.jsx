@@ -54,7 +54,6 @@ export default function FrmBouteille({
       if (quantite < 0) setOpenErr(true);
     }
   }
-  console.log(bouteille.prix_saq);
   return (
     <div className="FormBouteille">
       <Dialog
