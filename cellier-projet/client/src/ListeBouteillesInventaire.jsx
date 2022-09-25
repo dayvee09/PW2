@@ -46,6 +46,10 @@ function ListeBouteillesInventaire(props) {
                   user_id={props.user_id}
                   emailUtilisateur={props.emailUtilisateur}
                   URI={props.URI}
+                  cellier={props.cellier}
+                  fetchVins={props.fetchVins}
+                  fetchNomCellier={props.fetchNomCellier}
+                  gererCellier={props.gererCellier}
                 />
               </div>
             ))}

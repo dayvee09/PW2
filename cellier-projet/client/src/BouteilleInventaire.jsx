@@ -199,7 +199,14 @@ export default function BouteilleInventaire(props) {
               overflow: "auto",
             }}
           >
-            <ListeInventaire listeInventaire={listeInventaire} />
+            <ListeInventaire
+              listeInventaire={listeInventaire}
+              cellier={props.cellier}
+              setOpen={setOpen}
+              fetchVins={props.fetchVins}
+              fetchNomCellier={props.fetchNomCellier}
+              gererCellier={props.gererCellier}
+            />
           </StyledBox>
         </SwipeableDrawer>
       </Root>

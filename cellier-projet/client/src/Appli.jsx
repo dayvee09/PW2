@@ -1,11 +1,10 @@
 // Début des modifications
 
 import React from "react";
-import { Route, Routes, NavLink, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
-import Axios from "axios";
 import "./Appli.scss";
 import NavMobile from "./NavMobile";
 import NavDesktop from "./NavDesktop";
@@ -19,9 +18,6 @@ import Utilisateur, { user } from "./Utilisateur.jsx";
 import Profil from "./Profil.jsx";
 import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
-import Bouteille from "./Bouteille";
-import MuiButton from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
 import Logo from "./img/png/logo-jaune.png";
 import FrmAjoutBouteille from "./FrmAjoutBouteille";
 import { dict, formFields } from "./aws-form-traduction.js";
@@ -326,7 +322,7 @@ const Appli = () => {
               {/* ------------------------------ Routes --------------------------------*/}
               <Routes>
                 <Route
-                  path={`/profil/${emailUtilisateur}`}
+                  path={`/profil/:emailUtilisateur`}
                   element={
                     <Profil
                       supprimerUtilisateur={supprimerUtilisateur}
@@ -343,7 +339,7 @@ const Appli = () => {
                   }
                 />
                 <Route
-                  path={`/admin/${emailUtilisateur}`}
+                  path={`/admin/:emailUtilisateur`}
                   element={
                     <Admin
                       emailUtilisateur={emailUtilisateur}
@@ -361,7 +357,7 @@ const Appli = () => {
                   }
                 />
                 <Route
-                  path={`/cellier/${cellier}/vins`}
+                  path={`/cellier/:idCellier/vins`}
                   element={
                     <ListeBouteilles
                       nomCellier={nomCellier}
@@ -409,6 +405,10 @@ const Appli = () => {
                       URI={URI}
                       error={error}
                       setError={setError}
+                      cellier={cellier}
+                      fetchVins={fetchVins}
+                      fetchNomCellier={fetchNomCellier}
+                      gererCellier={gererCellier}
                     />
                   }
                 />
