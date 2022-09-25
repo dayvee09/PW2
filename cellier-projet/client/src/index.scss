@@ -10,6 +10,10 @@ body {
 	padding-bottom: 50px;
 }
 
+button {
+	transition: background-color 0.2s ease-in, color 0.2s ease-in;
+}
+
 h1 {
 	font-family: Alata;
 	font-size: 18px;
