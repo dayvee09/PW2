@@ -1,70 +1,58 @@
 .ListeCelliers {
-  width: 100%;
-  padding-top: 10px;
+	padding-top: 10px;
+	width: 100%;
 
-  .Cellier:first-of-type .cellier {
-    margin-top: 0;
-  }
+	.Cellier:first-of-type .cellier {
+		margin-top: 0;
+	}
+
+	@media only screen and (min-width: 768px) {
+		display: grid;
+		gap: 30px;
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	@media only screen and (min-width: 1000px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	@media only screen and (min-width: 1400px) {
+		grid-template-columns: repeat(4, 1fr);
+	}
 }
 
 .liste-cellier--entete {
-  display: flex;
-  justify-content: space-between;
+	display: flex;
+	justify-content: space-between;
 
-  .entete--items {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
-  }
-
-  .entete--items > * + * {
-    margin-top: 10px;
-  }
-
-  .liste-cellier--btn-ajout {
-	border: none;
-	background-color: transparent;
-	cursor: pointer;
-	font-family: Raleway;
-	font-size: 15px;
-	padding-top: 58px;
-    text-underline-offset: 5px;
-    text-decoration: underline 1px;
-
-	&:hover {
-		color: #cc4240;
+	.entete--items {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-end;
 	}
-  }
+
+	.entete--items > * + * {
+		margin-top: 10px;
+	}
+
+	.liste-cellier--btn-ajout {
+		border: none;
+		background-color: transparent;
+		cursor: pointer;
+		font-family: Raleway;
+		font-size: 15px;
+		padding-top: 54px;
+		text-underline-offset: 5px;
+		text-decoration: underline 1px;
+	}
+}
+
+.liste-cellier--btn-ajout:hover {
+	color: #cc4240;
 }
 
 .liste-cellier--message-retour {
 	color: #cc4240;
 	padding: 10px;
-}
-
-@media only screen and (min-width: 768px) {
-  .ListeCelliers {
-    display: grid;
-    gap: 30px;
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .liste-cellier--entete {
-	.liste-cellier--btn-ajout {
-		padding-top: 15px;
-	}
-  }
-}
-
-@media only screen and (min-width: 1000px) {
-	.ListeCelliers {
-		grid-template-columns: repeat(3, 1fr);
-	}
-}
-
-@media only screen and (min-width: 1400px) {
-  .ListeCelliers {
-    grid-template-columns: repeat(4, 1fr);
-  }
 }

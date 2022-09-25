@@ -1,81 +1,71 @@
 .NavDesktop {
-  display: none;
-  position: fixed;
-  width: 100%;
-  z-index: 10;
+	display: none;
+	position: fixed;
+	width: 100%;
+	z-index: 10;
 
-  .MuiList-root {
-    display: none;
-  }
+	@media only screen and (min-width: 768px) {
+		background-color: #f3f5eb;
+		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+		display: flex;
+		justify-content: space-between;
+		padding: 10px 5vw 10px 5vw;
+	
+		.logo {
+			height: 50px;
+			width: 120px;
+		}
+
+		.iconeAddBottle {
+			border: 1px solid #f1ab50;
+			border-radius: 120px;
+			height:50px;
+			margin-right: 25px;
+			&:hover {
+				border: 1px solid #d3d7dd;
+				scale: 1.02;
+			}
+		}
+	
+		.actionMenu {
+			display: flex;
+		}
+	
+		.navDesktop--container-profil {
+			cursor: pointer;
+			display: flex;
+			p {
+				padding-top: 10px;
+			}
+			img {
+				margin-right: 15px;
+			}
+		}
+	}
+
+	@media only screen and (min-width: 1200px) {
+		padding: 10px 12vw 10px 12vw;
+	}
+
+	@media only screen and (min-width: 1800px) {
+		padding: 10px 20vw 10px 20vw;
+	}
 }
 
-@media only screen and (min-width: 768px) {
-  .NavDesktop {
-    background-color: #f3f5eb;
-    display: flex;
-    justify-content: space-between;
-	padding: 10px 5vw 10px 5vw;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
-
-    .logo {
-      height: 50px;
-      width: 120px;
-    }
-
-
-    .iconeAddBottle {
-		margin-right: 25px;
-		height:50px;
-		border: 1px solid #f1ab50;
-		border-radius: 120px;
-		&:hover {
-			border: 1px solid #d3d7dd;
-			scale: 1.02;
-		}
-    }
-
-    .actionMenu {
-    	display: flex;
-    }
-
-    .navDesktop--container-profil {
-      display: flex;
-      cursor: pointer;
-
-      p {
-        padding-top: 10px;
-      }
-
-      img {
-        margin-right: 15px;
-      }
-    }
-  }
-
-  .MuiList-root {
-    a span {
-		padding-top:5px;
-    }
-
+.MuiList-root {
+	// display: none;
 	span {
 		font-family: Raleway;
 		font-size: 14px;
 	}
-    a:hover {
-      color: #cc4240;
-      background-color: transparent;
-    }
-  }
-}
-
-@media only screen and (min-width: 1200px) {
-	.NavDesktop {
-	  padding: 10px 12vw 10px 12vw;
-  }
-}
-
-@media only screen and (min-width: 1800px) {
-	.NavDesktop {
-		padding: 10px 22vw 10px 22vw;
-  }
+	@media only screen and (min-width: 768px) {
+		display: block;
+		a span {
+			padding-top:5px;
+		}
+		a:hover {
+			background-color: transparent;
+			color: #cc4240;
+		}
+	}
 }

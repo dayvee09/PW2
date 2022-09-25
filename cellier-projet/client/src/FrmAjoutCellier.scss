@@ -2,8 +2,8 @@
 	text-align: center;
 
 	.form-ajout--container {
-		max-width: 400px;
 		margin: 0 auto;
+		max-width: 400px;
 
 		span {
 			color: #cc4240;
@@ -15,23 +15,23 @@
 		}
 		
 		input {
+			font-size: 15px;
 			margin-top: 20px;
 			margin-bottom: 20px;
 			padding: 5px;
 			width: 100%;
-			font-size: 15px;
 		}
 
 		button {
-			padding: 10px 25px 10px 25px;
-			margin-top: 20px;
-			font-size: 12px;
-			font-family: Alata, sans-serif;
-			text-transform: uppercase;
+			background-color: #152440;
 			border: none;
 			border-radius: 4px;
-			background-color: #152440;
 			color: #f3f5eb;
+			font-family: Alata, sans-serif;
+			font-size: 12px;
+			margin-top: 20px;
+			padding: 10px 25px 10px 25px;
+			text-transform: uppercase;
 
 			&:hover {
 				background-color: #f1ab50;

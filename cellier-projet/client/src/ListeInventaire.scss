@@ -1,18 +1,21 @@
 .ListeInventaire {
-	.css-1p823my-MuiListItem-root {
-		background-color: #d3d7dd;
-		border-radius: 4px;
-		margin-bottom: 10px;
-		margin-right: 100px;
+  .css-1p823my-MuiListItem-root {
+    background-color: #d3d7dd;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    margin-right: 100px;
 
-		&:hover {
-			background-color: #152440;
-			color: #f3f5eb;
-			cursor: pointer;
-		}
-	}
+    &:hover {
+      background-color: #152440;
+      color: #f3f5eb;
+    }
+  }
 
-	.ListeInventaire--qt-cellier {
-		text-align: right;
-	}
+  .ListeInventaire--qt-cellier {
+    text-align: right;
+  }
+
+  .chaque--inventaire {
+    cursor: pointer;
+  }
 }

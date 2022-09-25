@@ -1,0 +1,152 @@
+.Aide {
+	h1 {
+		color: #152440;
+		padding-bottom: 50px;
+	}
+
+	.Appli--container {
+		background-image: linear-gradient(
+			to bottom,
+			transparent 70%,
+			#d3d7dd78 50%
+		);
+		padding-bottom:0;
+		padding-top:0;
+
+		.Aide--fonctionnement-container {
+			h2 {
+				font-size: 14px;
+				font-weight: 500;
+				padding-bottom: 10px;
+			}
+
+			p {
+				font-size: 12px;
+			}
+
+			.Aide--fonctionnement-grid {
+				display: grid;
+				gap: 20px;
+				grid-template-columns: repeat(1, 1fr);
+
+				.Aide--fonctionnement-grid-tile {
+					border: 0.5px solid #d3d7dd;
+					border-radius: 4px 4px 0 0;
+					box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+					padding: 20px;
+					 div  {
+						display: flex;justify-content: space-between;
+					 }
+					&:hover {
+						background-color: #d3d7dd37;
+					}
+
+					@media only screen and (min-width: 1200px) { 
+						&:last-of-type {
+							grid-column-start: 1;
+							grid-column-end: 3;
+							max-width: none;
+						}
+					}
+				}
+
+				@media only screen and (min-width: 1200px) { 
+					grid-template-columns: repeat(2, 1fr);
+				}
+			}
+			.Aide--questions-container {
+				h2 {
+					margin-bottom: 25px;
+					margin-top: 25px;
+				}
+
+				.accordion {
+					margin-bottom: 50px;
+					
+					* {
+						font-family: raleway;
+						font-size: 14px;
+					}
+	
+					.css-1elwnq4-MuiPaper-root-MuiAccordion-root {
+						background-color: transparent;
+						border: 0.5px solid #d3d7dd;
+						box-shadow: none;
+	
+					}
+					
+					@media only screen and (min-width: 768px) {
+						padding-bottom: 50px;
+					}
+				}
+			}
+
+			@media only screen and (min-width: 768px) {
+				padding-right: 50px;
+			}
+		}
+
+		.Aide--second-section {
+			padding:0 25px 25px 25px;
+			
+			label,
+			input {
+				font-family: raleway;
+				font-size: 12px;
+			}
+
+			.Aide--contact-container {
+				input[type=text], select, textarea {
+					border: 1px solid #d3d7dd; 
+					border-radius: 4px;
+					box-sizing: border-box; 
+					margin-bottom: 20px;
+					margin-top: 10px;
+					padding: 10px; 
+					resize: vertical;
+					width: 100%; 
+				}  
+				
+				input, textarea {
+					&:focus {
+						border-color: #f1ab50;
+						outline: none;
+					}
+				}
+		
+				input[type=submit] {
+					background-color: #152440;
+					border: none;
+					border-radius: 4px;
+					color: #f3f5eb;
+					cursor: pointer;
+					font-family: Alata;
+					text-transform: uppercase;
+					padding: 10px 24px;
+
+					&:hover {
+						background-color: #f1ab50;
+						color: #152440;
+						transition: background-color 0.2s ease-in, color 0.2s ease-in;
+					}
+				}
+
+				@media only screen and (min-width: 768px) {
+					margin-top: 30%;
+				}
+			}
+
+			@media only screen and (min-width: 768px) {
+				background-color: #d3d7dd78;
+				max-width: 500px;
+				min-width: 500px;
+			}
+		}
+
+		@media only screen and (min-width: 768px) {
+			background-image: none;
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+}

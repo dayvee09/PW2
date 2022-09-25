@@ -1,11 +1,6 @@
 .Appli {
 	.Appli--entete {
 		background-color: #152440;
-		border-bottom: #cc4240 5px solid;
-		color: #f3f5eb;
-		padding: 40px 1.25rem 20px 1.25rem;
-		margin-top: -15px;
-		min-height: 110px;
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -15,9 +10,15 @@
 			rgba(16, 30, 51, 0.95) 50%
 		),
 		url(./img/jpg/background-accueil.jpg);
+		border-bottom: #cc4240 5px solid;
+		color: #f3f5eb;
+		margin-top: -15px;
+		min-height: 110px;
+		padding: 40px 1.25rem 20px 1.25rem;
 
 		.Appli--search-bar-container {
 			display: flex;
+
 			.Appli--search-bar {
 				background-color: #f3f5eb;
 				border: 1px solid #cc4240;
@@ -37,11 +38,11 @@
 
 			.Appli--search-bar-icone {
 				background-color: #cc4240;
-				padding: 11px;
 				border-radius: 100px;
 				height: 40px;
-				width: 40px;
 				margin-left: 10px;
+				padding: 11px;
+				width: 40px;
 				.Appli--search-bar-icone-search{
 					display: block;
 					margin: auto;
@@ -57,22 +58,23 @@
 
 		.Appli--tri-container {		
 			select {
-				margin-top: 10px;
-				min-width: 170px;
 				background-color: #cc4240;
-				border: #cc4240 1px solid;
-				font-size: 11px;
-				outline: none;
-				color:#f3f5eb;
-				-webkit-appearance: none;
-				-moz-appearance: none;
 				background-image: url("./img/svg/icone_row_down_blue.svg");
 				background-size: 6% 50%;
 				background-repeat: no-repeat;
 				background-position-x: 95%;
 				background-position-y: 10px;
+				border: #cc4240 1px solid;
+				color:#f3f5eb;
+				font-size: 11px;
+				margin-top: 10px;
+				min-width: 170px;
+				outline: none;
+				-webkit-appearance: none;
+				-moz-appearance: none;
 			}
 
+	
 			@media only screen and (min-width: 365px) {
 				select {
 					margin-left: 10px;
@@ -82,8 +84,8 @@
 			@media only screen and (min-width: 390px) {
 				display: flex;
 				select {
-					margin-top: 0px;
 					margin-left: 10px;
+					margin-top: 0px;
 				}
 			}
 	
@@ -96,9 +98,9 @@
 				border-radius: 4px;
 				color: #f3f5eb;
 				font-family: Alata;
-				text-transform: uppercase;
-				padding: 10px 15px 10px 15px;
 				font-size: 11px;
+				padding: 10px 15px 10px 15px;
+				text-transform: uppercase;
 
 				&:hover {
 					background-color: #f1ab50;
@@ -113,164 +115,14 @@
 			display: flex;
 			justify-content: space-evenly;
 		}
-	}
 
-	.Appli--container {
-		padding: 0 1.25rem 75px 1.25rem;
-		min-height: 85vh;
-	}
-}
-
-// Gestion du formulaire de connexion
-.Login {
-	color: #152440;
-	font-family: "Raleway", sans-serif;
-	font-weight: 200;
-	padding-top: 25px;
-	padding-bottom: 25px;
-	text-align: center;
-	background-position: top;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-image: linear-gradient(
-		to top,
-		rgb(204, 66, 64) 60%,
-		rgba(16, 30, 51, 0.95) 50%
-		),
-		url(./img/jpg/background-accueil.jpg);
-		
-	position: fixed;
-	bottom: 0;
-	top: 0;
-	left: 0;
-	right: 0;
-	overflow: auto;
-		
-	&::-webkit-scrollbar {
-		display: none; /* for Chrome, Safari, and Opera */
-	}
-	
-	.logo {
-		width: 200px;
-		padding-bottom: 25px;
-	}
-
-	.Auth-sub-title {
-		padding-bottom: 25px;
-		font-weight: 200;
-		font-size: 15px;
-		color: #f3f5eb;
-	}
-
-	small {
-		font-size: 0.9em;
-		color: #f3f5eb;
-	}
-
-	.Authenticator {
-		padding-bottom: 25px;
-
-	.amplify-heading {
-		font-size: 15px;
-	}
-
-	div:first-child {
-		background-color: #f3f5eb;
-		width: 100%;
-	}
-
-	input {
-		text-align: left;
-
-		&:focus {
-		border-color: #f1ab50;
-		box-shadow: none;
-		}
-	}
-
-    .amplify-button--primary {
-		background-color: #f1ab50;
-		color: #152440;
-		font-weight: 200;
-
-		&:hover {
-		background-color: #152440;
-		color: #f3f5eb;
-		}
-    }
-
-    .amplify-button--link {
-		color: #152440;
-		text-underline-offset: 5px;
-		text-decoration: underline 1px;
-
-		&:hover {
-			background-color: #f3f5eb;
-			color: #cc4240;
-		}
-    }
-
-    .amplify-tabs-item {
-		background-color: #f3f5eb;
-		color: #cc4240;
-		font-weight: 500;
-		border: 1px solid #e2e2e273;
-    }
-
-    .amplify-alert--error {
-		background-color: #f3f5eb;
-		color: #cc4240;
-		font-weight: 500;
-		border: 1px solid #cc4240;
-    }
-
-    button[data-state="inactive"] {
-		background-color: #f3f5eb86;
-		color: #152440;
-    }
-
-    button[data-state="active"] {
-		border-top: 3px solid #f1ab50;
-    }
-  }
-}
-
-@media only screen and (min-width: 360px) {
-	.Appli {
-		.Appli--addBottle-container {
-			display: flex;
-			justify-content: space-between;
-
-			.Appli--addBottle-btnGroup {
-				padding-left: 10px;
-			}
-		}
-	}
-}
-
-@media only screen and (min-width: 560px) {
-	.Appli {
-		.Appli--entete {
+		@media only screen and (min-width: 560px) {
 			padding: 40px 3rem 20px 3rem;
 		}
 
-		.Appli--container {
-		padding: 0 3rem 75px 3rem;
-		}
-	}
-}
-
-@media only screen and (min-width: 768px) {
-	.Authenticator {
-		width: 600px;
-		margin: auto;
-	}
-
-	.Appli {
-		.Appli--entete {
+		@media only screen and (min-width: 768px) {
 			padding: 90px 5vw 10px 5vw;
 			margin-top: 0;
-			margin-bottom:  50px;
 			min-height: 150px;
 
 			.Appli--search-bar-container {
@@ -284,34 +136,153 @@
 			}
 		}
 
-		.Appli--container {
-			padding: 0 5vw 75px 5vw;
-		}
-
-	}
-}
-
-@media only screen and (min-width: 1200px) {
-	.Appli {
-		.Appli--entete {
+		@media only screen and (min-width: 1200px) {
 			padding: 90px 12vw 10px 12vw;
 		}
 
-		.Appli--container {
+		@media only screen and (min-width: 1800px) {
+			padding: 90px 20vw 10px 20vw;
+		}
+	}
+
+	.Appli--container {
+		padding: 0 1.25rem 75px 1.25rem;
+		min-height: 85vh;
+		h1 {
+			padding-top: 50px;
+		}
+
+		@media only screen and (min-width: 560px) {
+			padding: 0 3rem 75px 3rem;
+		}
+
+		@media only screen and (min-width: 768px) {
+			padding: 0 5vw 75px 5vw;
+		}
+
+		@media only screen and (min-width: 1200px) {
 			padding: 0 12vw 75px 12vw;
+		}
+
+		@media only screen and (min-width: 1800px) {
+			padding: 0 20vw 75px 20vw;
 		}
 	}
 }
 
+// Gestion du formulaire de connexion
+.Login {
+	background-position: top;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-image: linear-gradient(
+		to top,
+		rgb(204, 66, 64) 60%,
+		rgba(16, 30, 51, 0.95) 50%
+		),
+		url(./img/jpg/background-accueil.jpg);
+	color: #152440;
+	font-family: "Raleway", sans-serif;
+	font-weight: 200;
+	padding-top: 25px;
+	padding-bottom: 25px;
+	text-align: center;
+		
+	position: fixed;
+	bottom: 0;
+	top: 0;
+	left: 0;
+	right: 0;
+	overflow: auto;
+		
+	&::-webkit-scrollbar {
+		display: none; /* for Chrome, Safari, and Opera */
+	}
+	
+	.logo {
+		padding-bottom: 25px;
+		width: 200px;
+	}
 
-@media only screen and (min-width: 1800px) {
-	.Appli {
-		.Appli--entete {
-			padding: 90px 22vw 10px 22vw;
+	.Auth-sub-title {
+		color: #f3f5eb;
+		font-weight: 200;
+		font-size: 15px;
+		padding-bottom: 25px;
+	}
+
+	small {
+		color: #f3f5eb;
+	}
+
+	.Authenticator {
+		padding-bottom: 25px;
+
+		.amplify-heading {
+			font-size: 15px;
 		}
 
-		.Appli--container {
-			padding: 0 22vw 75px 22vw;
+		div:first-child {
+			background-color: #f3f5eb;
+			width: 100%;
+		}
+
+		input {
+			text-align: left;
+			&:focus {
+				border-color: #f1ab50;
+				box-shadow: none;
+			}
+		}
+
+		.amplify-button--primary {
+			background-color: #f1ab50;
+			color: #152440;
+			font-weight: 200;
+
+			&:hover {
+				background-color: #152440;
+				color: #f3f5eb;
+			}
+		}
+
+		.amplify-button--link {
+			color: #152440;
+			text-underline-offset: 5px;
+			text-decoration: underline 1px;
+
+			&:hover {
+				background-color: #f3f5eb;
+				color: #cc4240;
+			}
+		}
+
+		.amplify-tabs-item {
+			background-color: #f3f5eb;
+			border: 1px solid #e2e2e273;
+			color: #cc4240;
+			font-weight: 500;
+		}
+
+		.amplify-alert--error {
+			background-color: #f3f5eb;
+			border: 1px solid #cc4240;
+			color: #cc4240;
+			font-weight: 500;
+		}
+
+		button[data-state="inactive"] {
+			background-color: #f3f5eb86;
+			color: #152440;
+		}
+
+		button[data-state="active"] {
+			border-top: 3px solid #f1ab50;
+		}
+
+		@media only screen and (min-width: 768px) {
+			width: 600px;
+			margin: auto;
 		}
 	}
 }

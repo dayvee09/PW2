@@ -1,20 +1,20 @@
 .BouteilleInventaire {
-	//border: 0.1px solid #d3d7dd;
+	border: 0.5px solid #d3d7dd;
 	border-radius: 4px 4px 0 0;
 	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.08);
   
 	.bouteille--gestion {
-	  background-color: #d3d7dd78;
-	  height: 180px;
-	  position: relative;
+		background-color: #d3d7dd78;
+		height: 180px;
+		position: relative;
   
-	  img {
-		  padding: 5px 0 5px 0;
-		  object-fit: contain;
-		  height: 100%;
-		  width: 100%;
-		  max-height: 250px;
-		  mix-blend-mode: multiply;
+	    img {
+			padding: 5px 0 5px 0;
+			object-fit: contain;
+			height: 100%;
+			width: 100%;
+			max-height: 250px;
+			mix-blend-mode: multiply;
 		}
 	}
 
@@ -33,6 +33,7 @@
 			@media only screen and (min-width: 350px) {
 				min-height: 60px;
 			}
+			
 			@media only screen and (min-width: 400px) {
 				min-height: 50px;
 			}
@@ -43,49 +44,49 @@
 			}
 		}
 		.detail--container {
+			align-items: baseline;
 			display: flex;
 			justify-content: space-between;
-			align-items: baseline;
 		}
 	}
   
 	.quantite--container {
+		left: 5px;
 		position: absolute;
 		top: 5px;
-		left: 5px;
 	
 		.quantite {
-			text-align: center;
-			min-width: 35px;
 			background-color: #f1ab50;
-			font-weight: 600;
-			padding: 8px 8px;
 			border-radius: 140px;
-			margin: 5px;
 			color: #152440;
 			font-family: Raleway;
 			font-size: 12px;
+			font-weight: 600;
+			margin: 5px;
+			min-width: 35px;
+			padding: 8px 8px;
+			text-align: center;
 		}
 	}
 
 	.prix--container {
 		.prix {
-			min-width: 35px;
-			font-weight: 500;
 			color: #152440;
 			font-family: Raleway;
 			font-size: 11px;
+			font-weight: 500;
+			min-width: 35px;
 		}
 	}
   
 	.snackbar-wrapper {
-	  position: absolute;
-	  top: 0;
-	  right: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
 	}
   
 	&:hover {
-	  background-color: #d3d7dd40;
+		background-color: #d3d7dd40;
 	}
 }
   

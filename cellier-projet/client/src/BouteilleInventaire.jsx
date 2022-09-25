@@ -2,7 +2,7 @@ import * as React from "react";
 import "./BouteilleInventaire.scss";
 import { useState, useEffect } from "react";
 import MuiButton from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import placeholderSaq from "./img/png/placeholder-saq.png";
 import { grey } from "@mui/material/colors";
 import Box from "@mui/material/Box";
@@ -10,6 +10,10 @@ import Typography from "@mui/material/Typography";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 
 import ListeInventaire from "./ListeInventaire";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 const drawerBleeding = 56;
 
 const Root = styled("div")(({ theme }) => ({
@@ -22,6 +26,15 @@ const Root = styled("div")(({ theme }) => ({
 
 const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "light" ? "#fff" : grey[800],
+}));
+
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: "flex-end",
 }));
 
 const Puller = styled(Box)(({ theme }) => ({
@@ -47,6 +60,8 @@ export default function BouteilleInventaire(props) {
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
+
+  const theme = useTheme();
 
   /**
    *  État de la liste d'inventaire
@@ -136,9 +151,9 @@ export default function BouteilleInventaire(props) {
                 <p className="bouteille--info">
                   {props.type} - {props.format} - {props.millesime}
                 </p>
-                <hr></hr>
               </div>
             </div>
+            <hr></hr>
             <div className="prix--container">
               <p className="prix">
                 Valeur&nbsp;totale&nbsp;:&nbsp;
@@ -188,7 +203,24 @@ export default function BouteilleInventaire(props) {
             }}
           ></StyledBox>
           <Puller />
-          <Typography sx={{ p: 4, color: "text.secondary" }}>
+          <DrawerHeader>
+            <IconButton onClick={toggleDrawer(false)}>
+              {theme.direction === "ltr" ? (
+                <ChevronLeftIcon />
+              ) : (
+                <ChevronRightIcon />
+              )}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <Typography
+            sx={{
+              p: 4,
+              color: "text.secondary",
+              fontFamily: "raleway",
+              fontSize: "12px",
+            }}
+          >
             Cette bouteille est dans {listeInventaire.length} de vos celliers{" "}
           </Typography>
           <StyledBox
