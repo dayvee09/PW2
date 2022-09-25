@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_search_bar_white.svg";
 import BouteilleInventaire from "./BouteilleInventaire";
+import _ from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { TextField } from "@mui/material";
 
 function ListeBouteillesInventaire(props) {
@@ -13,8 +15,8 @@ function ListeBouteillesInventaire(props) {
    * Fectch la liste de tous les bouteilles dans tout différentes celliers
    */
   useEffect(() => {
-    props.fetchVinsInventaire();
-    if (props.bouteillesInventaire !== undefined) {
+    if (_.isEqual(props.bouteillesInventaire, results) !== true) {
+      props.fetchVinsInventaire();
       setResults(props.bouteillesInventaire);
     }
   }, [props.bouteillesInventaire]);
@@ -33,10 +35,6 @@ function ListeBouteillesInventaire(props) {
   }
 
   if (results.length > 0) {
-    // if (results === []) {
-    //   console.log()
-    //   setResults(props.bouteillesInventaire);
-    // }
     return (
       <>
         <div className="Appli--entete">
