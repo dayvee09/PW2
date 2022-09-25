@@ -3,13 +3,15 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_search_bar_white.svg";
 import BouteilleInventaire from "./BouteilleInventaire";
-import _ from 'lodash';
-import isEqual from 'lodash/isEqual';
+import _ from "lodash";
+import isEqual from "lodash/isEqual";
 import { TextField } from "@mui/material";
 
 function ListeBouteillesInventaire(props) {
   const [toSearch, setToSearch] = useState("");
   const [results, setResults] = useState([]);
+  const [debut, setDebut] = useState(0);
+  const [fin, setFin] = useState(200);
 
   /**
    * Fectch la liste de tous les bouteilles dans tout différentes celliers
@@ -20,6 +22,14 @@ function ListeBouteillesInventaire(props) {
       setResults(props.bouteillesInventaire);
     }
   }, [props.bouteillesInventaire]);
+
+  function gererVoirPlus() {
+    if (results.length > fin) {
+      setFin(fin + 200);
+    } else if (results.length <= fin) {
+      setFin(results.length);
+    }
+  }
 
   function gererInputRecherche(e) {
     setToSearch(e.target.value);
@@ -33,8 +43,8 @@ function ListeBouteillesInventaire(props) {
       )
     );
   }
-
-  if (results.length > 0) {
+  console.log(results.length);
+  if (results.length > 1) {
     return (
       <>
         <div className="Appli--entete">
@@ -60,7 +70,7 @@ function ListeBouteillesInventaire(props) {
           </div>
           <span className="liste-cellier--message-retour"></span>
           <div className="ListeBouteillesInventaire">
-            {results.map((bouteilleInventaire) => (
+            {results.slice(debut, fin).map((bouteilleInventaire) => (
               <div key={bouteilleInventaire.id}>
                 <BouteilleInventaire
                   {...bouteilleInventaire}
@@ -77,6 +87,52 @@ function ListeBouteillesInventaire(props) {
                 />
               </div>
             ))}
+          </div>
+          {results.length > fin ? (
+            <div className="fin--liste cliquable" onClick={gererVoirPlus}>
+              Voir plus
+            </div>
+          ) : (
+            results.length > 0 && (
+              <div className="fin--liste">Fin de la liste</div>
+            )
+          )}
+        </div>
+      </>
+    );
+  } else if (results.length === 1) {
+    return (
+      <>
+        <div className="Appli--entete">
+          <div className="Appli--search-bar-container">
+            <input
+              className="Appli--search-bar"
+              placeholder="Trouver une bouteille"
+              onChange={gererInputRecherche}
+            />
+          </div>
+        </div>
+        <div className="Appli--container">
+          <div className="liste-cellier--entete">
+            <h1>Mes Bouteilles</h1>
+          </div>
+          <span className="liste-cellier--message-retour"></span>
+          <div className="ListeBouteillesInventaire">
+            <div>
+              <BouteilleInventaire
+                {...results[0]}
+                bouteilleInventaire={results[0]}
+                setBouteilleInventaire={props.setBouteillesInventaire}
+                fetchVinsInventaire={props.fetchVinsInventaire}
+                user_id={props.user_id}
+                emailUtilisateur={props.emailUtilisateur}
+                URI={props.URI}
+                cellier={props.cellier}
+                fetchVins={props.fetchVins}
+                fetchNomCellier={props.fetchNomCellier}
+                gererCellier={props.gererCellier}
+              />
+            </div>
           </div>
         </div>
       </>
