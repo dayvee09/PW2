@@ -345,14 +345,15 @@ export default function Bouteille(props) {
         props.setError(props.error);
       });
   }
-
   return (
     <>
       <div className="Bouteille" data-quantite="">
         <div className="bouteille--gestion">
-          <div className="quantite--container">
-            <p className="quantite">{props.quantite}</p>
-          </div>
+          {props.setChangementBouteille && (
+            <div className="quantite--container">
+              <p className="quantite">{props.quantite}</p>
+            </div>
+          )}
           <img
             onClick={gererVoir}
             src={
@@ -363,10 +364,12 @@ export default function Bouteille(props) {
             alt="bouteille"
           />
           <div data-id="{id_bouteille_cellier}">
-            <MoreVertIcon
-              className="bouteille--gestion-dots"
-              onClick={gererMenuContextuel}
-            />
+            {props.setChangementBouteille && (
+              <MoreVertIcon
+                className="bouteille--gestion-dots"
+                onClick={gererMenuContextuel}
+              />
+            )}
           </div>
         </div>
         <div className="bouteille--info-container">
