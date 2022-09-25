@@ -147,11 +147,13 @@ export default function Admin(props) {
   };
   return (
     <>
+	  <div className="Appli--entete">
+		  <div className="Appli--signOut-container">
+			<button className="Appli--signOut"  onClick={redirectionAccueil}>Déconnexion</button>
+		</div>
+	</div>
       <div className="Appli--container">
         <div className="Admin">
-          <div className="deconnexion-admin" onClick={redirectionAccueil}>
-            Déconnexion
-          </div>
           <div className="content-admin">
             <h1>Bienvenue sur l'interface d'admin!</h1>
             <div>
