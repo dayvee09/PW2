@@ -44,11 +44,12 @@
 		font-size: 15px;
 		padding-top: 54px;
 		text-underline-offset: 5px;
-		text-decoration: underline 1px;s
-		&:hover {
-			color: #cc4240;
-		}
+		text-decoration: underline 1px;
 	}
+}
+
+.liste-cellier--btn-ajout:hover {
+	color: #cc4240;
 }
 
 .liste-cellier--message-retour {
