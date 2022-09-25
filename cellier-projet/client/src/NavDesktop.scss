@@ -53,16 +53,15 @@
 }
 
 .MuiList-root {
-	display: none;
+	// display: none;
+	span {
+		font-family: Raleway;
+		font-size: 14px;
+	}
 	@media only screen and (min-width: 768px) {
 		display: block;
 		a span {
 			padding-top:5px;
-		}
-
-		span {
-			font-family: Raleway;
-			font-size: 14px;
 		}
 		a:hover {
 			background-color: transparent;
