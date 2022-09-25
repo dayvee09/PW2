@@ -157,7 +157,9 @@ export default function BouteilleInventaire(props) {
             <div className="prix--container">
               <p className="prix">
                 Valeur&nbsp;totale&nbsp;:&nbsp;
-                {props.bouteilleInventaire.prix_total || 0}&nbsp;$
+                {parseFloat(props.bouteilleInventaire.prix_total).toFixed(2) ||
+                  0}
+                &nbsp;$
               </p>
             </div>
             <p className="bouteille--info">
