@@ -123,6 +123,7 @@ export default function FrmBouteille({
             voirFiche={voirFiche}
             setQuantite={setQuantite}
             quantite={quantite}
+            setOpenErr={setOpenErr}
           />
           <div className={voirFiche === true ? "hidden" : ""}>
             <label>Date d'achat: </label>

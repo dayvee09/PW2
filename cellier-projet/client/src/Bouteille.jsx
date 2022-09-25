@@ -116,6 +116,7 @@ export default function Bouteille(props) {
   function viderFermerFrm() {
     gererFermerMenuContextuel();
     setFrmSuppressionOuvert(false);
+    setSeverity("info");
   }
 
   /**
@@ -159,7 +160,6 @@ export default function Bouteille(props) {
    */
   function gererAjouter() {
     fetchVinUn();
-    // setQuantite((quantite) => parseInt(quantite) + 1);
     fetchPutVinUn(parseInt(props.quantite) + 1, dateAchat, dateGarde);
   }
 
@@ -168,13 +168,14 @@ export default function Bouteille(props) {
    */
   function gererBoire() {
     fetchVinUn();
-    if (quantite > 0) {
-      // setQuantite((quantite) => parseInt(quantite) - 1);
+    if (props.quantite > 0) {
       fetchPutVinUn(parseInt(props.quantite) - 1, dateAchat, dateGarde);
     } else {
-      //   setMessageRetour("En rupture de stock");
-      //   setSeverity("error");
-      //   setOpenAlert(true);
+      setMessageRetour(
+        "Cette bouteille est en rupture de stock. Voulez-vous la supprimer?"
+      );
+      setSeverity("error");
+      // setOpenAlert(true);
       setFrmSuppressionOuvert(true);
     }
   }
@@ -328,13 +329,7 @@ export default function Bouteille(props) {
       <div className="Bouteille" data-quantite="">
         <div className="bouteille--gestion">
           <div className="quantite--container">
-            <p className="quantite">
-              {/* {" "}
-              {contexteModif === true
-                ? bouteille.quantite
-                : props.quantite}{" "} */}
-              {props.quantite}
-            </p>
+            <p className="quantite">{props.quantite}</p>
           </div>
           <img
             onClick={gererVoir}
@@ -415,10 +410,13 @@ export default function Bouteille(props) {
           open={frmSuppressionOuvert}
           onClose={viderFermerFrm}
         >
-          <DialogTitle>
-            {" "}
-            Voulez-vous vraiment supprimer cette bouteille ?
-          </DialogTitle>
+          {severity === "error" ? (
+            <DialogTitle>{messageRetour}</DialogTitle>
+          ) : (
+            <DialogTitle>
+              Voulez-vous vraiment supprimer cette bouteille ?
+            </DialogTitle>
+          )}
           <DialogActions>
             <Button onClick={viderFermerFrm} className="cancel">
               Annuler
