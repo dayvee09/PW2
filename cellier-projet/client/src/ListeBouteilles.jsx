@@ -189,6 +189,8 @@ function ListeBouteilles(props) {
                       error={props.error}
                       setError={props.setError}
                       fetchUtilisateur={props.sfetchUtilisateur}
+                      fetchAjouterFavoris={props.fetchAjouterFavoris}
+                      fetchSupprimerFavoris={props.fetchSupprimerFavoris}
                     />
                   </div>
                 ))}
