@@ -139,9 +139,9 @@ export default function BouteilleInventaire(props) {
                 <p className="bouteille--info">
                   {props.type} - {props.format} - {props.millesime}
                 </p>
-                <hr></hr>
               </div>
             </div>
+			<hr></hr>
             <div className="prix--container">
               <p className="prix">
                 Valeur&nbsp;totale&nbsp;:&nbsp;
@@ -201,7 +201,7 @@ export default function BouteilleInventaire(props) {
               </IconButton>
             </DrawerHeader>
             <Divider />
-          <Typography sx={{ p: 4, color: "text.secondary" }}>
+          <Typography sx={{ p: 4, color: "text.secondary", fontFamily: "raleway", fontSize: "12px" }}>
             Cette bouteille est dans {listeInventaire.length} de vos celliers{" "}
           </Typography>
           <StyledBox
