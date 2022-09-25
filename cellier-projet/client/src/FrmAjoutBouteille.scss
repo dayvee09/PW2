@@ -1,9 +1,9 @@
 .FrmAjoutBouteille {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: auto;
-  max-width: 900px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: auto;
+	max-width: 900px;
 
 	h1 {
 		text-align: center;
@@ -20,21 +20,23 @@
 	.FrmAjoutNouvelle {
 		margin: 20px;
 		label {
-			margin-top: 10px;
 			display: block;
 			font-size: 14px;
+			margin-top: 10px;
 		}
+
 		.img--wrap {
 			background-color: #d3d7dd;
 			height: 180px;
 			img {
-			padding: 5px 0 5px 0;
-			mix-blend-mode: multiply;
-			object-fit: contain;
-			height: 100%;
-			width: 100%;
+				padding: 5px 0 5px 0;
+				mix-blend-mode: multiply;
+				object-fit: contain;
+				height: 100%;
+				width: 100%;
 			}
 		}
+
 		.btn--ajouter {
 			background-color: #101e33;
 			border: none;
@@ -45,24 +47,28 @@
 			padding: 10px 30px;
 
 			&:hover {
-			background-color: #f1ab50;
-			color: #101e33;
-			cursor: pointer;
+				background-color: #f1ab50;
+				color: #101e33;
+				cursor: pointer;
 			}
 		}
 	} 
+
 	.nonSelect {
 		opacity:0.7;
 		cursor: none;
 	}
+
 	.bandeRouge {
-		width: auto;
-		padding: 10px;
 		background-color: #cc4240;
+		padding: 10px;
+		width: auto;
 	}
+
 	.active {
 		color: #cc4240;
 	}
+	
 	.Grid p {
 		font-size: 12px;
 		margin-top: 0;
