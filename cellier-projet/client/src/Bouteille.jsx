@@ -207,6 +207,22 @@ export default function Bouteille(props) {
         }
       }
     }
+    if (
+      e.target.src ===
+      url +
+        "/PW2/cellier-projet/static/media/icone_favorite_blue_filled.4a820c77bc0a5c4a3f0fb93d65b4a9f6.svg"
+    ) {
+      let favorisAjout = {
+        vino__utilisateur_id: props.vino__utilisateur_id,
+        vino__bouteille_id: idBouteille,
+      };
+      console.log("Ajout");
+      console.log(favorisAjout);
+      props.fetchAjouterFavoris(favorisAjout);
+    } else {
+      console.log("Suppression");
+      props.fetchSupprimerFavoris(idBouteille);
+    }
   }
 
   /**
@@ -329,6 +345,7 @@ export default function Bouteille(props) {
         props.setError(props.error);
       });
   }
+
   return (
     <>
       <div className="Bouteille" data-quantite="">

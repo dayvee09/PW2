@@ -25,8 +25,11 @@ function ListeBouteillesInventaire(props) {
   }
 
   function filtreBouteilles(array, string) {
-    return array.filter(o =>
-        Object.keys(o).some(k => o[k].toLowerCase().includes(string.toLowerCase())));
+    return array.filter((o) =>
+      Object.keys(o).some((k) =>
+        o[k].toLowerCase().includes(string.toLowerCase())
+      )
+    );
   }
 
   if (results.length > 0) {
@@ -60,8 +63,7 @@ function ListeBouteillesInventaire(props) {
           <span className="liste-cellier--message-retour"></span>
           <div className="ListeBouteillesInventaire">
             {results.map((bouteilleInventaire) => (
-
-              <div key={bouteilleInventaire.id} >
+              <div key={bouteilleInventaire.id}>
                 <BouteilleInventaire
                   {...bouteilleInventaire}
                   bouteilleInventaire={bouteilleInventaire}
@@ -79,10 +81,9 @@ function ListeBouteillesInventaire(props) {
             ))}
           </div>
         </div>
-
       </>
     );
-  } else { 
+  } else {
     return (
       <>
         <div className="Appli--entete">
@@ -100,12 +101,12 @@ function ListeBouteillesInventaire(props) {
           </div>
           <span className="liste-cellier--message-retour"></span>
           <div className="ListeBouteillesInventaire">
-          <h2 className="aucune-bouteille">Aucune bouteille.</h2>
-          <NavLink to="/vins">
-            <p className="ListeBouteille--default-button">
-              + Ajouter une bouteille
-            </p>
-          </NavLink>
+            <h2 className="aucune-bouteille">Aucune bouteille.</h2>
+            <NavLink to="/vins">
+              <p className="ListeBouteille--default-button">
+                + Ajouter une bouteille
+              </p>
+            </NavLink>
           </div>
         </div>
       </>

@@ -286,6 +286,41 @@ const Appli = () => {
         setError(error);
       });
   }
+
+  async function fetchAjouterFavoris(vin) {
+    await fetch(URI + `/favoris/ajouter/favoris`, {
+      method: "POST",
+      body: JSON.stringify(vin),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {})
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      });
+  }
+
+  async function fetchSupprimerFavoris(vin) {
+    await fetch(URI + `/utilisateur/${id}/favoris/vin/${vin}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {})
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      });
+  }
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
@@ -376,6 +411,8 @@ const Appli = () => {
                       error={error}
                       setError={setError}
                       fetchUtilisateur={fetchUtilisateur}
+                      fetchAjouterFavoris={fetchAjouterFavoris}
+                      fetchSupprimerFavoris={fetchSupprimerFavoris}
                     />
                   }
                 />
@@ -482,7 +519,24 @@ const Appli = () => {
                 <Route
                   path={`/favoris`}
                   element={
-                    <Favoris URI={URI} error={error} setError={setError} />
+                    <Favoris
+                      URI={URI}
+                      error={error}
+                      setError={setError}
+                      id={id}
+                      nomCellier={nomCellier}
+                      setNomCellier={setNomCellier}
+                      fetchNomCellier={fetchNomCellier}
+                      bouteilles={bouteilles}
+                      setBouteilles={setBouteilles}
+                      fetchVins={fetchVins}
+                      gererBouteilles={gererBouteilles}
+                      cellier={cellier}
+                      celliers={celliers}
+                      fetchUtilisateur={fetchUtilisateur}
+                      fetchAjouterFavoris={fetchAjouterFavoris}
+                      fetchSupprimerFavoris={fetchSupprimerFavoris}
+                    />
                   }
                 />
                 <Route
