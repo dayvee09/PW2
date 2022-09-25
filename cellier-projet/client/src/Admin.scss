@@ -13,7 +13,7 @@
 	}
 
 	.content-admin {
-		margin-top: 100px;
+		margin-top: 50px;
 		h1 {
 			cursor: default;
 			padding: 0;
@@ -21,10 +21,12 @@
 
 		.importer-admin {
 			background-color: #f1ab50;
+			border: 1px solid #f1ab50;
 			border-radius: 4px;
 			color: #152440;
 			font-family: "Alata";
-			font-size: 1rem;
+			text-transform: uppercase;
+			font-size: 12px;
 			text-decoration: none;
 			transition: background-color 0.2s ease-in, color 0.2s ease-in;
 			margin-top: 30px;
@@ -42,24 +44,5 @@
 
 	.css-ki1hdl-MuiAlert-action {
 		margin-left: 0;
-	}
-
-	.deconnexion-admin {
-		background-color: #cc4240;
-		border-radius: 4px;
-		color: #f3f5eb;
-		cursor: pointer;
-		font-family: "Alata";
-		font-size: 0.75rem;
-		left: 10px;
-		padding: 10px;
-		position: absolute;
-		text-decoration: none;
-		transition: background-color 0.2s ease-in, color 0.2s ease-in;
-		top: 10px;
-		&:hover {
-			background-color: #f1ab50;
-			color: #152440;
-		}
 	}
 }
