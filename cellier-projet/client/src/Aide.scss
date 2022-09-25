@@ -13,6 +13,10 @@
 		padding-top:0;
 
 		.Aide--fonctionnement-container {
+			h1 {
+				padding-bottom: 50px;
+			}
+
 			h2 {
 				font-size: 14px;
 				font-weight: 500;
@@ -35,7 +39,7 @@
 					padding: 20px;
 					
 					&:hover {
-						scale: 1.01;
+						background-color: #d3d7dd37;
 					}
 
 					@media only screen and (min-width: 1200px) { 
@@ -124,6 +128,7 @@
 					&:hover {
 						background-color: #f1ab50;
 						color: #152440;
+						transition: background-color 0.2s ease-in, color 0.2s ease-in;
 					}
 				}
 
