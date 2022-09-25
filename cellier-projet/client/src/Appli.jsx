@@ -77,6 +77,7 @@ const Appli = () => {
     if (localStorage.getItem("celliers") !== null) {
       setCelliers(JSON.parse(localStorage.getItem("celliers")));
     }
+    fetchVinsInventaire();
   }, [id]);
 
   useEffect(() => {
