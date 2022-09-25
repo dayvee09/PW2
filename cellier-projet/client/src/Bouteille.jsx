@@ -1,7 +1,7 @@
 import * as React from "react";
 import "./Bouteille.scss";
 import FrmBouteille from "./FrmBouteille";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -56,6 +56,11 @@ export default function Bouteille(props) {
    *  État de la boite de dialogue de suppression
    */
   const [frmSuppressionOuvert, setFrmSuppressionOuvert] = useState(false);
+
+  /**
+   *  État de la boite de dialogue de suppression
+   */
+  const [messageDialog, setMessageDialog] = useState("");
 
   /**
    *  État d'affichage de la fiche de bouteille
@@ -123,6 +128,7 @@ export default function Bouteille(props) {
    * Gère l'ouverture de la boite de dialogue de supression du cellier
    */
   function gererSupprimer() {
+    setMessageDialog("Voulez-vous vraiment supprimer cette bouteille ?");
     setFrmSuppressionOuvert(true);
   }
 
@@ -175,7 +181,6 @@ export default function Bouteille(props) {
         "Cette bouteille est en rupture de stock. Voulez-vous la supprimer?"
       );
       setSeverity("error");
-      // setOpenAlert(true);
       setFrmSuppressionOuvert(true);
     }
   }

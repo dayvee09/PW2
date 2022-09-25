@@ -26,7 +26,7 @@ export default function ListeInventaire(props) {
   return (
     <List className="ListeInventaire" sx={{ width: "100%" }}>
       {props.listeInventaire.map((chaqueInventaire) => (
-        <div key={chaqueInventaire.cellier_id}>
+        <div className="chaque--inventaire" key={chaqueInventaire.cellier_id}>
           <ListItem
             onClick={() => setIdCellier(chaqueInventaire.cellier_id)}
             alignItems="center"

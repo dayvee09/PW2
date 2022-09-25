@@ -171,7 +171,10 @@ class SaqControleur extends Controleur
         $aElements = $noeud->getElementsByTagName("span");
         foreach ($aElements as $node) {
             if ($node->getAttribute('class') == 'price') {
-                $info->prix = trim($node->textContent);
+                $prix = trim($node->textContent);
+                $prix = str_replace(',', '.', $prix);
+                $prix = trim(str_replace('$', '', $prix));
+                $info->prix = $prix;
             }
         }
         //var_dump($info);

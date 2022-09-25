@@ -54,6 +54,7 @@ export default function FrmBouteille({
       if (quantite < 0) setOpenErr(true);
     }
   }
+  console.log(bouteille.prix_saq);
   return (
     <div className="FormBouteille">
       <Dialog
@@ -83,7 +84,7 @@ export default function FrmBouteille({
             <div className="hr"></div>
             <p className="description">Description : {bouteille.description}</p>
             <p className="millesime">Millesime : {bouteille.millesime}</p>
-            <p className="millesime">Prix : {bouteille.prix_saq}.00$</p>
+            <p className="millesime">Prix : {bouteille.prix_saq}$</p>
             <div className={voirFiche === false ? "hidden" : ""}>
               <p className="quantite">Quantité : {quantite}</p>
               <p className="date_achat">Date achat : {bouteille.date_achat}</p>

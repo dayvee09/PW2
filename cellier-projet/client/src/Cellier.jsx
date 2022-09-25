@@ -212,7 +212,7 @@ export default function Cellier(props) {
             {statsCellier.length === 1 &&
             statsCellier[0].somme !== undefined &&
             statsCellier[0].somme !== null
-              ? statsCellier[0].somme
+              ? parseFloat(statsCellier[0].somme).toFixed(2)
               : 0}
             $
           </p>
