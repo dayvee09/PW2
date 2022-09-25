@@ -1,29 +1,7 @@
-.css-ypiqx9-MuiDialogContent-root {
-	padding: 20px 20px 20px 20px !important;
-	background-color: #d3d7dd78;
-}
-
-.css-1cdjfa1-MuiPaper-root-MuiDialog-paper {
-	width: 100%;
-	.img-wrap {
-		height: 200px;
-		margin-bottom: 25px;
-	}
-
-	img {
-		padding: 5px 0 5px 0;
-		object-fit: contain;
-		height: 100%;
-		width: 100%;
-		max-height: 250px;
-		mix-blend-mode: multiply;
-	}
-}
-
 .nom  {
-	text-align: center;
 	font-weight: 500;
 	padding-bottom: 5px;
+	text-align: center;
 }
 
 .type  {
@@ -31,14 +9,15 @@
 }
 
 .lien_saq {
-	padding-top: 25px;
 	background-color: transparent;
 	cursor: pointer;
 	font-family: Raleway;
 	font-size: 12px;
+	padding-top: 25px;
     text-underline-offset: 5px;
     text-decoration: underline 1px;
-	a  {
+	
+	a {
 		color: #152440;
 		&:hover {
 			color: #cc4240;
@@ -48,10 +27,10 @@
 
 .FormBouteille--button {
 	&:nth-child(1) {
-		font-family: Alata;
 		background-color: transparent;
 		border: 1px solid #cc4240;
 		color: #152440;
+		font-family: Alata;
 		font-size: 12px;
 		padding: 10px 20px;
 		&:hover {
@@ -63,10 +42,10 @@
 	}
 	
 	&:nth-child(2) {
-		font-family: Alata;
 		background-color: #152440;
 		border: 1px solid #152440;
 		color: #f3f5eb;
+		font-family: Alata;
 		font-size: 12px;
 		padding: 10px 20px;
 		&:hover {
@@ -76,23 +55,42 @@
 			cursor: pointer;
 		}
 	}
-
+	
 }
 
 .img-container {
-	overflow: hidden;
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-image: linear-gradient(
 		to top,
 		#d3d7dd 60%,
 		#d3d7dd 50%
-	)
+	);
+	overflow: hidden;
 }
 
-@media only screen and (min-width: 768px) {
-	.css-ypiqx9-MuiDialogContent-root {
+.css-ypiqx9-MuiDialogContent-root {
+	background-color: #d3d7dd78;
+	padding: 20px 20px 20px 20px !important;
+
+	@media only screen and (min-width: 768px) {
 		padding: 40px 60px 60px 60px !important;
-		background-color: #d3d7dd78;
+	}
+}
+
+.css-1cdjfa1-MuiPaper-root-MuiDialog-paper {
+	width: 100%;
+	.img-wrap {
+		height: 200px;
+		margin-bottom: 25px;
+	}
+
+	img {
+		height: 100%;
+		object-fit: contain;
+		padding: 5px 0 5px 0;
+		max-height: 250px;
+		mix-blend-mode: multiply;
+		width: 100%;
 	}
 }

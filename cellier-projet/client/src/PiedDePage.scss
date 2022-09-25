@@ -1,16 +1,9 @@
 .PiedDePage {
 	* {
-	  color: #f3f5eb;
+		color: #f3f5eb;
 	}
 
 	background-color: #152440;
-	border-top: 5px solid #cc4240;
-	bottom: 0;
-	padding: 25px 25px 25px 25px;
-	display: flex;
-	justify-content: space-between; 
-	text-align: left;
-	width: 100%;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -18,17 +11,27 @@
 		to top,
 		rgba(16, 30, 51, 0.97) 50%,
 		rgba(16, 30, 51, 0.97) 50%
-	  ),
-	  url(./img/jpg/background-accueil.jpg);
+	),
+	url(./img/jpg/background-accueil.jpg);
+	border-top: 5px solid #cc4240;
+	bottom: 0;
+	display: flex;
+	justify-content: space-between; 
+	padding: 25px 25px 25px 25px;
+	text-align: left;
+	width: 100%;
 
-
-	  .nav-link-help {
+	.nav-link-help {
 		font-size: 12px;
-
 		&:hover {
 			color: #f1ab50;
 			cursor: pointer;
 		}
+	}
+
+	@media only screen and (min-width: 768px) {
+		position: fixed;
+		padding: 25px 50px 25px 50px;
 	}
 }
 
@@ -40,13 +43,8 @@
 	.nav-link-help {
 		display: none;
 	}
-}
-
-@media only screen and (min-width: 768px) {
-	.Login .PiedDePage {
-		position: fixed;
+	@media only screen and (min-width: 768px) {
 		background-color: #152440;
-		justify-content: space-between; 
 		background-position: center;
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -56,10 +54,7 @@
 			rgba(16, 30, 51, 0.97) 50%
 		),
 		url(./img/jpg/background-accueil.jpg);
- 	}
-	
-	.PiedDePage {
+		justify-content: space-between; 
 		position: fixed;
-		padding: 25px 50px 25px 50px;
 	}
 }
