@@ -1,9 +1,9 @@
 .Cellier {		
 	.cellier {
-		margin-top: 25px;
 		border: 1px solid #d3d7dd;
 		border-radius: 4px 4px 0 0;
 		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+		margin-top: 25px;
 		
 		&:hover {
 			background-color: #d3d7dd37;
@@ -23,9 +23,9 @@
 			}
 
 			.cellier--gestion-dots {
+				border-radius: 20px;
 				color: #cc4240;
 				margin-right: -10px;
-				border-radius: 20px;
 
 				&:hover {
 					background-color: #d3d7dd78;
@@ -38,20 +38,20 @@
 				font-family: Alata;
 				font-size: 15px;
 				min-height: 70px;
+				padding-left: 20px;
 				padding-right: 10px;
 				text-transform: uppercase;
-				padding-left: 20px;
 			}
 
 			button {
-				width: 50%;
-				font-size: 10px;
-				min-height: 100px;
+				background-color: transparent;
 				border: 1px solid #d3d7dd;
 				border-radius: 4px;
-				background-color: transparent;
-				text-transform: uppercase;
+				font-size: 10px;
+				min-height: 100px;
 				padding: 0 15px 0 15px;
+				text-transform: uppercase;
+				width: 50%;
 
 				&:hover {
 					background-color: #d3d7dd;
@@ -69,6 +69,10 @@
 				margin: 0px;
 			}
 		}
+
+		@media only screen and (min-width: 768px) {
+			margin-top: 0px;
+		}
 	}
 }
 
@@ -79,21 +83,12 @@
 		font-size: 14px;
 		
 		&:hover {
-			color: #cc4240;
 			background-color: transparent;
+			color: #cc4240;
 		}
 	
 		&:focus {
 			background-color: transparent;
-		}
-	}
-	
-}
-
-@media only screen and (min-width: 768px) {
-	.Cellier {
-		.cellier {
-			margin-top: 0px;
 		}
 	}
 }

@@ -1,8 +1,7 @@
 .NavMobile {
 	* {
-	  font-family: Alata, sans-serif;
-	  font-weight: 500;
-	//   border: red 1px dashed;
+		font-family: Alata, sans-serif;
+		font-weight: 500;
 	}
 	
 	.css-1bjk3jo-MuiButtonBase-root-MuiBottomNavigationAction-root.Mui-selected {
@@ -21,7 +20,6 @@
 		
 		a  {
 			padding-top: 10px;
-			// margin-top: -5px;
 			min-width: 60px;
 		}
 
@@ -40,37 +38,18 @@
 		}
 		
 		.AddBottleIcone {
-		width: 85px;
-		height: 80px;
-		position: absolute;
-		bottom: 0;
-		border-radius: 60px;
+			width: 85px;
+			height: 80px;
+			position: absolute;
+			bottom: 0;
+			border-radius: 60px;
 		}
 
 		.disabledIcone {
 			min-width:75px;
 		}
 	}
-}
-
-@media only screen and (min-width: 768px) {
-	.NavMobile {
+	@media only screen and (min-width: 768px) {
 		display: none;
-
-		.BottomNav {
-			padding-bottom: 10px;
-			// margin-left: 0;
-			position: relative;
-			background-color: #f3f5eb;
-			
-			a  {
-				padding-top: 10px;
-				margin-top: -20px;
-			}
-		}	
 	}
 }
-
-// #navbar {
-// 	transition: bottom 0.3s;
-// }

@@ -4,13 +4,13 @@
 	}
 
 	.Appli--container {
-		padding-top:0;
-		padding-bottom:0;
 		background-image: linear-gradient(
 			to bottom,
 			transparent 70%,
 			#d3d7dd78 50%
 		);
+		padding-bottom:0;
+		padding-top:0;
 
 		.Aide--fonctionnement-container {
 			h2 {
@@ -25,8 +25,8 @@
 
 			.Aide--fonctionnement-grid {
 				display: grid;
-				grid-template-columns: repeat(1, 1fr);
 				gap: 20px;
+				grid-template-columns: repeat(1, 1fr);
 
 				.Aide--fonctionnement-grid-tile {
 					border: 0.5px solid #d3d7dd;
@@ -53,8 +53,8 @@
 			}
 			.Aide--questions-container {
 				h2 {
-					margin-top: 25px;
 					margin-bottom: 25px;
+					margin-top: 25px;
 				}
 
 				.accordion {
@@ -67,10 +67,11 @@
 	
 					.css-1elwnq4-MuiPaper-root-MuiAccordion-root {
 						background-color: transparent;
-						box-shadow: none;
 						border: 0.5px solid #d3d7dd;
+						box-shadow: none;
 	
 					}
+					
 					@media only screen and (min-width: 768px) {
 						padding-bottom: 50px;
 					}
@@ -93,37 +94,41 @@
 
 			.Aide--contact-container {
 				input[type=text], select, textarea {
-					width: 100%; 
-					padding: 10px; 
 					border: 1px solid #d3d7dd; 
 					border-radius: 4px;
 					box-sizing: border-box; 
-					margin-top: 10px;
 					margin-bottom: 20px;
+					margin-top: 10px;
+					padding: 10px; 
 					resize: vertical;
+					width: 100%; 
 				}  
 				
 				input, textarea {
 					&:focus {
-						outline: none;
 						border-color: #f1ab50;
+						outline: none;
 					}
 				}
 		
 				input[type=submit] {
-					font-family: Alata;
-					text-transform: uppercase;
 					background-color: #152440;
-					color: #f3f5eb;
-					padding: 10px 24px;
 					border: none;
 					border-radius: 4px;
+					color: #f3f5eb;
 					cursor: pointer;
+					font-family: Alata;
+					text-transform: uppercase;
+					padding: 10px 24px;
 
 					&:hover {
-						color: #152440;
 						background-color: #f1ab50;
+						color: #152440;
 					}
+				}
+
+				@media only screen and (min-width: 768px) {
+					margin-top: 30%;
 				}
 			}
 
