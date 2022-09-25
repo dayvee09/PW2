@@ -5,6 +5,9 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AddLocationRoundedIcon from '@mui/icons-material/AddLocationRounded';
+import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
+import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 
 function Aide(props) {
 
@@ -18,11 +21,17 @@ function Aide(props) {
 				<h1>Fonctionnement</h1>
 				<div className="Aide--fonctionnement-grid">
 					<div className="Aide--fonctionnement-grid-tile">
-						<h2>Créer votre cellier</h2>
+						<div>
+							<h2>Créer votre cellier</h2>
+							<AddLocationRoundedIcon style={{ color: '#f1ab50' }} />
+						</div>
 						<p>Ajouter un nouveau cellier ou modifier le nom du cellier par défaut dans la page d'accueil.</p>
 					</div>
 					<div className="Aide--fonctionnement-grid-tile">
-						<h2>Importer ou créer une bouteille</h2>
+						<div>
+							<h2>Importer ou créer une bouteille</h2>
+							<DownloadRoundedIcon style={{ color: '#f1ab50' }}/>
+						</div>
 						<p>
 							Vous pouvez ajouter une bouteille à partir de n'importe où sur l'application.
 							Accéder au formulaire d'ajout et choisissez l'importation ou la création d'une bouteille personnalisée. 
@@ -30,7 +39,10 @@ function Aide(props) {
 						</p>
 					</div>
 					<div className="Aide--fonctionnement-grid-tile">
-						<h2>Gérer et consulter facilement vos celliers</h2>
+						<div>
+							<h2>Gérer et consulter facilement vos celliers</h2>
+							<SettingsRoundedIcon style={{ color: '#f1ab50' }}/>
+						</div>
 						<p>
 							Accèder à la page d'accueil pour gérer l'ensemble de vos celliers.
 							Cliquez sur votre cellier pour accèder à celui-ci.
