@@ -8,10 +8,11 @@ import isEqual from "lodash/isEqual";
 import { TextField } from "@mui/material";
 
 function ListeBouteillesInventaire(props) {
-  const [toSearch, setToSearch] = useState("");
+  // const [toSearch, setToSearch] = useState("");
   const [results, setResults] = useState([]);
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
+  let search;
 
   /**
    * Fectch la liste de tous les bouteilles dans tout différentes celliers
@@ -32,18 +33,23 @@ function ListeBouteillesInventaire(props) {
   }
 
   function gererInputRecherche(e) {
-    setToSearch(e.target.value);
-    setResults(filtreBouteilles(props.bouteillesInventaire, toSearch));
+    search = e.target.value;
+    setResults(filtreBouteilles(props.bouteillesInventaire, search));
   }
 
   function filtreBouteilles(array, string) {
-    return array.filter((o) =>
-      Object.keys(o).some((k) =>
-        o[k].toLowerCase().includes(string.toLowerCase())
-      )
-    );
+    // return array.filter((o) =>
+    //   Object.keys(o).some((k) => {
+    //     console.log(o);
+    //     console.log(k);
+    //     console.log(o[k]);
+    //     o[k].toLowerCase().includes(string.toLowerCase());
+    //   })
+    // );
+    return array.filter((bouteille) => {
+      return bouteille.nom.toLowerCase().includes(string.toLowerCase());
+    });
   }
-  console.log(results.length);
   if (results.length > 1) {
     return (
       <>
@@ -52,7 +58,13 @@ function ListeBouteillesInventaire(props) {
             <input
               className="Appli--search-bar"
               placeholder="Trouver une bouteille"
-              onChange={gererInputRecherche}
+              onKeyPress={(ev) => {
+                if (ev.key === "Enter") {
+                  gererInputRecherche(ev);
+                  ev.preventDefault();
+                  ev.target.value = "";
+                }
+              }}
             />
             {/* <div className="Appli--search-bar-icone">
               <img
@@ -108,7 +120,14 @@ function ListeBouteillesInventaire(props) {
             <input
               className="Appli--search-bar"
               placeholder="Trouver une bouteille"
-              onChange={gererInputRecherche}
+              onKeyPress={(ev) => {
+                if (ev.key === "Enter") {
+                  console.log(ev.target);
+                  gererInputRecherche(ev);
+                  ev.preventDefault();
+                  ev.target.value = "";
+                }
+              }}
             />
           </div>
         </div>
@@ -140,15 +159,7 @@ function ListeBouteillesInventaire(props) {
   } else {
     return (
       <>
-        <div className="Appli--entete">
-          <div className="Appli--search-bar-container">
-            <input
-              className="Appli--search-bar"
-              placeholder="Trouver une bouteille"
-              onChange={gererInputRecherche}
-            />
-          </div>
-        </div>
+        <div className="Appli--entete"></div>
         <div className="Appli--container">
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
