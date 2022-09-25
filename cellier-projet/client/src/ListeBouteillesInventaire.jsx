@@ -15,10 +15,9 @@ function ListeBouteillesInventaire(props) {
   useEffect(() => {
     props.fetchVinsInventaire();
     if (props.bouteillesInventaire !== undefined) {
-      console.log(props.bouteillesInventaire);
       setResults(props.bouteillesInventaire);
     }
-  }, []);
+  }, [props.bouteillesInventaire]);
 
   function gererInputRecherche(e) {
     setToSearch(e.target.value);
@@ -30,7 +29,7 @@ function ListeBouteillesInventaire(props) {
         Object.keys(o).some(k => o[k].toLowerCase().includes(string.toLowerCase())));
   }
 
-  if (props.bouteillesInventaire.length > 0) {
+  if (results.length > 0) {
     // if (results === []) {
     //   console.log()
     //   setResults(props.bouteillesInventaire);
@@ -79,19 +78,34 @@ function ListeBouteillesInventaire(props) {
 
       </>
     );
-  } else {
-    {
-      props.bouteillesInventaire.length == undefined && (
-        <div>
+  } else { 
+    return (
+      <>
+        <div className="Appli--entete">
+          <div className="Appli--search-bar-container">
+            <input
+              className="Appli--search-bar"
+              placeholder="Trouver une bouteille"
+              onChange={gererInputRecherche}
+            />
+          </div>
+        </div>
+        <div className="Appli--container">
+          <div className="liste-cellier--entete">
+            <h1>Mes Bouteilles</h1>
+          </div>
+          <span className="liste-cellier--message-retour"></span>
+          <div className="ListeBouteillesInventaire">
           <h2 className="aucune-bouteille">Aucune bouteille.</h2>
           <NavLink to="/vins">
             <p className="ListeBouteille--default-button">
               + Ajouter une bouteille
             </p>
           </NavLink>
+          </div>
         </div>
-      );
-    }
+      </>
+    );
   }
 }
 
