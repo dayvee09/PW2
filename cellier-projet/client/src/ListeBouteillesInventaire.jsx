@@ -14,11 +14,14 @@ function ListeBouteillesInventaire(props) {
    */
   useEffect(() => {
     props.fetchVinsInventaire();
+    if (props.bouteillesInventaire !== undefined) {
+      console.log(props.bouteillesInventaire);
+      setResults(props.bouteillesInventaire);
+    }
   }, []);
 
   function gererInputRecherche(e) {
     setToSearch(e.target.value);
-    console.log(e.target.value)
     setResults(filtreBouteilles(props.bouteillesInventaire, toSearch));
   }
 
@@ -28,10 +31,10 @@ function ListeBouteillesInventaire(props) {
   }
 
   if (props.bouteillesInventaire.length > 0) {
-    if (results === []) {
-      console.log(props.bouteillesInventaire)
-      setResults(props.bouteillesInventaire);
-    }
+    // if (results === []) {
+    //   console.log()
+    //   setResults(props.bouteillesInventaire);
+    // }
     return (
       <>
         <div className="Appli--entete">
@@ -41,14 +44,14 @@ function ListeBouteillesInventaire(props) {
               placeholder="Trouver une bouteille"
               onChange={gererInputRecherche}
             />
-            <div className="Appli--search-bar-icone">
+            {/* <div className="Appli--search-bar-icone">
               <img
                 className="Appli--search-bar-icone-search"
                 src={rowIcone}
                 alt="icone-row-left"
                 width={15}
               ></img>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="Appli--container">
@@ -58,6 +61,7 @@ function ListeBouteillesInventaire(props) {
           <span className="liste-cellier--message-retour"></span>
           <div className="ListeBouteillesInventaire">
             {results.map((bouteilleInventaire) => (
+
               <div key={bouteilleInventaire.id} >
                 <BouteilleInventaire
                   {...bouteilleInventaire}
