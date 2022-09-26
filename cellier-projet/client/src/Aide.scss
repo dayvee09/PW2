@@ -7,7 +7,7 @@
 	.Appli--container {
 		background-image: linear-gradient(
 			to bottom,
-			transparent 70%,
+			transparent 65%,
 			#d3d7dd78 50%
 		);
 		padding-bottom:0;
@@ -56,13 +56,13 @@
 			}
 			.Aide--questions-container {
 				h2 {
-					margin-bottom: 25px;
+					margin-bottom: 15px;
 					margin-top: 25px;
 				}
 
 				.accordion {
 					margin-bottom: 50px;
-					
+
 					* {
 						font-family: raleway;
 						font-size: 14px;
@@ -96,6 +96,7 @@
 			}
 
 			.Aide--contact-container {
+				margin-bottom: 50px;
 				input[type=text], select, textarea {
 					border: 1px solid #d3d7dd; 
 					border-radius: 4px;
