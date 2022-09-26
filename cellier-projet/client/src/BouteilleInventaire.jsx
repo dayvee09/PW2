@@ -10,10 +10,10 @@ import Typography from "@mui/material/Typography";
 import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 
 import ListeInventaire from "./ListeInventaire";
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 const drawerBleeding = 56;
 
 const Root = styled("div")(({ theme }) => ({
@@ -96,21 +96,33 @@ export default function BouteilleInventaire(props) {
    * fetch la liste des inventaires d'une bouteille
    */
   async function fetchListeInventaire() {
-	  await fetch(props.URI +"/" +"user_id" + "/" + props.user_id +"/" + "vinsInventaire" +"/" + "vin_id" + "/" + props.bouteilleInventaire.id)
-	  .then((response) => {
-		  if (response.ok) {
-			  return response.json();
-			}
-			throw response;
-		})
-		.then((data) => {
-			setListeInventaire(data)
-		})
-		.catch((error) => {
-		console.erro("Error fetching data: ", error);
-		props.setError(error);
-		});
-	}
+    await fetch(
+      props.URI +
+        "/" +
+        "user_id" +
+        "/" +
+        props.user_id +
+        "/" +
+        "vinsInventaire" +
+        "/" +
+        "vin_id" +
+        "/" +
+        props.bouteilleInventaire.id
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setListeInventaire(data);
+      })
+      .catch((error) => {
+        console.erro("Error fetching data: ", error);
+        props.setError(error);
+      });
+  }
 
   return (
     <>
@@ -141,11 +153,13 @@ export default function BouteilleInventaire(props) {
                 </p>
               </div>
             </div>
-			<hr></hr>
+            <hr></hr>
             <div className="prix--container">
               <p className="prix">
                 Valeur&nbsp;totale&nbsp;:&nbsp;
-                {props.bouteilleInventaire.prix_total || 0}&nbsp;$
+                {parseFloat(props.bouteilleInventaire.prix_total).toFixed(2) ||
+                  0}
+                &nbsp;$
               </p>
             </div>
             <p className="bouteille--info">
@@ -192,16 +206,23 @@ export default function BouteilleInventaire(props) {
           ></StyledBox>
           <Puller />
           <DrawerHeader>
-              <IconButton onClick={toggleDrawer(false)}>
-                {theme.direction === "ltr" ? (
-                  <ChevronLeftIcon />
-                ) : (
-                  <ChevronRightIcon />
-                )}
-              </IconButton>
-            </DrawerHeader>
-            <Divider />
-          <Typography sx={{ p: 4, color: "text.secondary", fontFamily: "raleway", fontSize: "12px" }}>
+            <IconButton onClick={toggleDrawer(false)}>
+              {theme.direction === "ltr" ? (
+                <ChevronLeftIcon />
+              ) : (
+                <ChevronRightIcon />
+              )}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <Typography
+            sx={{
+              p: 4,
+              color: "text.secondary",
+              fontFamily: "raleway",
+              fontSize: "12px",
+            }}
+          >
             Cette bouteille est dans {listeInventaire.length} de vos celliers{" "}
           </Typography>
           <StyledBox
@@ -212,8 +233,14 @@ export default function BouteilleInventaire(props) {
               overflow: "auto",
             }}
           >
-        
-            <ListeInventaire listeInventaire={listeInventaire} />
+            <ListeInventaire
+              listeInventaire={listeInventaire}
+              cellier={props.cellier}
+              setOpen={setOpen}
+              fetchVins={props.fetchVins}
+              fetchNomCellier={props.fetchNomCellier}
+              gererCellier={props.gererCellier}
+            />
           </StyledBox>
         </SwipeableDrawer>
       </Root>

@@ -1,11 +1,10 @@
 // Début des modifications
 
 import React from "react";
-import { Route, Routes, NavLink, useNavigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
-import Axios from "axios";
 import "./Appli.scss";
 import NavMobile from "./NavMobile";
 import NavDesktop from "./NavDesktop";
@@ -21,9 +20,6 @@ import Favoris from "./Favoris";
 import Aide from "./Aide";
 import { Auth } from "aws-amplify";
 import { email } from "./utilisateur.js";
-import Bouteille from "./Bouteille";
-import MuiButton from "@mui/material/Button";
-import { styled } from "@mui/material/styles";
 import Logo from "./img/png/logo-jaune.png";
 import FrmAjoutBouteille from "./FrmAjoutBouteille";
 import { dict, formFields } from "./aws-form-traduction.js";
@@ -53,7 +49,7 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
 
@@ -290,6 +286,41 @@ const Appli = () => {
         setError(error);
       });
   }
+
+  async function fetchAjouterFavoris(vin) {
+    await fetch(URI + `/favoris/ajouter/favoris`, {
+      method: "POST",
+      body: JSON.stringify(vin),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {})
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      });
+  }
+
+  async function fetchSupprimerFavoris(vin) {
+    await fetch(URI + `/utilisateur/${id}/favoris/vin/${vin}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {})
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      });
+  }
   // ---------------------------------- Rendering -----------------------------------------
   return (
     <div className={Auth.user ? "Appli" : "Login"}>
@@ -329,7 +360,7 @@ const Appli = () => {
               {/* ------------------------------ Routes --------------------------------*/}
               <Routes>
                 <Route
-                  path={`/profil/${emailUtilisateur}`}
+                  path={`/profil/:emailUtilisateur`}
                   element={
                     <Profil
                       supprimerUtilisateur={supprimerUtilisateur}
@@ -346,7 +377,7 @@ const Appli = () => {
                   }
                 />
                 <Route
-                  path={`/admin/${emailUtilisateur}`}
+                  path={`/admin/:emailUtilisateur`}
                   element={
                     <Admin
                       emailUtilisateur={emailUtilisateur}
@@ -364,7 +395,7 @@ const Appli = () => {
                   }
                 />
                 <Route
-                  path={`/cellier/${cellier}/vins`}
+                  path={`/cellier/:idCellier/vins`}
                   element={
                     <ListeBouteilles
                       nomCellier={nomCellier}
@@ -380,6 +411,8 @@ const Appli = () => {
                       error={error}
                       setError={setError}
                       fetchUtilisateur={fetchUtilisateur}
+                      fetchAjouterFavoris={fetchAjouterFavoris}
+                      fetchSupprimerFavoris={fetchSupprimerFavoris}
                     />
                   }
                 />
@@ -412,6 +445,10 @@ const Appli = () => {
                       URI={URI}
                       error={error}
                       setError={setError}
+                      cellier={cellier}
+                      fetchVins={fetchVins}
+                      fetchNomCellier={fetchNomCellier}
+                      gererCellier={gererCellier}
                     />
                   }
                 />
@@ -479,25 +516,32 @@ const Appli = () => {
                     />
                   }
                 />
-				 <Route
+                <Route
                   path={`/favoris`}
                   element={
                     <Favoris
                       URI={URI}
                       error={error}
                       setError={setError}
+                      id={id}
+                      nomCellier={nomCellier}
+                      setNomCellier={setNomCellier}
+                      fetchNomCellier={fetchNomCellier}
+                      bouteilles={bouteilles}
+                      setBouteilles={setBouteilles}
+                      fetchVins={fetchVins}
+                      gererBouteilles={gererBouteilles}
+                      cellier={cellier}
+                      celliers={celliers}
+                      fetchUtilisateur={fetchUtilisateur}
+                      fetchAjouterFavoris={fetchAjouterFavoris}
+                      fetchSupprimerFavoris={fetchSupprimerFavoris}
                     />
                   }
                 />
-				 <Route
+                <Route
                   path={`/aide`}
-                  element={
-                    <Aide
-                      URI={URI}
-                      error={error}
-                      setError={setError}
-                    />
-                  }
+                  element={<Aide URI={URI} error={error} setError={setError} />}
                 />
               </Routes>
             </div>

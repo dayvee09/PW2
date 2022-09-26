@@ -56,7 +56,7 @@ export default function Bouteille(props) {
    *  État de la boite de dialogue de suppression
    */
   const [frmSuppressionOuvert, setFrmSuppressionOuvert] = useState(false);
-  
+
   /**
    *  État de la boite de dialogue de suppression
    */
@@ -121,6 +121,7 @@ export default function Bouteille(props) {
   function viderFermerFrm() {
     gererFermerMenuContextuel();
     setFrmSuppressionOuvert(false);
+    setSeverity("info");
   }
 
   /**
@@ -165,7 +166,6 @@ export default function Bouteille(props) {
    */
   function gererAjouter() {
     fetchVinUn();
-    setQuantite((quantite) => parseInt(quantite) + 1);
     fetchPutVinUn(parseInt(props.quantite) + 1, dateAchat, dateGarde);
   }
 
@@ -174,15 +174,14 @@ export default function Bouteille(props) {
    */
   function gererBoire() {
     fetchVinUn();
-    if (quantite > 0) {
-      setQuantite((quantite) => parseInt(quantite) - 1);
+    if (props.quantite > 0) {
       fetchPutVinUn(parseInt(props.quantite) - 1, dateAchat, dateGarde);
     } else {
-      setMessageDialog("En rupture de stock! Voulez-vous vraiment supprimer cette bouteille ?");
+      setMessageRetour(
+        "Cette bouteille est en rupture de stock. Voulez-vous la supprimer?"
+      );
+      setSeverity("error");
       setFrmSuppressionOuvert(true);
-      // setMessageRetour("En rupture de stock");
-      // setSeverity("error");
-      // setOpenAlert(true);
     }
   }
 
@@ -207,6 +206,22 @@ export default function Bouteille(props) {
           iconeFavoris[i].src = favoriteIconeLine;
         }
       }
+    }
+    if (
+      e.target.src ===
+      url +
+        "/PW2/cellier-projet/static/media/icone_favorite_blue_filled.4a820c77bc0a5c4a3f0fb93d65b4a9f6.svg"
+    ) {
+      let favorisAjout = {
+        vino__utilisateur_id: props.vino__utilisateur_id,
+        vino__bouteille_id: idBouteille,
+      };
+      console.log("Ajout");
+      console.log(favorisAjout);
+      props.fetchAjouterFavoris(favorisAjout);
+    } else {
+      console.log("Suppression");
+      props.fetchSupprimerFavoris(idBouteille);
     }
   }
 
@@ -334,15 +349,11 @@ export default function Bouteille(props) {
     <>
       <div className="Bouteille" data-quantite="">
         <div className="bouteille--gestion">
-          <div className="quantite--container">
-            <p className="quantite">
-              {/* {" "}
-              {contexteModif === true
-                ? bouteille.quantite
-                : props.quantite}{" "} */}
-              {props.quantite}
-            </p>
-          </div>
+          {props.setChangementBouteille && (
+            <div className="quantite--container">
+              <p className="quantite">{props.quantite}</p>
+            </div>
+          )}
           <img
             onClick={gererVoir}
             src={
@@ -353,10 +364,12 @@ export default function Bouteille(props) {
             alt="bouteille"
           />
           <div data-id="{id_bouteille_cellier}">
-            <MoreVertIcon
-              className="bouteille--gestion-dots"
-              onClick={gererMenuContextuel}
-            />
+            {props.setChangementBouteille && (
+              <MoreVertIcon
+                className="bouteille--gestion-dots"
+                onClick={gererMenuContextuel}
+              />
+            )}
           </div>
         </div>
         <div className="bouteille--info-container">
@@ -422,11 +435,13 @@ export default function Bouteille(props) {
           open={frmSuppressionOuvert}
           onClose={viderFermerFrm}
         >
-          <DialogTitle>
-            {" "}
-            { messageDialog }
-            {/* Voulez-vous vraiment supprimer cette bouteille ? */}
-          </DialogTitle>
+          {severity === "error" ? (
+            <DialogTitle>{messageRetour}</DialogTitle>
+          ) : (
+            <DialogTitle>
+              Voulez-vous vraiment supprimer cette bouteille ?
+            </DialogTitle>
+          )}
           <DialogActions>
             <Button onClick={viderFermerFrm} className="cancel">
               Annuler
