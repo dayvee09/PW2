@@ -3,7 +3,12 @@ import "./FrmBouteilleInput.scss";
 
 export default function FrmBouteilleInput(props) {
   function gererInput(e) {
-    props.setQuantite(e.target.value);
+    const re = /^[0-9\b]+$/;
+    if (e.target.value === "" || re.test(e.target.value)) {
+      props.setQuantite(e.target.value);
+    } else {
+      props.setOpenErr(true);
+    }
   }
   return (
     <div

@@ -189,6 +189,8 @@ function ListeBouteilles(props) {
                       error={props.error}
                       setError={props.setError}
                       fetchUtilisateur={props.sfetchUtilisateur}
+                      fetchAjouterFavoris={props.fetchAjouterFavoris}
+                      fetchSupprimerFavoris={props.fetchSupprimerFavoris}
                     />
                   </div>
                 ))}
@@ -210,7 +212,9 @@ function ListeBouteilles(props) {
                   bouteille={props.bouteilles[0]}
                   setBouteilles={props.setBouteilles}
                   URI={props.URI}
-                  fetchUtilisateur={props.sfetchUtilisateur}
+                  fetchUtilisateur={props.fetchUtilisateur}
+                  fetchAjouterFavoris={props.fetchAjouterFavoris}
+                  fetchSupprimerFavoris={props.fetchSupprimerFavoris}
                 />
               </div>
             )}

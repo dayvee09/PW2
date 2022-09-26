@@ -55,7 +55,7 @@ export default function FrmAjoutBouteille(props) {
    * État du cellier choisi
    */
   const [vinCellier, setVinCellier] = React.useState(
-    props.cellier!=undefined
+    props.cellier != undefined
       ? parseInt(props.cellier)
       : parseInt(props.celliers[0].id)
   );
@@ -167,7 +167,9 @@ export default function FrmAjoutBouteille(props) {
     });
     setMillesime("");
     setVinPays("");
-    setVinCellier(props.cellier!=undefined ? props.cellier : props.celliers[0].id);
+    setVinCellier(
+      props.cellier != undefined ? props.cellier : props.celliers[0].id
+    );
     setVinFormat("");
     setVinPrix(1);
     setVinDescription("");
@@ -284,7 +286,7 @@ export default function FrmAjoutBouteille(props) {
       .then((data) => {
         props.fetchVins(vinCellier);
         props.setCellier(vinCellier);
-        navigate(`/cellier/${vinCellier}/vins`, { replace: true});
+        navigate(`/cellier/${vinCellier}/vins`, { replace: true });
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -334,7 +336,9 @@ export default function FrmAjoutBouteille(props) {
             </div>
             {/* Autocomplete début */}
             <div className={btnState ? "hidden" : "autocomplete"}>
-            <p className="instruction">Recherchez et importez une bouteille de la SAQ </p>
+              <p className="instruction">
+                Recherchez et importez une bouteille de la SAQ{" "}
+              </p>
               <Autocomplete
                 options={vinsListe}
                 getOptionLabel={(option) => option.nom}
@@ -377,7 +381,7 @@ export default function FrmAjoutBouteille(props) {
                 lg={12}
                 className={btnState ? "" : "hidden"}
               >
-				<label className="formInputNom creer">Nom</label>
+                <label className="formInputNom creer">Nom</label>
                 <p className="instruction">Créer une bouteille personnalisée</p>
                 <TextField
                   fullWidth
@@ -568,7 +572,7 @@ export default function FrmAjoutBouteille(props) {
                   value={vinCellier}
                   onChange={(e) => {
                     setVinCellier(e.target.value);
-					console.log(vinCellier)
+                    console.log(vinCellier);
                   }}
                   SelectProps={{
                     native: true,
