@@ -98,17 +98,17 @@ export default function Bouteille(props) {
   useEffect(() => {
     let iconeFavoris = filtreBouteilles(props.favorisId, props.id);
     if (iconeFavoris) {
-      if (iconeFavoris.length > 0) {
-        setFavorisIcone(favoriteIconeFilled);
-      } else setFavorisIcone(favoriteIconeLine);
+      setFavorisIcone(favoriteIconeFilled);
     } else setFavorisIcone(favoriteIconeLine);
   }, [props.id]);
 
   function filtreBouteilles(array, string) {
     if (array) {
       if (array.length > 0 && string) {
-        return array.filter((bouteille) => {
-          return bouteille.vino__bouteille_id.includes(string);
+        return array.find((bouteille) => {
+          if (bouteille.vino__bouteille_id === string) {
+            return true;
+          }
         });
       }
     }

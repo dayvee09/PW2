@@ -217,6 +217,8 @@ function ListeBouteilles(props) {
                   fetchUtilisateur={props.fetchUtilisateur}
                   fetchAjouterFavoris={props.fetchAjouterFavoris}
                   fetchSupprimerFavoris={props.fetchSupprimerFavoris}
+                  favorisId={props.favorisId}
+                  setFavorisId={props.setFavorisId}
                 />
               </div>
             )}
