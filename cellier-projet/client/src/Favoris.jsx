@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 
 function Favoris(props) {
-  const [favoris, setfavoris] = useState([]);
+  const [favoris, setFavoris] = useState([]);
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
 
@@ -32,15 +32,13 @@ function Favoris(props) {
         throw response;
       })
       .then((data) => {
-        setfavoris(data);
+        setFavoris(data);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
         props.setError(error);
       });
   }
-
-  console.log(favoris);
 
   if (favoris) {
     return (
@@ -85,6 +83,8 @@ function Favoris(props) {
                       fetchSupprimerFavoris={props.fetchSupprimerFavoris}
                       id={bouteille.vino__bouteille_id}
                       vino__utilisateur_id={props.id}
+                      favorisId={props.favorisId}
+                      setFavorisId={props.setFavorisId}
                     />
                   </div>
                 ))}
@@ -110,6 +110,8 @@ function Favoris(props) {
                   fetchSupprimerFavoris={props.fetchSupprimerFavoris}
                   id={favoris[0].vino__bouteille_id}
                   vino__utilisateur_id={props.id}
+                  favorisId={props.favorisId}
+                  setFavorisId={props.setFavorisId}
                 />
               </div>
             )}

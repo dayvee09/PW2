@@ -43,6 +43,7 @@ const Appli = () => {
   const [resetBottomNav, setResetBottomNav] = useState(false);
   const ENV = "dev";
   const [URI, setURI] = useState([]);
+  const [favorisId, setFavorisId] = useState([]);
 
   let location = window.location.pathname;
   useEffect(() => {
@@ -74,6 +75,7 @@ const Appli = () => {
       setCelliers(JSON.parse(localStorage.getItem("celliers")));
     }
     fetchVinsInventaire();
+    fetchFavorisId(id);
   }, [id]);
 
   useEffect(() => {
@@ -298,7 +300,9 @@ const Appli = () => {
         }
         throw response;
       })
-      .then((data) => {})
+      .then((data) => {
+        fetchFavorisId(id);
+      })
       .catch((error) => {
         console.error("Error fetching data: ", error);
         setError(error);
@@ -315,7 +319,28 @@ const Appli = () => {
         }
         throw response;
       })
-      .then((data) => {})
+      .then((data) => {
+        fetchFavorisId(id);
+      })
+      .catch((error) => {
+        console.error("Error fetching data: ", error);
+        setError(error);
+      });
+  }
+
+  async function fetchFavorisId(utilisateur) {
+    await fetch(
+      URI + "/" + "utilisateurId" + "/" + utilisateur + "/" + "favoris"
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw response;
+      })
+      .then((data) => {
+        setFavorisId(data);
+      })
       .catch((error) => {
         console.error("Error fetching data: ", error);
         setError(error);
@@ -413,6 +438,8 @@ const Appli = () => {
                       fetchUtilisateur={fetchUtilisateur}
                       fetchAjouterFavoris={fetchAjouterFavoris}
                       fetchSupprimerFavoris={fetchSupprimerFavoris}
+                      favorisId={favorisId}
+                      setFavorisId={setFavorisId}
                     />
                   }
                 />
@@ -536,6 +563,8 @@ const Appli = () => {
                       fetchUtilisateur={fetchUtilisateur}
                       fetchAjouterFavoris={fetchAjouterFavoris}
                       fetchSupprimerFavoris={fetchSupprimerFavoris}
+                      favorisId={favorisId}
+                      setFavorisId={setFavorisId}
                     />
                   }
                 />

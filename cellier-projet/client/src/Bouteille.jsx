@@ -93,6 +93,26 @@ export default function Bouteille(props) {
   const [dateGarde, setDateGarde] = useState(props.garde_jusqua);
   const [messageRetour, setMessageRetour] = useState([]);
   const [severity, setSeverity] = useState([]);
+  const [favorisIcone, setFavorisIcone] = useState([]);
+
+  useEffect(() => {
+    let iconeFavoris = filtreBouteilles(props.favorisId, props.id);
+    if (iconeFavoris) {
+      if (iconeFavoris.length > 0) {
+        setFavorisIcone(favoriteIconeFilled);
+      } else setFavorisIcone(favoriteIconeLine);
+    } else setFavorisIcone(favoriteIconeLine);
+  }, [props.id]);
+
+  function filtreBouteilles(array, string) {
+    if (array) {
+      if (array.length > 0 && string) {
+        return array.filter((bouteille) => {
+          return bouteille.vino__bouteille_id.includes(string);
+        });
+      }
+    }
+  }
 
   /**
    * Gestion du menu contextuel d'action d'un cellier
@@ -380,7 +400,7 @@ export default function Bouteille(props) {
             </p>
             <img
               className="bouteille--btn-favoris"
-              src={favoriteIconeLine}
+              src={favorisIcone}
               alt="icone-row-left"
               width={20}
               onClick={(e) => gererFavoris(e, props.id)}
