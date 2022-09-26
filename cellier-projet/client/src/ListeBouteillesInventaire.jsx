@@ -122,7 +122,6 @@ function ListeBouteillesInventaire(props) {
               placeholder="Trouver une bouteille"
               onKeyPress={(ev) => {
                 if (ev.key === "Enter") {
-                  console.log(ev.target);
                   gererInputRecherche(ev);
                   ev.preventDefault();
                   ev.target.value = "";

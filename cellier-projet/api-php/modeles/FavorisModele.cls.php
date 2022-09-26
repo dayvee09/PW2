@@ -3,8 +3,11 @@ class FavorisModele extends AccesBd
 {
     public function tout($params)
     {
-
-        return $this->lire("SELECT vino__favoris.vino__bouteille_id, vino__bouteille.nom, `image`, code_saq, pays, `description`, prix_saq, url_saq, url_img, `format`, vino__type_id, vino__type.type, millesime,personnalise, vino__cellier_id, quantite, date_achat, garde_jusqua, notes FROM vino__favoris JOIN vino__utilisateur ON vino__favoris.vino__utilisateur_id = vino__utilisateur.id JOIN vino__bouteille ON vino__favoris.vino__bouteille_id = vino__bouteille.id JOIN vino__type ON vino__type.id = vino__bouteille.vino__type_id JOIN vino__bouteille_has_vino__cellier ON vino__bouteille.id = vino__bouteille_has_vino__cellier.vino__bouteille_id WHERE vino__favoris.vino__utilisateur_id = :utilisateur GROUP BY vino__favoris.vino__bouteille_id", ['utilisateur' => $params['utilisateur']]);
+        if (isset($params['utilisateur'])) {
+            return $this->lire("SELECT vino__favoris.vino__bouteille_id, vino__bouteille.nom, `image`, code_saq, pays, `description`, prix_saq, url_saq, url_img, `format`, vino__type_id, vino__type.type, millesime,personnalise, vino__cellier_id, quantite, date_achat, garde_jusqua, notes FROM vino__favoris JOIN vino__utilisateur ON vino__favoris.vino__utilisateur_id = vino__utilisateur.id JOIN vino__bouteille ON vino__favoris.vino__bouteille_id = vino__bouteille.id JOIN vino__type ON vino__type.id = vino__bouteille.vino__type_id JOIN vino__bouteille_has_vino__cellier ON vino__bouteille.id = vino__bouteille_has_vino__cellier.vino__bouteille_id WHERE vino__favoris.vino__utilisateur_id = :utilisateur GROUP BY vino__favoris.vino__bouteille_id", ['utilisateur' => $params['utilisateur']]);
+        } else if (isset($params['utilisateurId'])) {
+            return $this->lire("SELECT vino__favoris.vino__bouteille_id FROM vino__favoris JOIN vino__utilisateur ON vino__favoris.vino__utilisateur_id = vino__utilisateur.id WHERE vino__favoris.vino__utilisateur_id = :utilisateurId GROUP BY vino__favoris.vino__bouteille_id", ['utilisateurId' => $params['utilisateurId']]);
+        }
     }
 
     public function un($params, $idEntite)
