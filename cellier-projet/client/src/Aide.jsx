@@ -55,11 +55,11 @@ function Aide(props) {
 					<div className="accordion">
 					<Accordion>
 						<AccordionSummary
-						expandIcon={<ExpandMoreIcon />}
+						expandIcon={<ExpandMoreIcon style={{ color: '#f1ab50', height: "20px", width: "20px" }}/>}
 						aria-controls="panel1a-content"
 						id="panel1a-header"
 						>
-						<Typography>Question 1</Typography>
+						<Typography>Première question</Typography>
 						</AccordionSummary>
 						<AccordionDetails>
 						<Typography>
@@ -70,11 +70,11 @@ function Aide(props) {
 					</Accordion>
 					<Accordion>
 						<AccordionSummary
-						expandIcon={<ExpandMoreIcon />}
+						expandIcon={<ExpandMoreIcon style={{ color: '#f1ab50', height: "20px", width: "20px" }}/>}
 						aria-controls="panel2a-content"
 						id="panel2a-header"
 						>
-						<Typography>Question 2</Typography>
+						<Typography>Deuxième question</Typography>
 						</AccordionSummary>
 						<AccordionDetails>
 						<Typography>
