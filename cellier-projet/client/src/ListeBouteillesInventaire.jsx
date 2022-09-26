@@ -13,6 +13,8 @@ function ListeBouteillesInventaire(props) {
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
   let search;
+  // const [quantiteTotal, setQuantiteTotal] = useState(0);
+  // const [prixTotal, setPrixTotal] = useState(0);
 
   /**
    * Fectch la liste de tous les bouteilles dans tout différentes celliers
@@ -50,6 +52,8 @@ function ListeBouteillesInventaire(props) {
       return bouteille.nom.toLowerCase().includes(string.toLowerCase());
     });
   }
+  var quantite_total = results.reduce((prev, cur)=> parseInt((cur.quantite_total? cur.quantite_total:0)) + parseInt(prev?prev:0), 0);
+  var prix_total = results.reduce((prev, cur)=> parseInt(cur.prix_total? cur.prix_total: 0) + parseInt(prev? prev:0), 0);
   if (results.length > 1) {
     return (
       <>
@@ -79,6 +83,10 @@ function ListeBouteillesInventaire(props) {
         <div className="Appli--container">
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
+            <div className="liste-inventaire-total">
+                <p>Quantite Total: {quantite_total} </p>
+                <p>Prix Total: {prix_total} $</p>
+            </div>
           </div>
           <span className="liste-cellier--message-retour"></span>
           <div className="ListeBouteillesInventaire">
@@ -133,6 +141,10 @@ function ListeBouteillesInventaire(props) {
         <div className="Appli--container">
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
+            <div className="liste-inventaire-total">
+                <p>Quantite Total: {quantite_total} </p>
+                <p>Prix Total: {prix_total} $</p>
+            </div>
           </div>
           <span className="liste-cellier--message-retour"></span>
           <div className="ListeBouteillesInventaire">
@@ -162,6 +174,10 @@ function ListeBouteillesInventaire(props) {
         <div className="Appli--container">
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
+            <div className="liste-inventaire-total">
+                <p>Quantite Total: {quantite_total} </p>
+                <p>Prix Total: {prix_total} $</p>
+            </div>
           </div>
           <span className="liste-cellier--message-retour"></span>
           <div className="ListeBouteillesInventaire">
