@@ -6,6 +6,8 @@ import BouteilleInventaire from "./BouteilleInventaire";
 import _ from "lodash";
 import isEqual from "lodash/isEqual";
 import { TextField } from "@mui/material";
+import Pagination from '@mui/material/Pagination';
+import usePagination from "./Pagination";
 
 function ListeBouteillesInventaire(props) {
   // const [toSearch, setToSearch] = useState("");
@@ -13,8 +15,19 @@ function ListeBouteillesInventaire(props) {
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
   let search;
-  // const [quantiteTotal, setQuantiteTotal] = useState(0);
-  // const [prixTotal, setPrixTotal] = useState(0);
+  /**
+   * configuration de la pagination
+   */
+   let [page, setPage] = useState(1);
+   const PER_PAGE = 8;
+ 
+   const count = Math.ceil(results.length / PER_PAGE);
+   const _DATA = usePagination(results, PER_PAGE);
+ 
+   const handleChange = (e, p) => {
+     setPage(p);
+     _DATA.jump(p);
+   };
 
   /**
    * Fectch la liste de tous les bouteilles dans tout différentes celliers
@@ -89,8 +102,17 @@ function ListeBouteillesInventaire(props) {
             </div>
           </div>
           <span className="liste-cellier--message-retour"></span>
+          <Pagination
+            count={count}
+            size="small"
+            page={page}
+            variant="outlined"
+            shape="rounded"
+            onChange={handleChange}
+          />
           <div className="ListeBouteillesInventaire">
-            {results.slice(debut, fin).map((bouteilleInventaire) => (
+            {/* {results.slice(debut, fin).map((bouteilleInventaire) => ( */}
+            {_DATA.currentData().map((bouteilleInventaire) => (
               <div key={bouteilleInventaire.id}>
                 <BouteilleInventaire
                   {...bouteilleInventaire}
@@ -108,6 +130,14 @@ function ListeBouteillesInventaire(props) {
               </div>
             ))}
           </div>
+          <Pagination
+            count={count}
+            size="small"
+            page={page}
+            variant="outlined"
+            shape="rounded"
+            onChange={handleChange}
+          />
           {results.length > fin ? (
             <div className="fin--liste cliquable" onClick={gererVoirPlus}>
               Voir plus
