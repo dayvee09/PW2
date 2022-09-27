@@ -52,8 +52,20 @@ function ListeBouteillesInventaire(props) {
       return bouteille.nom.toLowerCase().includes(string.toLowerCase());
     });
   }
-  var quantite_total = results.reduce((prev, cur)=> parseInt((cur.quantite_total? cur.quantite_total:0)) + parseInt(prev?prev:0), 0);
-  var prix_total = results.reduce((prev, cur)=> parseFloat(cur.prix_total? cur.prix_total: 0) + parseFloat(prev? prev:0), 0);
+  if (results.length > 0) {
+    var quantite_total = results.reduce(
+      (prev, cur) =>
+        parseInt(cur.quantite_total ? cur.quantite_total : 0) +
+        parseInt(prev ? prev : 0),
+      0
+    );
+    var prix_total = results.reduce(
+      (prev, cur) =>
+        parseFloat(cur.prix_total ? cur.prix_total : 0) +
+        parseFloat(prev ? prev : 0),
+      0
+    );
+  }
   if (results.length > 1) {
     return (
       <>
@@ -76,7 +88,7 @@ function ListeBouteillesInventaire(props) {
                 src={rowIcone}
                 alt="icone-row-left"
                 width={15}
-                onClick 
+                onClick
               ></img>
             </div>
           </div>
@@ -85,8 +97,11 @@ function ListeBouteillesInventaire(props) {
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
             <div className="liste-inventaire-total">
-                <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p>
-                <p>Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2) }&nbsp; $</p>
+              <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p>
+              <p>
+                Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2)}
+                &nbsp; $
+              </p>
             </div>
           </div>
           <span className="liste-cellier--message-retour"></span>
@@ -143,8 +158,11 @@ function ListeBouteillesInventaire(props) {
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
             <div className="liste-inventaire-total">
-                <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p>
-                <p>Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2) }&nbsp; $</p>
+              <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p>
+              <p>
+                Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2)}
+                &nbsp; $
+              </p>
             </div>
           </div>
           <span className="liste-cellier--message-retour"></span>
@@ -175,10 +193,6 @@ function ListeBouteillesInventaire(props) {
         <div className="Appli--container">
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
-            <div className="liste-inventaire-total">
-                <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p>
-                <p>Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2) }&nbsp; $</p>
-            </div>
           </div>
           <span className="liste-cellier--message-retour"></span>
           <div className="ListeBouteillesInventaire">
