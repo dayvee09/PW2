@@ -396,7 +396,7 @@ export default function Bouteille(props) {
           <div className="bouteille--description">
             <p className="bouteille--nom">{props.nom} </p>
             <p className="bouteille--info">
-              {props.type} - {props.format} - {props.millesime}
+              {props.type} - {props.format} - {props.pays}
             </p>
             <img
               className="bouteille--btn-favoris"
@@ -485,6 +485,7 @@ export default function Bouteille(props) {
           dateGarde={dateGarde}
           setDateGarde={setDateGarde}
           modifierBouteille={modifierBouteille}
+          personnalise={props.personnalise}
         />
       </div>
     </>
