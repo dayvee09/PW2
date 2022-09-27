@@ -17,7 +17,7 @@ import { styled } from '@mui/material/styles';
 
 function ListeBouteillesInventaire(props) {
   // const [toSearch, setToSearch] = useState("");
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState(["Aucune bouteille"]);
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
   let search;
@@ -100,9 +100,17 @@ function ListeBouteillesInventaire(props) {
       return bouteille.nom.toLowerCase().includes(string.toLowerCase());
     });
   }
-  var quantite_total = results.reduce((prev, cur)=> parseInt((cur.quantite_total? cur.quantite_total:0)) + parseInt(prev?prev:0), 0);
-  var bouteille_total = results.reduce((sum, item)=> sum + 1, 0);
-  var prix_total = results.reduce((prev, cur)=> parseFloat(cur.prix_total? cur.prix_total: 0) + parseFloat(prev? prev:0), 0);
+  
+  if (results.length > 0) {
+    var quantite_total = results.reduce((prev, cur)=> parseInt((cur.quantite_total? cur.quantite_total:0)) + parseInt(prev?prev:0), 0);
+    var bouteille_total = results.reduce((sum, item)=> sum + 1, 0);
+    var prix_total = results.reduce((prev, cur)=> parseFloat(cur.prix_total? cur.prix_total: 0) + parseFloat(prev? prev:0), 0);
+  } else {
+    var quantite_total = 0
+    var bouteille_total = 0
+    var prix_total = 0
+  }
+
   if (results.length > 1) {
     return (
       <>
