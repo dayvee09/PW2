@@ -111,15 +111,16 @@ function ListeBouteillesInventaire(props) {
             <input
               className="Appli--search-bar"
               placeholder="Trouver une bouteille"
-              onKeyPress={(ev) => {
-                if (ev.key === "Enter") {
-                  gererInputRecherche(ev);
-                  ev.preventDefault();
-                  ev.target.value = "";
-                }
-              }}
+              onChange={gererInputRecherche}
+              // onKeyPress={(ev) => {
+              //   if (ev.key === "Enter") {
+              //     gererInputRecherche(ev);
+              //     ev.preventDefault();
+              //     ev.target.value = "";
+              //   }
+              // }}
             />
-            <div className="Appli--search-bar-icone">
+            {/* <div className="Appli--search-bar-icone">
               <img
                 className="Appli--search-bar-icone-search"
                 src={rowIcone}
@@ -127,7 +128,7 @@ function ListeBouteillesInventaire(props) {
                 width={15}
                 onClick 
               ></img>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="Appli--container">
@@ -209,13 +210,14 @@ function ListeBouteillesInventaire(props) {
             <input
               className="Appli--search-bar"
               placeholder="Trouver une bouteille"
-              onKeyPress={(ev) => {
-                if (ev.key === "Enter") {
-                  gererInputRecherche(ev);
-                  ev.preventDefault();
-                  ev.target.value = "";
-                }
-              }}
+              onChange={gererInputRecherche}
+              // onKeyPress={(ev) => {
+              //   if (ev.key === "Enter") {
+              //     gererInputRecherche(ev);
+              //     ev.preventDefault();
+              //     ev.target.value = "";
+              //   }
+              // }}
             />
           </div>
         </div>
@@ -252,7 +254,31 @@ function ListeBouteillesInventaire(props) {
   } else {
     return (
       <>
-        <div className="Appli--entete"></div>
+        <div className="Appli--entete">
+          <div className="Appli--search-bar-container">
+            <input
+              className="Appli--search-bar"
+              placeholder="Trouver une bouteille"
+              onChange={gererInputRecherche}
+              // onKeyPress={(ev) => {
+              //   if (ev.key === "Enter") {
+              //     gererInputRecherche(ev);
+              //     ev.preventDefault();
+              //     ev.target.value = "";
+              //   }
+              // }}
+            />
+            {/* <div className="Appli--search-bar-icone">
+              <img
+                className="Appli--search-bar-icone-search"
+                src={rowIcone}
+                alt="icone-row-left"
+                width={15}
+                onClick 
+              ></img>
+            </div> */}
+          </div>
+        </div>
         <div className="Appli--container">
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
