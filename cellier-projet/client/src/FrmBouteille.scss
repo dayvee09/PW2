@@ -59,38 +59,39 @@
 }
 
 .img-container {
-	background-repeat: no-repeat;
-	background-size: cover;
+	background-repeat: no-repeat !important;
+	background-size: cover !important;
 	background-image: linear-gradient(
 		to top,
 		#d3d7dd 60%,
 		#d3d7dd 50%
-	);
-	overflow: hidden;
+	) !important;
+	overflow: hidden !important;
 }
 
-.css-ypiqx9-MuiDialogContent-root {
-	background-color: #d3d7dd78;
-	padding: 20px 20px 20px 20px !important;
+// .css-ypiqx9-MuiDialogContent-root {
+// 	// background-color: #d3d7dd78 !important;
+// 	// padding: 100px !important;
 
-	@media only screen and (min-width: 768px) {
-		padding: 40px 60px 60px 60px !important;
-	}
-}
+// 	@media only screen and (min-width: 768px) {
+// 		// padding: 40px 60px 60px 60px !important;
+// 	}
+// }
 
 .css-1cdjfa1-MuiPaper-root-MuiDialog-paper {
-	width: 100%;
-	.img-wrap {
-		height: 200px;
-		margin-bottom: 25px;
-	}
+	width: 100% !important;
+	// .img-wrap {
+		// background-color: #d3d7dd;
+		// height: 200px !important;
+		// margin-bottom: 25px !important;
+	// }
 
-	img {
-		height: 100%;
-		object-fit: contain;
-		padding: 5px 0 5px 0;
-		max-height: 250px;
-		mix-blend-mode: multiply;
-		width: 100%;
-	}
+	// img {
+		// height: 100% !important;
+		// object-fit: contain !important;
+		// padding: 5px 0 5px 0 !important;
+		// max-height: 250px !important;
+		// mix-blend-mode: multiply !important;
+		// width: 100% !important;
+	// }
 }

@@ -237,7 +237,7 @@ function ListeBouteillesInventaire(props) {
             <div className="liste-inventaire-total">
                 <p>Bouteille&nbsp; totale: &nbsp;{bouteille_total}&nbsp; </p>
                 {/* <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p> */}
-                <p>Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2) }&nbsp; $</p>
+                <p>Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2) }&nbsp;$</p>
             </div>
           </div>
           <span className="liste-cellier--message-retour"></span>
@@ -299,10 +299,10 @@ function ListeBouteillesInventaire(props) {
             </div>
           </div>
           <span className="liste-cellier--message-retour"></span>
-          <div className="ListeBouteillesInventaire">
-            <h2 className="aucune-bouteille">Aucune bouteille.</h2>
+          <div >
+            <h2 className="aucune-bouteille">Aucune bouteille pour cette recherche.</h2>
             <NavLink to="/vins">
-              <p className="ListeBouteille--default-button">
+              <p className="ListeInventaire--default-button">
                 + Ajouter une bouteille
               </p>
             </NavLink>
