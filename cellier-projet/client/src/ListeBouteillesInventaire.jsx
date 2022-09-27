@@ -150,6 +150,7 @@ function ListeBouteillesInventaire(props) {
           </div>
           <span className="liste-cellier--message-retour"></span>
           <Pagination
+		  	className="pagination"
             count={count}
             size="small"
             page={page}
@@ -191,6 +192,7 @@ function ListeBouteillesInventaire(props) {
             ))}
           </div>
           <Pagination
+		  	className="pagination"
             count={count}
             size="small"
             page={page}
