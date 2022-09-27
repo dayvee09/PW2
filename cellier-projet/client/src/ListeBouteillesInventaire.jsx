@@ -8,6 +8,12 @@ import isEqual from "lodash/isEqual";
 import { TextField } from "@mui/material";
 import Pagination from '@mui/material/Pagination';
 import usePagination from "./Pagination";
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import NativeSelect from '@mui/material/NativeSelect';
+import InputBase from '@mui/material/InputBase';
+import { styled } from '@mui/material/styles';
 
 function ListeBouteillesInventaire(props) {
   // const [toSearch, setToSearch] = useState("");
@@ -19,15 +25,44 @@ function ListeBouteillesInventaire(props) {
    * configuration de la pagination
    */
    let [page, setPage] = useState(1);
-   const PER_PAGE = 8;
- 
-   const count = Math.ceil(results.length / PER_PAGE);
-   const _DATA = usePagination(results, PER_PAGE);
- 
+    const PER_PAGE = 8;
+    const count = Math.ceil(results.length / PER_PAGE);
+    const _DATA = usePagination(results, PER_PAGE);
+  //  const [afficheParPage, setAfficheParPage] = useState(12);
+  //  const count = Math.ceil(results.length / afficheParPage);
+  //  const _DATA = usePagination(results, afficheParPage);
+  /**
+   * gestion du changement de pagination 
+   * @param {*} e 
+   * @param {*} p 
+   */
    const handleChange = (e, p) => {
      setPage(p);
      _DATA.jump(p);
    };
+  //  /**
+  //   * gestion du changement de le nombre de l'enregistrement de l'affichage par page
+  //   * @param {*} event 
+  //   */
+  //  const handleAfficheParPageChange = (event) => {
+  //   setAfficheParPage(event.target.value);
+  // };
+  //  // style du composant NativeSelect
+  //  const BootstrapInput = styled(InputBase)(({ theme }) => ({
+  //   '& .MuiInputBase-input': {
+  //     borderRadius: 4,
+  //     position: 'relative',
+  //     border: '1px solid #ced4da',
+  //     fontSize: 14,
+  //     padding: '2px 20px 4px 10px',
+  //     transition: theme.transitions.create(['border-color', 'box-shadow']),
+  //     '&:focus': {
+  //       borderRadius: 4,
+  //       borderColor: '#80bdff',
+  //       boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+  //     },
+  //   },
+  // }));
 
   /**
    * Fectch la liste de tous les bouteilles dans tout différentes celliers
@@ -66,6 +101,7 @@ function ListeBouteillesInventaire(props) {
     });
   }
   var quantite_total = results.reduce((prev, cur)=> parseInt((cur.quantite_total? cur.quantite_total:0)) + parseInt(prev?prev:0), 0);
+  var bouteille_total = results.reduce((sum, item)=> sum + 1, 0);
   var prix_total = results.reduce((prev, cur)=> parseFloat(cur.prix_total? cur.prix_total: 0) + parseFloat(prev? prev:0), 0);
   if (results.length > 1) {
     return (
@@ -97,7 +133,8 @@ function ListeBouteillesInventaire(props) {
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
             <div className="liste-inventaire-total">
-                <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p>
+                <p>Bouteille&nbsp; totale: &nbsp;{bouteille_total}&nbsp; </p>
+                {/* <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p> */}
                 <p>Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2) }&nbsp; $</p>
             </div>
           </div>
@@ -110,6 +147,19 @@ function ListeBouteillesInventaire(props) {
             shape="rounded"
             onChange={handleChange}
           />
+          {/* <FormControl sx={{ m: 1 }} variant="standard" size="small">
+              <NativeSelect
+                value={afficheParPage}
+                onChange={(event) => 
+                  setAfficheParPage(event.target.value)}
+                input={<BootstrapInput />}
+              >
+                <option value={12}>12</option>
+                <option value={24}>24</option>
+                <option value={36}>36</option>
+              </NativeSelect>
+            </FormControl> */}
+
           <div className="ListeBouteillesInventaire">
             {/* {results.slice(debut, fin).map((bouteilleInventaire) => ( */}
             {_DATA.currentData().map((bouteilleInventaire) => (
@@ -172,7 +222,8 @@ function ListeBouteillesInventaire(props) {
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
             <div className="liste-inventaire-total">
-                <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p>
+                <p>Bouteille&nbsp; totale: &nbsp;{bouteille_total}&nbsp; </p>
+                {/* <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p> */}
                 <p>Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2) }&nbsp; $</p>
             </div>
           </div>
@@ -205,7 +256,8 @@ function ListeBouteillesInventaire(props) {
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
             <div className="liste-inventaire-total">
-                <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p>
+                <p>Bouteille&nbsp; totale: &nbsp;{bouteille_total}&nbsp; </p>
+                {/* <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p> */}
                 <p>Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2) }&nbsp; $</p>
             </div>
           </div>
