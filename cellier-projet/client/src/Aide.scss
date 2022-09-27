@@ -44,10 +44,8 @@
 					}
 
 					img {
-						border: 1px solid #f1ab50;
+						border: 1px solid #d3d7dd;
 						background-color: #d3d7dd37;
-						margin-left: 25px;
-						border-radius: 4px;
 					}
 
 					@media only screen and (min-width: 1200px) { 
@@ -68,26 +66,6 @@
 					margin-bottom: 15px;
 					margin-top: 25px;
 				}
-
-				.accordion {
-					margin-bottom: 50px;
-
-					* {
-						font-family: raleway;
-						font-size: 14px;
-					}
-	
-					.css-1elwnq4-MuiPaper-root-MuiAccordion-root {
-						background-color: transparent;
-						border: 0.5px solid #d3d7dd;
-						box-shadow: none;
-	
-					}
-					
-					@media only screen and (min-width: 768px) {
-						padding-bottom: 50px;
-					}
-				}
 			}
 
 			@media only screen and (min-width: 768px) {
@@ -99,62 +77,46 @@
 			padding:0 25px 25px 25px;
 			margin-top: 100px;
 			
-			label,
-			input {
-				font-family: raleway;
-				font-size: 12px;
+			.Aide--accordion {
+				* {
+					font-family: raleway;
+					font-size: 14px;
+				}
+
+				.css-1elwnq4-MuiPaper-root-MuiAccordion-root {
+					background-color: #f3f5eb;
+					border: 0.5px solid #d3d7dd;
+					box-shadow: none;
+
+				}
 			}
 
 			.Aide--contact-container {
 				margin-bottom: 50px;
-				input[type=text], select, textarea {
-					border: 1px solid #d3d7dd; 
-					border-radius: 4px;
-					box-sizing: border-box; 
-					margin-bottom: 20px;
-					margin-top: 10px;
-					padding: 10px; 
-					resize: vertical;
-					width: 100%; 
-				}  
-				
-				input, textarea {
-					&:focus {
-						border-color: #f1ab50;
-						outline: none;
-					}
-				}
-		
-				input[type=submit] {
-					background-color: #152440;
-					border: none;
-					border-radius: 4px;
-					color: #f3f5eb;
-					cursor: pointer;
-					font-family: Alata;
-					text-transform: uppercase;
-					padding: 10px 24px;
+				margin-top:50px;
 
+				p {
+					padding-bottom: 10px;
+				}
+				.Aide--contact {
+					color: #152440;
+					font-size: 12px;
+					text-underline-offset: 5px;
+					text-decoration: underline 1px;
 					&:hover {
-						background-color: #f1ab50;
-						color: #152440;
-						transition: background-color 0.2s ease-in, color 0.2s ease-in;
+						color: #cc4240;
 					}
-				}
-
-				@media only screen and (min-width: 768px) {
-					margin-top: 30%;
-				}
+				 }
 			}
-
-			@media only screen and (min-width: 768px) {
+				
+			@media only screen and (min-width: 900px) {
 				background-color: #d3d7dd78;
 				max-width: 500px;
 				min-width: 500px;
 			}
 		}
-
-		@media only screen and (min-width: 768px) {
+		
+		@media only screen and (min-width: 900px) {
 			background-image: none;
 			display: flex;
 			justify-content: space-between;
