@@ -64,6 +64,7 @@ const Appli = () => {
   //     window.location.pathname = "/PW2/cellier-projet";
   //   }
   // }
+  // ErrorDocument 404 http://100.26.239.127/PW2/cellier-projet
 
   // ------------------------------- fonctions de gestion des états ----------------------------
 
