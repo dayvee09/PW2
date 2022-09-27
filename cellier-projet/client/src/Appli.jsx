@@ -50,9 +50,19 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
+      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
     }
   }, []);
+
+
+  /**
+   *  Gère la redirection au refresh
+   */
+  if (window.performance.getEntriesByType) {
+    if (window.performance.getEntriesByType("navigation")[0].type === "reload") {
+      window.location.pathname = "/";
+    }
+  }
 
   // ------------------------------- fonctions de gestion des états ----------------------------
 
@@ -70,10 +80,10 @@ const Appli = () => {
 
   useEffect(() => {
     fetchCelliers();
-    setCellier(JSON.parse(localStorage.getItem("cellier")));
-    if (localStorage.getItem("celliers") !== null) {
-      setCelliers(JSON.parse(localStorage.getItem("celliers")));
-    }
+    // setCellier(JSON.parse(localStorage.getItem("cellier")));
+    // if (localStorage.getItem("celliers") !== null) {
+    //   setCelliers(JSON.parse(localStorage.getItem("celliers")));
+    // }
     fetchVinsInventaire();
     fetchFavorisId(id);
   }, [id]);
@@ -173,10 +183,6 @@ const Appli = () => {
     let reponseJson = await reponse.json();
   }
 
-  // function refreshPage() {
-  //   window.location.reload(false);
-  // }
-
   async function gererSignOut() {
     await Auth.signOut()
       .then(() => {
@@ -208,8 +214,9 @@ const Appli = () => {
       })
       .then((data) => {
         if (data["erreur"] === undefined) {
-          localStorage.setItem("celliers", JSON.stringify(data));
-          setCelliers(JSON.parse(localStorage.getItem("celliers")));
+          // localStorage.setItem("celliers", JSON.stringify(data));
+          // setCelliers(JSON.parse(localStorage.getItem("celliers")));
+          setCelliers(data);
         }
       })
       .catch((error) => {

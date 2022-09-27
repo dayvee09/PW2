@@ -119,14 +119,15 @@ function ListeBouteillesInventaire(props) {
                 }
               }}
             />
-            {/* <div className="Appli--search-bar-icone">
+            <div className="Appli--search-bar-icone">
               <img
                 className="Appli--search-bar-icone-search"
                 src={rowIcone}
                 alt="icone-row-left"
                 width={15}
+                onClick 
               ></img>
-            </div> */}
+            </div>
           </div>
         </div>
         <div className="Appli--container">
