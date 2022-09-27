@@ -35,10 +35,19 @@
 					box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
 					padding: 20px;
 					 div  {
-						display: flex;justify-content: space-between;
+						display: flex;
+						justify-content: space-between;
+						position: relative;
 					 }
 					&:hover {
 						background-color: #d3d7dd37;
+					}
+
+					img {
+						border: 1px solid #f1ab50;
+						background-color: #d3d7dd37;
+						margin-left: 25px;
+						border-radius: 4px;
 					}
 
 					@media only screen and (min-width: 1200px) { 
@@ -88,6 +97,7 @@
 
 		.Aide--second-section {
 			padding:0 25px 25px 25px;
+			margin-top: 100px;
 			
 			label,
 			input {
