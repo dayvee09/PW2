@@ -17,7 +17,7 @@ import { styled } from '@mui/material/styles';
 
 function ListeBouteillesInventaire(props) {
   // const [toSearch, setToSearch] = useState("");
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState(["Aucune bouteille"]);
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
   let search;
@@ -100,9 +100,17 @@ function ListeBouteillesInventaire(props) {
       return bouteille.nom.toLowerCase().includes(string.toLowerCase());
     });
   }
-  var quantite_total = results.reduce((prev, cur)=> parseInt((cur.quantite_total? cur.quantite_total:0)) + parseInt(prev?prev:0), 0);
-  var bouteille_total = results.reduce((sum, item)=> sum + 1, 0);
-  var prix_total = results.reduce((prev, cur)=> parseFloat(cur.prix_total? cur.prix_total: 0) + parseFloat(prev? prev:0), 0);
+  
+  if (results.length > 0) {
+    var quantite_total = results.reduce((prev, cur)=> parseInt((cur.quantite_total? cur.quantite_total:0)) + parseInt(prev?prev:0), 0);
+    var bouteille_total = results.reduce((sum, item)=> sum + 1, 0);
+    var prix_total = results.reduce((prev, cur)=> parseFloat(cur.prix_total? cur.prix_total: 0) + parseFloat(prev? prev:0), 0);
+  } else {
+    var quantite_total = 0
+    var bouteille_total = 0
+    var prix_total = 0
+  }
+
   if (results.length > 1) {
     return (
       <>
@@ -111,15 +119,16 @@ function ListeBouteillesInventaire(props) {
             <input
               className="Appli--search-bar"
               placeholder="Trouver une bouteille"
-              onKeyPress={(ev) => {
-                if (ev.key === "Enter") {
-                  gererInputRecherche(ev);
-                  ev.preventDefault();
-                  ev.target.value = "";
-                }
-              }}
+              onChange={gererInputRecherche}
+              // onKeyPress={(ev) => {
+              //   if (ev.key === "Enter") {
+              //     gererInputRecherche(ev);
+              //     ev.preventDefault();
+              //     ev.target.value = "";
+              //   }
+              // }}
             />
-            <div className="Appli--search-bar-icone">
+            {/* <div className="Appli--search-bar-icone">
               <img
                 className="Appli--search-bar-icone-search"
                 src={rowIcone}
@@ -127,7 +136,7 @@ function ListeBouteillesInventaire(props) {
                 width={15}
                 onClick 
               ></img>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="Appli--container">
@@ -209,13 +218,14 @@ function ListeBouteillesInventaire(props) {
             <input
               className="Appli--search-bar"
               placeholder="Trouver une bouteille"
-              onKeyPress={(ev) => {
-                if (ev.key === "Enter") {
-                  gererInputRecherche(ev);
-                  ev.preventDefault();
-                  ev.target.value = "";
-                }
-              }}
+              onChange={gererInputRecherche}
+              // onKeyPress={(ev) => {
+              //   if (ev.key === "Enter") {
+              //     gererInputRecherche(ev);
+              //     ev.preventDefault();
+              //     ev.target.value = "";
+              //   }
+              // }}
             />
           </div>
         </div>
@@ -252,7 +262,31 @@ function ListeBouteillesInventaire(props) {
   } else {
     return (
       <>
-        <div className="Appli--entete"></div>
+        <div className="Appli--entete">
+          <div className="Appli--search-bar-container">
+            <input
+              className="Appli--search-bar"
+              placeholder="Trouver une bouteille"
+              onChange={gererInputRecherche}
+              // onKeyPress={(ev) => {
+              //   if (ev.key === "Enter") {
+              //     gererInputRecherche(ev);
+              //     ev.preventDefault();
+              //     ev.target.value = "";
+              //   }
+              // }}
+            />
+            {/* <div className="Appli--search-bar-icone">
+              <img
+                className="Appli--search-bar-icone-search"
+                src={rowIcone}
+                alt="icone-row-left"
+                width={15}
+                onClick 
+              ></img>
+            </div> */}
+          </div>
+        </div>
         <div className="Appli--container">
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
