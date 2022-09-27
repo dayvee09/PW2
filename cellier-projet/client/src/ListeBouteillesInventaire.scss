@@ -9,10 +9,21 @@
 	}
 
 	@media only screen and (min-width: 768px) {
-		grid-template-columns: repeat(3, 1fr);
-	}
-
-	@media only screen and (min-width: 1200px) {
 		grid-template-columns: repeat(4, 1fr);
 	}
+
+}
+
+.pagination {
+ li {
+	button {
+		font-family: raleway;
+		padding: 17px;
+		border-radius: 0;
+
+		&:hover {
+			color: #cc4240;
+		}
+	}
+ }
 }
