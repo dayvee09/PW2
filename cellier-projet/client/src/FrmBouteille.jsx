@@ -39,7 +39,7 @@ export default function FrmBouteille({
   const ficheStyle = [
     {
       backgroundColor: "#d3d7dd78",
-	  padding: "25px",
+	  padding: "20px",
 	  width: "100%",
     },
 	{
