@@ -35,6 +35,33 @@ export default function FrmBouteille({
    * L‘état d'erreur
    */
   const [openErr, setOpenErr] = React.useState(false);
+
+  const ficheStyle = [
+    {
+      backgroundColor: "#d3d7dd78",
+	  padding: "25px",
+	  width: "100%",
+    },
+	{
+		"& .img-wrap":
+		{ 
+			backgroundColor: "#d3d7dd",
+			height: "200px", 
+			marginBottom: "25px" 
+		},
+	},
+	{
+		"img":
+		{ 
+			objectFit: "contain",
+			padding: "5px 0 5px 0",
+			height: "100%", 
+			mixBlendMode: "multiply",
+			maxHeight: "250px",
+			width: "100%",
+		},
+	},	
+  ];
   /**
    *  Gère l'action d'annuler
    */
@@ -61,9 +88,10 @@ export default function FrmBouteille({
         open={frmOuvert}
         onClose={viderFermerFrm}
         PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
+		
       >
-        <DialogContent>
-          <div className="img-wrap img-container">
+        <DialogContent sx={ficheStyle}>
+          <div className="img-wrap">
             <img
               src={
                 bouteille.image && bouteille.image.indexOf("pastille_gout") < 0
