@@ -57,13 +57,13 @@ const Appli = () => {
   /**
    *  Gère la redirection au refresh
    */
-  if (window.performance.getEntriesByType) {
-    if (
-      window.performance.getEntriesByType("navigation")[0].type === "reload"
-    ) {
-      window.location.pathname = "/PW2/cellier-projet";
-    }
-  }
+  // if (window.performance.getEntriesByType) {
+  //   if (
+  //     window.performance.getEntriesByType("navigation")[0].type === "reload"
+  //   ) {
+  //     window.location.pathname = "/PW2/cellier-projet";
+  //   }
+  // }
 
   // ------------------------------- fonctions de gestion des états ----------------------------
 

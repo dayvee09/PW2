@@ -114,7 +114,6 @@ function ListeBouteillesInventaire(props) {
       0
     );
   }
-  console.log(results);
   if (results.length > 1) {
     return (
       <>
