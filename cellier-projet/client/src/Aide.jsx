@@ -8,9 +8,11 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddLocationRoundedIcon from '@mui/icons-material/AddLocationRounded';
 import DownloadRoundedIcon from '@mui/icons-material/DownloadRounded';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
+import etape1 from "./img/png/etape1.png";
+import etape2 from "./img/png/etape2.png";
+import etape3 from "./img/png/etape3.png";
 
 function Aide(props) {
-
     return (
       <div className="Aide">
 		<div className="Appli--entete">
@@ -22,32 +24,56 @@ function Aide(props) {
 				<div className="Aide--fonctionnement-grid">
 					<div className="Aide--fonctionnement-grid-tile">
 						<div>
-							<h2>Créer votre cellier</h2>
-							<AddLocationRoundedIcon style={{ color: '#f1ab50' }} />
+							<h2><AddLocationRoundedIcon  style={{ color: '#f1ab50', width: '15px', marginRight: '10px' }} />Créer votre cellier</h2>
+							
+							<img
+								src={etape1}
+								width="70"
+								height="40"
+								alt="logo-mon-vino"
+							></img>
 						</div>
-						<p>Ajouter un nouveau cellier ou modifier le nom du cellier par défaut dans la page d'accueil.</p>
+						<div>
+							<p>Ajouter un nouveau cellier ou modifier le nom du cellier par défaut dans la page d'accueil.</p>
+						</div>
 					</div>
 					<div className="Aide--fonctionnement-grid-tile">
 						<div>
-							<h2>Importer ou créer une bouteille</h2>
-							<DownloadRoundedIcon style={{ color: '#f1ab50' }}/>
+							<h2><DownloadRoundedIcon  style={{ color: '#f1ab50', width: '15px', marginRight: '10px' }}/>Importer ou créer une bouteille</h2>
+							<img
+								src={etape2}
+								width="70"
+								height="40"
+								alt="logo-mon-vino"
+							></img>
 						</div>
-						<p>
-							Vous pouvez ajouter une bouteille à partir de n'importe où sur l'application.
-							Accéder au formulaire d'ajout et choisissez l'importation ou la création d'une bouteille personnalisée. 
-							Entrez les informations requises et sélectionnez le cellier de votre choix.
-						</p>
+						<div>
+							<p>
+								Vous pouvez ajouter une bouteille à partir de n'importe où sur l'application.
+								Accéder au formulaire d'ajout et choisissez l'importation ou la création d'une bouteille personnalisée. 
+								Entrez les informations requises et sélectionnez le cellier de votre choix.
+							</p>
+							
+						</div>
 					</div>
 					<div className="Aide--fonctionnement-grid-tile">
 						<div>
-							<h2>Gérer et consulter facilement vos celliers</h2>
-							<SettingsRoundedIcon style={{ color: '#f1ab50' }}/>
+							<h2><SettingsRoundedIcon style={{ color: '#f1ab50', width: '15px', marginRight: '10px' }}/>Gérer et consulter facilement vos celliers</h2>
+							
+							<img
+								src={etape3}
+								width="70"
+								height="40"
+								alt="logo-mon-vino"
+							></img>
 						</div>
-						<p>
-							Accèder à la page d'accueil pour gérer l'ensemble de vos celliers.
-							Cliquez sur votre cellier pour accèder à celui-ci.
-							Consultez vos stock de bouteilles contenu dans tout les celliers sur la page Inventaire.
-						</p>
+						<div>
+							<p>
+								Accèder à la page d'accueil pour gérer l'ensemble de vos celliers.
+								Cliquez sur votre cellier pour accèder à celui-ci.
+								Consultez vos stock de bouteilles contenu dans tout les celliers sur la page Inventaire.
+							</p>
+						</div>
 					</div>
 				</div>
 				<div className="Aide--questions-container">
