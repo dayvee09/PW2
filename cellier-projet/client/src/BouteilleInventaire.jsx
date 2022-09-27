@@ -14,6 +14,7 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { ComponentPropsToStylePropsMap } from "@aws-amplify/ui-react";
 const drawerBleeding = 56;
 
 const Root = styled("div")(({ theme }) => ({
@@ -123,7 +124,6 @@ export default function BouteilleInventaire(props) {
         props.setError(error);
       });
   }
-
   return (
     <>
       <div className="BouteilleInventaire" data-quantite="">
@@ -157,8 +157,9 @@ export default function BouteilleInventaire(props) {
             <div className="prix--container">
               <p className="prix">
                 Valeur&nbsp;totale&nbsp;:&nbsp;
-                {parseFloat(props.bouteilleInventaire.prix_total).toFixed(2) ||
-                  0}
+                {props.bouteilleInventaire.prix_total
+                  ? parseFloat(props.bouteilleInventaire.prix_total).toFixed(2)
+                  : 0 || 0}
                 &nbsp;$
               </p>
             </div>

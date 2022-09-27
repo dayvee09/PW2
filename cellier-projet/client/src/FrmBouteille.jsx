@@ -29,6 +29,7 @@ export default function FrmBouteille({
   dateGarde,
   setDateGarde,
   modifierBouteille,
+  personnalise,
 }) {
   /**
    * L‘état d'erreur
@@ -82,14 +83,15 @@ export default function FrmBouteille({
             <hr></hr>
             <div className="hr"></div>
             <p className="description">Description : {bouteille.description}</p>
-            <p className="millesime">Millesime : {bouteille.millesime}</p>
-            <p className="millesime">Prix : {bouteille.prix_saq}$</p>
+            <p className={personnalise == 0? "hidden" : ""}>Millesime : {bouteille.millesime}</p>
+            <p className="prix">Prix : {bouteille.prix_saq}$</p>
             <div className={voirFiche === false ? "hidden" : ""}>
               <p className="quantite">Quantité : {quantite}</p>
               <p className="date_achat">Date achat : {bouteille.date_achat}</p>
               <p className="date_achat">
                 Date jusqu'à : {bouteille.garde_jusqua}
               </p>
+              <p className="notes">Note : {bouteille.notes}</p>
               <p className="lien_saq">
                 <a href={bouteille.url_saq} target="_blank">
                   Voir SAQ

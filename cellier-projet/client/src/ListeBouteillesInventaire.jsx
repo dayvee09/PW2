@@ -6,6 +6,14 @@ import BouteilleInventaire from "./BouteilleInventaire";
 import _ from "lodash";
 import isEqual from "lodash/isEqual";
 import { TextField } from "@mui/material";
+import Pagination from "@mui/material/Pagination";
+import usePagination from "./Pagination";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import NativeSelect from "@mui/material/NativeSelect";
+import InputBase from "@mui/material/InputBase";
+import { styled } from "@mui/material/styles";
 
 function ListeBouteillesInventaire(props) {
   // const [toSearch, setToSearch] = useState("");
@@ -13,8 +21,48 @@ function ListeBouteillesInventaire(props) {
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
   let search;
-  // const [quantiteTotal, setQuantiteTotal] = useState(0);
-  // const [prixTotal, setPrixTotal] = useState(0);
+  /**
+   * configuration de la pagination
+   */
+  let [page, setPage] = useState(1);
+  const PER_PAGE = 8;
+  const count = Math.ceil(results.length / PER_PAGE);
+  const _DATA = usePagination(results, PER_PAGE);
+  //  const [afficheParPage, setAfficheParPage] = useState(12);
+  //  const count = Math.ceil(results.length / afficheParPage);
+  //  const _DATA = usePagination(results, afficheParPage);
+  /**
+   * gestion du changement de pagination
+   * @param {*} e
+   * @param {*} p
+   */
+  const handleChange = (e, p) => {
+    setPage(p);
+    _DATA.jump(p);
+  };
+  //  /**
+  //   * gestion du changement de le nombre de l'enregistrement de l'affichage par page
+  //   * @param {*} event
+  //   */
+  //  const handleAfficheParPageChange = (event) => {
+  //   setAfficheParPage(event.target.value);
+  // };
+  //  // style du composant NativeSelect
+  //  const BootstrapInput = styled(InputBase)(({ theme }) => ({
+  //   '& .MuiInputBase-input': {
+  //     borderRadius: 4,
+  //     position: 'relative',
+  //     border: '1px solid #ced4da',
+  //     fontSize: 14,
+  //     padding: '2px 20px 4px 10px',
+  //     transition: theme.transitions.create(['border-color', 'box-shadow']),
+  //     '&:focus': {
+  //       borderRadius: 4,
+  //       borderColor: '#80bdff',
+  //       boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+  //     },
+  //   },
+  // }));
 
   /**
    * Fectch la liste de tous les bouteilles dans tout différentes celliers
@@ -66,6 +114,7 @@ function ListeBouteillesInventaire(props) {
       0
     );
   }
+  console.log(results);
   if (results.length > 1) {
     return (
       <>
@@ -74,15 +123,16 @@ function ListeBouteillesInventaire(props) {
             <input
               className="Appli--search-bar"
               placeholder="Trouver une bouteille"
-              onKeyPress={(ev) => {
-                if (ev.key === "Enter") {
-                  gererInputRecherche(ev);
-                  ev.preventDefault();
-                  ev.target.value = "";
-                }
-              }}
+              onChange={gererInputRecherche}
+              // onKeyPress={(ev) => {
+              //   if (ev.key === "Enter") {
+              //     gererInputRecherche(ev);
+              //     ev.preventDefault();
+              //     ev.target.value = "";
+              //   }
+              // }}
             />
-            <div className="Appli--search-bar-icone">
+            {/* <div className="Appli--search-bar-icone">
               <img
                 className="Appli--search-bar-icone-search"
                 src={rowIcone}
@@ -90,7 +140,7 @@ function ListeBouteillesInventaire(props) {
                 width={15}
                 onClick
               ></img>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="Appli--container">
@@ -105,8 +155,31 @@ function ListeBouteillesInventaire(props) {
             </div>
           </div>
           <span className="liste-cellier--message-retour"></span>
+          <Pagination
+            className="pagination"
+            count={count}
+            size="small"
+            page={page}
+            variant="outlined"
+            shape="rounded"
+            onChange={handleChange}
+          />
+          {/* <FormControl sx={{ m: 1 }} variant="standard" size="small">
+              <NativeSelect
+                value={afficheParPage}
+                onChange={(event) => 
+                  setAfficheParPage(event.target.value)}
+                input={<BootstrapInput />}
+              >
+                <option value={12}>12</option>
+                <option value={24}>24</option>
+                <option value={36}>36</option>
+              </NativeSelect>
+            </FormControl> */}
+
           <div className="ListeBouteillesInventaire">
-            {results.slice(debut, fin).map((bouteilleInventaire) => (
+            {/* {results.slice(debut, fin).map((bouteilleInventaire) => ( */}
+            {_DATA.currentData().map((bouteilleInventaire) => (
               <div key={bouteilleInventaire.id}>
                 <BouteilleInventaire
                   {...bouteilleInventaire}
@@ -124,6 +197,15 @@ function ListeBouteillesInventaire(props) {
               </div>
             ))}
           </div>
+          <Pagination
+            className="pagination"
+            count={count}
+            size="small"
+            page={page}
+            variant="outlined"
+            shape="rounded"
+            onChange={handleChange}
+          />
           {results.length > fin ? (
             <div className="fin--liste cliquable" onClick={gererVoirPlus}>
               Voir plus
@@ -144,13 +226,14 @@ function ListeBouteillesInventaire(props) {
             <input
               className="Appli--search-bar"
               placeholder="Trouver une bouteille"
-              onKeyPress={(ev) => {
-                if (ev.key === "Enter") {
-                  gererInputRecherche(ev);
-                  ev.preventDefault();
-                  ev.target.value = "";
-                }
-              }}
+              onChange={gererInputRecherche}
+              // onKeyPress={(ev) => {
+              //   if (ev.key === "Enter") {
+              //     gererInputRecherche(ev);
+              //     ev.preventDefault();
+              //     ev.target.value = "";
+              //   }
+              // }}
             />
           </div>
         </div>
@@ -189,7 +272,31 @@ function ListeBouteillesInventaire(props) {
   } else {
     return (
       <>
-        <div className="Appli--entete"></div>
+        <div className="Appli--entete">
+          <div className="Appli--search-bar-container">
+            <input
+              className="Appli--search-bar"
+              placeholder="Trouver une bouteille"
+              onChange={gererInputRecherche}
+              // onKeyPress={(ev) => {
+              //   if (ev.key === "Enter") {
+              //     gererInputRecherche(ev);
+              //     ev.preventDefault();
+              //     ev.target.value = "";
+              //   }
+              // }}
+            />
+            {/* <div className="Appli--search-bar-icone">
+              <img
+                className="Appli--search-bar-icone-search"
+                src={rowIcone}
+                alt="icone-row-left"
+                width={15}
+                onClick 
+              ></img>
+            </div> */}
+          </div>
+        </div>
         <div className="Appli--container">
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
@@ -197,12 +304,12 @@ function ListeBouteillesInventaire(props) {
           <span className="liste-cellier--message-retour"></span>
           <div className="ListeBouteillesInventaire">
             <h2 className="aucune-bouteille">Aucune bouteille.</h2>
-            <NavLink to="/vins">
-              <p className="ListeBouteille--default-button">
-                + Ajouter une bouteille
-              </p>
-            </NavLink>
           </div>
+          <NavLink to="/vins">
+            <p className="ListeBouteille--default-button">
+              + Ajouter une bouteille
+            </p>
+          </NavLink>
         </div>
       </>
     );

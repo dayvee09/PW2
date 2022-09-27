@@ -402,7 +402,7 @@ export default function FrmAjoutBouteille(props) {
 					✳ {erreur["nom"]}{" "}
 					</p> */}
               </Grid>
-              <Grid item xs={6} sm={6} md={3} lg={3}>
+              <Grid item xs={6} sm={6} md={3} lg={3} className={btnState ? "" : "hidden"}>
                 <label>Millesime</label>
                 <TextField
                   fullWidth
@@ -417,7 +417,7 @@ export default function FrmAjoutBouteille(props) {
                   }}
                 />
               </Grid>
-              <Grid item xs={6} sm={6} md={3} lg={3}>
+              <Grid item xs={btnState? 6 : 12} sm={btnState? 6 : 12} md={btnState?3:6} lg={btnState?3:6}>
                 <label>Pays</label>
                 <TextField
                   fullWidth
@@ -486,7 +486,7 @@ export default function FrmAjoutBouteille(props) {
                   }}
                 />
               </Grid>
-              <Grid item xs={12} sm={12} md={4} lg={3}>
+              <Grid item xs={12} sm={12} md={4} lg={4}>
                 <label>Type</label>
                 <TextField
                   select
@@ -511,14 +511,14 @@ export default function FrmAjoutBouteille(props) {
                 </TextField>
               </Grid>
 
-              <Grid item xs={6} sm={6} md={4} lg={3}>
+              <Grid item xs={6} sm={6} md={4} lg={4}>
                 <label>Date d'achat</label>
                 <DateSelecteur
                   dateAchat={vinDateAchat}
                   setDateAchat={setVinDateAchat}
                 />
               </Grid>
-              <Grid item xs={6} sm={6} md={4} lg={3}>
+              <Grid item xs={6} sm={6} md={4} lg={4}>
                 <label>Garde</label>
                 <DateSelecteurAnnee
                   dateGarde={vinGarde}
@@ -526,20 +526,7 @@ export default function FrmAjoutBouteille(props) {
                 />
               </Grid>
 
-              <Grid item xs={6} sm={6} md={4} lg={3}>
-                <label>Note</label>
-                <TextField
-                  fullWidth
-                  size="small"
-                  type="text"
-                  name="notes"
-                  value={vinNote}
-                  onChange={(e) => {
-                    setVinNote(e.target.value);
-                  }}
-                />
-              </Grid>
-              <Grid item xs={6} sm={6} md={4} lg={3}>
+              <Grid item xs={6} sm={6} md={6} lg={6}>
                 <label>Quantite</label>
                 <TextField
                   fullWidth
@@ -565,7 +552,8 @@ export default function FrmAjoutBouteille(props) {
                   ✳ {erreur["quantite"]}{" "}
                 </p>
               </Grid>
-              <Grid item xs={12} sm={12} md={4} lg={3}>
+
+              <Grid item xs={6} sm={6} md={6} lg={6}>
                 <label>Cellier</label>
                 <TextField
                   select
@@ -591,6 +579,20 @@ export default function FrmAjoutBouteille(props) {
                 <p className={erreur["ajout"] ? "active" : "hidden"}>
                   ✳ {erreur["ajout"]}{" "}
                 </p>
+              </Grid>
+
+              <Grid item xs={12} sm={12} >
+                <label>Note</label>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="text"
+                  name="notes"
+                  value={vinNote}
+                  onChange={(e) => {
+                    setVinNote(e.target.value);
+                  }}
+                />
               </Grid>
               <Grid item xs={12}>
                 <Box
