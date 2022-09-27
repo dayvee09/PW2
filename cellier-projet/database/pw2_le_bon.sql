@@ -276,8 +276,8 @@ ALTER TABLE `vino__cellier`
 -- Contraintes pour la table `vino__favoris`
 --
 ALTER TABLE `vino__favoris`
-  ADD CONSTRAINT `vino__favoris_ibfk_1` FOREIGN KEY (`vino__bouteille_id`) REFERENCES `vino__bouteille` (`id`),
-  ADD CONSTRAINT `vino__favoris_ibfk_2` FOREIGN KEY (`vino__utilisateur_id`) REFERENCES `vino__utilisateur` (`id`);
+  ADD CONSTRAINT `vino__favoris_ibfk_1` FOREIGN KEY (`vino__bouteille_id`) REFERENCES `vino__bouteille` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `vino__favoris_ibfk_2` FOREIGN KEY (`vino__utilisateur_id`) REFERENCES `vino__utilisateur` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
 
 

@@ -35,6 +35,6 @@ class CelliersControleur extends Controleur
     public function retirer($params, $idEntite = null)
     {
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
-        $this->reponse['corps'] = ['nombre' => $this->modele->retirer($params)];
+        $this->reponse['corps'] = ['nombre' => $this->modele->retirer($params, $idEntite)];
     }
 }

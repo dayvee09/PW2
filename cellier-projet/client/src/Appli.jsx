@@ -50,17 +50,18 @@ const Appli = () => {
     if (ENV == "prod") {
       setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
     } else {
-      setURI("http://localhost:8888/PW2/cellier-projet/api-php");
+      setURI("http://localhost/PW2/cellier-projet/api-php");
     }
   }, []);
-
 
   /**
    *  Gère la redirection au refresh
    */
   if (window.performance.getEntriesByType) {
-    if (window.performance.getEntriesByType("navigation")[0].type === "reload") {
-      window.location.pathname = "/";
+    if (
+      window.performance.getEntriesByType("navigation")[0].type === "reload"
+    ) {
+      window.location.pathname = "/PW2/cellier-projet";
     }
   }
 

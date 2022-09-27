@@ -32,9 +32,9 @@ class UtilisateursControleur extends Controleur
         $this->reponse['corps'] = $this->modele->changer($params, json_decode($fragmentEntite));
     }
 
-    public function retirer($params, $idEntite)
+    public function retirer($params, $idEntite = null)
     {
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
-        $this->reponse['corps'] = ['nombre' => $this->modele->retirer($params)];
+        $this->reponse['corps'] = ['nombre' => $this->modele->retirer($params, $idEntite)];
     }
 }
