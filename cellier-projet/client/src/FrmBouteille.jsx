@@ -39,28 +39,27 @@ export default function FrmBouteille({
   const ficheStyle = [
     {
       backgroundColor: "#d3d7dd78",
-	  padding: "20px",
-	  width: "100%",
+      padding: "20px",
+      width: "100%",
+      height: "100%",
     },
-	{
-		"& .img-wrap":
-		{ 
-			backgroundColor: "#d3d7dd",
-			height: "200px", 
-			marginBottom: "25px" 
-		},
-	},
-	{
-		"img":
-		{ 
-			objectFit: "contain",
-			padding: "5px 0 5px 0",
-			height: "100%", 
-			mixBlendMode: "multiply",
-			maxHeight: "250px",
-			width: "100%",
-		},
-	},	
+    {
+      "& .img-wrap": {
+        backgroundColor: "#d3d7dd",
+        height: "200px",
+        marginBottom: "25px",
+      },
+    },
+    {
+      img: {
+        objectFit: "contain",
+        padding: "5px 0 5px 0",
+        height: "100%",
+        mixBlendMode: "multiply",
+        maxHeight: "250px",
+        width: "100%",
+      },
+    },
   ];
   /**
    *  Gère l'action d'annuler
@@ -88,7 +87,6 @@ export default function FrmBouteille({
         open={frmOuvert}
         onClose={viderFermerFrm}
         PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
-		
       >
         <DialogContent sx={ficheStyle}>
           <div className="img-wrap">
@@ -111,7 +109,9 @@ export default function FrmBouteille({
             <hr></hr>
             <div className="hr"></div>
             <p className="description">Description : {bouteille.description}</p>
-            <p className={personnalise == 0? "hidden" : ""}>Millesime : {bouteille.millesime}</p>
+            <p className={personnalise == 0 ? "hidden" : ""}>
+              Millesime : {bouteille.millesime}
+            </p>
             <p className="prix">Prix : {bouteille.prix_saq}$</p>
             <div className={voirFiche === false ? "hidden" : ""}>
               <p className="quantite">Quantité : {quantite}</p>

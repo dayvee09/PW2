@@ -240,7 +240,7 @@ export default function FrmAjoutBouteille(props) {
     if (btnState === false) {
       formData = {
         vino__bouteille_id: value.id,
-        vino__cellier_id: vinCellier,
+        vino__cellier_id: parseInt(vinCellier),
         quantite: vinQuantite,
         date_achat: vinDateAchat,
         garde_jusqua: vinGarde,
@@ -261,7 +261,7 @@ export default function FrmAjoutBouteille(props) {
         vino__type_id: vinType,
         millesime: parseInt(vinMillesime),
         personnalise: 1,
-        vino__cellier_id: vinCellier,
+        vino__cellier_id: parseInt(vinCellier),
         quantite: vinQuantite,
         date_achat: vinDateAchat,
         garde_jusqua: vinGarde,
@@ -306,7 +306,6 @@ export default function FrmAjoutBouteille(props) {
     }
     return ok;
   };
-
   return (
     <div>
       <div className="Appli--entete">
@@ -402,7 +401,14 @@ export default function FrmAjoutBouteille(props) {
 					✳ {erreur["nom"]}{" "}
 					</p> */}
               </Grid>
-              <Grid item xs={6} sm={6} md={3} lg={3} className={btnState ? "" : "hidden"}>
+              <Grid
+                item
+                xs={6}
+                sm={6}
+                md={3}
+                lg={3}
+                className={btnState ? "" : "hidden"}
+              >
                 <label>Millesime</label>
                 <TextField
                   fullWidth
@@ -417,7 +423,13 @@ export default function FrmAjoutBouteille(props) {
                   }}
                 />
               </Grid>
-              <Grid item xs={btnState? 6 : 12} sm={btnState? 6 : 12} md={btnState?3:6} lg={btnState?3:6}>
+              <Grid
+                item
+                xs={btnState ? 6 : 12}
+                sm={btnState ? 6 : 12}
+                md={btnState ? 3 : 6}
+                lg={btnState ? 3 : 6}
+              >
                 <label>Pays</label>
                 <TextField
                   fullWidth
@@ -581,7 +593,7 @@ export default function FrmAjoutBouteille(props) {
                 </p>
               </Grid>
 
-              <Grid item xs={12} sm={12} >
+              <Grid item xs={12} sm={12}>
                 <label>Note</label>
                 <TextField
                   fullWidth
