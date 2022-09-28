@@ -27,6 +27,14 @@ export default function ListeInventaire(props) {
       {props.listeInventaire.map((chaqueInventaire) => (
         <div className="chaque--inventaire" key={chaqueInventaire.cellier_id}>
           <ListItem
+            sx={[
+              {
+                mr: "150px",
+                backgroundColor: "#d3d7dd",
+                borderRadius: "4px",
+                mb: "10px",
+              },
+            ]}
             onClick={() => setIdCellier(chaqueInventaire.cellier_id)}
             alignItems="center"
           >
