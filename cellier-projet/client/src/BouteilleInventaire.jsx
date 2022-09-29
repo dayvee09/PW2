@@ -147,7 +147,9 @@ export default function BouteilleInventaire(props) {
           <div className="bouteille--description">
             <div className="detail--container">
               <div>
-                <p className="bouteille--nom">{props.nom}</p>
+                <div className="bouteille--nom--wrapper">
+                  <p className="bouteille--nom">{props.nom}</p>
+                </div>
                 <p className="bouteille--info">
                   {props.type} - {props.format} - {props.millesime}
                 </p>
