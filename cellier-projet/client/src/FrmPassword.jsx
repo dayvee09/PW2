@@ -24,8 +24,8 @@ export default function FrmPassword({
    *  État des styles des composants MUI
    */
   const Button = styled(MuiButton)((props) => ({
-	color: "#152440",
-	border: "1px solid #cc4240",
+    color: "#152440",
+    border: "1px solid #cc4240",
     textDecoration: "none",
     borderRadius: "4px",
     fontFamily: "Alata",
@@ -33,7 +33,7 @@ export default function FrmPassword({
     padding: "10px 20px",
     "&:hover": {
       backgroundColor: "#f1ab50",
-	  border: "1px solid #f1ab50",
+      border: "1px solid #f1ab50",
       color: "#152440",
     },
   }));
@@ -57,9 +57,9 @@ export default function FrmPassword({
   const [messageRetour, setMessageRetour] = useState([]);
   useEffect(() => {
     if (messageRetour === "Modification effectuée") {
-      setSeverity("success")
-    } else if (messageRetour === "Courriel invalide"){
-      setSeverity("error")
+      setSeverity("success");
+    } else if (messageRetour === "Courriel invalide") {
+      setSeverity("error");
     }
   }, [messageRetour]);
 
@@ -80,15 +80,15 @@ export default function FrmPassword({
       return;
     }
     setOpenAlert(false);
-    setFrmPasswordOuvert(false)
-    setSeverity("")
+    setFrmPasswordOuvert(false);
+    setSeverity("");
   };
 
   /**
    * État du message d'erreur du password
    */
-   const validationRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-   const errorMessage = `Une majuscule, une minuscule et un minimum de 8 caractères requis`;
+  const validationRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+  const errorMessage = `Une majuscule, une minuscule et un minimum de 8 caractères requis`;
 
   /**
    *  Gère l'action d'annuler
@@ -166,7 +166,11 @@ export default function FrmPassword({
               <Alert
                 onClose={handleCloseAlert}
                 severity={severity}
-                sx={{ width: "100%" }}
+                sx={[
+                  {
+                    width: "100%",
+                  },
+                ]}
               >
                 {messageRetour}
               </Alert>
@@ -174,8 +178,12 @@ export default function FrmPassword({
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={viderFermerFrm} className="cancel">Annuler</Button>
-		  <button onClick={gererSoumettre} className="action">Enregistrer</button>
+          <Button onClick={viderFermerFrm} className="cancel">
+            Annuler
+          </Button>
+          <button onClick={gererSoumettre} className="action">
+            Enregistrer
+          </button>
         </DialogActions>
       </Dialog>
     </div>
