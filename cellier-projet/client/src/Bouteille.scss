@@ -1,127 +1,125 @@
 .Bouteille {
-	border: 0.5px solid #d3d7dd;
-	border-radius: 4px 4px 0 0;
-	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+  border: 0.5px solid #d3d7dd;
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
 
-	.bouteille--gestion {
-		background-color: #d3d7dd78;
-		cursor: pointer;
-		display: flex;
-		height: 180px;
-		justify-content: space-between;
-		position: relative;
+  .bouteille--gestion {
+    background-color: #d3d7dd78;
+    cursor: pointer;
+    display: flex;
+    height: 180px;
+    justify-content: space-between;
+    position: relative;
 
-		img {
-			height: 100%;
-			object-fit: contain;
-			padding: 5px 0 5px 0;
-			mix-blend-mode: multiply;
-			width: 100%;
-		}
+    img {
+      height: 100%;
+      object-fit: contain;
+      padding: 5px 0 5px 0;
+      mix-blend-mode: multiply;
+      width: 100%;
+    }
 
-		.bouteille--gestion-dots {
-			color: #cc4240;
-			border-radius: 20px;
-			position: absolute;
-			right: 5px;
-			top: 10px;
-			&:hover {
-				background-color: #d3d7dd78;
-				border-radius: 20px;
-				cursor: pointer;
-			}
-		}
-	}
+    .bouteille--gestion-dots {
+      color: #cc4240;
+      border-radius: 20px;
+      position: absolute;
+      right: 5px;
+      top: 10px;
+      &:hover {
+        background-color: #d3d7dd78;
+        border-radius: 20px;
+        cursor: pointer;
+      }
+    }
+  }
 
-	.bouteille--info-container {
-		min-height: 160px;
-		padding: 10px;
-	
-		.bouteille--btn-favoris {
-			float: right;
-			&:hover {
-				cursor: pointer;
-				filter: invert(39%) sepia(68%) saturate(920%) hue-rotate(322deg)
-					brightness(83%) contrast(93%);
-			}
-		}
-	}
+  .bouteille--info-container {
+    min-height: 160px;
+    padding: 10px;
 
-	.bouteille--info-container {
-		min-height: 180px;
-		padding: 10px;
-	}
+    .bouteille--btn-favoris {
+      float: right;
+      &:hover {
+        cursor: pointer;
+        filter: invert(39%) sepia(68%) saturate(920%) hue-rotate(322deg)
+          brightness(83%) contrast(93%);
+      }
+    }
+  }
 
-	.quantite--container {
-		left: 5px;
-		position: absolute;
-		top: 5px;
+  .bouteille--info-container {
+    min-height: 180px;
+    padding: 10px;
+  }
 
-		.quantite {
-			background-color: #f1ab50;
-			border-radius: 140px;
-			color: #152440;
-			font-family: Raleway;
-			font-weight: 600;
-			font-size: 12px;
-			margin: 5px;
-			min-width: 35px;
-			padding: 8px 8px;
-			text-align: center;
-		}
-	}
+  .quantite--container {
+    left: 5px;
+    position: absolute;
+    top: 5px;
 
-	.snackbar-wrapper {
-		position: absolute;
-		right: 0;
-		top: 0;
-	}
+    .quantite {
+      background-color: #f1ab50;
+      border-radius: 140px;
+      color: #152440;
+      font-family: Raleway;
+      font-weight: 600;
+      font-size: 12px;
+      margin: 5px;
+      min-width: 35px;
+      padding: 8px 8px;
+      text-align: center;
+    }
+  }
 
-	&:hover {
-		background-color: #d3d7dd40;
-	}
+  .snackbar-wrapper {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  &:hover {
+    background-color: #d3d7dd40;
+  }
 }
 
 .bouteille--info,
 .bouteille--nom {
-	margin: 0px;
-	min-height: 60px;
+  margin: 0px;
+  min-height: 60px;
 }
 
 .bouteille--description {
-	overflow-wrap: anywhere;
-
+  overflow-wrap: anywhere;
 }
 
 .prix {
-	min-height: 30px;
+  min-height: 30px;
 }
 
-
 .Bouteille--solo {
-	max-width: 325px;
+  max-width: 325px;
 }
 
 @media only screen and (min-width: 300px) {
-	.Bouteille {
-		.bouteille--info-container {
-			min-height: 150px;
-			.bouteille--info,
-			.bouteille--nom {
-				min-height: 50px;
-			}
-		}
-	}
+  .Bouteille {
+    .bouteille--info-container {
+      min-height: 150px;
+      .bouteille--info,
+      .bouteille--nom {
+        min-height: 50px;
+      }
+    }
+  }
 }
 
 @media only screen and (min-width: 400px) {
-	.Bouteille {
-		.bouteille--info-container {
-			min-height: 130px;
-			.bouteille--info,
-			.bouteille--nom {
-				min-height: 40px;
-			}
-		}
-	}
+  .Bouteille {
+    .bouteille--info-container {
+      min-height: 130px;
+      .bouteille--info,
+      .bouteille--nom {
+        min-height: 40px;
+      }
+    }
+  }
 }
