@@ -34,6 +34,14 @@
   }
 
   .bouteille--info-container {
+    max-height: 130px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    .bouteille--nom--wrapper {
+      max-height: 50px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     min-height: 160px;
     padding: 10px;
 
