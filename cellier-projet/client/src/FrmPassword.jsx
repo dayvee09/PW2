@@ -169,6 +169,8 @@ export default function FrmPassword({
                 sx={[
                   {
                     width: "100%",
+                    backgroundColor: "#152440",
+                    border: "1px solid #f1ab50",
                   },
                 ]}
               >

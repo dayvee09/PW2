@@ -108,6 +108,8 @@ function FormAjoutCellier({ celliers, URI, fetchCelliers, setError }) {
               sx={[
                 {
                   width: "100%",
+                  backgroundColor: "#152440",
+                  border: "1px solid #f1ab50",
                 },
               ]}
             >
