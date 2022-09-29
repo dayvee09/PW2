@@ -27,8 +27,8 @@ export default function FrmEmail({
    *  État des styles des composants MUI
    */
   const Button = styled(MuiButton)((props) => ({
-	color: "#152440",
-	border: "1px solid #cc4240",
+    color: "#152440",
+    border: "1px solid #cc4240",
     textDecoration: "none",
     borderRadius: "4px",
     fontFamily: "Alata",
@@ -36,7 +36,7 @@ export default function FrmEmail({
     padding: "10px 20px",
     "&:hover": {
       backgroundColor: "#f1ab50",
-	  border: "1px solid #f1ab50",
+      border: "1px solid #f1ab50",
       color: "#152440",
     },
   }));
@@ -160,7 +160,7 @@ export default function FrmEmail({
             <p className="">Nom d'usager : {username}</p>
             <ThemeProvider theme={theme}>
               <TextField
-			  	fullWidth={true}
+                fullWidth={true}
                 onChange={gererInput}
                 autoFocus
                 id="username"
@@ -182,7 +182,11 @@ export default function FrmEmail({
               <Alert
                 onClose={handleCloseAlert}
                 severity={severity}
-                sx={{ width: "100%" }}
+                sx={[
+                  {
+                    width: "100%",
+                  },
+                ]}
               >
                 {messageRetour}
               </Alert>
@@ -190,7 +194,9 @@ export default function FrmEmail({
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={viderFermerFrm} className="cancel">Annuler</Button>
+          <Button onClick={viderFermerFrm} className="cancel">
+            Annuler
+          </Button>
           <button onClick={gererSoumettre} className="action">
             Enregistrer
           </button>

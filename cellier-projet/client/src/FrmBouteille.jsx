@@ -81,6 +81,7 @@ export default function FrmBouteille({
       if (quantite < 0) setOpenErr(true);
     }
   }
+  console.log(bouteille);
   return (
     <div className="FormBouteille">
       <Dialog
@@ -121,9 +122,11 @@ export default function FrmBouteille({
               </p>
               <p className="notes">Note : {bouteille.notes}</p>
               <p className="lien_saq">
-                <a href={bouteille.url_saq} target="_blank">
-                  Voir SAQ
-                </a>
+                {bouteille.personnalise === "0" && (
+                  <a href={bouteille.url_saq} target="_blank">
+                    Voir SAQ
+                  </a>
+                )}
               </p>
             </div>
             <Dialog open={openErr}>
