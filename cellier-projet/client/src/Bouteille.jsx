@@ -394,7 +394,9 @@ export default function Bouteille(props) {
         </div>
         <div className="bouteille--info-container">
           <div className="bouteille--description">
-            <p className="bouteille--nom">{props.nom} </p>
+            <div className="bouteille--nom--wrapper">
+              <p className="bouteille--nom">{props.nom} </p>
+            </div>
             <p className="bouteille--info">
               {props.type} - {props.format} - {props.pays}
             </p>
