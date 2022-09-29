@@ -1,94 +1,94 @@
-.Cellier {		
-	.cellier {
-		border: 1px solid #d3d7dd;
-		border-radius: 4px 4px 0 0;
-		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-		margin-top: 25px;
-		
-		&:hover {
-			background-color: #d3d7dd37;
-		}
+.Cellier {
+  .cellier {
+    border: 1px solid #d3d7dd;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 25px;
 
-		.cellier--gestion {
-			display: flex;
-			justify-content: space-between;
-			padding: 10px 20px;
+    &:hover {
+      background-color: #d3d7dd37;
+    }
 
-			&:hover {
-				cursor: pointer;
-			}
+    .cellier--gestion {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
 
-			.cellier--gestion-container {
-				width: 100%;
-			}
+      &:hover {
+        cursor: pointer;
+      }
 
-			.cellier--gestion-dots {
-				border-radius: 20px;
-				color: #cc4240;
-				margin-right: -10px;
+      .cellier--gestion-container {
+        width: 100%;
+      }
 
-				&:hover {
-					background-color: #d3d7dd78;
-					border-radius: 20px;
-					cursor: pointer;
-				}
-			}
+      .cellier--gestion-dots {
+        border-radius: 20px;
+        color: #cc4240;
+        margin-right: -10px;
 
-			.cellier--nom {
-				font-family: Alata;
-				font-size: 15px;
-				min-height: 70px;
-				padding-left: 20px;
-				padding-right: 10px;
-				text-transform: uppercase;
-			}
+        &:hover {
+          background-color: #d3d7dd78;
+          border-radius: 20px;
+          cursor: pointer;
+        }
+      }
 
-			button {
-				background-color: transparent;
-				border: 1px solid #d3d7dd;
-				border-radius: 4px;
-				font-size: 10px;
-				min-height: 100px;
-				padding: 0 15px 0 15px;
-				text-transform: uppercase;
-				width: 50%;
+      .cellier--nom {
+        font-family: Alata;
+        font-size: 15px;
+        min-height: 70px;
+        padding-left: 20px;
+        padding-right: 10px;
+        text-transform: uppercase;
+      }
 
-				&:hover {
-					background-color: #d3d7dd;
-					border-color: #cc4240;
-				}
-			}
-		}
+      button {
+        background-color: transparent;
+        border: 1px solid #d3d7dd;
+        border-radius: 4px;
+        font-size: 10px;
+        min-height: 100px;
+        padding: 0 15px 0 15px;
+        text-transform: uppercase;
+        width: 50%;
 
-		.cellier--description {
-			background-color: #d3d7dd ;
-			padding: 10px;
-			text-align: center;
+        &:hover {
+          background-color: #d3d7dd;
+          border-color: #cc4240;
+        }
+      }
+    }
 
-			p {
-				margin: 0px;
-			}
-		}
+    .cellier--description {
+      background-color: #d3d7dd;
+      padding: 10px;
+      text-align: center;
 
-		@media only screen and (min-width: 768px) {
-			margin-top: 0px;
-		}
-	}
+      p {
+        margin: 0px;
+      }
+    }
+
+    @media only screen and (min-width: 768px) {
+      margin-top: 0px;
+    }
+  }
 }
 
 .MuiList-root {
-	background-color: transparent;
-	li {
-		font-family: Raleway;
-		font-size: 14px;
-		
-		&:hover {
-			background-color: transparent;
-			color: #cc4240;
-		}
-	
-		&:focus {
-			background-color: transparent;
-		}
-	}
+  background-color: transparent;
+  li {
+    font-family: Raleway;
+    font-size: 14px;
+
+    &:hover {
+      background-color: transparent;
+      color: #cc4240;
+    }
+
+    &:focus {
+      background-color: transparent;
+    }
+  }
 }

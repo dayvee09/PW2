@@ -273,7 +273,11 @@ export default function Cellier(props) {
           <Alert
             onClose={handleCloseAlert}
             severity={severity}
-            sx={{ width: "100%" }}
+            sx={[
+              {
+                width: "100%",
+              },
+            ]}
           >
             {messageRetour}
           </Alert>

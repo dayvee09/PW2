@@ -147,11 +147,13 @@ export default function Admin(props) {
   };
   return (
     <>
-	  <div className="Appli--entete">
-		  <div className="Appli--signOut-container">
-			<button className="Appli--signOut"  onClick={redirectionAccueil}>Déconnexion</button>
-		</div>
-	</div>
+      <div className="Appli--entete">
+        <div className="Appli--signOut-container">
+          <button className="Appli--signOut" onClick={redirectionAccueil}>
+            Déconnexion
+          </button>
+        </div>
+      </div>
       <div className="Appli--container">
         <div className="Admin">
           <div className="content-admin">
@@ -175,7 +177,11 @@ export default function Admin(props) {
             <Alert
               onClose={handleCloseAlert}
               severity="success"
-              sx={{ width: "100%" }}
+              sx={[
+                {
+                  width: "100%",
+                },
+              ]}
             >
               La synchronisation avec la base de données de la SAQ a été faite
               avec succès!
@@ -193,7 +199,11 @@ export default function Admin(props) {
             <Alert
               onClose={handleCloseAlertLoading}
               severity="success"
-              sx={{ width: "100%" }}
+              sx={[
+                {
+                  width: "100%",
+                },
+              ]}
             >
               <p>Synchronisation en cours, veuillez patienter.</p>
               {nbBouteillesSaq < 1 ? (

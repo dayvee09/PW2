@@ -15,31 +15,31 @@ function FormAjoutCellier({ celliers, URI, fetchCelliers, setError }) {
   /**
    * État de l'alerte
    */
-   const Alert = React.forwardRef(function Alert(props, ref) {
+  const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const [openAlert, setOpenAlert] = React.useState(false);
   const handleCloseAlert = (event, reason) => {
-    if (reason === 'clickaway') {
-      return
+    if (reason === "clickaway") {
+      return;
     }
     setOpenAlert(false);
-	navigate("/", { replace: true });
+    navigate("/", { replace: true });
   };
 
   function gererAjoutCellier() {
-	let nomCellier = document.getElementById("nomCellier").value;
-	let utilisateurId = celliers[0].vino__utilisateur_id;
-	if (nomCellier === "") {
-	  let error = document.querySelector("span");
-	  error.innerText = "Veuillez entrer un nom de cellier";
-	} else {
-	  let cellier = {
-		nom: nomCellier,
-		vino__utilisateur_id: utilisateurId,
-	  };
-	  ajouterCellier(cellier);
-	}
+    let nomCellier = document.getElementById("nomCellier").value;
+    let utilisateurId = celliers[0].vino__utilisateur_id;
+    if (nomCellier === "") {
+      let error = document.querySelector("span");
+      error.innerText = "Veuillez entrer un nom de cellier";
+    } else {
+      let cellier = {
+        nom: nomCellier,
+        vino__utilisateur_id: utilisateurId,
+      };
+      ajouterCellier(cellier);
+    }
   }
 
   async function ajouterCellier(cellier) {
@@ -55,12 +55,12 @@ function FormAjoutCellier({ celliers, URI, fetchCelliers, setError }) {
       })
       .then((data) => {
         fetchCelliers();
-		setMessageRetour("Ajout effectuée");
-		setSeverity("success");
-		setOpenAlert(true);
-		setTimeout (() => {
-			navigate("/", { replace: true });
-		}, 2000);
+        setMessageRetour("Ajout effectuée");
+        setSeverity("success");
+        setOpenAlert(true);
+        setTimeout(() => {
+          navigate("/", { replace: true });
+        }, 2000);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -69,49 +69,54 @@ function FormAjoutCellier({ celliers, URI, fetchCelliers, setError }) {
   }
 
   return (
-	<div>
-		<div className="Appli--entete">
-			<div>
-				<NavLink to={`/`}>
-					<button className="retour">
-					<img src={rowIcone} alt="icone-row-left" width={15}></img>Retour&nbsp;aux&nbsp;Celliers&nbsp;
-					</button>
-				</NavLink>
-			</div>
-		</div>
-		<div className="Appli--container">
-			<div className="FormAjoutCellier">
-				<h1>Ajouter un cellier</h1>
-				<div className="form-ajout--container">
-					<label htmlFor="nom">Nom du cellier</label>
-					<br></br>
-					<input type="text" id="nomCellier" name="nom" placeholder="Nom" />
-					<br></br>
-					<span></span>
-					<br></br>
-					<button onClick={gererAjoutCellier}>Ajouter</button>
-				</div>
-				<Snackbar
-					sx={{ height: "70%" }}
-					anchorOrigin={{
-					vertical: "top",
-					horizontal: "center",
-					}}
-					open={openAlert}
-					autoHideDuration={2000}
-					onClose={handleCloseAlert}
-				>
-					<Alert
-					onClose={handleCloseAlert}
-					severity={severity}
-					sx={{ width: "100%" }}
-					>
-					{messageRetour}
-					</Alert>
-				</Snackbar>
-			</div>
-		</div>
-	</div>
+    <div>
+      <div className="Appli--entete">
+        <div>
+          <NavLink to={`/`}>
+            <button className="retour">
+              <img src={rowIcone} alt="icone-row-left" width={15}></img>
+              Retour&nbsp;aux&nbsp;Celliers&nbsp;
+            </button>
+          </NavLink>
+        </div>
+      </div>
+      <div className="Appli--container">
+        <div className="FormAjoutCellier">
+          <h1>Ajouter un cellier</h1>
+          <div className="form-ajout--container">
+            <label htmlFor="nom">Nom du cellier</label>
+            <br></br>
+            <input type="text" id="nomCellier" name="nom" placeholder="Nom" />
+            <br></br>
+            <span></span>
+            <br></br>
+            <button onClick={gererAjoutCellier}>Ajouter</button>
+          </div>
+          <Snackbar
+            sx={{ height: "70%" }}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "center",
+            }}
+            open={openAlert}
+            autoHideDuration={2000}
+            onClose={handleCloseAlert}
+          >
+            <Alert
+              onClose={handleCloseAlert}
+              severity={severity}
+              sx={[
+                {
+                  width: "100%",
+                },
+              ]}
+            >
+              {messageRetour}
+            </Alert>
+          </Snackbar>
+        </div>
+      </div>
+    </div>
   );
 }
 
