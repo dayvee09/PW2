@@ -180,6 +180,8 @@ export default function Admin(props) {
               sx={[
                 {
                   width: "100%",
+                  backgroundColor: "#152440",
+                  border: "1px solid #f1ab50",
                 },
               ]}
             >
@@ -202,6 +204,8 @@ export default function Admin(props) {
               sx={[
                 {
                   width: "100%",
+                  backgroundColor: "#152440",
+                  border: "1px solid #f1ab50",
                 },
               ]}
             >
