@@ -49,20 +49,20 @@ export default function FrmBouteille({
         marginBottom: "25px",
       },
     },
-	{
-		"& .bouteille--description": {
-			width: "100px",
-			"@media only screen and (min-width: 325px)": {
-				width: "200px",
-			},
-			"@media only screen and (min-width: 400px)": {
-				width: "250px",
-			},
-			"@media only screen and (min-width: 500px)": {
-				width: "400px",
-			},
-		},
-	},
+    {
+      "& .bouteille--description": {
+        width: "100px",
+        "@media only screen and (min-width: 325px)": {
+          width: "200px",
+        },
+        "@media only screen and (min-width: 400px)": {
+          width: "250px",
+        },
+        "@media only screen and (min-width: 500px)": {
+          width: "400px",
+        },
+      },
+    },
     {
       img: {
         objectFit: "contain",
@@ -94,7 +94,6 @@ export default function FrmBouteille({
       if (quantite < 0) setOpenErr(true);
     }
   }
-  console.log(bouteille);
   return (
     <div className="FormBouteille">
       <Dialog
@@ -122,7 +121,9 @@ export default function FrmBouteille({
             </div>
             <hr></hr>
             <div className="hr"></div>
-            <p className="bouteille--description">Description : {bouteille.description}</p>
+            <p className="bouteille--description">
+              Description : {bouteille.description}
+            </p>
             <p className={personnalise == 0 ? "hidden" : ""}>
               Millesime : {bouteille.millesime}
             </p>
