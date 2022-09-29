@@ -13,6 +13,8 @@
 			display: flex;
 			justify-content: space-between;
 			padding: 10px 20px;
+			min-height: 100px;
+			padding-bottom: 30px;
 
 			&:hover {
 				cursor: pointer;
@@ -20,6 +22,11 @@
 
 			.cellier--gestion-container {
 				width: 100%;
+				display: -webkit-box;
+				-webkit-line-clamp: 2;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 
 			.cellier--gestion-dots {
@@ -37,7 +44,6 @@
 			.cellier--nom {
 				font-family: Alata;
 				font-size: 15px;
-				min-height: 70px;
 				padding-left: 20px;
 				padding-right: 10px;
 				text-transform: uppercase;

@@ -40,7 +40,6 @@ export default function FrmBouteille({
     {
       backgroundColor: "#d3d7dd78",
       padding: "20px",
-      width: "100%",
       height: "100%",
     },
     {
@@ -50,6 +49,20 @@ export default function FrmBouteille({
         marginBottom: "25px",
       },
     },
+	{
+		"& .bouteille--description": {
+			width: "100px",
+			"@media only screen and (min-width: 325px)": {
+				width: "200px",
+			},
+			"@media only screen and (min-width: 400px)": {
+				width: "250px",
+			},
+			"@media only screen and (min-width: 500px)": {
+				width: "400px",
+			},
+		},
+	},
     {
       img: {
         objectFit: "contain",
@@ -108,7 +121,7 @@ export default function FrmBouteille({
             </div>
             <hr></hr>
             <div className="hr"></div>
-            <p className="description">Description : {bouteille.description}</p>
+            <p className="bouteille--description">Description : {bouteille.description}</p>
             <p className={personnalise == 0 ? "hidden" : ""}>
               Millesime : {bouteille.millesime}
             </p>
