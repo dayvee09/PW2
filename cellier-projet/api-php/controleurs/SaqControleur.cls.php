@@ -4,12 +4,8 @@
  * Class MonSQL
  * Classe qui génère ma connection à MySQL à travers un singleton
  *
- *
  * @author Jonathan Martel
  * @version 1.0
- *
- *
- *
  */
 class SaqControleur extends Controleur
 {
@@ -23,7 +19,7 @@ class SaqControleur extends Controleur
     private static $_status;
     private $stmt;
 
-    //IMPORTER DU SAQ
+    //IMPORTER DE LA SAQ
     public function ajouter($donneesSaq)
     {
         // $page = 1;
@@ -38,7 +34,7 @@ class SaqControleur extends Controleur
     }
 
     /**
-     * getProduits
+     * Web scraper pour prendre toutes les bouteilles à importer
      * @param int $nombre
      * @param int $debut
      */
@@ -101,7 +97,13 @@ class SaqControleur extends Controleur
 
         return $i;
     }
-
+    
+    /**
+     * Prendre les contenu des nodes HTML et le sauvegarder 
+     *
+     * @param  mixed $node
+     * @return void
+     */
     private function get_inner_html($node)
     {
         $innerHTML = '';
@@ -111,11 +113,23 @@ class SaqControleur extends Controleur
         }
 
         return $innerHTML;
-    }
+    }    
+    /**
+     * Nettoyer l'espace de la chaine de caractère
+     *
+     * @param  mixed $chaine
+     */
     private function nettoyerEspace($chaine)
     {
         return preg_replace('/\s+/', ' ', $chaine);
     }
+        
+    /**
+     * Récupérer tous les informations associées à des bouteilles de la SAQ 
+     *
+     * @param  mixed $noeud
+     * @return void
+     */
     private function recupereInfo($noeud)
     {
         $info = new stdClass();
@@ -180,7 +194,12 @@ class SaqControleur extends Controleur
         //var_dump($info);
         return $info;
     }
-
+    
+    /**
+     * Ajouter les bouteilles importées dans la base de donnée 
+     *
+     * @param  mixed $bte
+     */
     private function ajouteProduit($bte)
     {
         $_db = new AccesBd;
@@ -208,7 +227,12 @@ class SaqControleur extends Controleur
         }
         return $retour;
     }
-
+    
+    /**
+     * Récupérer tous les bouteilles importées de la SAQ par le type du vin - Méthod 'GET'
+     *
+     * @param  mixed $type
+     */
     public function tout($type)
     {
         $type = $type["admin"];
@@ -241,25 +265,53 @@ class SaqControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $nbResults;
     }
-
+    
+    /**
+     * Récupérer un un enregistrement spécifié - Méthod 'GET'
+     *
+     * @param  mixed $params
+     * @param  mixed $idEntite
+     */
     public function un($params, $idEntite)
     {
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->un($params, $idEntite);
     }
-
+    
+    /**
+     * Modifier un enregistrement spécifié - Méthod 'PUT'
+     *
+     * @param  mixed $id
+     * @param  mixed $cellier
+     * @return void
+     */
     public function remplacer($id, $cellier)
     {
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->remplacer($id, json_decode($cellier));
     }
-
+    
+    /**
+     * Modifier un enregistrement spécifié - Méthod 'PATCH'
+     *
+     * @param  mixed $params
+     * @param  mixed $idEntite
+     * @param  mixed $fragmentEntite
+     * @return void
+     */
     public function changer($params, $idEntite, $fragmentEntite)
     {
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->changer($params, $idEntite, json_decode($fragmentEntite));
     }
-
+    
+    /**
+     * Supprimer un enregistrement spécifié - Méthod 'DELETE'
+     *
+     * @param  mixed $params
+     * @param  mixed $idEntite
+     * @return void
+     */
     public function retirer($params, $idEntite)
     {
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
