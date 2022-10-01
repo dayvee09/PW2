@@ -3,7 +3,12 @@ class AccesBd
 {
     private $pdo = null;    // Objet de Connexion (PDO)
     private $requetePdo = null; // Objet de requête paramétrée PDO (PDOStatement)
-
+    
+    /**
+     * __construct initialiser objet PDO pour créer un lien avec la base de donnée
+     *
+     * @return void
+     */
     function __construct()
     {
         try {
@@ -33,7 +38,7 @@ class AccesBd
     }
 
     /**
-     * Soumet une requête paramétrée PDO
+     * Soumettre une requête paramétrée PDO
      *
      * @param  string $sql Chaîne contenant une requête SQL paramétrée
      * @param  array $params Tableau associatif des paramètres de la requête
@@ -42,13 +47,12 @@ class AccesBd
     private function soumettre($sql, $params = [])
     {
         $this->requetePdo = $this->pdo->prepare($sql);
-        // var_dump($params);
         $this->requetePdo->execute($params);
     }
 
 
     /**
-     * Obtient un jeu d'enregistrement groupé (par première colonne sélectionnée)
+     * Obtenir un jeu d'enregistrement groupé (par première colonne sélectionnée)
      *
      * @param  string $sql Chaîne contenant une requête SQL paramétrée
      * @param  array $params Tableau associatif des paramètres de la requête
@@ -63,7 +67,14 @@ class AccesBd
         // }
         return $this->requetePdo->fetchAll();
     }
-
+    
+    /**
+     * Obtenir un entregistrement
+     *
+     * @param  string $sql Chaîne contenant une requête SQL paramétrée
+     * @param  array $params Tableau associatif des paramètres de la requête
+     * @return array Tableau associatif ayant seulement un entregistrement cherché
+     */
     protected function lireUn($sql, $params = [])
     {
         $this->soumettre($sql, $params);
@@ -71,7 +82,7 @@ class AccesBd
     }
 
     /**
-     * Insère un enregistrement
+     * Insèrer un enregistrement
      *
      * @param  string $sql Chaîne contenant une requête SQL paramétrée
      * @param  array $params Tableau associatif des paramètres de la requête
@@ -84,7 +95,7 @@ class AccesBd
     }
 
     /**
-     * Modifie un enregistrement
+     * Modifier un enregistrement
      *
      * @param  string $sql Chaîne contenant une requête SQL paramétrée
      * @param  array $params Tableau associatif des paramètres de la requête
@@ -97,7 +108,7 @@ class AccesBd
     }
 
     /**
-     * Modifie un enregistrement
+     * Supprimer un enregistrement
      *
      * @param  string $sql Chaîne contenant une requête SQL paramétrée
      * @param  array $params Tableau associatif des paramètres de la requête

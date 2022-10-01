@@ -71,7 +71,10 @@ class Routeur
         // }
 
         // Routeur en localhost:
-
+        
+        // http://localhost/PW2/cellier-projet/api-php/<$partiesRoute[4]>/<$partiesRoute[5]>/<collection>/<$partiesRoute[7]>/$partiesRoute[8]
+        // http://localhost/PW2/cellier-projet/api-php/cellier/2/celliers/bouteille/5
+        
         if (count($partiesRoute) > 6 && trim(urldecode($partiesRoute[6])) != '') {
             $collection = trim(urldecode($partiesRoute[6]));
             $params = [$partiesRoute[4] => trim(urldecode($partiesRoute[5]))];
@@ -80,19 +83,6 @@ class Routeur
                 $idEntite = [$partiesRoute[7] => trim(urldecode($partiesRoute[8]))];
             }
         }
-
-
-
-        // Alternative de modèle de routeur:
-
-        // //http://localhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7
-        // if (count($partiesRoute) > 9 && trim(urldecode($partiesRoute[9])) != '') {
-        //     //$collection = Stats
-        //     $collection = trim(urldecode($partiesRoute[8])).trim(urldecode($partiesRoute[6]));
-        //     // idEntite = ['celliers'=>6, 'vins'=>'7']
-        //     $idEntite = [$partiesRoute[6] => trim(urldecode($partiesRoute[7])), 
-        //                  $partiesRoute[8] => trim(urldecode($partiesRoute[9]))];
-        // }
 
         $nomControleur = ucfirst($collection) . 'Controleur';
         $nomModele = ucfirst($collection) . 'Modele';
