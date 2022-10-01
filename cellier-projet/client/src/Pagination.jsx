@@ -1,5 +1,12 @@
 import React, { useState } from "react";
 
+/**
+ * Gestion du composant de pagination
+ * @date 2022-09-30
+ * @param {*} data
+ * @param {*} itemsPerPage
+ * @returns {*}
+ */
 function usePagination(data, itemsPerPage) {
   const [currentPage, setCurrentPage] = useState(1);
   const maxPage = Math.ceil(data.length / itemsPerPage);

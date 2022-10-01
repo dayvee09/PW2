@@ -12,6 +12,11 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
+/**
+ * Grid 
+ * @date 2022-09-30
+ * @returns {*}
+ */
 export default function ColumnsGrid() {
   return (
     <Box sx={{ flexGrow: 1 }}>
