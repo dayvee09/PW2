@@ -1,6 +1,6 @@
 <?php
 class StatsModele extends AccesBd
-{    
+{
     /**
      * Récupérer le nombre total des différents bouteilles et le prix total à un cellier spécifié 
      * @param  array $params Tableau associatif des paramètres de la requête
@@ -10,7 +10,7 @@ class StatsModele extends AccesBd
     {
         return $this->lire("SELECT count(*) as compte, sum(prix_saq * quantite) as somme FROM vino__bouteille JOIN vino__bouteille_has_vino__cellier ON vino__bouteille.id=vino__bouteille_has_vino__cellier.vino__bouteille_id JOIN vino__type ON vino__bouteille.vino__type_id=vino__type.id JOIN vino__cellier ON vino__cellier.id =vino__bouteille_has_vino__cellier.vino__cellier_id where vino__bouteille_has_vino__cellier.vino__cellier_id =:cellier ORDER BY vino__bouteille.id ASC", ['cellier' => $params['cellier']]);
     }
-    
+
     /**
      * Récupérer l'enregistrement d'une bouteille spécifié dans un cellier spécifié
      *
@@ -24,7 +24,7 @@ class StatsModele extends AccesBd
         $id_cellier = intval($idEntite['celliers']);
         return $this->lireUn("SELECT nom, `image`, code_saq, pays, `description`, prix_saq, url_saq, url_img, `format`, vino__type_id, millesime,personnalise, vino__cellier_id, quantite, date_achat, garde_jusqua, notes FROM vino__bouteille JOIN vino__bouteille_has_vino__cellier ON vino__bouteille.id=vino__bouteille_has_vino__cellier.vino__bouteille_id WHERE vino__bouteille.id=:vin_id and vino__bouteille_has_vino__cellier.vino__cellier_id=:cellier_id", ['vin_id' => $id_vin, 'cellier_id' => $id_cellier]);
     }
-    
+
     /**
      * Modifier des informations d'une bouteille spécifié
      *
@@ -43,6 +43,7 @@ class StatsModele extends AccesBd
             $id_cellier
         ]);
         // *-- payload -"PUT" -- "http://localhost/PW2/cellier-projet/api-php/user_id/3/celliers/6/vins/7" */
+        // Exemple pour test:
         // {
         //   "quantite":100,
         //   "date_achat":"2011-01-01",

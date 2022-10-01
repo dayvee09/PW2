@@ -18,7 +18,7 @@ class CelliersModele extends AccesBd
      *
      * @param  array $params Tableau associatif des paramètres de la requête
      * @param  array $idEntite Tableau associatif des paramètres de la requête
-     * @return array Tableau associatif ayant seulement un entregistrement cherché
+     * @return array Tableau associatif ayant seulement un enregistrement cherché
      */
     public function un($params, $idEntite)
     {

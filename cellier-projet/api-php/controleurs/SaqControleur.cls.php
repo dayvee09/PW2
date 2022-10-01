@@ -3,9 +3,6 @@
 /**
  * Class MonSQL
  * Classe qui génère ma connection à MySQL à travers un singleton
- *
- * @author Jonathan Martel
- * @version 1.0
  */
 class SaqControleur extends Controleur
 {
@@ -22,8 +19,6 @@ class SaqControleur extends Controleur
     //IMPORTER DE LA SAQ
     public function ajouter($donneesSaq)
     {
-        // $page = 1;
-        // $nombreProduit = 24; //48 ou 96	
 
         $body = json_decode($donneesSaq);
 
@@ -95,7 +90,7 @@ class SaqControleur extends Controleur
 
         return $i;
     }
-    
+
     /**
      * Prendre les contenu des nodes HTML et le sauvegarder 
      *
@@ -111,7 +106,7 @@ class SaqControleur extends Controleur
         }
 
         return $innerHTML;
-    }    
+    }
     /**
      * Nettoyer l'espace de la chaine de caractère
      *
@@ -121,7 +116,7 @@ class SaqControleur extends Controleur
     {
         return preg_replace('/\s+/', ' ', $chaine);
     }
-        
+
     /**
      * Récupérer tous les informations associées à des bouteilles de la SAQ 
      *
@@ -191,7 +186,7 @@ class SaqControleur extends Controleur
         }
         return $info;
     }
-    
+
     /**
      * Ajouter les bouteilles importées dans la base de donnée 
      *
@@ -222,7 +217,7 @@ class SaqControleur extends Controleur
         }
         return $retour;
     }
-    
+
     /**
      * Récupérer tous les bouteilles importées de la SAQ par le type du vin - Méthod 'GET'
      *
@@ -260,7 +255,7 @@ class SaqControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $nbResults;
     }
-    
+
     /**
      * Récupérer un un enregistrement spécifié - Méthod 'GET'
      *
@@ -272,7 +267,7 @@ class SaqControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->un($params, $idEntite);
     }
-    
+
     /**
      * Modifier un enregistrement spécifié - Méthod 'PUT'
      *
@@ -285,7 +280,7 @@ class SaqControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->remplacer($id, json_decode($cellier));
     }
-    
+
     /**
      * Modifier un enregistrement spécifié - Méthod 'PATCH'
      *
@@ -299,7 +294,7 @@ class SaqControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->changer($params, $idEntite, json_decode($fragmentEntite));
     }
-    
+
     /**
      * Supprimer un enregistrement spécifié - Méthod 'DELETE'
      *

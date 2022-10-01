@@ -5,8 +5,6 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET,POST,PUT,PATCH,DELETE");
 
 $urlRequete = $_SERVER['REQUEST_URI'];
-// echo $urlRequete;
-// echo "\n\n";
 
 $routeur = new Routeur(
     parse_url($urlRequete, PHP_URL_PATH),
@@ -41,8 +39,6 @@ class Routeur
 
     public function invoquerRoute()
     {
-        // Exemples d'URLs : 
-        // /index.php/plats, /plats/17, /vins, /vins/5
         $collection = "celliers";
         $idEntite = [];
         $params = [];
@@ -71,14 +67,10 @@ class Routeur
         // }
 
         // Routeur en localhost:
-        
-        // http://localhost/PW2/cellier-projet/api-php/<$partiesRoute[4]>/<$partiesRoute[5]>/<collection>/<$partiesRoute[7]>/$partiesRoute[8]
-        // http://localhost/PW2/cellier-projet/api-php/cellier/2/celliers/bouteille/5
-        
+
         if (count($partiesRoute) > 6 && trim(urldecode($partiesRoute[6])) != '') {
             $collection = trim(urldecode($partiesRoute[6]));
             $params = [$partiesRoute[4] => trim(urldecode($partiesRoute[5]))];
-            //print_r($params);
             if (count($partiesRoute) > 7 && trim(urldecode($partiesRoute[7])) != '') {
                 $idEntite = [$partiesRoute[7] => trim(urldecode($partiesRoute[8]))];
             }

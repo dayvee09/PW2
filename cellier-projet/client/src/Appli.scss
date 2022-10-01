@@ -1,9 +1,4 @@
 .Appli {
-  // Override le style des MUI pour les alerts
-  .css-juoc2m {
-    background-color: #152440 !important;
-    border: 1px solid #f1ab50;
-  }
   .Appli--entete {
     background-color: #152440;
     background-position: center;
@@ -170,6 +165,11 @@
     @media only screen and (min-width: 1800px) {
       padding: 0 20vw 75px 20vw;
     }
+  }
+  // Override le style des MUI pour les alerts
+  .css-juoc2m {
+    background-color: #152440 !important;
+    border: 1px solid #f1ab50;
   }
 }
 
