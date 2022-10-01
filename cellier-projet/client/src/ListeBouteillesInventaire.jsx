@@ -15,6 +15,18 @@ import NativeSelect from "@mui/material/NativeSelect";
 import InputBase from "@mui/material/InputBase";
 import { styled } from "@mui/material/styles";
 
+/**
+ * Gestion de la liste de l'inventaire des bouteilles 
+ * 
+ * Contenant l'affichage de l'inventaire total de bouteille de l'utilisateur et
+ * l'inventaire par la bouteille, ainsi retrouver le cellier dans lequel la bouteille s'y trouve;
+ * Intégrer la fonctionnalité de recherche permettant à l’utilisateur de retrouver la bouteille désirée 
+ * et la fonctionnalité de pagination
+ * 
+ * @date 2022-09-30
+ * @param {any} props
+ * @returns {any}
+ */
 function ListeBouteillesInventaire(props) {
 	// const [toSearch, setToSearch] = useState("");
 	const [results, setResults] = useState([]);

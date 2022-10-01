@@ -12,6 +12,12 @@ import MuiAlert from "@mui/material/Alert";
 import MuiButton from "@mui/material/Button";
 import { PasswordField, Button } from "@aws-amplify/ui-react";
 
+/**
+ * Gestion du mot de passe d'un utilisateur connecté
+ * @date 2022-09-30
+ * @param {*} {setFrmPasswordOuvert ... }
+ * @returns {*}
+ */
 export default function FrmPassword({
 	setFrmPasswordOuvert,
 	frmPasswordOuvert,

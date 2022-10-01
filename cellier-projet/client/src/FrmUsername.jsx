@@ -13,6 +13,12 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Gestion de l'entrée du nom d'utilisateur
+ * @date 2022-09-30
+ * @param {*} {username ... }
+ * @returns {*}
+ */
 export default function FrmEmail({
 	username,
 	setNouveauUsername,

@@ -7,6 +7,14 @@ import MuiAlert from "@mui/material/Alert";
 import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 
+/**
+ * Gestion de l'ajout d'un cellier à un utilisateur
+ * 
+ * Contenant la gestion des états et le stockage des données en utilisant 'fetch'
+ * @date 2022-09-30
+ * @param {*} {celliers ...}
+ * @returns {*}
+ */
 function FormAjoutCellier({ celliers, URI, fetchCelliers, setError }) {
 	const navigate = useNavigate();
 	const [messageRetour, setMessageRetour] = useState([]);

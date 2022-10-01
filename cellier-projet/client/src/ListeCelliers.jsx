@@ -3,6 +3,12 @@ import Cellier from "./Cellier";
 import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_search_bar_white.svg";
 
+/**
+ * L'affichage de la liste des celliers à un utilisteur connecté
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 function ListeCelliers(props) {
 	if (props.celliers.length > 0) {
 		return (
