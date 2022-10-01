@@ -174,6 +174,7 @@ function ListeBouteillesInventaire(props) {
             variant="outlined"
             shape="rounded"
             onChange={handleChange}
+			aria-label="pagination"
           />
           {/* <FormControl sx={{ m: 1 }} variant="standard" size="small">
               <NativeSelect
