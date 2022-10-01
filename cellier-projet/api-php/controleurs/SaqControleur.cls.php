@@ -85,8 +85,6 @@ class SaqControleur extends Controleur
             if (strpos($noeud->getAttribute('class'), "product-item") !== false) {
 
                 $info = self::recupereInfo($noeud);
-                // var_dump($info);
-                // die();
                 $retour = $this->ajouteProduit($info);
                 if ($retour->succes == false) {
                 } else {
@@ -191,7 +189,6 @@ class SaqControleur extends Controleur
                 $info->prix = $prix;
             }
         }
-        //var_dump($info);
         return $info;
     }
     
@@ -207,8 +204,6 @@ class SaqControleur extends Controleur
         $retour->succes = false;
         $retour->raison = '';
 
-        // var_dump($bte);
-        // die();
         // Récupère le type
         $rows = $this->modele->un($bte->desc->type);
         $type_id = $rows->id;

@@ -145,6 +145,7 @@ function ListeBouteilles(props) {
               <select
                 className="retour"
                 name="tri"
+				aria-label="tri"
                 id="tri"
                 defaultValue="tout"
                 onChange={(e) => setSortType(e.target.value)}

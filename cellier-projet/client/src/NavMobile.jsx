@@ -89,8 +89,9 @@ export default function NavMobile({
               icon={<AddBottleIcone />}
               component={Link}
               to={`/vins`}
+			  aria-label="bouton-ajouter-bouteille"
             />
-            <BottomNavigationAction className="disabledIcone" disabled={true} />
+            <BottomNavigationAction className="disabledIcone" disabled={true} aria-label="bouton-ajouter-bouteille"/>
             <BottomNavigationAction
               label="FAVORIS"
               icon={<FavorisIcone />}

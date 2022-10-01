@@ -9,7 +9,6 @@ class UtilisateursControleur extends Controleur
      */
     public function tout($params)
     {
-        // $groupe = false;
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->tout($params);
     }
