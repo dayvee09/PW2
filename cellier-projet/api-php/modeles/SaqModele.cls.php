@@ -17,7 +17,6 @@ class SaqModele extends AccesBd
 
     public function ajouter($vin, $type_id)
     {
-
         // var_dump($vin);
         // die();
         $nouveau_id = $this->creer("INSERT INTO vino__bouteille (nom, vino__type_id, `image`, code_saq, pays, `description`, prix_saq, url_saq, url_img, `format`, millesime, personnalise) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [$vin->nom, $type_id, $vin->img, $vin->desc->code_SAQ, $vin->desc->pays, $vin->desc->texte, floatval($vin->prix), $vin->url, $vin->img, $vin->desc->format, 2000, 0]);

@@ -147,7 +147,7 @@ export default function Profil(props) {
 	  <div  className="Appli--container">
 		<div className="infos-profil">
 			<img src={Image} className="icone-profil" alt="icone-profil"></img>
-			<p>{props.username}</p>
+			<h1>{props.username}</h1>
 		</div>
 		<div className="Profil--container">
 			{/* <div className="signOut">
@@ -167,6 +167,7 @@ export default function Profil(props) {
 					type={"text"}
 					variant="outlined"
 					value={props.username}
+					aria-label="username"
 					disabled
 					/>
 				</div>
@@ -183,6 +184,7 @@ export default function Profil(props) {
 					type={"text"}
 					variant="outlined"
 					value={props.emailUtilisateur}
+					aria-label="email"
 					disabled
 					/>
 				</div>
@@ -199,6 +201,7 @@ export default function Profil(props) {
 					type={"password"}
 					variant="outlined"
 					defaultValue={"**********"}
+					aria-label="password"
 					disabled
 				/>
 				</div>

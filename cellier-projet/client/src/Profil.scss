@@ -87,6 +87,12 @@ a:link {
 	margin-bottom: 25px;
 	margin-top: 50px;
 
+	h1 {
+		padding-left: 25px;
+		margin-top: -25px;
+		text-transform: lowercase;
+	}
+
 	.icone-profil {
 		@media only screen and (min-width: 768px) {
 			margin-top: 0px;
