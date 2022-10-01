@@ -18,6 +18,15 @@ import Alert from "@mui/material/Alert";
 import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 
+/**
+ * Gestion de l'ajout d'une bouteille importé de la SAQ et l'ajout d'une bouteille 'non listée'
+ * 
+ * Contenant la foncition de l'autocomplete, la gestion de la formulaire, la gestion des états
+ * ainsi que la lecture et le stockage des données en utilisant 'fetch'
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 export default function FrmAjoutBouteille(props) {
   /**
    * L‘état d'erreur

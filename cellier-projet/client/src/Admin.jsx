@@ -8,6 +8,12 @@ import MuiAlert from "@mui/material/Alert";
 import { useNavigate } from "react-router-dom";
 import { selectUnstyledClasses } from "@mui/base";
 
+/**
+ * Gestion de l'admin qui contient principalement la fonction de synchroniser avec la base de données de la SAQ
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 export default function Admin(props) {
 	const [nbBouteillesSaq, setNbBouteillesSaq] = useState(0);
 	const [go, setGo] = useState(false);

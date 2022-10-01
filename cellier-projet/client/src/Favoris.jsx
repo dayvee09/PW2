@@ -4,6 +4,14 @@ import Bouteille from "./Bouteille";
 import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 
+/**
+ * Gestion de la bouteille à favoris
+ * 
+ * Contenant la gestion des états, de l'ajout et la suppresion de la bouteille à favorie
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 function Favoris(props) {
   const [favoris, setFavoris] = useState([]);
   const [debut, setDebut] = useState(0);
