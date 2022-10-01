@@ -4,6 +4,14 @@ import Bouteille from "./Bouteille";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 
+/**
+ * L'affichage de la liste des bouteilles
+ * 
+ * Contenant le tri par la différent condition
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 function ListeBouteilles(props) {
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);

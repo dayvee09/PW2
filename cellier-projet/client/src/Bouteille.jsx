@@ -16,6 +16,17 @@ import placeholderSaq from "./img/png/placeholder-saq.png";
 import favoriteIconeLine from "./img/svg/icone_favorite_blue_line.svg";
 import favoriteIconeFilled from "./img/svg/icone_favorite_blue_filled.svg";
 
+/**
+ * Gestion du composant 'bouteille'
+ * 
+ * Contenant la gestion des états, du menu contextuel d'action d'une bouteille(modifier, ajouter, boire, supprimer)
+ * Gère l'ajout d'une bouteille au favoris
+ * Récupérer des ressources en utilisant Fetch
+ * 
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 export default function Bouteille(props) {
   /**
    *  API MUI https://mui.com/material-ui/react-snackbar/
@@ -115,7 +126,7 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Gestion du menu contextuel d'action d'un cellier
+   * Gestion du menu contextuel d'action d'une bouteille
    * @param {*} evt
    */
   function gererMenuContextuel(evt) {
@@ -129,14 +140,14 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Gestion de la fermeture du menu contextuel d'action d'un cellier
+   * Gestion de la fermeture du menu contextuel d'action d'une bouteille
    */
   function gererFermerMenuContextuel() {
     setEltAncrage(null);
   }
 
   /**
-   * Gère la fermeture de la boite de dialogue de supression du profil
+   * Gère la fermeture de la boite de dialogue de supression 
    */
   function viderFermerFrm() {
     gererFermerMenuContextuel();
@@ -145,7 +156,7 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Gère l'ouverture de la boite de dialogue de supression du cellier
+   * Gère l'ouverture de la boite de dialogue de supression 
    */
   function gererSupprimer() {
     setMessageDialog("Voulez-vous vraiment supprimer cette bouteille ?");
@@ -153,7 +164,7 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Gère la suppression du cellier
+   * Gère la suppression
    */
   function gererSoumettre() {
     fetchSupprimerBouteille();
@@ -335,7 +346,7 @@ export default function Bouteille(props) {
   }
 
   /**
-   * Supprime le cellier
+   * Supprime la bouteille spécifié - Appel d'API 
    */
   async function fetchSupprimerBouteille() {
     await fetch(

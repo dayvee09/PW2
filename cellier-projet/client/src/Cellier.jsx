@@ -13,6 +13,16 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { styled } from "@mui/material/styles";
 
+/**
+ * Gestion du composant 'cellier'
+ * 
+ * Contenant la gestion des états, du menu contextuel d'action d'un cellier(modifier, supprimer)
+ * Récupérer des ressources en utilisant Fetch
+ * Contrôle des fenêtres de dialogue interactives
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 export default function Cellier(props) {
   const [cellier, setCellier] = useState([props.id]);
   const [statsCellier, setStatsCellier] = useState([]);

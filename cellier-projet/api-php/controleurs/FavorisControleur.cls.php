@@ -24,7 +24,7 @@ class FavorisControleur extends Controleur
     }
     
     /**
-     * Ajouter une bouteille favorie - Méthod 'POST'
+     * Ajouter une bouteille à favorie - Méthod 'POST'
      *
      * @param  mixed $vin
      * @return void
