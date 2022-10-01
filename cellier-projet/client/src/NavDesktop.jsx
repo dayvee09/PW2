@@ -8,30 +8,30 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
 export default function NavDesktop({
-  user,
-  gererSignOut,
-  utilisateur,
-  username,
+	user,
+	gererSignOut,
+	utilisateur,
+	username,
 }) {
-  const [eltAncrage, setEltAncrage] = useState(null);
-  const menuContextuelOuvert = Boolean(eltAncrage);
-  const navigate = useNavigate();
+	const [eltAncrage, setEltAncrage] = useState(null);
+	const menuContextuelOuvert = Boolean(eltAncrage);
+	const navigate = useNavigate();
 
-  function gererMenuContextuel(evt) {
-    setEltAncrage(evt.currentTarget);
-  }
+	function gererMenuContextuel(evt) {
+		setEltAncrage(evt.currentTarget);
+	}
 
-  function gererFermerMenuContextuel() {
-    setEltAncrage(null);
-  }
+	function gererFermerMenuContextuel() {
+		setEltAncrage(null);
+	}
 
-  const redirectionAccueil = function () {
-    gererSignOut();
-    const timer = setTimeout(() => {
-      navigate("/", { replace: true });
-    }, 2000);
-    return () => clearTimeout(timer);
-  };
+	const redirectionAccueil = function () {
+		gererSignOut();
+		const timer = setTimeout(() => {
+			navigate("/", { replace: true });
+		}, 2000);
+		return () => clearTimeout(timer);
+	};
   return (
     <>
       <div className="NavDesktop">

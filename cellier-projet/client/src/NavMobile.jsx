@@ -12,16 +12,14 @@ import { ReactComponent as InventaireIcone } from "./img/svg/icone_inventaire_bl
 import { ReactComponent as AddBottleIcone } from "./img/svg/add_bottle_blue_filled.svg";
 
 export default function NavMobile({
-  Auth,
-  emailUtilisateur,
-  utilisateur,
-  setIndexNav,
-  indexNav,
-  setResetBottomNav,
-  resetBottomNav
+	Auth,
+	emailUtilisateur,
+	utilisateur,
+	setIndexNav,
+	indexNav,
+	setResetBottomNav,
+	resetBottomNav
 }) {
-	// console.log('value is, on path', window.location.pathname);
-	
   	// état du BottomNavigation
 	const [value, setValue] = useState(indexNav);
 

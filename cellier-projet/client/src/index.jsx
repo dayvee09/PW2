@@ -10,9 +10,9 @@ Amplify.configure(config)
 
 const eltRacine = ReactDOM.createRoot(document.getElementById("racine"));
 eltRacine.render(
-  <React.StrictMode>
-	<Router>
-    	<Appli />
-	</Router>
-  </React.StrictMode>
+	<React.StrictMode>
+		<Router>
+			<Appli />
+		</Router>
+	</React.StrictMode>
 );

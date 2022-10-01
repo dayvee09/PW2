@@ -14,7 +14,6 @@ export default function DateSelecteur(props) {
             <div className="DateInput">
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <Stack spacing={3}>
-
                         <DatePicker
                            dateFormat="YYYY-MM-DD"
                             views={['day']}
