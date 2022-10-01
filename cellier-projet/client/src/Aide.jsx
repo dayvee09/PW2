@@ -16,7 +16,6 @@ function Aide(props) {
     return (
       <div className="Aide">
 		<div className="Appli--entete">
-
 		</div>
 		<div className="Appli--container">
 			<div className="Aide--fonctionnement-container">
@@ -25,7 +24,6 @@ function Aide(props) {
 					<div className="Aide--fonctionnement-grid-tile">
 						<div>
 							<h2><AddLocationRoundedIcon  style={{ color: '#f1ab50', width: '15px', marginRight: '10px' }} />Créer votre cellier</h2>
-							
 							<img
 								src={etape1}
 								width="85"
@@ -53,13 +51,11 @@ function Aide(props) {
 								Accéder au formulaire d'ajout et choisissez l'importation ou la création d'une bouteille personnalisée. 
 								Entrez les informations requises et sélectionnez le cellier de votre choix.
 							</p>
-							
 						</div>
 					</div>
 					<div className="Aide--fonctionnement-grid-tile">
 						<div>
 							<h2><SettingsRoundedIcon style={{ color: '#f1ab50', width: '15px', marginRight: '10px' }}/>Gérer et consulter facilement vos celliers</h2>
-							
 							<img
 								src={etape3}
 								width="85"
@@ -76,9 +72,6 @@ function Aide(props) {
 						</div>
 					</div>
 				</div>
-				{/* <div className="Aide--questions-container">
-					<h2>Questions fréquentes</h2>
-				</div> */}
 			</div>
 			<div className="Aide--second-section">
 				<div className="">
@@ -121,7 +114,7 @@ function Aide(props) {
 					</div>
 				</div>
 			</div>
-			</div>
+		</div>
 	</div>
     );
 }
