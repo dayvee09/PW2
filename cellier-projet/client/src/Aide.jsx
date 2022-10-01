@@ -12,6 +12,14 @@ import etape1 from "./img/png/etape1.png";
 import etape2 from "./img/png/etape2.png";
 import etape3 from "./img/png/etape3.png";
 
+/**
+ * Gestion de la fonction 'Aide' 
+ * 
+ * Contenant l'affichage des principales fonctionnalités du site ainsi qu’un lien pour pouvoir contacter l’administration du site
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 function Aide(props) {
     return (
       <div className="Aide">

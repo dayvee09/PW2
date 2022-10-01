@@ -9,6 +9,12 @@ import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
+/**
+ * Gestion du formulaire de l'import de la SAQ
+ * @date 2022-09-30
+ * @param {*} {frmOuvert ... }
+ * @returns {*}
+ */
 export default function FrmSaq({
 	frmOuvert,
 	setFrmOuvert,

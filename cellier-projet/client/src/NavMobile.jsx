@@ -11,6 +11,12 @@ import { ReactComponent as FavorisIcone } from "./img/svg/icone_favorite_blue_li
 import { ReactComponent as InventaireIcone } from "./img/svg/icone_inventaire_blue_line.svg";
 import { ReactComponent as AddBottleIcone } from "./img/svg/add_bottle_blue_filled.svg";
 
+/**
+ * Gestion de la navigation en version mobile
+ * @date 2022-09-30
+ * @param {*} {Auth ...}
+ * @returns {*}
+ */
 export default function NavMobile({
 	Auth,
 	emailUtilisateur,

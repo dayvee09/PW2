@@ -1,6 +1,12 @@
 import "./ToggleBtn.scss";
 import { useState } from "react";
 
+/**
+ * Gestion du composant 'ToggleBtn' qui fait partie de la fonctionnalité de l'ajout d'une bouteille
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 export default function ToggleBtn(props) {
   
 	function handleClickBtn() {

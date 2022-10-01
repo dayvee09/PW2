@@ -15,6 +15,14 @@ import placeholderSaq from "./img/png/placeholder-saq.png";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
 
+/**
+ * Gestion du formulaire d'une bouteille
+ * 
+ * Contenant l'affichage et la modification de la bouteille spécifié
+ * @date 2022-09-30
+ * @param {*} {bouteille ...}
+ * @returns {*}
+ */
 export default function FrmBouteille({
 	bouteille,
 	frmOuvert,

@@ -48,6 +48,15 @@ const Puller = styled(Box)(({ theme }) => ({
 	bottom: "calc(50% - 15px)",
 }));
 
+/**
+ * La tuile de l'inventaire de bouteille qui fait partie de la liste de l'inventaire de bouteille
+ * 
+ * Permet à l'utilisateur de consulter les stocks de la bouteille en cliquant le boutton 
+ * Contenant le composant de la liste des celliers dans lequel cette bouteille se trouve 
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 export default function BouteilleInventaire(props) {
 	/**
 	 *  MUI component drawer

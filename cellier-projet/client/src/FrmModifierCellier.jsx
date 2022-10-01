@@ -7,6 +7,12 @@ import MuiAlert from "@mui/material/Alert";
 import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 
+/**
+ * Gestion du formulaire de modification d'un cellier
+ * @date 2022-09-30
+ * @param {*} {fetchCelliers ...}
+ * @returns {*}
+ */
 function FrmModifierCellier({ fetchCelliers, URI, error, setError }) {
 	const location = useLocation();
 	const navigate = useNavigate();
