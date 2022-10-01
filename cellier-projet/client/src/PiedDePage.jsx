@@ -1,6 +1,12 @@
 import "./PiedDePage.scss";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 
+/**
+ * Le pies de page
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 export default function PiedDePage(props) {
   return (
     <>

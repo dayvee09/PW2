@@ -7,6 +7,12 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import moment from "moment";
 
+/**
+ * Gestion de selecteur d'une date en format "YYYY-MM-DD"
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 export default function DateSelecteur(props) {
 
     return (

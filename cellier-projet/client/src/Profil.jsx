@@ -16,6 +16,12 @@ import { useNavigate } from "react-router-dom";
 import { TextField } from "@aws-amplify/ui-react";
 import { NavLink } from "react-router-dom";
 
+/**
+ * Gestion de mon profile
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 export default function Profil(props) {
 
   /**

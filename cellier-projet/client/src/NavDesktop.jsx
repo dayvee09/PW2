@@ -7,6 +7,12 @@ import Image from "./img/svg/icone_profil_blue_line.svg";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 
+/**
+ * Gestion de la navigation principale en version desktop (menu déroulant)
+ * @date 2022-09-30
+ * @param {*} {user ...}
+ * @returns {*}
+ */
 export default function NavDesktop({
   user,
   gererSignOut,

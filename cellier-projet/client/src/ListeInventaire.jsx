@@ -9,6 +9,12 @@ import Avatar from "@mui/material/Avatar";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+/**
+ * La liste des celliers qui affiche de différent inventaire d'une bouteille spécifié dans le composant "BouteilleInventaire"
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 export default function ListeInventaire(props) {
   const [idCellier, setIdCellier] = useState([]);
   const navigate = useNavigate();

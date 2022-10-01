@@ -27,6 +27,16 @@ import ListeBouteillesInventaire from "./ListeBouteillesInventaire";
 
 let DATA;
 
+/**
+ * Gestion de l'application 
+ * 
+ * contenant la gestion des états, la configuration de la varible de l'environnement , des paramètres de routage du système. 
+ * Prétraitement, acquisition et chargement de toutes les données à render, déploiement logique algorithmique.
+ * Disposition des composants
+ * 
+ * @date 2022-09-30
+ * @returns {*}
+ */
 const Appli = () => {
   const [error, setError] = useState([]);
   const [bouteilles, setBouteilles] = useState([]);

@@ -6,6 +6,12 @@ import {
   NavLink,
 } from "react-router-dom";
 
+/**
+ * Gestion de l'utilisateur 
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 export default function Utilisateur(props) {
   useEffect(() => {
     props.fetchUtilisateurs();

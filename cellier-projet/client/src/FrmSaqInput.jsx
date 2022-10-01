@@ -6,6 +6,12 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
+/**
+ * Gestion de l'entrée du composant 'input' situé dans le formulaire de l'import de la SAQ
+ * @date 2022-09-30
+ * @param {*} props
+ * @returns {*}
+ */
 export default function FrmSaqInput(props) {
   const gererType = (e) => {
     props.setType(e.target.value);
