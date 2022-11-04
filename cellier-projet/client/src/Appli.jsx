@@ -51,14 +51,14 @@ const Appli = () => {
   const [celliers, setCelliers] = useState([]);
   const [indexNav, setIndexNav] = useState(0);
   const [resetBottomNav, setResetBottomNav] = useState(false);
-  const ENV = "dev";
+  const ENV = "prod";
   const [URI, setURI] = useState([]);
   const [favorisId, setFavorisId] = useState([]);
 
   let location = window.location.pathname;
   useEffect(() => {
     if (ENV == "prod") {
-      setURI("http://100.26.239.127/PW2/cellier-projet/api-php/index.php");
+      setURI("https://monvino.app/api-php/index.php");
     } else {
       setURI("http://localhost/PW2/cellier-projet/api-php");
     }
