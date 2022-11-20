@@ -129,9 +129,9 @@ export default function FrmBouteille({
             </div>
             <hr></hr>
             <div className="hr"></div>
-            <p className="bouteille--description">
+            {/* <p className="bouteille--description">
               Description : {bouteille.description}
-            </p>
+            </p> */}
             <p className={personnalise == 0 ? "hidden" : ""}>
               Millesime : {bouteille.millesime}
             </p>
