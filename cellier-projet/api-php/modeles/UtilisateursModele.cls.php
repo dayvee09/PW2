@@ -1,6 +1,6 @@
 <?php
 class UtilisateursModele extends AccesBd
-{    
+{
     /**
      * Récupérer tous les utilisateurs 
      *
@@ -15,7 +15,7 @@ class UtilisateursModele extends AccesBd
             return $this->lire("SELECT vino__utilisateur.id, vino__utilisateur.email, vino__utilisateur.nom FROM vino__utilisateur");
         }
     }
-    
+
     /**
      * Récupérer un enregistrement d'un utilisateur spécifié par son email unique
      *
@@ -26,7 +26,7 @@ class UtilisateursModele extends AccesBd
     {
         return $this->lireUn("SELECT vino__utilisateur.id, vino__utilisateur.email, vino__utilisateur.nom FROM vino__utilisateur JOIN vino__cellier ON vino__utilisateur.id=vino__cellier.vino__utilisateur_id WHERE vino__utilisateur.email=:email ", ['email' => $params["email"]]);
     }
-    
+
     /**
      * Ajouter un nouveau utilisateur et son premier cellier par défault
      *
@@ -36,10 +36,10 @@ class UtilisateursModele extends AccesBd
     public function ajouter($utilisateur)
     {
         $last_insert_id = $this->creer("INSERT INTO vino__utilisateur (vino__utilisateur.email, vino__utilisateur.nom) VALUES (?, ?)", [$utilisateur->email, $utilisateur->nom]);
-        $last_insert_id = $this->creer("INSERT INTO vino__cellier (vino__cellier.nom, vino__utilisateur_id) VALUES (?, ?)", ["Coucou", $last_insert_id]);
+        $last_insert_id = $this->creer("INSERT INTO vino__cellier (vino__cellier.nom, vino__utilisateur_id) VALUES (?, ?)", ["Cellier par défaut", $last_insert_id]);
         return $last_insert_id;
     }
-    
+
     /**
      * Supprimer un utilisateur spécifié
      *
@@ -50,7 +50,7 @@ class UtilisateursModele extends AccesBd
     {
         return $this->supprimer("DELETE FROM vino__utilisateur WHERE vino__utilisateur.email=:email", ['email' => $params["email"]]);
     }
-    
+
     /**
      * Modifier certains des champs d'un utilisateur connecté
      *

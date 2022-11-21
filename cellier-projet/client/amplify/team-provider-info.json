@@ -9,11 +9,18 @@
       "UnauthRoleName": "amplify-cellierreactapp-dev-120444-unauthRole",
       "StackName": "amplify-cellierreactapp-dev-120444",
       "StackId": "arn:aws:cloudformation:ca-central-1:550015104023:stack/amplify-cellierreactapp-dev-120444/f9435870-2621-11ed-947a-02606b1762d2",
-      "AmplifyAppId": "d34898wyfk7uvf"
+      "AmplifyAppId": "d2d3iwc7zl80q2"
     },
     "categories": {
       "auth": {
         "cellierreactappf10f3a82": {}
+      }
+    }
+  },
+  "staging": {
+    "categories": {
+      "auth": {
+        "monvino": {}
       }
     }
   }

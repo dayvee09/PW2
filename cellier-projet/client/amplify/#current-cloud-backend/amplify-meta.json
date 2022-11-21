@@ -9,7 +9,7 @@
       "UnauthRoleName": "amplify-cellierreactapp-dev-120444-unauthRole",
       "StackName": "amplify-cellierreactapp-dev-120444",
       "StackId": "arn:aws:cloudformation:ca-central-1:550015104023:stack/amplify-cellierreactapp-dev-120444/f9435870-2621-11ed-947a-02606b1762d2",
-      "AmplifyAppId": "d34898wyfk7uvf"
+      "AmplifyAppId": "d2d3iwc7zl80q2"
     }
   },
   "auth": {
@@ -19,24 +19,16 @@
       "dependsOn": [],
       "customAuth": false,
       "frontendAuthConfig": {
-        "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL"
-        ],
-        "signupAttributes": [
-          "EMAIL"
-        ],
+        "socialProviders": ["amazon", "apple", "facebook", "google"],
+        "usernameAttributes": ["EMAIL"],
+        "signupAttributes": ["EMAIL"],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": []
         },
         "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
+        "mfaTypes": ["SMS"],
+        "verificationMechanisms": ["EMAIL"]
       },
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-cellierreactapp-dev-120444-deployment/amplify-cfn-templates/auth/cellierreactappf10f3a82-cloudformation-template.json",

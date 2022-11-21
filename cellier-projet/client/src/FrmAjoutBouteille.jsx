@@ -80,7 +80,7 @@ export default function FrmAjoutBouteille(props) {
    * État de la date de garde choisie
    */
   const [vinGarde, setVinGarde] = React.useState(
-    moment().get("year").toString()
+    moment().add(1, "years").format("YYYY-MM-DD")
   );
   /**
    * État de la Note
@@ -180,7 +180,7 @@ export default function FrmAjoutBouteille(props) {
     setVinFormat("");
     setVinPrix(1);
     setVinDescription("");
-    setVinGarde(moment().get("year").toString());
+    setVinGarde(moment().get("day").toString());
     setVinImage("");
     setVinNom(" ");
     setVinNote("");

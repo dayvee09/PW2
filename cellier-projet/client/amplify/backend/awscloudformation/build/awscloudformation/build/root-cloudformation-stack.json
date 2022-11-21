@@ -1,5 +1,5 @@
 {
-  "Description": "Root Stack for AWS Amplify CLI",
+  "Description": "Root Stack for AWS Amplify Console",
   "AWSTemplateFormatVersion": "2010-09-09",
   "Parameters": {
     "DeploymentBucketName": {
@@ -152,40 +152,49 @@
         }
       }
     },
-    "authcellierreactappf10f3a82": {
+    "authmonvino": {
       "Type": "AWS::CloudFormation::Stack",
       "Properties": {
-        "TemplateURL": "https://s3.amazonaws.com/amplify-cellierreactapp-dev-120444-deployment/amplify-cfn-templates/auth/cellierreactappf10f3a82-cloudformation-template.json",
+        "TemplateURL": "https://s3.amazonaws.com/amplify-amplifyaac26432e9544-staging-53728-deployment/amplify-cfn-templates/auth/monvino-cloudformation-template.json",
         "Parameters": {
-          "identityPoolName": "cellierreactappf10f3a82_identitypool_f10f3a82",
+          "identityPoolName": "testAuthIdentityPool",
           "allowUnauthenticatedIdentities": false,
-          "resourceNameTruncated": "cellief10f3a82",
-          "userPoolName": "cellierreactappf10f3a82_userpool_f10f3a82",
+          "resourceNameTruncated": "monvin2b41fdf8",
+          "userPoolName": "monvino",
           "autoVerifiedAttributes": "email",
           "mfaConfiguration": "OFF",
           "mfaTypes": "SMS Text Message",
           "smsAuthenticationMessage": "Your authentication code is {####}",
           "smsVerificationMessage": "Your verification code is {####}",
-          "emailVerificationSubject": "Your verification code",
-          "emailVerificationMessage": "Your verification code is {####}",
+          "emailVerificationSubject": "Verification code: {####}",
+          "emailVerificationMessage": "Verification code: {####}",
           "defaultPasswordPolicy": false,
           "passwordPolicyMinLength": 8,
-          "passwordPolicyCharacters": "",
-          "requiredAttributes": "email",
+          "passwordPolicyCharacters": "Requires Lowercase,Requires Numbers,Requires Symbols,Requires Uppercase",
+          "requiredAttributes": "",
           "aliasAttributes": "",
           "userpoolClientGenerateSecret": false,
           "userpoolClientRefreshTokenValidity": 30,
-          "userpoolClientWriteAttributes": "email",
-          "userpoolClientReadAttributes": "email",
-          "userpoolClientLambdaRole": "cellief10f3a82_userpoolclient_lambda_role",
+          "userpoolClientWriteAttributes": "",
+          "userpoolClientReadAttributes": "",
+          "userpoolClientLambdaRole": "monvin2b41fdf8_userpoolclient_lambda_role",
           "userpoolClientSetAttributes": false,
-          "sharedId": "f10f3a82",
-          "resourceName": "cellierreactappf10f3a82",
+          "sharedId": "2b41fdf8",
+          "resourceName": "monvino",
           "authSelections": "identityPoolAndUserPool",
-          "useDefault": "default",
-          "usernameAttributes": "email",
-          "userPoolGroupList": "",
           "serviceName": "Cognito",
+          "usernameAttributes": "email",
+          "useDefault": "manual",
+          "userPoolGroups": false,
+          "userPoolGroupList": "",
+          "adminQueries": false,
+          "thirdPartyAuth": false,
+          "authProviders": "",
+          "hostedUI": true,
+          "hostedUIDomainName": "5k5iizp3gfek",
+          "authProvidersUserPool": "Facebook,Google,LoginWithAmazon",
+          "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"public_profile\",\"AttributeMapping\":{\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid profile\",\"AttributeMapping\":{\"username\":\"sub\"}},{\"ProviderName\":\"LoginWithAmazon\",\"authorize_scopes\":\"profile:user_id\",\"AttributeMapping\":{\"username\":\"user_id\"}}]",
+          "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
           "usernameCaseSensitive": false,
           "useEnabledMfas": true,
           "authRoleArn": {
@@ -202,7 +211,8 @@
           },
           "breakCircularDependency": true,
           "dependsOn": "",
-          "env": "dev"
+          "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"1353744432098378\",\"client_secret\":\"35d2a84c69fc2100b7fe221c82078021\"},{\"ProviderName\":\"Google\",\"client_id\":\"209565927447-ai6s51sr1823s4bgipee20e3qcrh18up.apps.googleusercontent.com\",\"client_secret\":\"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\"},{\"ProviderName\":\"LoginWithAmazon\",\"client_id\":\"amzn1.application-oa2-client.d9dbaa47a812447085be6f9d631ca933\",\"client_secret\":\"81656fe8accd82ec7a52fc7cb6255e30af5f1e3c0383d6ed0d6d6695c50f65c2\"}]",
+          "env": "staging"
         }
       }
     },
@@ -210,7 +220,7 @@
       "DependsOn": [
         "AuthRole",
         "UnauthRole",
-        "authcellierreactappf10f3a82"
+        "authmonvino"
       ],
       "Type": "AWS::Lambda::Function",
       "Properties": {
@@ -305,7 +315,7 @@
         },
         "idpId": {
           "Fn::GetAtt": [
-            "authcellierreactappf10f3a82",
+            "authmonvino",
             "Outputs.IdentityPoolId"
           ]
         },

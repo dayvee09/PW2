@@ -32,7 +32,7 @@ export default function DateSelecteurAnnee(props) {
                 newValue
                   ? props.setDateGarde(newValue.format("YYYY-MM-DD").toString())
                   : props.setDateGarde(
-                      moment().format("YYYY-MM-DD").toString()
+                      moment().add(1, "years").format("YYYY-MM-DD").toString()
                     );
               }}
               renderInput={(params) => <TextField size="small" {...params} />}

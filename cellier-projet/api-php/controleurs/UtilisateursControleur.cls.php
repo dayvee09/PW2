@@ -1,6 +1,6 @@
 <?php
 class UtilisateursControleur extends Controleur
-{    
+{
     /**
      * Récupérer tous les informations de tous les utilisateurs 
      *
@@ -12,7 +12,7 @@ class UtilisateursControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->tout($params);
     }
-    
+
     /**
      * Récupérer tous les informations d'un utilisateur connecté
      *
@@ -25,7 +25,7 @@ class UtilisateursControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->un($params, $idEntite);
     }
-    
+
     /**
      * Ajouter un nouveau utilisateur
      *
@@ -37,7 +37,7 @@ class UtilisateursControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 201 Created';
         $this->reponse['corps'] = ['id' => $this->modele->ajouter(json_decode($utilisateur))];
     }
-    
+
     /**
      * Modifier tous les champs d'un utilisateur spécifié
      *
@@ -50,7 +50,7 @@ class UtilisateursControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->remplacer($id, json_decode($utilisateur));
     }
-    
+
     /**
      * Modifier certains champs d'un utilisateur spécifié
      *
@@ -64,7 +64,7 @@ class UtilisateursControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->changer($params, json_decode($fragmentEntite));
     }
-    
+
     /**
      * Supprimer un utilisateur spécifié 
      *
