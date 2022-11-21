@@ -15,6 +15,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "@aws-amplify/ui-react";
 import { NavLink } from "react-router-dom";
+import { Auth } from "aws-amplify";
 
 /**
  * Gestion de mon profile
@@ -142,132 +143,140 @@ export default function Profil(props) {
     }, 2000);
     return () => clearTimeout(timer);
   };
-
-  return (
-    <>
-      <div className="Appli--entete">
-        <div className="Appli--signOut-container">
-          <button className="Appli--signOut" onClick={redirectionAccueil}>
-            Déconnexion
-          </button>
-        </div>
-      </div>
-      <div className="Appli--container">
-        <div className="infos-profil">
-          <img src={Image} className="icone-profil" alt="icone-profil"></img>
-          <h1>{props.username}</h1>
-        </div>
-        <div className="Profil--container">
-          <div className="Profil">
-            <div className="description-username">
-              <div className="infos-modification">
-                <p>Nom d'usager</p>
-                <button className="modifier" onClick={gererModifierUsername}>
-                  Modifier
-                </button>
-              </div>
-              <TextField
-                style={{ width: "100%" }}
-                id="username"
-                type={"text"}
-                variant="outlined"
-                value={props.username}
-                aria-label="username"
-                disabled
-              />
-            </div>
-            <div className="description-courriel">
-              <div className="infos-modification">
-                <p>Adresse Courriel</p>
-                <button className="modifier" onClick={gererModifierEmail}>
-                  Modifier
-                </button>
-              </div>
-              <TextField
-                style={{ width: "100%" }}
-                id="email"
-                type={"text"}
-                variant="outlined"
-                value={props.emailUtilisateur}
-                aria-label="email"
-                disabled
-              />
-            </div>
-            <div className="description-password">
-              <div className="infos-modification">
-                <p>Mot de passe</p>
-                <button className="modifier" onClick={gererModifierPassword}>
-                  Modifier
-                </button>
-              </div>
-              <TextField
-                style={{ width: "100%" }}
-                id="password"
-                type={"password"}
-                variant="outlined"
-                defaultValue={"**********"}
-                aria-label="password"
-                disabled
-              />
-            </div>
-          </div>
-        </div>
-        <FrmUsername
-          emailUtilisateur={props.emailUtilisateur}
-          frmUsernameOuvert={frmUsernameOuvert}
-          setFrmUsernameOuvert={setFrmUsernameOuvert}
-          username={props.username}
-          setUsername={props.setUsername}
-          NouveauUsername={NouveauUsername}
-          setNouveauUsername={setNouveauUsername}
-          URI={props.URI}
-        />
-        <FrmEmail
-          username={props.username}
-          frmEmailOuvert={frmEmailOuvert}
-          setFrmEmailOuvert={setFrmEmailOuvert}
-          utilisateur={props.utilisateur}
-          emailUtilisateur={props.emailUtilisateur}
-          setEmailUtilisateur={props.setEmailUtilisateur}
-          URI={props.URI}
-          setNouvelEmailUtilisateur={setNouvelEmailUtilisateur}
-          NouvelEmailUtilisateur={NouvelEmailUtilisateur}
-        />
-        <FrmPassword
-          frmPasswordOuvert={frmPasswordOuvert}
-          setFrmPasswordOuvert={setFrmPasswordOuvert}
-          emailUtilisateur={props.emailUtilisateur}
-          passwordActuel={passwordActuel}
-          setPasswordActuel={setPasswordActuel}
-          passwordNouveau={passwordNouveau}
-          setPasswordNouveau={setPasswordNouveau}
-        />
-        {props.utilisateur && props.utilisateur.privilege !== "admin" && (
-          <div className="boutonSupprimer" data-id="">
-            <button className="boutonSupprimer" onClick={gererSupprimer}>
-              Supprimer votre compte
+  if (Auth.user) {
+    return (
+      <>
+        <div className="Appli--entete">
+          <div className="Appli--signOut-container">
+            <button className="Appli--signOut" onClick={redirectionAccueil}>
+              Déconnexion
             </button>
           </div>
-        )}
-      </div>
-      <Dialog
-        PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
-        open={frmSuppressionOuvert}
-        onClose={viderFermerFrm}
-      >
-        <DialogTitle>
-          {" "}
-          Voulez-vous vraiment supprimer votre profil ?
-        </DialogTitle>
-        <DialogActions>
-          <Button onClick={viderFermerFrm} className="cancel">
-            Annuler
-          </Button>
-          <button onClick={gererSoumettre} className="action">
-            Supprimer
-          </button>
-        </DialogActions>
-      </Dialog>
-    </>
-  );
+        </div>
+        <div className="Appli--container">
+          <div className="infos-profil">
+            <img src={Image} className="icone-profil" alt="icone-profil"></img>
+            <h1>{props.username}</h1>
+          </div>
+          <div className="Profil--container">
+            <div className="Profil">
+              <div className="description-username">
+                <div className="infos-modification">
+                  <p>Nom d'usager</p>
+                  <button className="modifier" onClick={gererModifierUsername}>
+                    Modifier
+                  </button>
+                </div>
+                <TextField
+                  style={{ width: "100%" }}
+                  id="username"
+                  type={"text"}
+                  variant="outlined"
+                  value={props.username}
+                  aria-label="username"
+                  disabled
+                />
+              </div>
+              {Auth.user.attributes.email && (
+                <div className="description-courriel">
+                  <div className="infos-modification">
+                    <p>Adresse Courriel</p>
+                    <button className="modifier" onClick={gererModifierEmail}>
+                      Modifier
+                    </button>
+                  </div>
+                  <TextField
+                    style={{ width: "100%" }}
+                    id="email"
+                    type={"text"}
+                    variant="outlined"
+                    value={props.emailUtilisateur}
+                    aria-label="email"
+                    disabled
+                  />
+                </div>
+              )}
+              {Auth.user.attributes.email && (
+                <div className="description-password">
+                  <div className="infos-modification">
+                    <p>Mot de passe</p>
+                    <button
+                      className="modifier"
+                      onClick={gererModifierPassword}
+                    >
+                      Modifier
+                    </button>
+                  </div>
+                  <TextField
+                    style={{ width: "100%" }}
+                    id="password"
+                    type={"password"}
+                    variant="outlined"
+                    defaultValue={"**********"}
+                    aria-label="password"
+                    disabled
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+          <FrmUsername
+            emailUtilisateur={props.emailUtilisateur}
+            frmUsernameOuvert={frmUsernameOuvert}
+            setFrmUsernameOuvert={setFrmUsernameOuvert}
+            username={props.username}
+            setUsername={props.setUsername}
+            NouveauUsername={NouveauUsername}
+            setNouveauUsername={setNouveauUsername}
+            URI={props.URI}
+          />
+          <FrmEmail
+            username={props.username}
+            frmEmailOuvert={frmEmailOuvert}
+            setFrmEmailOuvert={setFrmEmailOuvert}
+            utilisateur={props.utilisateur}
+            emailUtilisateur={props.emailUtilisateur}
+            setEmailUtilisateur={props.setEmailUtilisateur}
+            URI={props.URI}
+            setNouvelEmailUtilisateur={setNouvelEmailUtilisateur}
+            NouvelEmailUtilisateur={NouvelEmailUtilisateur}
+          />
+          <FrmPassword
+            frmPasswordOuvert={frmPasswordOuvert}
+            setFrmPasswordOuvert={setFrmPasswordOuvert}
+            emailUtilisateur={props.emailUtilisateur}
+            passwordActuel={passwordActuel}
+            setPasswordActuel={setPasswordActuel}
+            passwordNouveau={passwordNouveau}
+            setPasswordNouveau={setPasswordNouveau}
+          />
+          {props.utilisateur && props.utilisateur.privilege !== "admin" && (
+            <div className="boutonSupprimer" data-id="">
+              <button className="boutonSupprimer" onClick={gererSupprimer}>
+                Supprimer votre compte
+              </button>
+            </div>
+          )}
+        </div>
+        <Dialog
+          PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
+          open={frmSuppressionOuvert}
+          onClose={viderFermerFrm}
+        >
+          <DialogTitle>
+            {" "}
+            Voulez-vous vraiment supprimer votre profil ?
+          </DialogTitle>
+          <DialogActions>
+            <Button onClick={viderFermerFrm} className="cancel">
+              Annuler
+            </Button>
+            <button onClick={gererSoumettre} className="action">
+              Supprimer
+            </button>
+          </DialogActions>
+        </Dialog>
+      </>
+    );
+  }
 }

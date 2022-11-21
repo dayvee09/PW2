@@ -1,19 +1,19 @@
 {
   "providers": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-cellierreactapp-dev-120444-authRole",
-      "UnauthRoleArn": "arn:aws:iam::550015104023:role/amplify-cellierreactapp-dev-120444-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::550015104023:role/amplify-cellierreactapp-dev-120444-authRole",
-      "Region": "ca-central-1",
-      "DeploymentBucketName": "amplify-cellierreactapp-dev-120444-deployment",
-      "UnauthRoleName": "amplify-cellierreactapp-dev-120444-unauthRole",
-      "StackName": "amplify-cellierreactapp-dev-120444",
-      "StackId": "arn:aws:cloudformation:ca-central-1:550015104023:stack/amplify-cellierreactapp-dev-120444/f9435870-2621-11ed-947a-02606b1762d2",
-      "AmplifyAppId": "d34898wyfk7uvf"
+      "AuthRoleName": "amplify-amplifyaac26432e9544-staging-53728-authRole",
+      "UnauthRoleArn": "arn:aws:iam::329341945501:role/amplify-amplifyaac26432e9544-staging-53728-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::329341945501:role/amplify-amplifyaac26432e9544-staging-53728-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-amplifyaac26432e9544-staging-53728-deployment",
+      "UnauthRoleName": "amplify-amplifyaac26432e9544-staging-53728-unauthRole",
+      "StackName": "amplify-amplifyaac26432e9544-staging-53728",
+      "StackId": "arn:aws:cloudformation:us-east-1:329341945501:stack/amplify-amplifyaac26432e9544-staging-53728/7fdeb730-2b4a-11ed-89e6-0a139eb25667",
+      "AmplifyAppId": "d2d3iwc7zl80q2"
     }
   },
   "auth": {
-    "cellierreactappf10f3a82": {
+    "monvino": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -23,9 +23,7 @@
         "usernameAttributes": [
           "EMAIL"
         ],
-        "signupAttributes": [
-          "EMAIL"
-        ],
+        "signupAttributes": [],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
           "passwordPolicyCharacters": []
@@ -38,21 +36,22 @@
           "EMAIL"
         ]
       },
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-cellierreactapp-dev-120444-deployment/amplify-cfn-templates/auth/cellierreactappf10f3a82-cloudformation-template.json",
-        "logicalId": "authcellierreactappf10f3a82"
-      },
-      "lastPushTimeStamp": "2022-09-06T15:16:07.595Z",
       "output": {
-        "UserPoolId": "ca-central-1_hktzNtdqX",
-        "AppClientIDWeb": "7qfb8nrr1go4htdpkv6j6fri9f",
-        "AppClientID": "5v6hdjl53q576nnpvb2h60uar6",
-        "IdentityPoolId": "ca-central-1:966baf24-c991-453a-8f7b-aa5b54589b86",
-        "UserPoolArn": "arn:aws:cognito-idp:ca-central-1:550015104023:userpool/ca-central-1_hktzNtdqX",
-        "IdentityPoolName": "cellierreactappf10f3a82_identitypool_f10f3a82__dev",
-        "UserPoolName": "cellierreactappf10f3a82_userpool_f10f3a82"
+        "UserPoolId": "us-east-1_H1I0D2Dvq",
+        "AppClientIDWeb": "562i3fo92gp98jrsgr1v2ab255",
+        "AppClientID": "5qdlc33f21qa434pfeajvefuc1",
+        "HostedUIDomain": "5k5iizp3gfek-staging",
+        "IdentityPoolId": "us-east-1:9374764d-493c-4820-8421-502086b01e5d",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:329341945501:userpool/us-east-1_H1I0D2Dvq",
+        "IdentityPoolName": "testAuthIdentityPool__staging",
+        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
+        "UserPoolName": "monvino"
       },
-      "lastPushDirHash": "hqDKO6MG0wiXa9ba9eRa0AuQvUo="
+      "lastPushTimeStamp": "2022-11-21T03:41:09.699Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-amplifyaac26432e9544-staging-53728-deployment/amplify-cfn-templates/auth/monvino-cloudformation-template.json",
+        "logicalId": "authmonvino"
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "projectPath": "/Applications/MAMP/htdocs/PW2/cellier-projet/client",
-  "defaultEditor": "Visual Studio Code",
-  "envName": "dev"
+  "projectPath": "C:\\xampp\\htdocs\\PW2\\cellier-projet\\client",
+  "envName": "staging",
+  "defaultEditor": "vscode"
 }

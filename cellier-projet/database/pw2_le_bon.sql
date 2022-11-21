@@ -166,7 +166,7 @@ INSERT INTO `vino__type` (`id`, `type`) VALUES
 CREATE TABLE `vino__utilisateur` (
   `id` int(11) NOT NULL,
   `nom` varchar(45) DEFAULT NULL,
-  `email` varchar(45) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `mdp` varchar(45) DEFAULT NULL,
   `privilege` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

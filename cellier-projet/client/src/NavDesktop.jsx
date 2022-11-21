@@ -14,30 +14,30 @@ import MenuItem from "@mui/material/MenuItem";
  * @returns {*}
  */
 export default function NavDesktop({
-	user,
-	gererSignOut,
-	utilisateur,
-	username,
+  user,
+  gererSignOut,
+  utilisateur,
+  username,
 }) {
-	const [eltAncrage, setEltAncrage] = useState(null);
-	const menuContextuelOuvert = Boolean(eltAncrage);
-	const navigate = useNavigate();
+  const [eltAncrage, setEltAncrage] = useState(null);
+  const menuContextuelOuvert = Boolean(eltAncrage);
+  const navigate = useNavigate();
 
-	function gererMenuContextuel(evt) {
-		setEltAncrage(evt.currentTarget);
-	}
+  function gererMenuContextuel(evt) {
+    setEltAncrage(evt.currentTarget);
+  }
 
-	function gererFermerMenuContextuel() {
-		setEltAncrage(null);
-	}
+  function gererFermerMenuContextuel() {
+    setEltAncrage(null);
+  }
 
-	const redirectionAccueil = function () {
-		gererSignOut();
-		const timer = setTimeout(() => {
-			navigate("/", { replace: true });
-		}, 2000);
-		return () => clearTimeout(timer);
-	};
+  const redirectionAccueil = function () {
+    gererSignOut();
+    const timer = setTimeout(() => {
+      navigate("/", { replace: true });
+    }, 2000);
+    return () => clearTimeout(timer);
+  };
   return (
     <>
       <div className="NavDesktop">
@@ -90,7 +90,11 @@ export default function NavDesktop({
             <MenuItem
               onClick={gererFermerMenuContextuel}
               component={Link}
-              to={`/profil/${user.attributes.email}`}
+              to={
+                user.attributes.email
+                  ? `/profil/${user.attributes.email}`
+                  : `/profil/${user.username}`
+              }
             >
               <span>Mon Profil</span>
             </MenuItem>
@@ -110,7 +114,7 @@ export default function NavDesktop({
             <span>Mes Favoris</span>
           </MenuItem>
 
-		  <MenuItem
+          <MenuItem
             onClick={gererFermerMenuContextuel}
             component={Link}
             to={`/vinsInventaire`}

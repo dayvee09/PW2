@@ -190,7 +190,7 @@ export default function FrmBouteille({
             setDateAchat={setDateAchat}
           />
           <div className={voirFiche === true ? "hidden" : ""}>
-            <label>Garde: </label>
+            <label>Garde jusqu'à: </label>
           </div>
           <DateSelecteurAnnee
             voirFiche={voirFiche}

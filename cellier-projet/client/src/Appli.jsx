@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Authenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
+import aws_exports from "./aws-exports";
 import "./Appli.scss";
 import NavMobile from "./NavMobile";
 import NavDesktop from "./NavDesktop";
@@ -25,7 +26,7 @@ import FrmAjoutBouteille from "./FrmAjoutBouteille";
 import { dict, formFields } from "./aws-form-traduction.js";
 import ListeBouteillesInventaire from "./ListeBouteillesInventaire";
 
-let DATA;
+Auth.configure(aws_exports);
 
 /**
  * Gestion de l'application
@@ -51,11 +52,12 @@ const Appli = () => {
   const [celliers, setCelliers] = useState([]);
   const [indexNav, setIndexNav] = useState(0);
   const [resetBottomNav, setResetBottomNav] = useState(false);
-  const ENV = "dev";
+  const ENV = "prod";
   const [URI, setURI] = useState([]);
   const [favorisId, setFavorisId] = useState([]);
 
   let location = window.location.pathname;
+
   useEffect(() => {
     if (ENV == "prod") {
       setURI("https://monvino.app/api-php/index.php");
@@ -69,11 +71,9 @@ const Appli = () => {
   email().then((email) => {
     const emailUtilisateur = email;
     setEmailUtilisateur(emailUtilisateur);
-    if (DATA !== undefined) {
-      return;
+    if (utilisateur === undefined) {
+      createUser(emailUtilisateur);
     }
-    createUser(emailUtilisateur);
-    DATA = true;
   });
 
   useEffect(() => {
@@ -102,21 +102,39 @@ const Appli = () => {
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
   async function createUser(emailUtilisateur) {
     let bool = false;
-    let DefautUsername = emailUtilisateur.substring(
-      0,
-      emailUtilisateur.indexOf("@")
-    );
+    let defaultUsername;
+    if (emailUtilisateur.includes("@")) {
+      defaultUsername = emailUtilisateur.substring(
+        0,
+        emailUtilisateur.indexOf("@")
+      );
+    } else if (emailUtilisateur.includes("amazon")) {
+      defaultUsername = "Utilisateur Amazon";
+    } else if (emailUtilisateur.includes("google")) {
+      defaultUsername = "Utilisateur Google";
+    } else if (emailUtilisateur.includes("facebook")) {
+      defaultUsername = "Utilisateur facebook";
+    } else {
+      defaultUsername = "Utilisateur";
+    }
     utilisateurs.forEach((utilisateur) => {
       if (utilisateur["email"] === emailUtilisateur && bool === false) {
         bool = true;
       }
     });
     if (!bool) {
+      console.log(emailUtilisateur);
+      console.log(defaultUsername);
       let reponse = await fetch(URI + "/admin/ajout/utilisateurs", {
         method: "POST",
-        body: JSON.stringify({ email: emailUtilisateur, nom: DefautUsername }),
+        body: JSON.stringify({ email: emailUtilisateur, nom: defaultUsername }),
       });
       let reponseJson = await reponse.json();
+      console.log(reponseJson);
+      // setUtilisateur({
+      //   email:reponseJson,
+      //   id:
+      // })
     }
   }
 
@@ -159,6 +177,11 @@ const Appli = () => {
   }
 
   async function supprimerUtilisateur() {
+    let reponse = await fetch(
+      URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
+      { method: "DELETE" }
+    );
+    let reponseJson = await reponse.json();
     await Auth.deleteUser()
       .then(() => {
         setId("");
@@ -168,16 +191,10 @@ const Appli = () => {
         setCelliers("");
         setEmailUtilisateur("");
         setUsername("");
-        DATA = undefined;
       })
       .catch((err) =>
-        console.log("Erreur lors de la suppression de viotre profil", err)
+        console.log("Erreur lors de la suppression de votre profil", err)
       );
-    let reponse = await fetch(
-      URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
-      { method: "DELETE" }
-    );
-    let reponseJson = await reponse.json();
   }
 
   async function gererSignOut() {
@@ -192,7 +209,6 @@ const Appli = () => {
         setEmailUtilisateur("");
         setUsername("");
         setIndexNav(0);
-        DATA = undefined;
       })
       .catch((err) => console.log("Erreur lors de la déconnexion", err));
   }
@@ -364,7 +380,11 @@ const Appli = () => {
           src={Logo}
           alt="logo-mon-vino"
         ></img>
-        <Authenticator className="Authenticator" formFields={formFields}>
+        <Authenticator
+          socialProviders={["amazon", "facebook", "google"]}
+          className="Authenticator"
+          formFields={formFields}
+        >
           {({ signOut, user }) => (
             <div>
               <Utilisateur
