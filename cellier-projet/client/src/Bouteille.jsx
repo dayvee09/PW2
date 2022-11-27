@@ -85,13 +85,13 @@ export default function Bouteille(props) {
   /**
    * État de la date d'achat et la date précédente
    */
-  const [dateAchat, setDateAchat] = useState(props.date_achat);
+  const [dateAchat, setDateAchat] = useState("");
 
   /**
    * État de la date de garde et la date de garde précédente
    */
-  const [dateGarde, setDateGarde] = useState(props.garde_jusqua);
-  const [vinNote, setVinNote] = useState(props.notes);
+  const [dateGarde, setDateGarde] = useState("");
+  const [vinNote, setVinNote] = useState("");
   const [messageRetour, setMessageRetour] = useState([]);
   const [severity, setSeverity] = useState([]);
   const [favorisIcone, setFavorisIcone] = useState([]);
@@ -164,6 +164,9 @@ export default function Bouteille(props) {
    * Gère l'affichage du formulaire quand click du bouton "Modifier"
    */
   function gererModifier() {
+    setVinNote(props.notes);
+    setDateGarde(props.garde_jusqua);
+    setDateAchat(props.date_achat);
     setFrmOuvert(true);
     gererFermerMenuContextuel();
   }
@@ -172,11 +175,9 @@ export default function Bouteille(props) {
    * Gère l'affichage du formulaire quand click du bouton "Fiche"
    */
   function gererVoir() {
-    if (contexteModif === true) {
-      setQuantite(quantite);
-    } else {
-      setQuantite(props.quantite);
-    }
+    setVinNote(props.notes);
+    setDateGarde(props.garde_jusqua);
+    setDateAchat(props.date_achat);
     fetchVinUn();
     setVoirFiche(true);
     setFrmOuvert(true);
@@ -187,7 +188,12 @@ export default function Bouteille(props) {
    */
   function gererAjouter() {
     fetchVinUn();
-    fetchPutVinUn(parseInt(props.quantite) + 1, dateAchat, dateGarde, vinNote);
+    fetchPutVinUn(
+      parseInt(props.quantite) + 1,
+      props.date_achat,
+      props.garde_jusqua,
+      props.notes
+    );
   }
 
   /**
@@ -198,9 +204,9 @@ export default function Bouteille(props) {
     if (props.quantite > 0) {
       fetchPutVinUn(
         parseInt(props.quantite) - 1,
-        dateAchat,
-        dateGarde,
-        vinNote
+        props.date_achat,
+        props.garde_jusqua,
+        props.notes
       );
     } else {
       setMessageRetour(
@@ -217,7 +223,6 @@ export default function Bouteille(props) {
   function gererFavoris(e, idBouteille) {
     let iconeFavoris = document.querySelectorAll(".bouteille--btn-favoris");
     let url = window.location.protocol + "//" + window.location.host;
-    console.log(url);
     let favoriteIconeLineUrl =
       url +
       "/static/media/icone_favorite_blue_line.1497cb6ab627fa7efc52a978b1de0507.svg";
@@ -243,11 +248,8 @@ export default function Bouteille(props) {
         vino__utilisateur_id: props.vino__utilisateur_id,
         vino__bouteille_id: idBouteille,
       };
-      console.log("Ajout");
-      console.log(favorisAjout);
       props.fetchAjouterFavoris(favorisAjout);
     } else {
-      console.log("Suppression");
       props.fetchSupprimerFavoris(idBouteille);
     }
   }

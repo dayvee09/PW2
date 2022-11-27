@@ -588,7 +588,6 @@ export default function FrmAjoutBouteille(props) {
                   value={vinCellier}
                   onChange={(e) => {
                     setVinCellier(e.target.value);
-                    console.log(vinCellier);
                   }}
                   SelectProps={{
                     native: true,

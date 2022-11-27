@@ -15,7 +15,6 @@ import moment from "moment";
  * @returns {*}
  */
 export default function DateSelecteurAnnee(props) {
-  console.log(props.dateGarde);
   return (
     <div
       className={[
