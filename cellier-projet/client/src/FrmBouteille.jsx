@@ -14,6 +14,7 @@ import Collapse from "@mui/material/Collapse";
 import placeholderSaq from "./img/png/placeholder-saq.png";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
+import TextField from "@mui/material/TextField";
 
 /**
  * Gestion du formulaire d'une bouteille
@@ -38,6 +39,8 @@ export default function FrmBouteille({
   setDateGarde,
   modifierBouteille,
   personnalise,
+  setVinNote,
+  vinNote,
 }) {
   /**
    * L‘état d'erreur
@@ -96,7 +99,7 @@ export default function FrmBouteille({
    */
   function gererSoumettre() {
     if (quantite >= 0) {
-      modifierBouteille(quantite, dateAchat, dateGarde);
+      modifierBouteille(quantite, dateAchat, dateGarde, vinNote);
       setFrmOuvert(false);
     } else {
       if (quantite < 0) setOpenErr(true);
@@ -136,7 +139,11 @@ export default function FrmBouteille({
               Millesime : {bouteille.millesime}
             </p>
             <p className="prix">Prix : {bouteille.prix_saq}$</p>
-            <div className={voirFiche === false ? "hidden" : ""}>
+            <div
+              className={
+                voirFiche === false || dateGarde == 2023 ? "hidden" : ""
+              }
+            >
               <p className="quantite">Quantité : {quantite}</p>
               <p className="date_achat">Date achat : {bouteille.date_achat}</p>
               <p className="date_achat">
@@ -198,6 +205,20 @@ export default function FrmBouteille({
             dateGarde={dateGarde}
             setDateGarde={setDateGarde}
           />
+          <div className={voirFiche === true ? "hidden" : ""}>
+            <label for="note">Note</label>
+            <TextField
+              fullWidth
+              size="small"
+              type="text"
+              name="notes"
+              id="note"
+              value={vinNote}
+              onChange={(e) => {
+                setVinNote(e.target.value);
+              }}
+            />
+          </div>
         </DialogContent>
         {voirFiche === false ? (
           <DialogActions>

@@ -91,6 +91,7 @@ export default function Bouteille(props) {
    * État de la date de garde et la date de garde précédente
    */
   const [dateGarde, setDateGarde] = useState(props.garde_jusqua);
+  const [vinNote, setVinNote] = useState(props.notes);
   const [messageRetour, setMessageRetour] = useState([]);
   const [severity, setSeverity] = useState([]);
   const [favorisIcone, setFavorisIcone] = useState([]);
@@ -253,13 +254,14 @@ export default function Bouteille(props) {
   function modifierBouteille(
     NouveauQuantite,
     NouveauDateAchat,
-    NouveauDateGarde
+    NouveauDateGarde,
+    NouveauNote
   ) {
     var reg = /^[1-9]+[0-9]*]*$/;
     if (reg.test(NouveauQuantite)) {
       setQuantite(NouveauQuantite);
     }
-    fetchPutVinUn(quantite, NouveauDateAchat, NouveauDateGarde);
+    fetchPutVinUn(quantite, NouveauDateAchat, NouveauDateGarde, NouveauNote);
   }
   /**
    * Actualiser la quantité du DB
@@ -268,7 +270,8 @@ export default function Bouteille(props) {
   async function fetchPutVinUn(
     NouveauQuantite,
     NouveauDateAchat,
-    NouveauDateGarde
+    NouveauDateGarde,
+    NouveauNote
   ) {
     let reponse = await fetch(
       props.URI +
@@ -288,6 +291,7 @@ export default function Bouteille(props) {
           quantite: NouveauQuantite,
           date_achat: NouveauDateAchat,
           garde_jusqua: NouveauDateGarde,
+          note: NouveauNote,
         }),
       }
     )
@@ -493,6 +497,8 @@ export default function Bouteille(props) {
           setDateAchat={setDateAchat}
           dateGarde={dateGarde}
           setDateGarde={setDateGarde}
+          vinNote={vinNote}
+          setVinNote={setVinNote}
           modifierBouteille={modifierBouteille}
           personnalise={props.personnalise}
         />
