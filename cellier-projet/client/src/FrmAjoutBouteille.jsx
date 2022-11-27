@@ -180,7 +180,7 @@ export default function FrmAjoutBouteille(props) {
     setVinFormat("");
     setVinPrix(1);
     setVinDescription("");
-    setVinGarde(moment().get("day").toString());
+    setVinGarde(moment().add(1, "years").format("YYYY-MM-DD"));
     setVinImage("");
     setVinNom(" ");
     setVinNote("");

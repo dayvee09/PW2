@@ -187,7 +187,7 @@ export default function Bouteille(props) {
    */
   function gererAjouter() {
     fetchVinUn();
-    fetchPutVinUn(parseInt(props.quantite) + 1, dateAchat, dateGarde);
+    fetchPutVinUn(parseInt(props.quantite) + 1, dateAchat, dateGarde, vinNote);
   }
 
   /**
@@ -196,7 +196,12 @@ export default function Bouteille(props) {
   function gererBoire() {
     fetchVinUn();
     if (props.quantite > 0) {
-      fetchPutVinUn(parseInt(props.quantite) - 1, dateAchat, dateGarde);
+      fetchPutVinUn(
+        parseInt(props.quantite) - 1,
+        dateAchat,
+        dateGarde,
+        vinNote
+      );
     } else {
       setMessageRetour(
         "Cette bouteille est en rupture de stock. Voulez-vous la supprimer?"

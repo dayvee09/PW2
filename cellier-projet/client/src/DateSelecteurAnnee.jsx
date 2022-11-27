@@ -15,6 +15,7 @@ import moment from "moment";
  * @returns {*}
  */
 export default function DateSelecteurAnnee(props) {
+  console.log(props.dateGarde);
   return (
     <div
       className={[
@@ -30,9 +31,9 @@ export default function DateSelecteurAnnee(props) {
               value={props.dateGarde}
               onChange={(newValue) => {
                 newValue
-                  ? props.setDateGarde(newValue.format("YYYY-MM-DD").toString())
+                  ? props.setDateGarde(newValue.format("YYYY-MM-DD"))
                   : props.setDateGarde(
-                      moment().add(1, "years").format("YYYY-MM-DD").toString()
+                      moment().add(1, "years").format("YYYY-MM-DD")
                     );
               }}
               renderInput={(params) => <TextField size="small" {...params} />}
