@@ -57,24 +57,24 @@ class Routeur
 
         // Routeur pour le serveur de développement (Ne pas effacer):
 
-        // if (count($partiesRoute) > 5 && trim(urldecode($partiesRoute[5])) != '') {
-        //     $collection = trim(urldecode($partiesRoute[5]));
-        //     $params = [$partiesRoute[3] => trim(urldecode($partiesRoute[4]))];
-        //     //print_r($params);
-        //     if (count($partiesRoute) > 6 && trim(urldecode($partiesRoute[6])) != '') {
-        //         $idEntite = [$partiesRoute[6] => trim(urldecode($partiesRoute[7]))];
-        //     }
-        // }
+        if (count($partiesRoute) > 5 && trim(urldecode($partiesRoute[5])) != '') {
+            $collection = trim(urldecode($partiesRoute[5]));
+            $params = [$partiesRoute[3] => trim(urldecode($partiesRoute[4]))];
+            //print_r($params);
+            if (count($partiesRoute) > 6 && trim(urldecode($partiesRoute[6])) != '') {
+                $idEntite = [$partiesRoute[6] => trim(urldecode($partiesRoute[7]))];
+            }
+        }
 
         // Routeur en localhost:
 
-        if (count($partiesRoute) > 6 && trim(urldecode($partiesRoute[6])) != '') {
-            $collection = trim(urldecode($partiesRoute[6]));
-            $params = [$partiesRoute[4] => trim(urldecode($partiesRoute[5]))];
-            if (count($partiesRoute) > 7 && trim(urldecode($partiesRoute[7])) != '') {
-                $idEntite = [$partiesRoute[7] => trim(urldecode($partiesRoute[8]))];
-            }
-        }
+        // if (count($partiesRoute) > 6 && trim(urldecode($partiesRoute[6])) != '') {
+        //     $collection = trim(urldecode($partiesRoute[6]));
+        //     $params = [$partiesRoute[4] => trim(urldecode($partiesRoute[5]))];
+        //     if (count($partiesRoute) > 7 && trim(urldecode($partiesRoute[7])) != '') {
+        //         $idEntite = [$partiesRoute[7] => trim(urldecode($partiesRoute[8]))];
+        //     }
+        // }
 
         $nomControleur = ucfirst($collection) . 'Controleur';
         $nomModele = ucfirst($collection) . 'Modele';
