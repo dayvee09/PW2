@@ -104,15 +104,28 @@ function ListeBouteilles(props) {
     props.fetchVins(props.cellier);
     props.fetchNomCellier(props.cellier);
     setSortType("tout");
+  }, [debut, fin]);
+
+  useEffect(() => {
+    if (changementBouteille !== false) {
+      props.fetchVins(props.cellier);
+    }
+  }, [changementBouteille]);
+
+  useEffect(() => {
     if (props.cible) {
-      if (document.querySelector(`[data-id="${props.cible}"]`)) {
-        let cible = document.querySelector(`[data-id="${props.cible}"]`);
-        let target = cible.getBoundingClientRect().top + window.scrollY;
-        window.scrollTo({
-          top: target,
-          behavior: "smooth",
-        });
-      } else {
+      console.log(document.querySelectorAll("[data-id]"));
+      if (document.querySelectorAll("[data-id]").length > 1) {
+        if (document.querySelector(`[data-id="${props.cible}"]`)) {
+          let cible = document.querySelector(`[data-id="${props.cible}"]`);
+          let target = cible.getBoundingClientRect().top + window.scrollY;
+          window.scrollTo({
+            top: target,
+            behavior: "smooth",
+          });
+        }
+      }
+      if (document.querySelectorAll("[data-id]").length === 1) {
         setDebut(
           props.bouteilles.findIndex((object) => {
             return object.id === props.cible;
@@ -121,13 +134,7 @@ function ListeBouteilles(props) {
         setFin(debut + 1);
       }
     }
-  }, [debut]);
-
-  useEffect(() => {
-    if (changementBouteille !== false) {
-      props.fetchVins(props.cellier);
-    }
-  }, [changementBouteille]);
+  }, [props.bouteilles]);
 
   function gererVoirPlus() {
     if (props.bouteilles.length > fin) {
@@ -136,17 +143,6 @@ function ListeBouteilles(props) {
       setFin(props.bouteilles.length);
     }
   }
-
-  /**
-   * Redirection vers la modification du cellier
-   */
-  function gererModifier() {
-    navigate(`/modifier-cellier`, {
-      state: { id: props.cellier[0], nom: props.nomCellier.nom },
-      replace: true,
-    });
-  }
-  console.log(props);
   if (props.bouteilles) {
     return (
       <div>

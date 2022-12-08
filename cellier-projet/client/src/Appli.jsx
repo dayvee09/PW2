@@ -79,10 +79,6 @@ const Appli = () => {
 
   useEffect(() => {
     fetchCelliers();
-    setCellier(JSON.parse(localStorage.getItem("cellier")));
-    if (localStorage.getItem("celliers") !== null) {
-      setCelliers(JSON.parse(localStorage.getItem("celliers")));
-    }
     fetchVinsInventaire();
     fetchFavorisId(id);
   }, [id]);
@@ -225,8 +221,6 @@ const Appli = () => {
       })
       .then((data) => {
         if (data["erreur"] === undefined) {
-          localStorage.setItem("celliers", JSON.stringify(data));
-          setCelliers(JSON.parse(localStorage.getItem("celliers")));
           setCelliers(data);
         }
       })
@@ -258,10 +252,6 @@ const Appli = () => {
       })
       .then((data) => {
         setNomCellier(data.nom);
-        if (data["erreur"] === undefined) {
-          localStorage.setItem("nomCellier", JSON.stringify(data));
-          setNomCellier(JSON.parse(localStorage.getItem("nomCellier")));
-        }
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
