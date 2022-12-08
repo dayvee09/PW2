@@ -45,6 +45,7 @@ const Appli = () => {
   const [emailUtilisateur, setEmailUtilisateur] = useState([]);
   const [id, setId] = useState([]);
   const [cellier, setCellier] = useState([]);
+  const [cible, setCible] = useState([]);
   const [nomCellier, setNomCellier] = useState([]);
   const [username, setUsername] = useState([]);
   const [utilisateur, setUtilisateur] = useState([]);
@@ -95,6 +96,9 @@ const Appli = () => {
   }
   function gererCellier(idCellier) {
     setCellier(idCellier);
+  }
+  function gererCible(cible) {
+    setCible(cible);
   }
 
   // -------------------------- Requêtes Fetch ------------------------------------------------------
@@ -462,6 +466,31 @@ const Appli = () => {
                   }
                 />
                 <Route
+                  path={`/cellier/:idCellier/vins/:cible`}
+                  element={
+                    <ListeBouteilles
+                      nomCellier={nomCellier}
+                      setNomCellier={setNomCellier}
+                      fetchNomCellier={fetchNomCellier}
+                      bouteilles={bouteilles}
+                      setBouteilles={setBouteilles}
+                      fetchVins={fetchVins}
+                      gererBouteilles={gererBouteilles}
+                      cellier={cellier}
+                      celliers={celliers}
+                      URI={URI}
+                      error={error}
+                      setError={setError}
+                      fetchUtilisateur={fetchUtilisateur}
+                      fetchAjouterFavoris={fetchAjouterFavoris}
+                      fetchSupprimerFavoris={fetchSupprimerFavoris}
+                      favorisId={favorisId}
+                      setFavorisId={setFavorisId}
+                      cible={cible}
+                    />
+                  }
+                />
+                <Route
                   path={`/vins`}
                   element={
                     <FrmAjoutBouteille
@@ -494,6 +523,7 @@ const Appli = () => {
                       fetchVins={fetchVins}
                       fetchNomCellier={fetchNomCellier}
                       gererCellier={gererCellier}
+                      gererCible={gererCible}
                     />
                   }
                 />

@@ -395,7 +395,7 @@ export default function Bouteille(props) {
             }
             alt="bouteille"
           />
-          <div data-id="{id_bouteille_cellier}">
+          <div data-id={props.id}>
             {props.setChangementBouteille && (
               <MoreVertIcon
                 className="bouteille--gestion-dots"

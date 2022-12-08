@@ -168,6 +168,7 @@ function ListeBouteillesInventaire(props) {
                   fetchVins={props.fetchVins}
                   fetchNomCellier={props.fetchNomCellier}
                   gererCellier={props.gererCellier}
+                  gererCible={props.gererCible}
                 />
               </div>
             ))}
@@ -231,6 +232,7 @@ function ListeBouteillesInventaire(props) {
                 fetchVins={props.fetchVins}
                 fetchNomCellier={props.fetchNomCellier}
                 gererCellier={props.gererCellier}
+                gererCible={props.gererCible}
               />
             </div>
           </div>

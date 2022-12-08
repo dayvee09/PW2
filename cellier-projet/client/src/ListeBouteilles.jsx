@@ -104,10 +104,29 @@ function ListeBouteilles(props) {
     props.fetchVins(props.cellier);
     props.fetchNomCellier(props.cellier);
     setSortType("tout");
-  }, []);
+    if (props.cible) {
+      if (document.querySelector(`[data-id="${props.cible}"]`)) {
+        let cible = document.querySelector(`[data-id="${props.cible}"]`);
+        let target = cible.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: target,
+          behavior: "smooth",
+        });
+      } else {
+        setDebut(
+          props.bouteilles.findIndex((object) => {
+            return object.id === props.cible;
+          })
+        );
+        setFin(debut + 1);
+      }
+    }
+  }, [debut]);
 
   useEffect(() => {
-    props.fetchVins(props.cellier);
+    if (changementBouteille !== false) {
+      props.fetchVins(props.cellier);
+    }
   }, [changementBouteille]);
 
   function gererVoirPlus() {
@@ -119,7 +138,7 @@ function ListeBouteilles(props) {
   }
 
   /**
-   * Redirection vers la modificiation du cellier
+   * Redirection vers la modification du cellier
    */
   function gererModifier() {
     navigate(`/modifier-cellier`, {
@@ -127,6 +146,7 @@ function ListeBouteilles(props) {
       replace: true,
     });
   }
+  console.log(props);
   if (props.bouteilles) {
     return (
       <div>
