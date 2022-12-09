@@ -21,6 +21,7 @@ function ListeBouteilles(props) {
    *  État des bouteilles au tri
    */
   const [data, setData] = useState([]);
+  const [unique, setUnique] = useState(false);
   const [sortType, setSortType] = useState([]);
   const navigate = useNavigate();
 
@@ -114,27 +115,40 @@ function ListeBouteilles(props) {
 
   useEffect(() => {
     if (props.cible) {
-      console.log(document.querySelectorAll("[data-id]"));
       if (document.querySelectorAll("[data-id]").length > 1) {
-        if (document.querySelector(`[data-id="${props.cible}"]`)) {
+        if (
+          document.querySelector(`[data-id="${props.cible}"]`) &&
+          unique === false &&
+          changementBouteille === false
+        ) {
           let cible = document.querySelector(`[data-id="${props.cible}"]`);
           let target = cible.getBoundingClientRect().top + window.scrollY;
           window.scrollTo({
             top: target,
             behavior: "smooth",
           });
+        } else if (props.bouteilles.length > 200) {
+          setUnique(true);
         }
-      }
-      if (document.querySelectorAll("[data-id]").length === 1) {
-        setDebut(
-          props.bouteilles.findIndex((object) => {
-            return object.id === props.cible;
-          })
-        );
-        setFin(debut + 1);
       }
     }
   }, [props.bouteilles]);
+
+  useEffect(() => {
+    if (props.cible && props.bouteilles.length > 200) {
+      setDebut(
+        props.bouteilles.findIndex((object) => {
+          return object.id === props.cible;
+        })
+      );
+    }
+  }, [unique]);
+
+  useEffect(() => {
+    if (props.cible && props.bouteilles.length > 200) {
+      setFin(debut + 1);
+    }
+  }, [debut]);
 
   function gererVoirPlus() {
     if (props.bouteilles.length > fin) {
