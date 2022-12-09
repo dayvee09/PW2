@@ -53,7 +53,7 @@ const Appli = () => {
   const [celliers, setCelliers] = useState([]);
   const [indexNav, setIndexNav] = useState(0);
   const [resetBottomNav, setResetBottomNav] = useState(false);
-  const ENV = "dev";
+  const ENV = "prod";
   const [URI, setURI] = useState([]);
   const [favorisId, setFavorisId] = useState([]);
 
@@ -123,11 +123,14 @@ const Appli = () => {
       }
     });
     if (!bool) {
+      console.log(emailUtilisateur);
+      console.log(defaultUsername);
       let reponse = await fetch(URI + "/admin/ajout/utilisateurs", {
         method: "POST",
         body: JSON.stringify({ email: emailUtilisateur, nom: defaultUsername }),
       });
       let reponseJson = await reponse.json();
+      console.log(reponseJson);
       // setUtilisateur({
       //   email:reponseJson,
       //   id:
