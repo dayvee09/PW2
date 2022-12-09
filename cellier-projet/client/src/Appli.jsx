@@ -53,7 +53,7 @@ const Appli = () => {
   const [celliers, setCelliers] = useState([]);
   const [indexNav, setIndexNav] = useState(0);
   const [resetBottomNav, setResetBottomNav] = useState(false);
-  const ENV = "prod";
+  const ENV = "dev";
   const [URI, setURI] = useState([]);
   const [favorisId, setFavorisId] = useState([]);
 
