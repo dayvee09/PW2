@@ -123,18 +123,11 @@ const Appli = () => {
       }
     });
     if (!bool) {
-      console.log(emailUtilisateur);
-      console.log(defaultUsername);
       let reponse = await fetch(URI + "/admin/ajout/utilisateurs", {
         method: "POST",
         body: JSON.stringify({ email: emailUtilisateur, nom: defaultUsername }),
       });
       let reponseJson = await reponse.json();
-      console.log(reponseJson);
-      // setUtilisateur({
-      //   email:reponseJson,
-      //   id:
-      // })
     }
   }
 

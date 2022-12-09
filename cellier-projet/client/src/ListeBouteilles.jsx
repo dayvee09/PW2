@@ -20,16 +20,18 @@ function ListeBouteilles(props) {
   /**
    *  État des bouteilles au tri
    */
-  const [data, setData] = useState([]);
   const [unique, setUnique] = useState(false);
   const [sortType, setSortType] = useState([]);
   const navigate = useNavigate();
+  let indexBouteille = props.bouteilles.findIndex((object) => {
+    return object.id === props.cible;
+  });
 
   /**
    *  État des bouteilles au tri
    */
   useEffect(() => {
-    let result = data;
+    let result;
     switch (sortType) {
       case "qt-decroissante": {
         result = [...props.bouteilles].sort((a, b) => {
@@ -135,17 +137,13 @@ function ListeBouteilles(props) {
   }, [props.bouteilles]);
 
   useEffect(() => {
-    if (props.cible && props.bouteilles.length > 200) {
-      setDebut(
-        props.bouteilles.findIndex((object) => {
-          return object.id === props.cible;
-        })
-      );
+    if (props.cible && props.bouteilles.length > 200 && indexBouteille >= 200) {
+      setDebut(indexBouteille);
     }
   }, [unique]);
 
   useEffect(() => {
-    if (props.cible && props.bouteilles.length > 200) {
+    if (props.cible && props.bouteilles.length > 200 && indexBouteille >= 200) {
       setFin(debut + 1);
     }
   }, [debut]);
