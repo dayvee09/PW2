@@ -45,6 +45,7 @@ const Appli = () => {
   const [emailUtilisateur, setEmailUtilisateur] = useState([]);
   const [id, setId] = useState([]);
   const [cellier, setCellier] = useState([]);
+  const [cible, setCible] = useState([]);
   const [nomCellier, setNomCellier] = useState([]);
   const [username, setUsername] = useState([]);
   const [utilisateur, setUtilisateur] = useState([]);
@@ -52,7 +53,7 @@ const Appli = () => {
   const [celliers, setCelliers] = useState([]);
   const [indexNav, setIndexNav] = useState(0);
   const [resetBottomNav, setResetBottomNav] = useState(false);
-  const ENV = "prod";
+  const ENV = "dev";
   const [URI, setURI] = useState([]);
   const [favorisId, setFavorisId] = useState([]);
 
@@ -78,10 +79,6 @@ const Appli = () => {
 
   useEffect(() => {
     fetchCelliers();
-    setCellier(JSON.parse(localStorage.getItem("cellier")));
-    if (localStorage.getItem("celliers") !== null) {
-      setCelliers(JSON.parse(localStorage.getItem("celliers")));
-    }
     fetchVinsInventaire();
     fetchFavorisId(id);
   }, [id]);
@@ -95,6 +92,9 @@ const Appli = () => {
   }
   function gererCellier(idCellier) {
     setCellier(idCellier);
+  }
+  function gererCible(cible) {
+    setCible(cible);
   }
 
   // -------------------------- Requêtes Fetch ------------------------------------------------------
@@ -224,8 +224,6 @@ const Appli = () => {
       })
       .then((data) => {
         if (data["erreur"] === undefined) {
-          localStorage.setItem("celliers", JSON.stringify(data));
-          setCelliers(JSON.parse(localStorage.getItem("celliers")));
           setCelliers(data);
         }
       })
@@ -257,10 +255,6 @@ const Appli = () => {
       })
       .then((data) => {
         setNomCellier(data.nom);
-        if (data["erreur"] === undefined) {
-          localStorage.setItem("nomCellier", JSON.stringify(data));
-          setNomCellier(JSON.parse(localStorage.getItem("nomCellier")));
-        }
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
@@ -465,6 +459,31 @@ const Appli = () => {
                   }
                 />
                 <Route
+                  path={`/cellier/:idCellier/vins/:cible`}
+                  element={
+                    <ListeBouteilles
+                      nomCellier={nomCellier}
+                      setNomCellier={setNomCellier}
+                      fetchNomCellier={fetchNomCellier}
+                      bouteilles={bouteilles}
+                      setBouteilles={setBouteilles}
+                      fetchVins={fetchVins}
+                      gererBouteilles={gererBouteilles}
+                      cellier={cellier}
+                      celliers={celliers}
+                      URI={URI}
+                      error={error}
+                      setError={setError}
+                      fetchUtilisateur={fetchUtilisateur}
+                      fetchAjouterFavoris={fetchAjouterFavoris}
+                      fetchSupprimerFavoris={fetchSupprimerFavoris}
+                      favorisId={favorisId}
+                      setFavorisId={setFavorisId}
+                      cible={cible}
+                    />
+                  }
+                />
+                <Route
                   path={`/vins`}
                   element={
                     <FrmAjoutBouteille
@@ -497,6 +516,7 @@ const Appli = () => {
                       fetchVins={fetchVins}
                       fetchNomCellier={fetchNomCellier}
                       gererCellier={gererCellier}
+                      gererCible={gererCible}
                     />
                   }
                 />
