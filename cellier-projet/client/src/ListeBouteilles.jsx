@@ -23,10 +23,13 @@ function ListeBouteilles(props) {
   const [unique, setUnique] = useState(false);
   const [sortType, setSortType] = useState([]);
   const navigate = useNavigate();
-  let indexBouteille = props.bouteilles.findIndex((object) => {
-    return object.id === props.cible;
-  });
-
+  let indexBouteille = 0;
+  console.log(props.bouteilles.length);
+  if (props.bouteilles.length !== undefined) {
+    indexBouteille = props.bouteilles.findIndex((object) => {
+      return object.id === props.cible;
+    });
+  }
   /**
    *  État des bouteilles au tri
    */

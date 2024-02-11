@@ -368,7 +368,7 @@ const Appli = () => {
           alt="logo-mon-vino"
         ></img>
         <Authenticator
-          socialProviders={["amazon", "facebook", "google"]}
+          socialProviders={["amazon", "google"]}
           className="Authenticator"
           formFields={formFields}
         >

@@ -1,6 +1,6 @@
 <?php
 class CelliersControleur extends Controleur
-{    
+{
     /**
      * Récupérer tous les celliers à un utilisateur connecté - Méthod 'GET'
      *
@@ -12,7 +12,7 @@ class CelliersControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->tout($params);
     }
-    
+
     /**
      * Récupérer un cellier spécifié à un utilisateur connecté - Méthod 'GET'
      *
@@ -25,7 +25,7 @@ class CelliersControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->un($params, $idEntite);
     }
-    
+
     /**
      *  Ajouter un nouveau cellier à un utilisateur connecté - Méthod 'POST'
      *
@@ -37,7 +37,7 @@ class CelliersControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 201 Created';
         $this->reponse['corps'] = ['id' => $this->modele->ajouter(json_decode($cellier))];
     }
-    
+
     /**
      * Non appliqué - Méthod 'PUT'
      *
@@ -47,7 +47,7 @@ class CelliersControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->remplacer($id, json_decode($cellier));
     }
-    
+
     /**
      * Modifier certains champs d'un cellier spécifié à un utilisateur connecté - Méthod 'PATCH'
      *
@@ -61,7 +61,7 @@ class CelliersControleur extends Controleur
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
         $this->reponse['corps'] = $this->modele->changer($params, $idEntite, json_decode($fragmentEntite));
     }
-    
+
     /**
      * Supprimer un cellier spécifié à un utilisateur connecté - Méthod 'DELETE'
      *
