@@ -39,22 +39,22 @@ Auth.configure(aws_exports);
  * @returns {*}
  */
 const Appli = () => {
-  const [error, setError] = useState([]);
+  const [error, setError] = useState(null);
   const [bouteilles, setBouteilles] = useState([]);
   const [bouteillesInventaire, setBouteillesInventaire] = useState([]);
-  const [emailUtilisateur, setEmailUtilisateur] = useState([]);
-  const [id, setId] = useState([]);
-  const [cellier, setCellier] = useState([]);
-  const [cible, setCible] = useState([]);
-  const [nomCellier, setNomCellier] = useState([]);
-  const [username, setUsername] = useState([]);
-  const [utilisateur, setUtilisateur] = useState([]);
+  const [emailUtilisateur, setEmailUtilisateur] = useState("");
+  const [id, setId] = useState("");
+  const [cellier, setCellier] = useState("");
+  const [cible, setCible] = useState("");
+  const [nomCellier, setNomCellier] = useState("");
+  const [username, setUsername] = useState("");
+  const [utilisateur, setUtilisateur] = useState(null);
   const [utilisateurs, setUtilisateurs] = useState([]);
   const [celliers, setCelliers] = useState([]);
   const [indexNav, setIndexNav] = useState(0);
   const [resetBottomNav, setResetBottomNav] = useState(false);
   const ENV = "dev";
-  const [URI, setURI] = useState([]);
+  const [URI, setURI] = useState("");
   const [favorisId, setFavorisId] = useState([]);
 
   let location = window.location.pathname;
@@ -69,23 +69,31 @@ const Appli = () => {
 
   // ------------------------------- fonctions de gestion des états ----------------------------
 
-  email().then((email) => {
-    const emailUtilisateur = email;
-    setEmailUtilisateur(emailUtilisateur);
-    if (utilisateur === undefined) {
-      createUser(emailUtilisateur);
-    }
-  });
+  useEffect(() => {
+    email().then((userEmail) => {
+      if (userEmail) {
+        setEmailUtilisateur(userEmail);
+      }
+    });
+  }, []);
 
   useEffect(() => {
+    if (emailUtilisateur && !utilisateur) {
+      createUser(emailUtilisateur);
+    }
+  }, [emailUtilisateur, utilisateurs]);
+
+  useEffect(() => {
+    if (!URI || !id) return;
     fetchCelliers();
     fetchVinsInventaire();
     fetchFavorisId(id);
-  }, [id]);
+  }, [URI, id]);
 
   useEffect(() => {
+    if (!URI || !cellier) return;
     fetchVins(cellier);
-  }, [cellier]);
+  }, [URI, cellier]);
 
   function gererBouteilles(idBouteilles) {
     setBouteilles(idBouteilles);
@@ -101,6 +109,7 @@ const Appli = () => {
 
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
   async function createUser(emailUtilisateur) {
+    if (!URI || !emailUtilisateur) return;
     let bool = false;
     let defaultUsername;
     if (emailUtilisateur.includes("@")) {
@@ -132,6 +141,7 @@ const Appli = () => {
   }
 
   async function fetchUtilisateurs() {
+    if (!URI || !emailUtilisateur) return;
     await fetch(
       URI + "/" + "admin" + "/" + emailUtilisateur + "/" + "utilisateurs"
     )
@@ -151,6 +161,7 @@ const Appli = () => {
   }
 
   async function fetchUtilisateur() {
+    if (!URI || !emailUtilisateur) return;
     await fetch(
       URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs"
     )
@@ -208,6 +219,7 @@ const Appli = () => {
 
   // ---------------------------------- Gestion des celliers -----------------------------
   async function fetchCelliers() {
+    if (!URI || !id) return;
     await fetch(URI + "/" + "user_id" + "/" + id + "/" + "celliers")
       .then((response) => {
         if (response.ok) {
@@ -258,6 +270,7 @@ const Appli = () => {
   // --------------------------------- Gestion des bouteilles ------------------------------------
 
   async function fetchVins(cellier) {
+    if (!URI || !cellier) return;
     await fetch(URI + "/" + "cellier" + "/" + cellier + "/" + "vins")
       .then((response) => {
         if (response.ok) {
@@ -276,6 +289,7 @@ const Appli = () => {
   // --------------------------------- Gestion des différentes bouteilles comprises dans tous mes celliers ------------------------------------
 
   async function fetchVinsInventaire() {
+    if (!URI || !id) return;
     await fetch(URI + "/" + "user_id" + "/" + id + "/" + "vinsInventaire")
       .then((response) => {
         if (response.ok) {
@@ -332,6 +346,7 @@ const Appli = () => {
   }
 
   async function fetchFavorisId(utilisateur) {
+    if (!URI || !utilisateur) return;
     await fetch(
       URI + "/" + "utilisateurId" + "/" + utilisateur + "/" + "favoris"
     )

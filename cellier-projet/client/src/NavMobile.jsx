@@ -34,15 +34,15 @@ export default function NavMobile({
 	}, [value]);
 
 	// Gestion du reset du BottomNavigation lors de la déconnexion
-	if(Auth.user == null ) {
-		if(resetBottomNav == false) {
+	useEffect(() => {
+		if (Auth.user == null && resetBottomNav === false) {
 			setResetBottomNav(true);
-			if(value == 1) {
-				setIndexNav(0)
+			if (value === 1) {
+				setIndexNav(0);
 				setValue(0);
 			}
 		}
-	}
+	}, [Auth.user, resetBottomNav, value, setResetBottomNav, setIndexNav]);
 
 	return (
 	<div>

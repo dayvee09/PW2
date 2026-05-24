@@ -14,7 +14,9 @@ import {
  */
 export default function Utilisateur(props) {
 	useEffect(() => {
-		props.fetchUtilisateurs();
+		if (props.emailUtilisateur) {
+			props.fetchUtilisateurs();
+		}
 	}, [props.emailUtilisateur]);
 
 	useEffect(() => {
