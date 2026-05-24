@@ -81,10 +81,9 @@ const AppliContent = () => {
   }, []);
 
   useEffect(() => {
-    if (emailUtilisateur && !utilisateur) {
-      createUser(emailUtilisateur);
-    }
-  }, [emailUtilisateur, utilisateurs]);
+    if (!URI || !emailUtilisateur || utilisateur) return;
+    ensureUser(emailUtilisateur);
+  }, [URI, emailUtilisateur, utilisateur]);
 
   useEffect(() => {
     if (!URI || !id) return;
@@ -111,37 +110,51 @@ const AppliContent = () => {
   // -------------------------- Requêtes Fetch ------------------------------------------------------
 
   // ----------------------- Gestion des utilisateurs ------------------------------------------------
-  async function createUser(emailUtilisateur) {
-    if (!URI || !emailUtilisateur) return;
-    let bool = false;
-    let defaultUsername;
+  function defaultUsernameFromEmail(emailUtilisateur) {
     if (emailUtilisateur.includes("@")) {
-      defaultUsername = emailUtilisateur.substring(
-        0,
-        emailUtilisateur.indexOf("@")
-      );
-    } else if (emailUtilisateur.includes("amazon")) {
-      defaultUsername = "Utilisateur Amazon";
-    } else if (emailUtilisateur.includes("google")) {
-      defaultUsername = "Utilisateur Google";
-    } else if (emailUtilisateur.includes("facebook")) {
-      defaultUsername = "Utilisateur facebook";
-    } else {
-      defaultUsername = "Utilisateur";
+      return emailUtilisateur.substring(0, emailUtilisateur.indexOf("@"));
     }
-    utilisateurs.forEach((utilisateur) => {
-      if (utilisateur["email"] === emailUtilisateur && bool === false) {
-        bool = true;
+    if (emailUtilisateur.includes("amazon")) return "Utilisateur Amazon";
+    if (emailUtilisateur.includes("google")) return "Utilisateur Google";
+    if (emailUtilisateur.includes("facebook")) return "Utilisateur facebook";
+    return "Utilisateur";
+  }
+
+  async function ensureUser(emailUtilisateur) {
+    if (!URI || !emailUtilisateur) return;
+
+    try {
+      const existing = await fetch(
+        URI + "/email/" + emailUtilisateur + "/utilisateurs"
+      );
+      if (existing.ok) {
+        const data = await existing.json();
+        if (Array.isArray(data) && data.length > 0) {
+          setUtilisateur(data[0]);
+          return;
+        }
       }
-    });
-    if (!bool) {
-      let reponse = await fetch(URI + "/admin/ajout/utilisateurs", {
+
+      const reponse = await fetch(URI + "/admin/ajout/utilisateurs", {
         method: "POST",
-        body: JSON.stringify({ email: emailUtilisateur, nom: defaultUsername }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: emailUtilisateur,
+          nom: defaultUsernameFromEmail(emailUtilisateur),
+        }),
       });
-      let reponseJson = await reponse.json();
+      if (!reponse.ok) {
+        throw reponse;
+      }
+      await fetchUtilisateur();
+    } catch (error) {
+      console.error("Error creating user: ", error);
+      setError(error);
     }
   }
+
+  // Alias kept for any legacy references (e.g. props named createUser)
+  const createUser = ensureUser;
 
   async function fetchUtilisateurs() {
     if (!URI || !emailUtilisateur) return;

@@ -34,8 +34,18 @@ class UtilisateursControleur extends Controleur
      */
     public function ajouter($utilisateur)
     {
-        $this->reponse['entete_statut'] = 'HTTP/1.1 201 Created';
-        $this->reponse['corps'] = ['id' => $this->modele->ajouter(json_decode($utilisateur))];
+        try {
+            $payload = json_decode($utilisateur);
+            if (!$payload || !isset($payload->email, $payload->nom)) {
+                throw new InvalidArgumentException('Corps JSON invalide (email et nom requis).');
+            }
+            $id = $this->modele->ajouter($payload);
+            $this->reponse['entete_statut'] = 'HTTP/1.1 201 Created';
+            $this->reponse['corps'] = ['id' => $id];
+        } catch (Throwable $e) {
+            $this->reponse['entete_statut'] = 'HTTP/1.1 500 Internal Server Error';
+            $this->reponse['corps'] = ['erreur' => $e->getMessage()];
+        }
     }
 
     /**

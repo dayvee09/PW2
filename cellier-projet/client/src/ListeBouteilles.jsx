@@ -24,7 +24,6 @@ function ListeBouteilles(props) {
   const [sortType, setSortType] = useState([]);
   const navigate = useNavigate();
   let indexBouteille = 0;
-  console.log(props.bouteilles.length);
   if (props.bouteilles.length !== undefined) {
     indexBouteille = props.bouteilles.findIndex((object) => {
       return object.id === props.cible;
@@ -178,8 +177,7 @@ function ListeBouteilles(props) {
                 defaultValue="tout"
                 onChange={(e) => setSortType(e.target.value)}
               >
-                <img src={rowIcone} alt="icone-row-down" width={15}></img>
-                <option selected value="tout">
+                <option value="tout">
                   Tout
                 </option>
                 <option value="vin-rouge">Vin Rouge</option>

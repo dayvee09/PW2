@@ -52,7 +52,7 @@ export default function FrmAjoutBouteille(props) {
   /**
    * État de la valeur choisi du composant 'Autocomplete'
    */
-  const [value, setValue] = React.useState([]);
+  const [value, setValue] = React.useState(null);
 
   /**
    * État du type de bouteille
@@ -155,9 +155,7 @@ export default function FrmAjoutBouteille(props) {
    * Purifier le formulaire quand on bascule entre le bouton 'importer' et 'créer'
    */
   function clearForm() {
-    setValue((value) => {
-      value = [];
-    });
+    setValue(null);
     setMillesime("");
     setVinPays("");
     setVinCellier(
@@ -322,7 +320,7 @@ export default function FrmAjoutBouteille(props) {
             </div>
             {/* Apparaîte uniquement en important de la bouteille du SAQ */}
             <div className={btnState ? "hidden" : ""}>
-              <label className="formInputNom" for="nom-bouteille-saq">
+              <label className="formInputNom" htmlFor="nom-bouteille-saq">
                 Nom: {value ? value.nom : ""}
               </label>
             </div>
@@ -342,9 +340,7 @@ export default function FrmAjoutBouteille(props) {
                 // Gère du boutton clear 'X' , faut nettoyer tous les champs du formulaire
                 onInputChange={(event, newValue, reason) => {
                   if (reason === "clear" || newValue === "") {
-                    setValue((value) => {
-                      value = [];
-                    });
+                    setValue(null);
                   }
                 }}
                 // Gère du changement de l'option
@@ -374,7 +370,7 @@ export default function FrmAjoutBouteille(props) {
                 lg={12}
                 className={btnState ? "" : "hidden"}
               >
-                <label className="formInputNom creer" for="nom-bouteille-perso">
+                <label className="formInputNom creer" htmlFor="nom-bouteille-perso">
                   Nom
                 </label>
                 <p className="instruction">Créer une bouteille personnalisée</p>
@@ -403,7 +399,7 @@ export default function FrmAjoutBouteille(props) {
                 lg={3}
                 className={btnState ? "" : "hidden"}
               >
-                <label for="millesime">Millesime</label>
+                <label htmlFor="millesime">Millesime</label>
                 <TextField
                   fullWidth
                   size="small"
@@ -412,7 +408,7 @@ export default function FrmAjoutBouteille(props) {
                   id="millesime"
                   disabled={btnState ? false : true}
                   className={!btnState ? "nonSelect" : ""}
-                  value={value ? value.millesime : vinMillesime}
+                  value={value?.millesime ?? vinMillesime}
                   onChange={(e) => {
                     setMillesime(e.target.value);
                   }}
@@ -425,7 +421,7 @@ export default function FrmAjoutBouteille(props) {
                 md={btnState ? 3 : 6}
                 lg={btnState ? 3 : 6}
               >
-                <label for="pays">Pays</label>
+                <label htmlFor="pays">Pays</label>
                 <TextField
                   fullWidth
                   size="small"
@@ -434,14 +430,14 @@ export default function FrmAjoutBouteille(props) {
                   id="pays"
                   disabled={btnState ? false : true}
                   className={!btnState ? "nonSelect" : ""}
-                  value={value ? value.pays : vinPays}
+                  value={value?.pays ?? vinPays}
                   onChange={(e) => {
                     setVinPays(e.target.value);
                   }}
                 />
               </Grid>
               <Grid item xs={6} sm={6} md={3} lg={3}>
-                <label for="prix">Prix</label>
+                <label htmlFor="prix">Prix</label>
                 <TextField
                   fullWidth
                   size="small"
@@ -450,7 +446,7 @@ export default function FrmAjoutBouteille(props) {
                   name="prix"
                   disabled={btnState ? false : true}
                   className={!btnState ? "nonSelect" : ""}
-                  value={value ? value.prix_saq : vinPrix}
+                  value={value?.prix_saq ?? vinPrix}
                   onChange={(e) => {
                     setVinPrix(e.target.value);
                     e.target.value === ""
@@ -463,7 +459,7 @@ export default function FrmAjoutBouteille(props) {
                 </p>
               </Grid>
               <Grid item xs={6} sm={6} md={3} lg={3}>
-                <label for="format">format(ml)</label>
+                <label htmlFor="format">format(ml)</label>
                 <TextField
                   fullWidth
                   size="small"
@@ -472,14 +468,14 @@ export default function FrmAjoutBouteille(props) {
                   name="format"
                   disabled={btnState ? false : true}
                   className={!btnState ? "nonSelect" : ""}
-                  value={value ? value.format : vinFormat}
+                  value={value?.format ?? vinFormat}
                   onChange={(e) => {
                     setVinFormat(e.target.value);
                   }}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={12}>
-                <label for="description">Description</label>
+                <label htmlFor="description">Description</label>
                 <TextField
                   fullWidth
                   size="small"
@@ -491,17 +487,17 @@ export default function FrmAjoutBouteille(props) {
                   // maxRows={3}
                   disabled={btnState ? false : true}
                   className={!btnState ? "nonSelect" : ""}
-                  value={value ? value.description : vinDescription}
+                  value={value?.description ?? vinDescription}
                   onChange={(e) => {
                     setVinDescription(e.target.value);
                   }}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={4} lg={4}>
-                <label for="type">Type</label>
+                <label htmlFor="type">Type</label>
                 <TextField
                   select
-                  value={value ? value.vino__type_id : vinType}
+                  value={value?.vino__type_id ?? vinType}
                   onChange={(e) => {
                     setVinType(e.target.value);
                   }}
@@ -539,7 +535,7 @@ export default function FrmAjoutBouteille(props) {
               </Grid>
 
               <Grid item xs={6} sm={6} md={6} lg={6}>
-                <label for="quantite">Quantite</label>
+                <label htmlFor="quantite">Quantite</label>
                 <TextField
                   fullWidth
                   size="small"
@@ -567,7 +563,7 @@ export default function FrmAjoutBouteille(props) {
               </Grid>
 
               <Grid item xs={6} sm={6} md={6} lg={6}>
-                <label for="cellier-bouteille">Cellier</label>
+                <label htmlFor="cellier-bouteille">Cellier</label>
                 <TextField
                   select
                   id="cellier-bouteille"
@@ -594,7 +590,7 @@ export default function FrmAjoutBouteille(props) {
               </Grid>
 
               <Grid item xs={12} sm={12}>
-                <label for="note">Note</label>
+                <label htmlFor="note">Note</label>
                 <TextField
                   fullWidth
                   size="small"

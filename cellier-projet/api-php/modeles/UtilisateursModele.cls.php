@@ -10,7 +10,8 @@ class UtilisateursModele extends AccesBd
     public function tout($params)
     {
         if (isset($params['email'])) {
-            return $this->lire("SELECT DISTINCT vino__utilisateur.id, vino__utilisateur.email, vino__utilisateur.privilege, vino__utilisateur.nom FROM vino__utilisateur JOIN vino__cellier ON vino__utilisateur.id=vino__cellier.vino__utilisateur_id WHERE vino__utilisateur.email=:email", ['email' => $params["email"]]);
+            $utilisateur = $this->parEmail($params['email']);
+            return $utilisateur ? [$utilisateur] : [];
         } else {
             return $this->lire("SELECT vino__utilisateur.id, vino__utilisateur.email, vino__utilisateur.nom FROM vino__utilisateur");
         }
@@ -24,20 +25,50 @@ class UtilisateursModele extends AccesBd
      */
     public function un($params)
     {
-        return $this->lireUn("SELECT vino__utilisateur.id, vino__utilisateur.email, vino__utilisateur.nom FROM vino__utilisateur JOIN vino__cellier ON vino__utilisateur.id=vino__cellier.vino__utilisateur_id WHERE vino__utilisateur.email=:email ", ['email' => $params["email"]]);
+        $email = $params['email'] ?? $params['admin'] ?? null;
+        if (!$email) {
+            return false;
+        }
+        return $this->parEmail($email);
     }
 
     /**
-     * Ajouter un nouveau utilisateur et son premier cellier par défault
+     * Trouver un utilisateur par courriel (sans exiger un cellier associé).
+     *
+     * @return object|false
+     */
+    public function parEmail($email)
+    {
+        $row = $this->lireUn(
+            "SELECT id, email, nom, privilege FROM vino__utilisateur WHERE email = :email",
+            ['email' => $email]
+        );
+        return is_object($row) ? $row : false;
+    }
+
+    /**
+     * Ajouter un nouveau utilisateur et son premier cellier par défault.
+     * Si le courriel existe déjà, renvoie l'id existant.
      *
      * @param  mixed $utilisateur Payload du corps du message HTTP en format JSON
-     * @return int Identifiant (auto increment) du dernier enregistrement inséré
+     * @return int Identifiant de l'utilisateur
      */
     public function ajouter($utilisateur)
     {
-        $last_insert_id = $this->creer("INSERT INTO vino__utilisateur (vino__utilisateur.email, vino__utilisateur.nom) VALUES (?, ?)", [$utilisateur->email, $utilisateur->nom]);
-        $last_insert_id = $this->creer("INSERT INTO vino__cellier (vino__cellier.nom, vino__utilisateur_id) VALUES (?, ?)", ["Cellier par défaut", $last_insert_id]);
-        return $last_insert_id;
+        $existant = $this->parEmail($utilisateur->email);
+        if ($existant !== false) {
+            return (int) $existant->id;
+        }
+
+        $userId = $this->creer(
+            "INSERT INTO vino__utilisateur (email, nom) VALUES (?, ?)",
+            [$utilisateur->email, $utilisateur->nom]
+        );
+        $this->creer(
+            "INSERT INTO vino__cellier (nom, vino__utilisateur_id) VALUES (?, ?)",
+            ["Cellier par défaut", $userId]
+        );
+        return $userId;
     }
 
     /**
