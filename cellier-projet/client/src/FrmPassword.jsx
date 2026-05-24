@@ -3,7 +3,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Auth } from "aws-amplify";
+import { updatePassword } from "./auth";
 import { useState, useEffect } from "react";
 import "./FrmPassword.scss";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
@@ -110,17 +110,17 @@ export default function FrmPassword({
 		setBool(false);
 		setMessageRetour("");
 		setSeverity("");
-		Auth.currentAuthenticatedUser()
-		.then((user) => {
-			return Auth.changePassword(user, passwordActuel, nouveauPassword);
+		updatePassword({
+			oldPassword: passwordActuel,
+			newPassword: nouveauPassword,
 		})
-		.then((data) => {
-			setMessageRetour("Modification effectuée");
-		})
-		.catch((err) => {
-			console.log(err);
-			setMessageRetour("Courriel invalide");
-		});
+			.then(() => {
+				setMessageRetour("Modification effectuée");
+			})
+			.catch((err) => {
+				console.log(err);
+				setMessageRetour("Courriel invalide");
+			});
 	}
 
 	/**

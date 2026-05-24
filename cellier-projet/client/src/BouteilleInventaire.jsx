@@ -14,7 +14,6 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { ComponentPropsToStylePropsMap } from "@aws-amplify/ui-react";
 const drawerBleeding = 56;
 
 const Root = styled("div")(({ theme }) => ({

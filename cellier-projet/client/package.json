@@ -3,34 +3,57 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aws-amplify/ui-react": "^3.6.0",
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
-    "@material-ui/core": "^4.12.4",
-    "@mui/icons-material": "^5.10.3",
-    "@mui/material": "^5.10.4",
-    "@mui/x-date-pickers": "^5.0.0",
-    "aws-amplify": "^4.3.43",
-    "axios": "^0.27.2",
-    "date-fns": "^2.29.2",
-    "dayjs": "^1.11.10",
-    "gh-pages": "^4.0.0",
-    "lodash": "^4.17.21",
-    "moment": "^2.29.4",
-    "node-sass": "^7.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.3.0",
+    "@aws-amplify/ui-react": "^6.15.4",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^6.4.0",
+    "@mui/material": "^6.4.0",
+    "@mui/x-date-pickers": "^7.28.0",
+    "aws-amplify": "^6.17.0",
+    "dayjs": "^1.11.20",
+    "gh-pages": "^6.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.3",
     "react-scripts": "5.0.1",
-    "redux": "^4.2.0"
+    "sass": "^1.85.0"
+  },
+  "devDependencies": {
+    "html-webpack-plugin": "5.6.7"
+  },
+  "overrides": {
+    "html-webpack-plugin": "5.6.7",
+    "js-cookie": "3.0.7",
+    "lodash": "4.18.1",
+    "picomatch": "4.0.4",
+    "@babel/plugin-transform-modules-systemjs": "7.29.4",
+    "@babel/preset-env": "7.29.5",
+    "axios": "1.16.1",
+    "nth-check": "2.1.1",
+    "postcss": "8.5.15",
+    "serialize-javascript": "7.0.5",
+    "underscore": "1.13.8",
+    "uuid": "11.1.1",
+    "@tootallnate/once": "3.0.1",
+    "path-to-regexp": "0.1.13",
+    "node-forge": "1.4.0",
+    "minimatch": "3.1.5",
+    "filelist": {
+      "minimatch": "5.1.9"
+    },
+    "flatted": "3.4.2",
+    "rollup": "2.80.0",
+    "tar": "7.5.15"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "NODE_OPTIONS='--require ./scripts/node-crypto-polyfill.js' react-scripts start",
+    "build": "NODE_OPTIONS='--require ./scripts/node-crypto-polyfill.js' react-scripts build",
+    "test": "NODE_OPTIONS='--require ./scripts/node-crypto-polyfill.js' react-scripts test",
     "eject": "react-scripts eject",
     "preghdeploy": "npm run build",
-    "ghdeploy": "gh-pages -d build"
+    "ghdeploy": "gh-pages -d build",
+    "audit": "npm audit",
+    "audit:fix": "npm audit fix"
   },
   "eslintConfig": {
     "extends": [
@@ -53,8 +76,5 @@
   "homepage-info": "Avant de déployer sur GitHub Pages vous devez configurer correctement la propriété homepage ci-dessous : 1) retirer le suffixe '-inactif' de l'étiquette, et 2) remplacer 'code-utilisateur' par le nom de votre compte GitHub et 'nom-de-depot-github' par le nom de votre dépôt GitHub dans la valeur de la propriété.",
   "homepage-inactif": "https://code-utilisateur.github.io/nom-de-depot-github/",
   "homepage-webdev": "https://e2195277.webdev.cmaisonneuve.qc.ca/PW2/cellier-projet",
-  "homepage": "https://monvino.app",
-  "devDependencies": {
-    "webpack-cli": "^4.10.0"
-  }
+  "homepage": "https://monvino.app"
 }

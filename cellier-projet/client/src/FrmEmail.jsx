@@ -5,7 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import { Auth } from "aws-amplify";
+import { updateUserAttribute } from "./auth";
 import { useState, useEffect } from "react";
 import "./FrmEmail.scss";
 import MuiButton from "@mui/material/Button";
@@ -119,11 +119,13 @@ export default function FrmEmail({
 	 * requête de modification de l'email utilisateur
 	 */
 	async function fetchPatchUtilisateurEmail(NouvelEmailUtilisateur) {
-		let user = await Auth.currentAuthenticatedUser();
-		let result = await Auth.updateUserAttributes(user, {
-			email: NouvelEmailUtilisateur,
+		await updateUserAttribute({
+			userAttribute: {
+				attributeKey: "email",
+				value: NouvelEmailUtilisateur,
+			},
 		});
-		if (result === "SUCCESS") {
+		{
 			let reponse = await fetch(
 			URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs",
 			{
@@ -135,7 +137,7 @@ export default function FrmEmail({
 			setEmailUtilisateur(NouvelEmailUtilisateur);
 			navigate(`/profil/${NouvelEmailUtilisateur}`, { replace: true });
 		}
-		return result;
+		return "SUCCESS";
 	}
 
 	/**

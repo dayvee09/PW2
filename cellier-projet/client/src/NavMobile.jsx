@@ -18,7 +18,7 @@ import { ReactComponent as AddBottleIcone } from "./img/svg/add_bottle_blue_fill
  * @returns {*}
  */
 export default function NavMobile({
-	Auth,
+	isAuthenticated,
 	emailUtilisateur,
 	utilisateur,
 	setIndexNav,
@@ -35,18 +35,18 @@ export default function NavMobile({
 
 	// Gestion du reset du BottomNavigation lors de la déconnexion
 	useEffect(() => {
-		if (Auth.user == null && resetBottomNav === false) {
+		if (!isAuthenticated && resetBottomNav === false) {
 			setResetBottomNav(true);
 			if (value === 1) {
 				setIndexNav(0);
 				setValue(0);
 			}
 		}
-	}, [Auth.user, resetBottomNav, value, setResetBottomNav, setIndexNav]);
+	}, [isAuthenticated, resetBottomNav, value, setResetBottomNav, setIndexNav]);
 
 	return (
 	<div>
-      <div className={Auth.user ? "NavMobile" : "Hidden"}>
+      <div className={isAuthenticated ? "NavMobile" : "Hidden"}>
         <AppBar
           position="fixed"
           color="primary"

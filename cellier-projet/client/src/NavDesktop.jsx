@@ -14,11 +14,12 @@ import MenuItem from "@mui/material/MenuItem";
  * @returns {*}
  */
 export default function NavDesktop({
-  user,
+  emailUtilisateur,
   gererSignOut,
   utilisateur,
   username,
 }) {
+  const profilIdentifiant = emailUtilisateur || username || "";
   const [eltAncrage, setEltAncrage] = useState(null);
   const menuContextuelOuvert = Boolean(eltAncrage);
   const navigate = useNavigate();
@@ -82,7 +83,7 @@ export default function NavDesktop({
             <MenuItem
               onClick={gererFermerMenuContextuel}
               component={Link}
-              to={`/admin/${user.attributes.email}`}
+              to={`/admin/${profilIdentifiant}`}
             >
               <span>Menu Admin</span>
             </MenuItem>
@@ -90,11 +91,7 @@ export default function NavDesktop({
             <MenuItem
               onClick={gererFermerMenuContextuel}
               component={Link}
-              to={
-                user.attributes.email
-                  ? `/profil/${user.attributes.email}`
-                  : `/profil/${user.username}`
-              }
+              to={`/profil/${profilIdentifiant}`}
             >
               <span>Mon Profil</span>
             </MenuItem>

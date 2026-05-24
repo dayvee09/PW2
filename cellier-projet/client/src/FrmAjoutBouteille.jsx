@@ -6,11 +6,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import BtnGroup from "./ToggleBtn";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
-import moment from "moment";
+import dayjs from "dayjs";
 import placeholderSaq from "./img/png/placeholder-saq.png";
 import { useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
@@ -74,13 +74,13 @@ export default function FrmAjoutBouteille(props) {
    * État de la date d'achat choisie
    */
   const [vinDateAchat, setVinDateAchat] = React.useState(
-    moment().format("YYYY-MM-DD")
+    dayjs().format("YYYY-MM-DD")
   );
   /**
    * État de la date de garde choisie
    */
   const [vinGarde, setVinGarde] = React.useState(
-    moment().add(1, "years").format("YYYY-MM-DD")
+    dayjs().add(1, "year").format("YYYY-MM-DD")
   );
   /**
    * État de la Note
@@ -166,13 +166,13 @@ export default function FrmAjoutBouteille(props) {
     setVinFormat("");
     setVinPrix(1);
     setVinDescription("");
-    setVinGarde(moment().add(1, "years").format("YYYY-MM-DD"));
+    setVinGarde(dayjs().add(1, "year").format("YYYY-MM-DD"));
     setVinImage("");
     setVinNom(" ");
     setVinNote("");
     setVinQuantite(1);
     setVinType(1);
-    setVinDateAchat(moment().format("YYYY-MM-DD"));
+    setVinDateAchat(dayjs().format("YYYY-MM-DD"));
     setErreur([]);
   }
   /**

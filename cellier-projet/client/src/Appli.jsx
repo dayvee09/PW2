@@ -3,9 +3,11 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Authenticator } from "@aws-amplify/ui-react";
+import {
+  Authenticator,
+  useAuthenticator,
+} from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
-import aws_exports from "./aws-exports";
 import "./Appli.scss";
 import NavMobile from "./NavMobile";
 import NavDesktop from "./NavDesktop";
@@ -15,18 +17,16 @@ import FrmAjoutCellier from "./FrmAjoutCellier";
 import FrmModifierCellier from "./FrmModifierCellier";
 import Admin from "./Admin";
 import ListeCelliers from "./ListeCelliers";
-import Utilisateur, { user } from "./Utilisateur.jsx";
+import Utilisateur from "./Utilisateur.jsx";
 import Profil from "./Profil.jsx";
 import Favoris from "./Favoris";
 import Aide from "./Aide";
-import { Auth } from "aws-amplify";
+import { signOut, deleteUser } from "./auth";
 import { email } from "./utilisateur.js";
 import Logo from "./img/png/logo-jaune.png";
 import FrmAjoutBouteille from "./FrmAjoutBouteille";
-import { dict, formFields } from "./aws-form-traduction.js";
+import { formFields } from "./aws-form-traduction.js";
 import ListeBouteillesInventaire from "./ListeBouteillesInventaire";
-
-Auth.configure(aws_exports);
 
 /**
  * Gestion de l'application
@@ -38,7 +38,10 @@ Auth.configure(aws_exports);
  * @date 2022-09-30
  * @returns {*}
  */
-const Appli = () => {
+const AppliContent = () => {
+  const { authStatus } = useAuthenticator();
+  const isAuthenticated = authStatus === "authenticated";
+
   const [error, setError] = useState(null);
   const [bouteilles, setBouteilles] = useState([]);
   const [bouteillesInventaire, setBouteillesInventaire] = useState([]);
@@ -186,7 +189,7 @@ const Appli = () => {
       { method: "DELETE" }
     );
     let reponseJson = await reponse.json();
-    await Auth.deleteUser()
+    await deleteUser()
       .then(() => {
         setId("");
         setUtilisateur("");
@@ -202,7 +205,7 @@ const Appli = () => {
   }
 
   async function gererSignOut() {
-    await Auth.signOut()
+    await signOut()
       .then(() => {
         setResetBottomNav(false);
         setId("");
@@ -367,28 +370,17 @@ const Appli = () => {
 
   // ---------------------------------- Rendering -----------------------------------------
   return (
-    <div className={Auth.user ? "Appli" : "Login"}>
-      {Auth.user && (
+    <div className={isAuthenticated ? "Appli" : "Login"}>
+      {isAuthenticated && (
         <NavDesktop
-          user={Auth.user}
+          emailUtilisateur={emailUtilisateur}
           gererSignOut={gererSignOut}
           utilisateur={utilisateur}
           username={username}
         />
       )}
       <div>
-        <img
-          className={Auth.user ? "Hidden" : "logo"}
-          src={Logo}
-          alt="logo-mon-vino"
-        ></img>
-        <Authenticator
-          socialProviders={["amazon", "google"]}
-          className="Authenticator"
-          formFields={formFields}
-        >
-          {({ signOut, user }) => (
-            <div>
+        <div>
               <Utilisateur
                 utilisateur={utilisateur}
                 setUtilisateur={setUtilisateur}
@@ -622,14 +614,12 @@ const Appli = () => {
                   element={<Aide URI={URI} error={error} setError={setError} />}
                 />
               </Routes>
-            </div>
-          )}
-        </Authenticator>
-        <p className={Auth.user ? "Hidden" : "Auth-sub-title"}>
+        </div>
+        <p className={isAuthenticated ? "Hidden" : "Auth-sub-title"}>
           Commencez dès maintenant votre collection de vin !
         </p>
         <NavMobile
-          Auth={Auth}
+          isAuthenticated={isAuthenticated}
           emailUtilisateur={emailUtilisateur}
           utilisateur={utilisateur}
           setIndexNav={setIndexNav}
@@ -642,5 +632,22 @@ const Appli = () => {
     </div>
   );
 };
+
+const Appli = () => (
+  <Authenticator
+    socialProviders={["amazon", "google"]}
+    className="Authenticator"
+    formFields={formFields}
+    components={{
+      Header() {
+        return (
+          <img className="logo" src={Logo} alt="logo-mon-vino" />
+        );
+      },
+    }}
+  >
+    <AppliContent />
+  </Authenticator>
+);
 
 export default Appli;
