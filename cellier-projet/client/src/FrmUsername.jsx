@@ -127,7 +127,9 @@ export default function FrmEmail({
     );
     let reponseJson = await reponse.json();
     setUsername(NouveauUsername);
-    navigate(`/profil/${emailUtilisateur}`, { replace: true });
+    navigate(`/profil/${encodeURIComponent(emailUtilisateur)}`, {
+      replace: true,
+    });
   }
 
   /**

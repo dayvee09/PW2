@@ -1,8 +1,9 @@
 // Début des modifications
 
 import React from "react";
-import { Route, Routes } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { Hub } from "aws-amplify/utils";
 import {
   Authenticator,
   useAuthenticator,
@@ -21,12 +22,24 @@ import Utilisateur from "./Utilisateur.jsx";
 import Profil from "./Profil.jsx";
 import Favoris from "./Favoris";
 import Aide from "./Aide";
-import { signOut, deleteUser } from "./auth";
+import { signOut, deleteUser, emailFromCognitoUser } from "./auth";
 import { email } from "./utilisateur.js";
 import Logo from "./img/png/logo-jaune.png";
 import FrmAjoutBouteille from "./FrmAjoutBouteille";
 import { formFields } from "./aws-form-traduction.js";
 import ListeBouteillesInventaire from "./ListeBouteillesInventaire";
+
+function ProfilRedirect({ emailUtilisateur }) {
+  if (!emailUtilisateur) {
+    return <Navigate to="/" replace />;
+  }
+  return (
+    <Navigate
+      to={`/profil/${encodeURIComponent(emailUtilisateur)}`}
+      replace
+    />
+  );
+}
 
 /**
  * Gestion de l'application
@@ -38,9 +51,26 @@ import ListeBouteillesInventaire from "./ListeBouteillesInventaire";
  * @date 2022-09-30
  * @returns {*}
  */
-const AppliContent = () => {
-  const { authStatus } = useAuthenticator();
-  const isAuthenticated = authStatus === "authenticated";
+// In dev, use same-origin path so setupProxy.js forwards to Apache (port 80).
+const DEV_API_URI =
+  process.env.REACT_APP_API_URI || "/PW2/cellier-projet/api-php";
+const PROD_API_URI = "https://monvino.app/api-php/index.php";
+
+function normalizeUtilisateur(data) {
+  if (!data) return null;
+  if (Array.isArray(data)) {
+    return data.length > 0 && data[0]?.id ? data[0] : null;
+  }
+  if (data.erreur) return null;
+  return data.id ? data : null;
+}
+
+const AppliContent = ({ cognitoUser }) => {
+  const { authStatus, route } = useAuthenticator();
+  const isAuthenticated =
+    route === "authenticated" ||
+    route === "signOut" ||
+    authStatus === "authenticated";
 
   const [error, setError] = useState(null);
   const [bouteilles, setBouteilles] = useState([]);
@@ -56,34 +86,115 @@ const AppliContent = () => {
   const [celliers, setCelliers] = useState([]);
   const [indexNav, setIndexNav] = useState(0);
   const [resetBottomNav, setResetBottomNav] = useState(false);
-  const ENV = "dev";
-  const [URI, setURI] = useState("");
+  const URI =
+    process.env.REACT_APP_API_URI ||
+    (process.env.NODE_ENV === "production" ? PROD_API_URI : DEV_API_URI);
   const [favorisId, setFavorisId] = useState([]);
+  const [userLoadError, setUserLoadError] = useState(null);
+  const [sessionVersion, setSessionVersion] = useState(0);
+  const bootstrapRunning = useRef(false);
 
   let location = window.location.pathname;
 
-  useEffect(() => {
-    if (ENV == "prod") {
-      setURI("https://monvino.app/api-php/index.php");
-    } else {
-      setURI("http://localhost/PW2/cellier-projet/api-php");
-    }
-  }, []);
+  function applyUtilisateur(user, userEmail) {
+    setUtilisateur(user);
+    setId(String(user.id));
+    setUsername(user.nom || defaultUsernameFromEmail(userEmail));
+    setEmailUtilisateur(userEmail);
+  }
 
   // ------------------------------- fonctions de gestion des états ----------------------------
 
   useEffect(() => {
-    email().then((userEmail) => {
-      if (userEmail) {
-        setEmailUtilisateur(userEmail);
+    if (!isAuthenticated) {
+      setId("");
+      setUtilisateur(null);
+      setEmailUtilisateur("");
+      setUsername("");
+      setCelliers([]);
+      setUserLoadError(null);
+      bootstrapRunning.current = false;
+      return;
+    }
+
+    let cancelled = false;
+
+    async function resolveEmail() {
+      setUserLoadError(null);
+      let userEmail = emailFromCognitoUser(cognitoUser);
+      if (!userEmail) {
+        userEmail = await email();
       }
-    });
-  }, []);
+      if (cancelled) return;
+      if (userEmail) {
+        setEmailUtilisateur((prev) => prev || userEmail);
+        return;
+      }
+      setUserLoadError(
+        new Error(
+          "Impossible de lire l'email du compte connecté. Réessayez ou utilisez la connexion par courriel."
+        )
+      );
+    }
+
+    resolveEmail();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isAuthenticated, cognitoUser, sessionVersion]);
 
   useEffect(() => {
-    if (!URI || !emailUtilisateur || utilisateur) return;
-    ensureUser(emailUtilisateur);
-  }, [URI, emailUtilisateur, utilisateur]);
+    if (!isAuthenticated) return;
+    if (!URI || !emailUtilisateur || id) return;
+
+    let cancelled = false;
+
+    async function bootstrap() {
+      if (bootstrapRunning.current) return;
+      bootstrapRunning.current = true;
+      try {
+        setUserLoadError(null);
+        const ok = await ensureUser(emailUtilisateur);
+        if (!cancelled && !ok) {
+          setUserLoadError(
+            (prev) =>
+              prev ||
+              new Error(
+                "Compte introuvable dans la base de données. Vérifiez que l'API PHP répond."
+              )
+          );
+        }
+      } catch (err) {
+        console.error("Session bootstrap failed:", err);
+        if (!cancelled) {
+          setUserLoadError(err);
+        }
+      } finally {
+        bootstrapRunning.current = false;
+      }
+    }
+
+    bootstrap();
+
+    return () => {
+      cancelled = true;
+      bootstrapRunning.current = false;
+    };
+  }, [isAuthenticated, URI, emailUtilisateur, id, sessionVersion]);
+
+  useEffect(() => {
+    const cancel = Hub.listen("auth", ({ payload }) => {
+      if (
+        payload.event === "signedIn" ||
+        payload.event === "tokenRefresh"
+      ) {
+        bootstrapRunning.current = false;
+        setSessionVersion((version) => version + 1);
+      }
+    });
+    return () => cancel();
+  }, []);
 
   useEffect(() => {
     if (!URI || !id) return;
@@ -120,18 +231,22 @@ const AppliContent = () => {
     return "Utilisateur";
   }
 
-  async function ensureUser(emailUtilisateur) {
-    if (!URI || !emailUtilisateur) return;
+  async function ensureUser(userEmail) {
+    if (!URI || !userEmail) return false;
+
+    const encodedEmail = encodeURIComponent(userEmail);
 
     try {
+      setUserLoadError(null);
       const existing = await fetch(
-        URI + "/email/" + emailUtilisateur + "/utilisateurs"
+        URI + "/email/" + encodedEmail + "/utilisateurs"
       );
       if (existing.ok) {
         const data = await existing.json();
-        if (Array.isArray(data) && data.length > 0) {
-          setUtilisateur(data[0]);
-          return;
+        const user = normalizeUtilisateur(data);
+        if (user) {
+          applyUtilisateur(user, userEmail);
+          return true;
         }
       }
 
@@ -139,17 +254,54 @@ const AppliContent = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: emailUtilisateur,
-          nom: defaultUsernameFromEmail(emailUtilisateur),
+          email: userEmail,
+          nom: defaultUsernameFromEmail(userEmail),
         }),
       });
       if (!reponse.ok) {
-        throw reponse;
+        let detail = "";
+        try {
+          const errBody = await reponse.json();
+          detail = errBody?.erreur ? `: ${errBody.erreur}` : "";
+        } catch {
+          /* ignore */
+        }
+        throw new Error(
+          `Création du compte refusée (HTTP ${reponse.status})${detail}`
+        );
       }
-      await fetchUtilisateur();
+      const created = await reponse.json();
+      if (created?.id) {
+        applyUtilisateur(
+          {
+            id: created.id,
+            email: userEmail,
+            nom: defaultUsernameFromEmail(userEmail),
+          },
+          userEmail
+        );
+        return true;
+      }
+
+      const retry = await fetch(
+        URI + "/email/" + encodedEmail + "/utilisateurs"
+      );
+      if (retry.ok) {
+        const data = await retry.json();
+        const user = normalizeUtilisateur(data);
+        if (user) {
+          applyUtilisateur(user, userEmail);
+          return true;
+        }
+      }
+
+      setUserLoadError(new Error("Utilisateur introuvable"));
+      return false;
     } catch (error) {
       console.error("Error creating user: ", error);
+      setUserLoadError(error);
       setError(error);
+      return false;
     }
   }
 
@@ -178,9 +330,8 @@ const AppliContent = () => {
 
   async function fetchUtilisateur() {
     if (!URI || !emailUtilisateur) return;
-    await fetch(
-      URI + "/" + "email" + "/" + emailUtilisateur + "/" + "utilisateurs"
-    )
+    const encodedEmail = encodeURIComponent(emailUtilisateur);
+    await fetch(URI + "/email/" + encodedEmail + "/utilisateurs")
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -188,10 +339,13 @@ const AppliContent = () => {
         throw response;
       })
       .then((data) => {
-        setUtilisateur(data[0]);
+        const user = normalizeUtilisateur(data);
+        if (user) {
+          applyUtilisateur(user, emailUtilisateur);
+        }
       })
       .catch((error) => {
-        console.error("Error fetching data: ", error);
+        console.error("Error fetching utilisateur: ", error);
         setError(error);
       });
   }
@@ -205,12 +359,13 @@ const AppliContent = () => {
     await deleteUser()
       .then(() => {
         setId("");
-        setUtilisateur("");
+        setUtilisateur(null);
         setBouteilles("");
         setBouteillesInventaire("");
         setCelliers("");
         setEmailUtilisateur("");
         setUsername("");
+        bootstrapRunning.current = false;
       })
       .catch((err) =>
         console.log("Erreur lors de la suppression de votre profil", err)
@@ -222,13 +377,14 @@ const AppliContent = () => {
       .then(() => {
         setResetBottomNav(false);
         setId("");
-        setUtilisateur("");
+        setUtilisateur(null);
         setBouteilles("");
         setBouteillesInventaire("");
-        setCelliers("");
+        setCelliers([]);
         setEmailUtilisateur("");
         setUsername("");
         setIndexNav(0);
+        bootstrapRunning.current = false;
       })
       .catch((err) => console.log("Erreur lors de la déconnexion", err));
   }
@@ -244,8 +400,8 @@ const AppliContent = () => {
         throw response;
       })
       .then((data) => {
-        if (data["erreur"] === undefined) {
-          setCelliers(data);
+        if (data?.erreur === undefined) {
+          setCelliers(Array.isArray(data) ? data : []);
         }
       })
       .catch((error) => {
@@ -413,6 +569,18 @@ const AppliContent = () => {
               {/* ------------------------------ Routes --------------------------------*/}
               <Routes>
                 <Route
+                  path="/profil"
+                  element={
+                    <ProfilRedirect emailUtilisateur={emailUtilisateur} />
+                  }
+                />
+                <Route
+                  path="/profil/"
+                  element={
+                    <ProfilRedirect emailUtilisateur={emailUtilisateur} />
+                  }
+                />
+                <Route
                   path={`/profil/:emailUtilisateur`}
                   element={
                     <Profil
@@ -552,6 +720,7 @@ const AppliContent = () => {
                       URI={URI}
                       error={error}
                       setError={setError}
+                      userLoadError={userLoadError}
                     />
                   }
                 />
@@ -572,6 +741,7 @@ const AppliContent = () => {
                       URI={URI}
                       error={error}
                       setError={setError}
+                      userLoadError={userLoadError}
                     />
                   }
                 />
@@ -659,7 +829,7 @@ const Appli = () => (
       },
     }}
   >
-    <AppliContent />
+    {({ user }) => <AppliContent cognitoUser={user} />}
   </Authenticator>
 );
 

@@ -62,3 +62,20 @@
 	color: #cc4240;
 	padding: 10px;
 }
+
+.liste-cellier--etat {
+	font-family: Raleway, sans-serif;
+	font-size: 16px;
+	margin-top: 2rem;
+	text-align: center;
+
+	&--erreur {
+		color: #cc4240;
+	}
+}
+
+.liste-cellier--btn-ajout--vide {
+	display: block;
+	margin: 1.5rem auto 0;
+	padding-top: 0;
+}

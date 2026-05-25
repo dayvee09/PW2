@@ -1,5 +1,5 @@
-import { getUserEmail } from "./auth";
+import { getUserEmailWithRetry } from "./auth";
 
 export async function email() {
-  return getUserEmail();
+  return getUserEmailWithRetry();
 }

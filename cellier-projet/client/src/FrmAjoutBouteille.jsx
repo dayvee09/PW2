@@ -18,6 +18,18 @@ import Alert from "@mui/material/Alert";
 import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 
+function resolveCellierId(cellier, celliers) {
+  if (cellier) {
+    const parsed = parseInt(cellier, 10);
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  if (celliers?.[0]?.id != null) {
+    const parsed = parseInt(celliers[0].id, 10);
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  return "";
+}
+
 /**
  * Gestion de l'ajout d'une bouteille importé de la SAQ et l'ajout d'une bouteille 'non listée'
  *
@@ -61,10 +73,8 @@ export default function FrmAjoutBouteille(props) {
   /**
    * État du cellier choisi
    */
-  const [vinCellier, setVinCellier] = React.useState(
-    props.cellier != undefined
-      ? parseInt(props.cellier)
-      : parseInt(props.celliers[0].id)
+  const [vinCellier, setVinCellier] = React.useState(() =>
+    resolveCellierId(props.cellier, props.celliers)
   );
   /**
    * État de la quantité choisie
@@ -140,6 +150,7 @@ export default function FrmAjoutBouteille(props) {
    */
 
   useEffect(() => {
+    if (!props.URI || vinCellier === "" || !Number.isFinite(vinCellier)) return;
     fetch(props.URI + `/cellier/${vinCellier}/vins`)
       .then((response) => {
         if (response.ok) {
@@ -150,7 +161,15 @@ export default function FrmAjoutBouteille(props) {
       .then((data) => {
         setVinsTest(data);
       });
-  }, [vinCellier]);
+  }, [vinCellier, props.URI]);
+
+  useEffect(() => {
+    if (vinCellier !== "" && Number.isFinite(vinCellier)) return;
+    const resolved = resolveCellierId(props.cellier, props.celliers);
+    if (resolved !== "") {
+      setVinCellier(resolved);
+    }
+  }, [props.celliers, props.cellier, vinCellier]);
   /**
    * Purifier le formulaire quand on bascule entre le bouton 'importer' et 'créer'
    */
@@ -158,9 +177,7 @@ export default function FrmAjoutBouteille(props) {
     setValue(null);
     setMillesime("");
     setVinPays("");
-    setVinCellier(
-      props.cellier != undefined ? props.cellier : props.celliers[0].id
-    );
+    setVinCellier(resolveCellierId(props.cellier, props.celliers));
     setVinFormat("");
     setVinPrix(1);
     setVinDescription("");
@@ -169,7 +186,7 @@ export default function FrmAjoutBouteille(props) {
     setVinNom(" ");
     setVinNote("");
     setVinQuantite(1);
-    setVinType(1);
+    setVinType("1");
     setVinDateAchat(dayjs().format("YYYY-MM-DD"));
     setErreur([]);
   }

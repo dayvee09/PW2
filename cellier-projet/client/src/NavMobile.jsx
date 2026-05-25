@@ -71,15 +71,25 @@ export default function NavMobile({
               <BottomNavigationAction
                 label="ADMIN"
                 icon={<ProfilIcone />}
-                component={Link}
-                to={`/admin/${emailUtilisateur}`}
+                component={emailUtilisateur ? Link : "div"}
+                to={
+                  emailUtilisateur
+                    ? `/admin/${encodeURIComponent(emailUtilisateur)}`
+                    : undefined
+                }
+                disabled={!emailUtilisateur}
               />
             ) : (
               <BottomNavigationAction
                 label="PROFIL"
                 icon={<ProfilIcone />}
-                component={Link}
-                to={`/profil/${emailUtilisateur}`}
+                component={emailUtilisateur ? Link : "div"}
+                to={
+                  emailUtilisateur
+                    ? `/profil/${encodeURIComponent(emailUtilisateur)}`
+                    : undefined
+                }
+                disabled={!emailUtilisateur}
               />
             )}
             <BottomNavigationAction

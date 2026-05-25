@@ -135,7 +135,9 @@ export default function FrmEmail({
 			);
 			let reponseJson = await reponse.json();
 			setEmailUtilisateur(NouvelEmailUtilisateur);
-			navigate(`/profil/${NouvelEmailUtilisateur}`, { replace: true });
+			navigate(`/profil/${encodeURIComponent(NouvelEmailUtilisateur)}`, {
+				replace: true,
+			});
 		}
 		return "SUCCESS";
 	}

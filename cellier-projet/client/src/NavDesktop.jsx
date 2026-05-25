@@ -19,7 +19,12 @@ export default function NavDesktop({
   utilisateur,
   username,
 }) {
-  const profilIdentifiant = emailUtilisateur || username || "";
+  const profilPath = emailUtilisateur
+    ? `/profil/${encodeURIComponent(emailUtilisateur)}`
+    : null;
+  const adminPath = emailUtilisateur
+    ? `/admin/${encodeURIComponent(emailUtilisateur)}`
+    : null;
   const [eltAncrage, setEltAncrage] = useState(null);
   const menuContextuelOuvert = Boolean(eltAncrage);
   const navigate = useNavigate();
@@ -82,16 +87,18 @@ export default function NavDesktop({
           {utilisateur && utilisateur.privilege === "admin" ? (
             <MenuItem
               onClick={gererFermerMenuContextuel}
-              component={Link}
-              to={`/admin/${profilIdentifiant}`}
+              component={adminPath ? Link : "div"}
+              to={adminPath || undefined}
+              disabled={!adminPath}
             >
               <span>Menu Admin</span>
             </MenuItem>
           ) : (
             <MenuItem
               onClick={gererFermerMenuContextuel}
-              component={Link}
-              to={`/profil/${profilIdentifiant}`}
+              component={profilPath ? Link : "div"}
+              to={profilPath || undefined}
+              disabled={!profilPath}
             >
               <span>Mon Profil</span>
             </MenuItem>

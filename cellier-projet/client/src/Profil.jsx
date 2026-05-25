@@ -24,8 +24,9 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
  * @returns {*}
  */
 export default function Profil(props) {
-  const { authStatus } = useAuthenticator();
-  const isAuthenticated = authStatus === "authenticated";
+  const { authStatus, route } = useAuthenticator();
+  const isAuthenticated =
+    route === "authenticated" || authStatus === "authenticated";
 
   /**
    *  État des styles des composants MUI
