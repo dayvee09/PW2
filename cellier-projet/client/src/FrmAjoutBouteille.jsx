@@ -31,6 +31,11 @@ function resolveCellierId(cellier, celliers) {
   return "";
 }
 
+function parseCellierId(value) {
+  const parsed = parseInt(value, 10);
+  return Number.isFinite(parsed) ? parsed : "";
+}
+
 /**
  * Gestion de l'ajout d'une bouteille importé de la SAQ et l'ajout d'une bouteille 'non listée'
  *
@@ -198,7 +203,7 @@ export default function FrmAjoutBouteille(props) {
   }, [vinCellier, props.URI]);
 
   useEffect(() => {
-    if (vinCellier !== "" && Number.isFinite(vinCellier)) return;
+    if (parseCellierId(vinCellier) !== "") return;
     const resolved = resolveCellierId(props.cellier, props.celliers);
     if (resolved !== "") {
       setVinCellier(resolved);
@@ -637,7 +642,7 @@ export default function FrmAjoutBouteille(props) {
                   id="cellier-bouteille"
                   value={vinCellier}
                   onChange={(e) => {
-                    setVinCellier(e.target.value);
+                    setVinCellier(parseCellierId(e.target.value));
                   }}
                   SelectProps={{
                     native: true,
@@ -647,7 +652,7 @@ export default function FrmAjoutBouteille(props) {
                   name="cellier"
                 >
                   {props.celliers.map((cellier) => (
-                    <option key={cellier.id} value={cellier.id}>
+                    <option key={cellier.id} value={parseCellierId(cellier.id)}>
                       {cellier.nom}
                     </option>
                   ))}
