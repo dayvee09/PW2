@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .NavMobile {
 	* {
 		font-family: Alata, sans-serif;
@@ -52,4 +53,60 @@
 	@media only screen and (min-width: 768px) {
 		display: none;
 	}
+=======
+.NavMobile {
+	* {
+		font-family: Alata, sans-serif;
+		font-weight: 500;
+	}
+	
+	.css-1bjk3jo-MuiButtonBase-root-MuiBottomNavigationAction-root.Mui-selected {
+		color: #152440;
+	}
+
+	.MuiPaper-root {
+		background-color: #f3f5eb;
+		padding: 0 20px 0 20px;
+	}
+	
+	.BottomNav {
+		padding-bottom: 5px;
+		position: relative;
+		background-color: #f3f5eb;
+		
+		a  {
+			padding-top: 10px;
+			min-width: 60px;
+		}
+
+		.MuiButtonBase--root {
+			padding-left: 5px;
+		}
+		
+		span {
+			padding-top: 5px;
+			font-size: 10px;
+		}
+		
+		a.Mui-selected:not(.AddBottleIcone) {
+			border-top: 5px solid;
+			filter: invert(39%) sepia(68%) saturate(920%) hue-rotate(322deg) brightness(83%) contrast(93%);
+		}
+		
+		.AddBottleIcone {
+			width: 85px;
+			height: 80px;
+			position: absolute;
+			bottom: 0;
+			border-radius: 60px;
+		}
+
+		.disabledIcone {
+			min-width:75px;
+		}
+	}
+	@media only screen and (min-width: 768px) {
+		display: none;
+	}
+>>>>>>> monvino/master
 }

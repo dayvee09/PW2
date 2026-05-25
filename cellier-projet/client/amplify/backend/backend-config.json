@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> monvino/master
 {
   "auth": {
     "monvino": {
@@ -21,6 +24,7 @@
     }
   }
 }
+<<<<<<< HEAD
 =======
 {
   "auth": {
@@ -45,3 +49,5 @@
   }
 }
 >>>>>>> master
+=======
+>>>>>>> monvino/master

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Styles are anchored on dialog classes (MUI portals the dialog outside .FormBouteille).
 
 .FormBouteille-dialog {
@@ -409,3 +410,95 @@ body.fiche-zoom-active .MuiDialog-root {
     }
   }
 }
+=======
+.description {
+  .nom {
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .notes {
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.nom {
+  font-weight: 500;
+  padding-bottom: 5px;
+  text-align: center;
+}
+
+.type {
+  text-align: center;
+}
+
+.lien_saq {
+  background-color: transparent;
+  cursor: pointer;
+  font-family: Raleway;
+  font-size: 12px;
+  padding-top: 25px;
+  text-underline-offset: 5px;
+  text-decoration: underline 1px;
+
+  a {
+    color: #152440;
+    &:hover {
+      color: #cc4240;
+    }
+  }
+}
+
+.FormBouteille--button {
+  &:nth-child(1) {
+    background-color: transparent;
+    border: 1px solid #cc4240;
+    color: #152440;
+    font-family: Alata;
+    font-size: 12px;
+    padding: 10px 20px;
+    &:hover {
+      background-color: #f1ab50;
+      border: 1px solid #f1ab50;
+      color: #152440;
+      cursor: pointer;
+    }
+  }
+
+  &:nth-child(2) {
+    background-color: #152440;
+    border: 1px solid #152440;
+    color: #f3f5eb;
+    font-family: Alata;
+    font-size: 12px;
+    padding: 10px 20px;
+    &:hover {
+      background-color: #f1ab50;
+      border: 1px solid #f1ab50;
+      color: #152440;
+      cursor: pointer;
+    }
+  }
+}
+
+.img-container {
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-image: linear-gradient(
+    to top,
+    #d3d7dd 60%,
+    #d3d7dd 50%
+  ) !important;
+  overflow: hidden !important;
+}
+
+.css-ypiqx9-MuiDialogContent-root {
+  padding: 20px !important;
+
+  @media only screen and (min-width: 768px) {
+    padding: 40px 60px 60px 60px !important;
+  }
+}
+>>>>>>> monvino/master

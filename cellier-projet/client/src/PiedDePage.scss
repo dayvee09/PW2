@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .PiedDePage {
 	background-color: #152440;
 	background-position: center;
@@ -59,4 +60,65 @@
 	@media only screen and (min-width: 768px) {
 		justify-content: space-between;
 	}
+=======
+.PiedDePage {
+	* {
+		color: #f3f5eb;
+	}
+
+	background-color: #152440;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-image: linear-gradient(
+		to top,
+		rgba(16, 30, 51, 0.97) 50%,
+		rgba(16, 30, 51, 0.97) 50%
+	),
+	url(./img/jpg/background-accueil.jpg);
+	border-top: 5px solid #cc4240;
+	bottom: 0;
+	display: flex;
+	justify-content: space-between; 
+	padding: 25px 25px 25px 25px;
+	text-align: left;
+	width: 100%;
+
+	.nav-link-help {
+		font-size: 12px;
+		&:hover {
+			color: #f1ab50;
+			cursor: pointer;
+		}
+	}
+
+	@media only screen and (min-width: 768px) {
+		position: fixed;
+		padding: 25px 50px 25px 50px;
+	}
+}
+
+.Login .PiedDePage {
+	background-color: #cc4240;
+	background-image: none;
+
+	justify-content: center; 
+	.nav-link-help {
+		display: none;
+	}
+	@media only screen and (min-width: 768px) {
+		background-color: #152440;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-image: linear-gradient(
+			to top,
+			rgba(16, 30, 51, 0.97) 50%,
+			rgba(16, 30, 51, 0.97) 50%
+		),
+		url(./img/jpg/background-accueil.jpg);
+		justify-content: space-between; 
+		position: fixed;
+	}
+>>>>>>> monvino/master
 }

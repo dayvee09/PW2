@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> monvino/master
 <?php
 class CelliersControleur extends Controleur
 {
@@ -76,6 +79,7 @@ class CelliersControleur extends Controleur
         $this->reponse['corps'] = ['nombre' => $this->modele->retirer($params, $idEntite)];
     }
 }
+<<<<<<< HEAD
 =======
 <?php
 class CelliersControleur extends Controleur
@@ -155,3 +159,5 @@ class CelliersControleur extends Controleur
     }
 }
 >>>>>>> master
+=======
+>>>>>>> monvino/master

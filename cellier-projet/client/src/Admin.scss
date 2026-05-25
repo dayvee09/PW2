@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .Admin {
 	display: flex;
 	justify-content: center;
@@ -45,4 +46,53 @@
 	.css-ki1hdl-MuiAlert-action {
 		margin-left: 0;
 	}
+=======
+.Admin {
+	display: flex;
+	justify-content: center;
+	position: relative;
+	width: 100%;
+
+	* {
+		text-align: center;
+	}
+
+	button {
+		cursor: pointer;
+	}
+
+	.content-admin {
+		margin-top: 50px;
+		h1 {
+			cursor: default;
+			padding: 0;
+		}
+
+		.importer-admin {
+			background-color: #f1ab50;
+			border: 1px solid #f1ab50;
+			border-radius: 4px;
+			color: #152440;
+			font-family: "Alata";
+			text-transform: uppercase;
+			font-size: 12px;
+			text-decoration: none;
+			transition: background-color 0.2s ease-in, color 0.2s ease-in;
+			margin-top: 30px;
+			padding: 20px;
+			&:hover {
+				background-color: #f3f5eb;
+				color: #152440;
+			}
+		}
+	}
+
+	.contenu--alert {
+		text-align: center;
+	}
+
+	.css-ki1hdl-MuiAlert-action {
+		margin-left: 0;
+	}
+>>>>>>> monvino/master
 }

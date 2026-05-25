@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 RewriteEngine On
 RewriteRule ^.*php$ index.php [L]
 RewriteCond %{REQUEST_FILENAME} !-f
+=======
+RewriteEngine On
+RewriteRule ^.*php$ index.php [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+>>>>>>> monvino/master
 RewriteRule . index.php [L]

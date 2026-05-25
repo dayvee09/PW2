@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
   {
     "Key": "user:Stack",
@@ -7,4 +8,15 @@
     "Key": "user:Application",
     "Value": "{project-name}"
   }
+=======
+[
+  {
+    "Key": "user:Stack",
+    "Value": "{project-env}"
+  },
+  {
+    "Key": "user:Application",
+    "Value": "{project-name}"
+  }
+>>>>>>> monvino/master
 ]

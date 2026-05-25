@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> monvino/master
 // Début des modifications
 
 import React from "react";
@@ -630,6 +633,7 @@ const Appli = () => {
 };
 
 export default Appli;
+<<<<<<< HEAD
 =======
 // Début des modifications
 
@@ -1693,3 +1697,5 @@ const Appli = () => (
 
 export default Appli;
 >>>>>>> master
+=======
+>>>>>>> monvino/master

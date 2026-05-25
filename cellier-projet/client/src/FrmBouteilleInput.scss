@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .FrmBouteilleInput {
 	align-items: center;
 	display: flex;
@@ -25,4 +26,33 @@
 
 .css-md26zr-MuiInputBase-root-MuiOutlinedInput-root {
 	font-family: raleway;
+=======
+.FrmBouteilleInput {
+	align-items: center;
+	display: flex;
+	flex-wrap: nowrap;
+	margin: 4px 0;
+	text-align: left;
+
+	label {
+		margin-right: 10px;
+		width: 100px;
+	}
+
+	.DateInput {
+		flex: 1;
+	}
+
+	&:focus {
+		border:none;
+	}
+}
+
+.hidden {
+	display: none;
+}
+
+.css-md26zr-MuiInputBase-root-MuiOutlinedInput-root {
+	font-family: raleway;
+>>>>>>> monvino/master
 }

@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> monvino/master
 import "./ListeCelliers.scss";
 import Cellier from "./Cellier";
 import { NavLink } from "react-router-dom";
@@ -54,6 +57,7 @@ function ListeCelliers(props) {
 }
 
 export default ListeCelliers;
+<<<<<<< HEAD
 =======
 import "./ListeCelliers.scss";
 import Cellier from "./Cellier";
@@ -164,3 +168,5 @@ function ListeCelliers(props) {
 
 export default ListeCelliers;
 >>>>>>> master
+=======
+>>>>>>> monvino/master

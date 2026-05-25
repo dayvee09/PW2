@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> monvino/master
 {
   "name": "mon-vino",
   "version": "0.1.0",
@@ -59,6 +62,7 @@
     "webpack-cli": "^4.10.0"
   }
 }
+<<<<<<< HEAD
 =======
 {
   "name": "mon-vino",
@@ -141,3 +145,5 @@
   "homepage": "https://monvino.app"
 }
 >>>>>>> master
+=======
+>>>>>>> monvino/master

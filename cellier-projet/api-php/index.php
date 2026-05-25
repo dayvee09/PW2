@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> monvino/master
 <?php
 // Front Controller (Contrôleur Pilote)
 header("Content-Type: application/json; charset=UTF-8");
@@ -120,6 +123,7 @@ class Routeur
         }
     }
 }
+<<<<<<< HEAD
 =======
 <?php
 // Front Controller (Contrôleur Pilote)
@@ -258,3 +262,5 @@ class Routeur
     }
 }
 >>>>>>> master
+=======
+>>>>>>> monvino/master

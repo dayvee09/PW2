@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> monvino/master
 import React, { useEffect, useMemo, useState } from "react";
 import "./ListeBouteilles.scss";
 import Bouteille from "./Bouteille";
@@ -302,6 +305,7 @@ function ListeBouteilles(props) {
 }
 
 export default ListeBouteilles;
+<<<<<<< HEAD
 =======
 import React, { useEffect, useMemo, useState } from "react";
 import "./ListeBouteilles.scss";
@@ -624,3 +628,5 @@ function ListeBouteilles(props) {
 
 export default ListeBouteilles;
 >>>>>>> master
+=======
+>>>>>>> monvino/master

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .ListeBouteillesInventaire {
 	margin: 10px 0;
 	display: grid;
@@ -38,4 +39,46 @@
 			}
 		}
 	}
+=======
+.ListeBouteillesInventaire {
+	margin: 10px 0;
+	display: grid;
+	gap: 20px;
+	grid-template-columns: repeat(2, 1fr);
+	
+	.ListeBouteillesInventaire--default-text {
+		font-size: 15px;
+	}
+
+	@media only screen and (min-width: 768px) {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+.ListeInventaire--default-button  {
+	color: #152440;
+	font-size: 15px;
+	text-underline-offset: 5px;
+	text-decoration: underline 1px;
+
+	&:hover {
+		color: #cc4240;
+	}
+}
+
+.pagination {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	li {
+		button {
+			font-family: raleway;
+			padding: 17px;
+			border-radius: 0;
+
+			&:hover {
+				color: #cc4240;
+			}
+		}
+	}
+>>>>>>> monvino/master
 }
