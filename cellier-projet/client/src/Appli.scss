@@ -1,3 +1,322 @@
+<<<<<<< HEAD
+.Appli {
+  .Appli--entete {
+    background-color: #152440;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: linear-gradient(
+        to top,
+        rgba(16, 30, 51, 0.95) 50%,
+        rgba(16, 30, 51, 0.95) 50%
+      ),
+      url(./img/jpg/background-accueil.jpg);
+    border-bottom: #cc4240 5px solid;
+    color: #f3f5eb;
+    margin-top: -15px;
+    min-height: 110px;
+    padding: 40px 1.25rem 20px 1.25rem;
+
+    .Appli--search-bar-container {
+      display: flex;
+
+      .Appli--search-bar {
+        background-color: #f3f5eb;
+        border: 1px solid #cc4240;
+        border-radius: 4px;
+        color: #152440;
+        font-family: Raleway;
+        padding: 10px 10px 10px 10px;
+        margin-bottom: 5px;
+        outline: none;
+        width: 70%;
+
+        &:focus {
+          border-color: #f1ab50;
+          box-shadow: none;
+        }
+      }
+
+      .Appli--search-bar-icone {
+        background-color: #cc4240;
+        border-radius: 100px;
+        height: 40px;
+        margin-left: 10px;
+        padding: 11px;
+        width: 40px;
+        .Appli--search-bar-icone-search {
+          display: block;
+          margin: auto;
+        }
+
+        &:hover {
+          background-color: #f1ab50;
+          color: #f3f5eb;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .Appli--tri-container {
+      select {
+        background-color: #cc4240;
+        background-image: url("./img/svg/icone_row_down_blue.svg");
+        background-size: 6% 50%;
+        background-repeat: no-repeat;
+        background-position-x: 95%;
+        background-position-y: 10px;
+        border: #cc4240 1px solid;
+        color: #f3f5eb;
+        font-size: 11px;
+        margin-top: 10px;
+        min-width: 170px;
+        outline: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+      }
+
+      @media only screen and (min-width: 365px) {
+        select {
+          margin-left: 10px;
+        }
+      }
+
+      @media only screen and (min-width: 390px) {
+        display: flex;
+        select {
+          margin-left: 10px;
+          margin-top: 0px;
+        }
+      }
+    }
+
+    .Appli--signOut-container {
+      .Appli--signOut {
+        background-color: #cc4240;
+        border: 1px solid #cc4240;
+        border-radius: 4px;
+        color: #ffffff;
+        font-family: Alata;
+        font-size: 11px;
+        padding: 10px 15px 10px 15px;
+        text-transform: uppercase;
+
+        &:hover {
+          background-color: #f1ab50;
+          border: 1px solid #f1ab50;
+          color: #152440;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .Appli--addBottle-container {
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    @media only screen and (min-width: 560px) {
+      padding: 40px 3rem 20px 3rem;
+    }
+
+    @media only screen and (min-width: 768px) {
+      padding: 90px 5vw 10px 5vw;
+      margin-top: 0;
+      min-height: 150px;
+
+      .Appli--search-bar-container {
+        .Appli--search-bar {
+          width: 40%;
+        }
+      }
+
+      .Appli--signOut {
+        margin-bottom: 5px;
+      }
+    }
+
+    @media only screen and (min-width: 1200px) {
+      padding: 90px 12vw 10px 12vw;
+    }
+
+    @media only screen and (min-width: 1800px) {
+      padding: 90px 20vw 10px 20vw;
+    }
+  }
+
+  .Appli--container {
+    padding: 0 1.25rem 75px 1.25rem;
+    min-height: 85vh;
+    h1 {
+      padding-top: 50px;
+    }
+
+    @media only screen and (min-width: 560px) {
+      padding: 0 3rem 75px 3rem;
+    }
+
+    @media only screen and (min-width: 768px) {
+      padding: 0 5vw 75px 5vw;
+    }
+
+    @media only screen and (min-width: 1200px) {
+      padding: 0 12vw 75px 12vw;
+    }
+
+    @media only screen and (min-width: 1800px) {
+      padding: 0 20vw 75px 20vw;
+    }
+  }
+  // Override le style des MUI pour les alerts
+  .css-juoc2m {
+    background-color: #152440 !important;
+    border: 1px solid #f1ab50;
+  }
+}
+
+// Formulaire de connexion (Amplify Authenticator — affiché avant authentification)
+.Authenticator[data-amplify-authenticator] {
+  // Palette Mon Vino (remplace le thème teal par défaut d'Amplify)
+  --amplify-colors-primary-80: #152440;
+  --amplify-colors-primary-90: #f1ab50;
+  --amplify-colors-primary-100: #152440;
+  --amplify-colors-font-interactive: #152440;
+  --amplify-colors-border-focus: #f1ab50;
+  --amplify-components-button-primary-background-color: #152440;
+  --amplify-components-button-primary-color: #f3f5eb;
+  --amplify-components-button-primary-hover-background-color: #f1ab50;
+  --amplify-components-button-primary-hover-color: #152440;
+  --amplify-components-button-primary-focus-background-color: #f1ab50;
+  --amplify-components-button-primary-focus-color: #152440;
+  --amplify-components-button-link-color: #152440;
+  --amplify-components-button-link-hover-color: #cc4240;
+  --amplify-components-link-color: #152440;
+  --amplify-components-link-hover-color: #cc4240;
+  --amplify-components-tabs-item-active-border-color: #f1ab50;
+  --amplify-components-tabs-item-active-color: #cc4240;
+  --amplify-components-tabs-item-color: #152440;
+  --amplify-components-tabs-item-hover-border-color: #f1ab50;
+  --amplify-components-fieldcontrol-focus-border-color: #f1ab50;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: linear-gradient(
+      to top,
+      rgba(16, 30, 51, 0.95) 50%,
+      rgba(16, 30, 51, 0.95) 50%
+    ),
+    url(./img/jpg/background-accueil.jpg);
+  color: #f3f5eb;
+  font-family: "Raleway", sans-serif;
+  font-weight: 200;
+  padding: 25px 1.25rem;
+  text-align: center;
+
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  [data-amplify-container] {
+    max-width: 600px;
+    margin: auto;
+    padding-bottom: 25px;
+  }
+
+  .logo {
+    padding-bottom: 25px;
+    width: 200px;
+  }
+
+  .amplify-heading {
+    font-size: 15px;
+  }
+
+  [data-amplify-router] {
+    background-color: #f3f5eb;
+    width: 100%;
+  }
+
+  input {
+    text-align: left;
+
+    &:focus {
+      border-color: #f1ab50;
+      box-shadow: none;
+    }
+  }
+
+  .amplify-button--primary {
+    background-color: #152440;
+    border-color: #152440;
+    color: #f3f5eb;
+    font-family: Alata;
+    font-weight: 400;
+    text-transform: uppercase;
+
+    &:hover {
+      background-color: #f1ab50;
+      border-color: #f1ab50;
+      color: #152440;
+    }
+  }
+
+  .amplify-button--link {
+    color: #152440;
+    text-underline-offset: 5px;
+    text-decoration: underline 1px;
+
+    &:hover {
+      background-color: #f3f5eb;
+      color: #cc4240;
+    }
+  }
+
+  .amplify-tabs-item {
+    background-color: #f3f5eb;
+    border: 1px solid #e2e2e273;
+    color: #cc4240;
+    font-weight: 500;
+  }
+
+  .amplify-alert--error {
+    background-color: #f3f5eb;
+    border: 1px solid #cc4240;
+    color: #cc4240;
+    font-weight: 500;
+  }
+
+  button[data-state="inactive"] {
+    background-color: #f3f5eb86;
+    color: #152440;
+  }
+
+  button[data-state="active"] {
+    border-top: 3px solid #f1ab50;
+  }
+}
+
+// Conteneur affiché après authentification (classe historique conservée)
+.Login {
+  .Auth-sub-title {
+    color: #f3f5eb;
+    font-weight: 200;
+    font-size: 15px;
+    padding-bottom: 25px;
+  }
+
+  small {
+    color: #f3f5eb;
+  }
+}
+=======
 .Appli {
   .Appli--entete {
     background-color: #152440;
@@ -289,3 +608,4 @@
     }
   }
 }
+>>>>>>> monvino/master

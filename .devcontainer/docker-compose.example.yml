@@ -1,0 +1,41 @@
+# Copy to docker-compose.yml (gitignored) or set env vars before docker compose up.
+#   cp .devcontainer/docker-compose.example.yml .devcontainer/docker-compose.yml
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspaces/monvino:cached
+    command: sleep infinity
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME:-pw2}
+      DB_USER: ${DB_USER:-monvino}
+      DB_PASSWORD: ${DB_PASSWORD:-change-me}
+
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-change-me-root}
+      MYSQL_DATABASE: ${DB_NAME:-pw2}
+      MYSQL_USER: ${DB_USER:-monvino}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-change-me}
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ../cellier-projet/database/monvino-starter.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+volumes:
+  mysql-data:

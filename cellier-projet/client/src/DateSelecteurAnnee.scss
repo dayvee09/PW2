@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .DateSelecteurAnnee {
     align-items: center;
     display: flex;
@@ -15,4 +16,23 @@
 
 .hidden{
     display: none;
+=======
+.DateSelecteurAnnee {
+    align-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    text-align: left;
+
+    label {
+        margin-right: 10px;
+    }
+
+    .DateInput {
+        flex: 1;
+    }
+}
+
+.hidden{
+    display: none;
+>>>>>>> monvino/master
 }

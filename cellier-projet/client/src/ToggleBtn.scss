@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .ToggleBtn {
 	.container {
 		align-items: center;
@@ -66,4 +67,74 @@
 }
 .br2 {
     border-radius:5px 0px 0px 5px;
+=======
+.ToggleBtn {
+	.container {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+
+		.button {
+			align-items: center;
+			border: 1px solid #f1ab50;
+			border-radius: 5px;
+			color: #152440;
+			cursor: pointer;
+			display: flex;
+			height: 39px;
+			width: 200px;
+		}
+
+		.button-element {
+			align-items: center;
+			background: #f1ab50;
+			box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.14);
+			display: flex;
+			height: 39px;
+			justify-content: center;
+			transition: all 0.3s;
+			width: 100px;
+		}
+
+		#importer {
+			color: #152440;
+			font-family: "Alata", sans-serif;
+			font-size: 12px;
+			font-style: normal;
+			font-weight:500;
+			letter-spacing: 0.2px;
+
+		}
+
+		#creer {
+			color: #fff;
+			font-family:  "Alata", sans-serif;
+			font-size: 12px;
+			font-style: normal;
+			font-weight: 500;
+			letter-spacing: 0.2px;
+			padding-left: 23px;
+		}
+
+		label {
+			display: none;
+		}
+	}
+}
+
+.tfx100 {
+    transform:translateX(100px);
+}
+.tfxn100 {
+    transform:translateX(-100px);
+}
+.tfx0 {
+    transform:translateX(0px);
+}
+.br1 {
+    border-radius:0px 5px 5px 0px;
+}
+.br2 {
+    border-radius:5px 0px 0px 5px;
+>>>>>>> monvino/master
 }

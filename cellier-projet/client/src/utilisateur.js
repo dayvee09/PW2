@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> monvino/master
 import { Auth } from "aws-amplify";
 import { useResolvedPath } from "react-router-dom";
 
@@ -21,3 +25,13 @@ export async function email() {
     return null; // or throw an error, or handle this case as appropriate for your app
   }
 }
+<<<<<<< HEAD
+=======
+import { getUserEmailWithRetry } from "./auth";
+
+export async function email() {
+  return getUserEmailWithRetry();
+}
+>>>>>>> master
+=======
+>>>>>>> monvino/master

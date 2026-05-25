@@ -1,3 +1,416 @@
+<<<<<<< HEAD
+// Styles are anchored on dialog classes (MUI portals the dialog outside .FormBouteille).
+
+.FormBouteille-dialog {
+  border-radius: 8px;
+  max-width: 520px;
+  width: 100%;
+}
+
+.FormBouteille-content {
+  padding: 0 !important;
+  overflow-x: hidden;
+}
+
+.fiche-image-btn {
+  background-color: #d3d7dd;
+  border: none;
+  cursor: zoom-in;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  padding: 24px 20px 16px;
+  position: relative;
+  width: 100%;
+
+  &:hover .fiche-image-hint,
+  &:focus-visible .fiche-image-hint {
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #f1ab50;
+    outline-offset: -2px;
+  }
+
+  img {
+    display: block;
+    height: auto;
+    max-height: 300px;
+    max-width: 100%;
+    mix-blend-mode: multiply;
+    object-fit: contain;
+    pointer-events: none;
+    width: auto;
+  }
+}
+
+.fiche-image-hint {
+  align-items: center;
+  background-color: rgba(21, 36, 64, 0.75);
+  border-radius: 4px;
+  color: #f3f5eb;
+  display: inline-flex;
+  font-family: Alata, sans-serif;
+  font-size: 0.75rem;
+  gap: 4px;
+  margin-top: 12px;
+  opacity: 0.85;
+  padding: 6px 12px;
+  transition: opacity 0.2s ease;
+
+  svg {
+    font-size: 1rem;
+  }
+}
+
+// Hide dialogs while the image lightbox is open (bottle viewer, alerts, etc.)
+body.fiche-zoom-active .MuiDialog-root {
+  visibility: hidden;
+}
+
+.fiche-image-zoom-overlay {
+  animation: fiche-zoom-fade-in 0.2s ease-out;
+  background: linear-gradient(
+    165deg,
+    #152440 0%,
+    #1a2d52 45%,
+    #152440 100%
+  );
+  box-sizing: border-box;
+  cursor: default;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
+  height: 100dvh;
+  inset: 0;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  position: fixed;
+  width: 100%;
+  z-index: 2000;
+}
+
+@keyframes fiche-zoom-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fiche-image-zoom-header {
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(243, 245, 235, 0.12);
+  display: flex;
+  flex-shrink: 0;
+  gap: 12px;
+  justify-content: space-between;
+  padding: 12px 16px;
+}
+
+.fiche-image-zoom-title {
+  color: #f3f5eb;
+  flex: 1;
+  font-family: Alata, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: 0;
+  min-width: 0;
+}
+
+.fiche-image-zoom-close {
+  align-items: center;
+  background: transparent;
+  border: 1px solid rgba(243, 245, 235, 0.45);
+  border-radius: 4px;
+  color: #f3f5eb;
+  cursor: pointer;
+  display: flex;
+  flex-shrink: 0;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
+
+  &:hover {
+    background: rgba(204, 66, 64, 0.85);
+    border-color: #cc4240;
+  }
+
+  svg {
+    font-size: 1.35rem;
+  }
+}
+
+.fiche-image-zoom-stage {
+  align-items: center;
+  cursor: default;
+  display: flex;
+  justify-content: center;
+  min-height: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 12px;
+  touch-action: pan-x pan-y;
+}
+
+.fiche-image-zoom-overlay--zoomed .fiche-image-zoom-stage {
+  align-items: flex-start;
+}
+
+.fiche-image-zoom-img {
+  background-color: #f3f5eb;
+  border-radius: 6px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  cursor: zoom-in;
+  display: block;
+  flex-shrink: 0;
+  height: auto;
+  max-height: calc(100dvh - 130px);
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform 0.22s ease-out;
+  width: auto;
+
+  &--zoomed {
+    cursor: zoom-out;
+  }
+}
+
+@media only screen and (min-width: 481px) {
+  .fiche-image-zoom-img--zoomed {
+    max-height: none;
+    max-width: none;
+  }
+}
+
+.fiche-image-zoom-hint {
+  color: rgba(243, 245, 235, 0.7);
+  flex-shrink: 0;
+  font-family: Alata, sans-serif;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  margin: 0;
+  padding: 8px 16px 12px;
+  text-align: center;
+}
+
+@media only screen and (min-width: 481px) {
+  .fiche-image-zoom-header {
+    align-items: center;
+    padding: 16px 20px;
+  }
+
+  .fiche-image-zoom-title {
+    font-size: 0.95rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .fiche-image-zoom-img {
+    max-height: calc(100dvh - 140px);
+    max-width: min(94vw, 820px);
+  }
+
+  .fiche-image-zoom-hint {
+    font-size: 0.75rem;
+    padding: 10px 20px 16px;
+  }
+}
+
+.fiche-body {
+  padding: 24px 28px 12px;
+}
+
+.fiche-header {
+  border-bottom: 1px solid #d3d7dd;
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  text-align: center;
+}
+
+.fiche-nom {
+  color: #152440;
+  font-family: Alata, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 10px;
+  word-wrap: break-word;
+}
+
+.fiche-type {
+  color: #5a6478;
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.fiche-description-block {
+  margin-bottom: 22px;
+
+  .fiche-section-label {
+    color: #152440;
+    display: block;
+    font-family: Alata, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .fiche-description-text {
+    background-color: #fff;
+    border: 1px solid #d3d7dd;
+    border-radius: 4px;
+    color: #152440;
+    font-size: 0.9rem;
+    font-style: italic;
+    line-height: 1.65;
+    margin: 0;
+    padding: 14px 16px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+}
+
+.fiche-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 4px;
+}
+
+.fiche-meta-item {
+  border-bottom: 1px solid #e8ebe3;
+  display: grid;
+  gap: 4px 12px;
+  grid-template-columns: minmax(110px, 38%) 1fr;
+  align-items: baseline;
+  padding: 14px 0;
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  &--full {
+    grid-template-columns: minmax(110px, 38%) 1fr;
+  }
+}
+
+.fiche-label {
+  color: #152440;
+  font-family: Alata, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.fiche-value {
+  color: #152440;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.45;
+  margin: 0;
+  word-wrap: break-word;
+
+  &--empty {
+    color: #8a919e;
+    font-style: italic;
+  }
+
+  &--emphasis {
+    font-weight: 600;
+  }
+}
+
+.fiche-lien-saq {
+  margin-top: 8px;
+  padding-top: 8px;
+  text-align: center;
+
+  a {
+    color: #152440;
+    font-family: Raleway, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+
+    &:hover {
+      color: #cc4240;
+    }
+  }
+}
+
+.fiche-edit-fields {
+  border-top: 1px solid #d3d7dd;
+  margin-top: 20px;
+  padding-top: 18px;
+
+  label {
+    color: #152440;
+    display: block;
+    font-family: Alata, sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    margin-top: 16px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+.FormBouteille-actions {
+  background-color: #f3f5eb;
+  border-top: 1px solid #d3d7dd;
+  justify-content: flex-end;
+  padding: 14px 24px 18px !important;
+}
+
+.FormBouteille--button {
+  font-family: Alata, sans-serif !important;
+  font-size: 12px !important;
+  padding: 10px 24px !important;
+  text-transform: none !important;
+
+  &:nth-child(1) {
+    background-color: transparent !important;
+    border: 1px solid #cc4240 !important;
+    color: #152440 !important;
+
+    &:hover {
+      background-color: #f1ab50 !important;
+      border-color: #f1ab50 !important;
+      color: #152440 !important;
+    }
+  }
+
+  &:nth-child(2),
+  &:only-child {
+    background-color: #152440 !important;
+    border: 1px solid #152440 !important;
+    color: #f3f5eb !important;
+
+    &:hover {
+      background-color: #f1ab50 !important;
+      border-color: #f1ab50 !important;
+      color: #152440 !important;
+    }
+  }
+}
+=======
 .description {
   .nom {
     word-wrap: break-word;
@@ -88,3 +501,4 @@
     padding: 40px 60px 60px 60px !important;
   }
 }
+>>>>>>> monvino/master

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .Appli--container {
 	.fin--liste {
 		cursor: default;
@@ -74,4 +75,82 @@
 	@media only screen and (min-width: 768px) {
 		margin-top: 0;
 	}
+=======
+.Appli--container {
+	.fin--liste {
+		cursor: default;
+		margin: auto;
+		padding: 50px 15px 15px 15px;
+		width: 100px;
+	}
+
+	.fin--liste.cliquable {
+		cursor: pointer;
+		text-decoration: underline;
+	}
+}
+
+.ListeBouteille--grid {
+	display: grid;
+	gap: 20px;
+	grid-template-columns: repeat(2, 1fr);
+	list-style: none;
+	width: 100%;
+
+	@media only screen and (min-width: 940px) {
+		grid-template-columns: repeat(3, 1fr);
+	}
+	@media only screen and (min-width: 1200px) {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+.ListeBouteilles--default {
+	h1 {
+		font-size: 20px;
+		padding-top: 0;
+	}
+
+	.ListeBouteille--default-button {
+		color: #152440;
+		font-size: 15px;
+		text-decoration: underline 1px;
+		text-underline-offset: 5px;
+
+		&:hover {
+			color: #cc4240;
+			cursor: pointer;
+		}
+	}
+}
+
+.ListeBouteille--cellier-nom {
+	padding-bottom: 50px;
+}
+
+.retour {
+	background-color: transparent;
+	border: 1px solid #cc4240;
+	border-radius: 4px;
+	color: #f3f5eb;
+	font-family: Alata;
+	margin-bottom: 5px;
+	padding: 10px 10px 10px 10px;
+	text-transform: uppercase;
+
+	&:hover {
+		background-color: #cc4240;
+		border: 1px solid #cc4240;
+		cursor: pointer;
+	}
+
+	img {
+		display: inline-block;
+		padding-right: 10px;
+	}
+
+	@media only screen and (min-width: 768px) {
+		margin-top: 0;
+	}
+>>>>>>> monvino/master
 }

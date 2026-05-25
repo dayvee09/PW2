@@ -1,3 +1,66 @@
+<<<<<<< HEAD
+.PiedDePage {
+	background-color: #152440;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-image: linear-gradient(
+		to top,
+		rgba(16, 30, 51, 0.97) 50%,
+		rgba(16, 30, 51, 0.97) 50%
+	),
+	url(./img/jpg/background-accueil.jpg);
+	border-top: 5px solid #cc4240;
+	bottom: 0;
+	display: flex;
+	justify-content: space-between;
+	padding: 25px 25px 25px 25px;
+	text-align: left;
+	width: 100%;
+	color: #f3f5eb;
+	font-family: Raleway;
+	font-size: 12px;
+	font-weight: 400;
+
+	&__copyright,
+	.nav-link-help {
+		color: #f3f5eb;
+	}
+
+	&__copyright {
+		margin: 0;
+	}
+
+	.nav-link-help {
+		font-family: Alata;
+		font-size: 12px;
+		font-weight: 400;
+		text-decoration: none;
+		text-transform: uppercase;
+
+		&:hover {
+			color: #f1ab50;
+			cursor: pointer;
+		}
+	}
+
+	@media only screen and (min-width: 768px) {
+		position: fixed;
+		padding: 25px 50px 25px 50px;
+	}
+}
+
+.Login .PiedDePage {
+	justify-content: center;
+
+	.nav-link-help {
+		display: none;
+	}
+
+	@media only screen and (min-width: 768px) {
+		justify-content: space-between;
+	}
+=======
 .PiedDePage {
 	* {
 		color: #f3f5eb;
@@ -57,4 +120,5 @@
 		justify-content: space-between; 
 		position: fixed;
 	}
+>>>>>>> monvino/master
 }

@@ -1,3 +1,86 @@
+<<<<<<< HEAD
+.FrmAjoutBouteille {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin: auto;
+	max-width: 900px;
+
+	h1 {
+		text-align: center;
+	}
+
+	.formInputNom {
+		padding-top: 15px;
+	}
+
+	.autocomplete {
+		padding-bottom: 8px;
+	}
+
+	.FrmAjoutNouvelle {
+		margin: 20px;
+		label {
+			display: block;
+			font-size: 14px;
+			margin-top: 10px;
+		}
+
+		.fiche-image-btn--ajout {
+			min-height: 180px;
+			padding: 16px 20px 12px;
+
+			img {
+				max-height: 140px;
+			}
+		}
+
+		.btn--ajouter {
+			background-color: #101e33;
+			border: none;
+			border-radius: 4px;
+			color: #f3f5eb;
+			font-family: Alata;
+			text-transform: uppercase;
+			padding: 10px 30px;
+
+			&:hover {
+				background-color: #f1ab50;
+				color: #101e33;
+				cursor: pointer;
+			}
+		}
+	} 
+
+	.nonSelect {
+		opacity:0.7;
+		cursor: none;
+	}
+
+	.bandeRouge {
+		background-color: #cc4240;
+		padding: 10px;
+		width: auto;
+	}
+
+	.active {
+		color: #cc4240;
+	}
+	
+	.Grid p {
+		font-size: 12px;
+		margin-top: 0;
+	}
+}
+
+.MuiAutocomplete-popperDisablePortal {
+	z-index: 10;
+	
+	* {
+		font-family: Raleway;
+		font-size: 14px;
+	}
+=======
 .FrmAjoutBouteille {
 	display: flex;
 	flex-direction: column;
@@ -82,4 +165,5 @@
 		font-family: Raleway;
 		font-size: 14px;
 	}
+>>>>>>> monvino/master
 }
