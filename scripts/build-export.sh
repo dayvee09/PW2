@@ -19,12 +19,7 @@ if [ ! -f "$CLIENT/src/aws-exports.js" ]; then
   exit 1
 fi
 
-if [ -f "$CLIENT/.env.production" ]; then
-  set -a
-  # shellcheck disable=SC1091
-  source "$CLIENT/.env.production"
-  set +a
-fi
+# React (create-react-app) reads .env.production during npm run build — no need to source it in bash.
 
 echo "==> Building React client"
 cd "$CLIENT"
