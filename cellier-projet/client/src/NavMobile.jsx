@@ -1,7 +1,7 @@
 import "./NavMobile.scss";
 import * as React from "react";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -10,6 +10,22 @@ import { ReactComponent as ProfilIcone } from "./img/svg/icone_profil_blue_line.
 import { ReactComponent as FavorisIcone } from "./img/svg/icone_favorite_blue_line.svg";
 import { ReactComponent as InventaireIcone } from "./img/svg/icone_inventaire_blue_line.svg";
 import { ReactComponent as AddBottleIcone } from "./img/svg/add_bottle_blue_filled.svg";
+
+function bottomNavIndexFromPath(pathname) {
+	if (pathname === "/vinsInventaire") return 5;
+	if (pathname === "/favoris") return 4;
+	if (pathname === "/vins") return 2;
+	if (pathname.startsWith("/profil/") || pathname.startsWith("/admin/")) return 1;
+	if (
+		pathname === "/" ||
+		pathname === "/PW2/cellier-projet" ||
+		pathname.startsWith("/cellier/") ||
+		pathname === "/modifier-cellier"
+	) {
+		return 0;
+	}
+	return 0;
+}
 
 /**
  * Gestion de la navigation en version mobile
@@ -28,23 +44,22 @@ export default function NavMobile({
 	prefetchVinsInventaire,
 	prefetchFavorisId,
 }) {
-  	// état du BottomNavigation
-	const [value, setValue] = useState(indexNav);
+	const location = useLocation();
+	const activeIndex = bottomNavIndexFromPath(location.pathname);
 
-    useEffect(() => {
-	  setIndexNav(value);
-	}, [value]);
+	useEffect(() => {
+		setIndexNav(activeIndex);
+	}, [activeIndex, setIndexNav]);
 
 	// Gestion du reset du BottomNavigation lors de la déconnexion
 	useEffect(() => {
 		if (!isAuthenticated && resetBottomNav === false) {
 			setResetBottomNav(true);
-			if (value === 1) {
+			if (indexNav === 1) {
 				setIndexNav(0);
-				setValue(0);
 			}
 		}
-	}, [isAuthenticated, resetBottomNav, value, setResetBottomNav, setIndexNav]);
+	}, [isAuthenticated, resetBottomNav, indexNav, setResetBottomNav, setIndexNav]);
 
 	return (
 	<div>
@@ -56,10 +71,8 @@ export default function NavMobile({
 		  >
           <BottomNavigation
             className="BottomNav"
-            value={indexNav}
-            onChange={(event, newValue) => {
-				setValue(newValue);
-            }}
+            value={activeIndex}
+            onChange={() => {}}
             showLabels
           >
             <BottomNavigationAction
