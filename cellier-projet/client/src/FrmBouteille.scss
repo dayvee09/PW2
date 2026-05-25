@@ -65,7 +65,7 @@
   }
 }
 
-// Hide the bottle modal while the image lightbox is open
+// Hide dialogs while the image lightbox is open (bottle viewer, alerts, etc.)
 body.fiche-zoom-active .MuiDialog-root {
   visibility: hidden;
 }

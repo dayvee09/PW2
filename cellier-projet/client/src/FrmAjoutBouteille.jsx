@@ -13,6 +13,7 @@ import DateSelecteurAnnee from "./DateSelecteurAnnee";
 import MuiDateProvider from "./MuiDateProvider";
 import dayjs from "dayjs";
 import placeholderSaq from "./img/png/placeholder-saq.png";
+import BouteilleImageZoom from "./BouteilleImageZoom";
 import { useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 import Alert from "@mui/material/Alert";
@@ -356,6 +357,12 @@ export default function FrmAjoutBouteille(props) {
     }
     return ok;
   };
+
+  const imageSrc = imgUrl();
+  const imageTitre = btnState
+    ? (vinNom?.trim() ? vinNom.trim() : "Bouteille personnalisée")
+    : value?.nom || "Bouteille";
+
   return (
     <MuiDateProvider>
     <div>
@@ -375,14 +382,12 @@ export default function FrmAjoutBouteille(props) {
         <div className="FrmAjoutBouteille">
           <h1>AJOUTER UNE BOUTEILLE</h1>
           <div className="FrmAjoutNouvelle">
-            <div className="img--wrap">
-              <img
-                loading="lazy"
-                decoding="async"
-                src={imgUrl() ? imgUrl() : placeholderSaq}
-                alt=""
-              />
-            </div>
+            <BouteilleImageZoom
+              imageSrc={imageSrc}
+              title={imageTitre}
+              alt={imageTitre}
+              buttonClassName="fiche-image-btn fiche-image-btn--ajout"
+            />
             {/* Apparaîte uniquement en important de la bouteille du SAQ */}
             <div className={btnState ? "hidden" : ""}>
               <label className="formInputNom" htmlFor="nom-bouteille-saq">
