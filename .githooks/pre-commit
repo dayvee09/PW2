@@ -12,6 +12,8 @@ BLOCKED_PATTERNS=(
   'aws-exports\.js$'
   'team-provider-info\.json$'
   'amplify/#current-cloud-backend'
+  'amplify/backend/awscloudformation'
+  'amplify/backend/amplify-meta\.json$'
   'amplify/\.config/local-'
   '\.devcontainer/docker-compose\.yml$'
   '\.pem$'

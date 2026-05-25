@@ -15,6 +15,7 @@ BRANCH="$(git branch --show-current)"
 echo "This will rewrite history on branch: $BRANCH"
 echo "Paths removed from every commit:"
 echo "  - cellier-projet/client/amplify/#current-cloud-backend/"
+echo "  - cellier-projet/client/amplify/backend/awscloudformation/"
 echo "  - .devcontainer/docker-compose.yml"
 echo ""
 read -r -p "Continue? [y/N] " ans
@@ -25,6 +26,7 @@ export FILTER_BRANCH_SQUELCH_WARNING=1
 git filter-branch -f --index-filter '
   git rm -rf --cached --ignore-unmatch \
     cellier-projet/client/amplify/#current-cloud-backend \
+    cellier-projet/client/amplify/backend/awscloudformation \
     .devcontainer/docker-compose.yml \
     2>/dev/null || true
 ' -- "$BRANCH"

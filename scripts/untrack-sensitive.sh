@@ -23,13 +23,23 @@ for f in "${FILES[@]}"; do
   fi
 done
 
-AMPLIFY_BACKEND="cellier-projet/client/amplify/#current-cloud-backend"
-if git ls-files --error-unmatch "$AMPLIFY_BACKEND" &>/dev/null; then
-  git rm -r --cached "$AMPLIFY_BACKEND"
-  echo "Untracked: $AMPLIFY_BACKEND/ (recursive)"
-else
-  echo "Not tracked (skip): $AMPLIFY_BACKEND/"
-fi
+for dir in \
+  "cellier-projet/client/amplify/#current-cloud-backend" \
+  "cellier-projet/client/amplify/backend/awscloudformation"; do
+  if git ls-files --error-unmatch "$dir" &>/dev/null; then
+    git rm -r --cached "$dir"
+    echo "Untracked: $dir/ (recursive)"
+  else
+    echo "Not tracked (skip): $dir/"
+  fi
+done
+
+for f in cellier-projet/client/amplify/backend/amplify-meta.json; do
+  if git ls-files --error-unmatch "$f" &>/dev/null; then
+    git rm --cached "$f"
+    echo "Untracked: $f"
+  fi
+done
 
 echo ""
 echo "Done. Commit the .gitignore update and these removals when ready."
