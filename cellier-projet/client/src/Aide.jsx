@@ -85,33 +85,65 @@ function Aide(props) {
 				<div className="">
 					<h1>Questions fréquentes</h1>
 					<div className="Aide--accordion">
-					<Accordion>
+					<Accordion disableGutters elevation={0} className="Aide--accordion-item">
 						<AccordionSummary
 						expandIcon={<ExpandMoreIcon style={{ color: '#f1ab50', height: "20px", width: "20px" }}/>}
-						aria-controls="panel1a-content"
-						id="panel1a-header"
+						aria-controls="faq-panel1-content"
+						id="faq-panel1-header"
 						>
-						<Typography>Première question</Typography>
+						<Typography>Comment créer ou modifier un cellier ?</Typography>
 						</AccordionSummary>
 						<AccordionDetails>
 						<Typography>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-							malesuada lacus ex, sit amet blandit leo lobortis eget.
+							Sur la page d'accueil, ajoutez un nouveau cellier ou modifiez le nom du cellier par défaut.
+							Pour renommer un cellier existant, ouvrez-le puis utilisez l'option de modification du nom.
 						</Typography>
 						</AccordionDetails>
 					</Accordion>
-					<Accordion>
+					<Accordion disableGutters elevation={0} className="Aide--accordion-item">
 						<AccordionSummary
 						expandIcon={<ExpandMoreIcon style={{ color: '#f1ab50', height: "20px", width: "20px" }}/>}
-						aria-controls="panel2a-content"
-						id="panel2a-header"
+						aria-controls="faq-panel2-content"
+						id="faq-panel2-header"
 						>
-						<Typography>Deuxième question</Typography>
+						<Typography>Comment ajouter une bouteille à mon cellier ?</Typography>
 						</AccordionSummary>
 						<AccordionDetails>
 						<Typography>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-							malesuada lacus ex, sit amet blandit leo lobortis eget.
+							Depuis n'importe quelle page, accédez au formulaire d'ajout de bouteille.
+							Choisissez d'importer une bouteille du catalogue ou d'en créer une personnalisée,
+							remplissez les informations requises, puis sélectionnez le cellier de destination.
+						</Typography>
+						</AccordionDetails>
+					</Accordion>
+					<Accordion disableGutters elevation={0} className="Aide--accordion-item">
+						<AccordionSummary
+						expandIcon={<ExpandMoreIcon style={{ color: '#f1ab50', height: "20px", width: "20px" }}/>}
+						aria-controls="faq-panel3-content"
+						id="faq-panel3-header"
+						>
+						<Typography>Où consulter toutes mes bouteilles ?</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+						<Typography>
+							La page Inventaire regroupe toutes les bouteilles présentes dans vos celliers.
+							Utilisez l'onglet Inventaire dans le menu de navigation pour y accéder rapidement.
+						</Typography>
+						</AccordionDetails>
+					</Accordion>
+					<Accordion disableGutters elevation={0} className="Aide--accordion-item">
+						<AccordionSummary
+						expandIcon={<ExpandMoreIcon style={{ color: '#f1ab50', height: "20px", width: "20px" }}/>}
+						aria-controls="faq-panel4-content"
+						id="faq-panel4-header"
+						>
+						<Typography>Comment modifier mon profil ou réinitialiser mon mot de passe ?</Typography>
+						</AccordionSummary>
+						<AccordionDetails>
+						<Typography>
+							Rendez-vous dans la page Profil pour mettre à jour vos informations personnelles.
+							Pour réinitialiser votre mot de passe, utilisez l'option « Mot de passe oublié »
+							sur l'écran de connexion.
 						</Typography>
 						</AccordionDetails>
 					</Accordion>
