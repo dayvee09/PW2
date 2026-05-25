@@ -361,7 +361,7 @@ const AppliContent = ({ cognitoUser }) => {
         setId("");
         setUtilisateur(null);
         setBouteilles("");
-        setBouteillesInventaire("");
+        setBouteillesInventaire([]);
         setCelliers("");
         setEmailUtilisateur("");
         setUsername("");
@@ -379,7 +379,7 @@ const AppliContent = ({ cognitoUser }) => {
         setId("");
         setUtilisateur(null);
         setBouteilles("");
-        setBouteillesInventaire("");
+        setBouteillesInventaire([]);
         setCelliers([]);
         setEmailUtilisateur("");
         setUsername("");
@@ -470,10 +470,11 @@ const AppliContent = ({ cognitoUser }) => {
         throw response;
       })
       .then((data) => {
-        setBouteillesInventaire(data);
+        setBouteillesInventaire(Array.isArray(data) ? data : []);
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
+        setBouteillesInventaire([]);
         setError(error);
       });
   }

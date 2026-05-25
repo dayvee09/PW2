@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_search_bar_white.svg";
 import BouteilleInventaire from "./BouteilleInventaire";
-import isEqual from "lodash/isEqual";
 import { TextField } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import usePagination from "./Pagination";
@@ -75,14 +74,15 @@ function ListeBouteillesInventaire(props) {
   //   },
   // }));
 
-  /**
-   * Fectch la liste de tous les bouteilles dans tout différentes celliers
-   */
   useEffect(() => {
-    if (!isEqual(props.bouteillesInventaire, results)) {
-      props.fetchVinsInventaire();
-      setResults(props.bouteillesInventaire);
-    }
+    props.fetchVinsInventaire();
+  }, []);
+
+  useEffect(() => {
+    const inventaire = Array.isArray(props.bouteillesInventaire)
+      ? props.bouteillesInventaire
+      : [];
+    setResults(inventaire);
   }, [props.bouteillesInventaire]);
 
   function gererVoirPlus() {
@@ -99,6 +99,9 @@ function ListeBouteillesInventaire(props) {
   }
 
   function filtreBouteilles(array, string) {
+    if (!Array.isArray(array)) {
+      return [];
+    }
     return array.filter((bouteille) => {
       return bouteille.nom.toLowerCase().includes(string.toLowerCase());
     });
