@@ -1,8 +1,4 @@
 .PiedDePage {
-	* {
-		color: #f3f5eb;
-	}
-
 	background-color: #152440;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -16,13 +12,31 @@
 	border-top: 5px solid #cc4240;
 	bottom: 0;
 	display: flex;
-	justify-content: space-between; 
+	justify-content: space-between;
 	padding: 25px 25px 25px 25px;
 	text-align: left;
 	width: 100%;
+	color: #f3f5eb;
+	font-family: Raleway;
+	font-size: 12px;
+	font-weight: 400;
+
+	&__copyright,
+	.nav-link-help {
+		color: #f3f5eb;
+	}
+
+	&__copyright {
+		margin: 0;
+	}
 
 	.nav-link-help {
+		font-family: Alata;
 		font-size: 12px;
+		font-weight: 400;
+		text-decoration: none;
+		text-transform: uppercase;
+
 		&:hover {
 			color: #f1ab50;
 			cursor: pointer;

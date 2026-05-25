@@ -157,10 +157,15 @@ function ListeBouteillesInventaire(props) {
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
             <div className="liste-inventaire-total">
-              <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p>
               <p>
-                Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2)}
-                &nbsp; $
+                <span className="liste-inventaire-total__label">Quantité totale : </span>
+                <span className="liste-inventaire-total__value">{quantite_total}</span>
+              </p>
+              <p>
+                <span className="liste-inventaire-total__label">Valeur totale : </span>
+                <span className="liste-inventaire-total__value">
+                  {parseFloat(prix_total).toFixed(2)} $
+                </span>
               </p>
             </div>
           </div>
@@ -233,10 +238,15 @@ function ListeBouteillesInventaire(props) {
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
             <div className="liste-inventaire-total">
-              <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p>
               <p>
-                Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2)}
-                &nbsp; $
+                <span className="liste-inventaire-total__label">Quantité totale : </span>
+                <span className="liste-inventaire-total__value">{quantite_total}</span>
+              </p>
+              <p>
+                <span className="liste-inventaire-total__label">Valeur totale : </span>
+                <span className="liste-inventaire-total__value">
+                  {parseFloat(prix_total).toFixed(2)} $
+                </span>
               </p>
             </div>
           </div>
