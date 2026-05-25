@@ -26,6 +26,7 @@ export default function NavMobile({
 	setResetBottomNav,
 	resetBottomNav,
 	prefetchVinsInventaire,
+	prefetchFavorisId,
 }) {
   	// état du BottomNavigation
 	const [value, setValue] = useState(indexNav);
@@ -106,6 +107,8 @@ export default function NavMobile({
               icon={<FavorisIcone />}
               component={Link}
               to="/favoris"
+              onMouseEnter={prefetchFavorisId}
+              onFocus={prefetchFavorisId}
             />
             <BottomNavigationAction
               label="INVENTAIRE"

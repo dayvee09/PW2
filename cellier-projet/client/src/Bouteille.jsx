@@ -31,13 +31,11 @@ const Button = styled(MuiButton)(() => ({
   },
 }));
 
-export default function Bouteille(props) {
-  /**
-   *  API MUI https://mui.com/material-ui/react-snackbar/
-   */
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+function Bouteille(props) {
   const [eltAncrage, setEltAncrage] = useState(null);
   const [contexteModif, setContexteModif] = useState(false);
   const menuContextuelOuvert = Boolean(eltAncrage);
@@ -513,3 +511,5 @@ export default function Bouteille(props) {
     </>
   );
 }
+
+export default React.memo(Bouteille);

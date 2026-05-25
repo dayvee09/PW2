@@ -73,8 +73,8 @@ function Favoris(props) {
             <div></div>
             {favoris.length > 1 && (
               <div className="ListeBouteille--grid">
-                {favoris.slice(debut, fin).map((bouteille, index) => (
-                  <div key={index}>
+                {favoris.slice(debut, fin).map((bouteille) => (
+                  <div key={bouteille.id ?? bouteille.vino__bouteille_id}>
                     <Bouteille
                       {...bouteille}
                       fetchVins={props.fetchVins}

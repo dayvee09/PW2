@@ -74,6 +74,7 @@ function ListeCelliers(props) {
                   fetchCelliers={props.fetchCelliers}
                   fetchStatsCelliers={props.fetchStatsCelliers}
                   prefetchVins={props.prefetchVins}
+                  prefetchFavorisId={props.prefetchFavorisId}
                   invalidateBouteillesCache={props.invalidateBouteillesCache}
                 />
               </div>

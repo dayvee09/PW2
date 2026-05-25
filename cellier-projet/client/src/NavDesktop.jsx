@@ -19,6 +19,7 @@ export default function NavDesktop({
   utilisateur,
   username,
   prefetchVinsInventaire,
+  prefetchFavorisId,
 }) {
   const profilPath = emailUtilisateur
     ? `/profil/${encodeURIComponent(emailUtilisateur)}`
@@ -115,6 +116,8 @@ export default function NavDesktop({
             onClick={gererFermerMenuContextuel}
             component={Link}
             to={`/favoris`}
+            onMouseEnter={prefetchFavorisId}
+            onFocus={prefetchFavorisId}
           >
             <span>Mes Favoris</span>
           </MenuItem>

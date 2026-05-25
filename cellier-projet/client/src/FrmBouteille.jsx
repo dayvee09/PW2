@@ -13,6 +13,7 @@ import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import placeholderSaq from "./img/png/placeholder-saq.png";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
+import MuiDateProvider from "./MuiDateProvider";
 import TextField from "@mui/material/TextField";
 
 /**
@@ -115,6 +116,7 @@ export default function FrmBouteille({
     : "";
 
   return (
+    <MuiDateProvider>
     <div className="FormBouteille">
       <Dialog
         className="FormBouteille-dialog-root"
@@ -363,5 +365,6 @@ export default function FrmBouteille({
           document.body
         )}
     </div>
+    </MuiDateProvider>
   );
 }

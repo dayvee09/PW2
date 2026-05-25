@@ -10,6 +10,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
+import MuiDateProvider from "./MuiDateProvider";
 import dayjs from "dayjs";
 import placeholderSaq from "./img/png/placeholder-saq.png";
 import { useNavigate } from "react-router-dom";
@@ -351,6 +352,7 @@ export default function FrmAjoutBouteille(props) {
     return ok;
   };
   return (
+    <MuiDateProvider>
     <div>
       <div className="Appli--entete">
         <div className="Appli--addBottle-container">
@@ -708,6 +710,7 @@ export default function FrmAjoutBouteille(props) {
         </div>
       </div>
     </div>
+    </MuiDateProvider>
   );
 }
 const types = [

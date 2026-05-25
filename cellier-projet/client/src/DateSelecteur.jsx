@@ -1,8 +1,5 @@
 import "./DateSelecteur.scss";
-import * as React from "react";
-import { Stack } from "@mui/material";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Stack from "@mui/material/Stack";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 
@@ -23,24 +20,22 @@ export default function DateSelecteur(props) {
       ].join(" ")}
     >
       <div className="DateInput">
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Stack spacing={3}>
-            <DatePicker
-              views={["day"]}
-              value={dateValue}
-              onChange={(newValue) => {
-                props.setDateAchat(
-                  newValue
-                    ? newValue.format("YYYY-MM-DD")
-                    : dayjs().format("YYYY-MM-DD")
-                );
-              }}
-              slotProps={{
-                textField: { fullWidth: true, size: "small", helperText: null },
-              }}
-            />
-          </Stack>
-        </LocalizationProvider>
+        <Stack spacing={3}>
+          <DatePicker
+            views={["day"]}
+            value={dateValue}
+            onChange={(newValue) => {
+              props.setDateAchat(
+                newValue
+                  ? newValue.format("YYYY-MM-DD")
+                  : dayjs().format("YYYY-MM-DD")
+              );
+            }}
+            slotProps={{
+              textField: { fullWidth: true, size: "small", helperText: null },
+            }}
+          />
+        </Stack>
       </div>
     </div>
   );

@@ -174,7 +174,10 @@ export default function Cellier(props) {
           <div
             className="cellier--gestion-container"
             onClick={handleClickCellier}
-            onMouseEnter={() => props.prefetchVins?.(props.id)}
+            onMouseEnter={() => {
+              props.prefetchVins?.(props.id);
+              props.prefetchFavorisId?.();
+            }}
           >
             <p className="cellier--nom">{props.nom}</p>
           </div>

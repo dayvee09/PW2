@@ -13,21 +13,24 @@ import "./Appli.scss";
 import NavMobile from "./NavMobile";
 import NavDesktop from "./NavDesktop";
 import PiedDePage from "./PiedDePage.jsx";
-import ListeBouteilles from "./ListeBouteilles";
-import FrmAjoutCellier from "./FrmAjoutCellier";
-import FrmModifierCellier from "./FrmModifierCellier";
 import ListeCelliers from "./ListeCelliers";
 import Utilisateur from "./Utilisateur.jsx";
-import Favoris from "./Favoris";
 import { signOut, deleteUser, emailFromCognitoUser } from "./auth";
 import { email } from "./utilisateur.js";
 import Logo from "./img/png/logo-jaune.png";
-import FrmAjoutBouteille from "./FrmAjoutBouteille";
-import ListeBouteillesInventaire from "./ListeBouteillesInventaire";
 import { formFields } from "./aws-form-traduction.js";
+
 const Admin = lazy(() => import("./Admin"));
 const Profil = lazy(() => import("./Profil.jsx"));
 const Aide = lazy(() => import("./Aide"));
+const ListeBouteilles = lazy(() => import("./ListeBouteilles"));
+const FrmAjoutBouteille = lazy(() => import("./FrmAjoutBouteille"));
+const ListeBouteillesInventaire = lazy(() =>
+  import("./ListeBouteillesInventaire")
+);
+const Favoris = lazy(() => import("./Favoris"));
+const FrmAjoutCellier = lazy(() => import("./FrmAjoutCellier"));
+const FrmModifierCellier = lazy(() => import("./FrmModifierCellier"));
 
 const RouteFallback = () => (
   <p className="liste-cellier--etat">Chargement…</p>
@@ -102,6 +105,8 @@ const AppliContent = ({ cognitoUser }) => {
   const vinsFetchInFlightRef = useRef({});
   const inventaireCacheRef = useRef(null);
   const inventaireFetchInFlightRef = useRef(null);
+  const favorisLoadedRef = useRef(false);
+  const favorisFetchInFlightRef = useRef(null);
   const cellierActifRef = useRef("");
 
   const location = useLocation();
@@ -217,9 +222,21 @@ const AppliContent = ({ cognitoUser }) => {
   useEffect(() => {
     if (!URI || !id) return;
     fetchCelliers();
-    fetchVinsInventaire();
-    fetchFavorisId(id);
   }, [URI, id]);
+
+  useEffect(() => {
+    if (!URI || !id) return;
+    const needsFavoris =
+      /^\/cellier\/\d+\/vins/.test(location.pathname) ||
+      location.pathname === "/favoris";
+    const needsInventaire = location.pathname === "/vinsInventaire";
+    if (needsFavoris) {
+      ensureFavorisLoaded();
+    }
+    if (needsInventaire) {
+      fetchVinsInventaire();
+    }
+  }, [URI, id, location.pathname]);
 
   function gererBouteilles(idBouteilles) {
     setBouteilles(idBouteilles);
@@ -389,6 +406,8 @@ const AppliContent = ({ cognitoUser }) => {
         setBouteilles("");
         setBouteillesInventaire([]);
         inventaireCacheRef.current = null;
+        favorisLoadedRef.current = false;
+        setFavorisId([]);
         setCelliers("");
         setEmailUtilisateur("");
         setUsername("");
@@ -408,6 +427,8 @@ const AppliContent = ({ cognitoUser }) => {
         setBouteilles("");
         setBouteillesInventaire([]);
         inventaireCacheRef.current = null;
+        favorisLoadedRef.current = false;
+        setFavorisId([]);
         setCelliers([]);
         setEmailUtilisateur("");
         setUsername("");
@@ -676,7 +697,10 @@ const AppliContent = ({ cognitoUser }) => {
 
   async function fetchFavorisId(utilisateur) {
     if (!URI || !utilisateur) return;
-    await fetch(
+    if (favorisFetchInFlightRef.current) {
+      return favorisFetchInFlightRef.current;
+    }
+    const promise = fetch(
       URI + "/" + "utilisateurId" + "/" + utilisateur + "/" + "favoris"
     )
       .then((response) => {
@@ -687,11 +711,28 @@ const AppliContent = ({ cognitoUser }) => {
       })
       .then((data) => {
         setFavorisId(data);
+        favorisLoadedRef.current = true;
+        return data;
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
         setError(error);
+        throw error;
+      })
+      .finally(() => {
+        favorisFetchInFlightRef.current = null;
       });
+    favorisFetchInFlightRef.current = promise;
+    return promise;
+  }
+
+  function ensureFavorisLoaded() {
+    if (!URI || !id || favorisLoadedRef.current) return;
+    fetchFavorisId(id);
+  }
+
+  function prefetchFavorisId() {
+    ensureFavorisLoaded();
   }
 
   // ---------------------------------- Rendering -----------------------------------------
@@ -704,6 +745,7 @@ const AppliContent = ({ cognitoUser }) => {
           utilisateur={utilisateur}
           username={username}
           prefetchVinsInventaire={prefetchVinsInventaire}
+          prefetchFavorisId={prefetchFavorisId}
         />
       )}
       <div>
@@ -883,6 +925,7 @@ const AppliContent = ({ cognitoUser }) => {
                       statsCelliers={statsCelliers}
                       fetchVins={fetchVins}
                       prefetchVins={prefetchVins}
+                      prefetchFavorisId={prefetchFavorisId}
                       invalidateBouteillesCache={invalidateBouteillesCache}
                       id={id}
                       emailUtilisateur={emailUtilisateur}
@@ -916,6 +959,7 @@ const AppliContent = ({ cognitoUser }) => {
                       fetchStatsCelliers={fetchStatsCelliers}
                       statsCelliers={statsCelliers}
                       prefetchVins={prefetchVins}
+                      prefetchFavorisId={prefetchFavorisId}
                       invalidateBouteillesCache={invalidateBouteillesCache}
                     />
                   }
@@ -986,6 +1030,7 @@ const AppliContent = ({ cognitoUser }) => {
           setResetBottomNav={setResetBottomNav}
           resetBottomNav={resetBottomNav}
           prefetchVinsInventaire={prefetchVinsInventaire}
+          prefetchFavorisId={prefetchFavorisId}
         />
       </div>
       <PiedDePage />
