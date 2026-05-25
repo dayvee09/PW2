@@ -11,6 +11,8 @@ cd cellier-projet/client && npm install && npm start
 
 API PHP : servie via Apache/XAMPP ou le proxy du client (`setupProxy.js`).
 
+Base de données : importer `cellier-projet/database/monvino-starter.sql` (voir `cellier-projet/database/README.md`). Le fichier `pw2_le_bon.sql` reste local et n’est pas versionné.
+
 ## Production
 
 Voir **[DEPLOYMENT.md](./DEPLOYMENT.md)** pour :

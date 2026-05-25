@@ -15,7 +15,7 @@ BLOCKED_PATTERNS=(
   '\.pem$'
   '\.key$'
   'credentials\.json$'
-  'cellier-projet/database/'
+  'cellier-projet/database/pw2_le_bon\.sql$'
 )
 
 STAGED=$(git diff --cached --name-only --diff-filter=ACM || true)
@@ -32,6 +32,11 @@ while IFS= read -r file; do
       break
     fi
   done
+  # Block personal SQL dumps except the public starter file
+  if echo "$file" | grep -qE '^cellier-projet/database/.*\.sql$' && \
+     ! echo "$file" | grep -qE '^cellier-projet/database/monvino-starter\.sql$'; then
+    BLOCKED+=("$file")
+  fi
 done <<< "$STAGED"
 
 if [ "${#BLOCKED[@]}" -gt 0 ]; then

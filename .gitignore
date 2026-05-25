@@ -42,8 +42,10 @@ Thumbs.db
 *.swo
 *~
 
-# --- Database dumps (may contain hashed passwords / user data) ---
-cellier-projet/database/
+# --- Database dumps (personal / production — never commit) ---
+cellier-projet/database/*
+!cellier-projet/database/monvino-starter.sql
+!cellier-projet/database/README.md
 
 # --- IDE ---
 .idea/
