@@ -12,6 +12,15 @@ class SaqControleur extends Controleur
 
     private const SAQ_GRAPHQL_URL = 'https://www.saq.com/graphql';
     private const SAQ_BASE_URL = 'https://www.saq.com/fr/';
+    /** Tranches de prix pour contourner la limite Magento (currentPage * pageSize ≤ 10 000). */
+    private const TRANCHES_PRIX = [
+        ['from' => '0', 'to' => '15'],
+        ['from' => '15', 'to' => '25'],
+        ['from' => '25', 'to' => '40'],
+        ['from' => '40', 'to' => '60'],
+        ['from' => '60', 'to' => '100'],
+        ['from' => '100', 'to' => '99999'],
+    ];
 
   private static $_webpage;
     private static $_status;
@@ -133,7 +142,16 @@ class SaqControleur extends Controleur
         return $info;
     }
 
-    private function fetchProductsPage($type, $page, $pageSize, $includeItems = true)
+    private function prixFilterGraphQL($prixMin, $prixMax)
+    {
+        if ($prixMin === null || $prixMax === null) {
+            return '';
+        }
+
+        return ', price: { from: "' . $prixMin . '", to: "' . $prixMax . '" }';
+    }
+
+    private function fetchProductsPage($type, $page, $pageSize, $includeItems = true, $prixMin = null, $prixMax = null)
     {
         $categoryPath = $this->categoryPathForType($type);
         $itemsSelection = $includeItems
@@ -153,7 +171,8 @@ class SaqControleur extends Controleur
             }'
             : '';
 
-        $query = '{ products(filter: { category_url_path: { eq: "' . $categoryPath . '" } }, pageSize: '
+        $query = '{ products(filter: { category_url_path: { eq: "' . $categoryPath . '" }'
+            . $this->prixFilterGraphQL($prixMin, $prixMax) . ' }, pageSize: '
             . intval($pageSize) . ', currentPage: ' . intval($page) . ') { total_count ' . $itemsSelection . ' } }';
         $query = preg_replace('/\s+/', ' ', trim($query));
 
@@ -161,12 +180,47 @@ class SaqControleur extends Controleur
         return $data->data->products ?? null;
     }
 
+    /**
+     * Découpe un type de vin en tranches de prix pour contourner la limite de pagination Magento.
+     */
+    private function tranchesPrixPourType($type)
+    {
+        $tranches = [];
+
+        foreach (self::TRANCHES_PRIX as $tranche) {
+            $products = $this->fetchProductsPage($type, 1, 1, false, $tranche['from'], $tranche['to']);
+            $total = isset($products->total_count) ? intval($products->total_count) : 0;
+            if ($total > 0) {
+                $tranches[] = [
+                    'prixMin' => $tranche['from'],
+                    'prixMax' => $tranche['to'],
+                    'total' => $total,
+                ];
+            }
+        }
+
+        return $tranches;
+    }
+
+    private function typeParCategorie($type)
+    {
+        $types = [
+            'rouge' => 'Vin rouge',
+            'blanc' => 'Vin blanc',
+            'rose' => 'Vin rosé',
+        ];
+
+        return $types[$type] ?? 'Vin rouge';
+    }
+
     //IMPORTER DE LA SAQ
     public function ajouter($donneesSaq)
     {
         try {
             $body = json_decode($donneesSaq);
-            $this->getProduits($body->nombre, $body->page + 0, $body->type);
+            $prixMin = isset($body->prixMin) ? (string) $body->prixMin : null;
+            $prixMax = isset($body->prixMax) ? (string) $body->prixMax : null;
+            $this->getProduits($body->nombre, $body->page + 0, $body->type, $prixMin, $prixMax);
             $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
             $this->reponse['corps'] = ['succes' => true];
         } catch (Throwable $e) {
@@ -178,13 +232,14 @@ class SaqControleur extends Controleur
     /**
      * Importer les bouteilles d'une page via l'API GraphQL de la SAQ.
      */
-    public function getProduits($nombre, $page, $type = "rouge")
+    public function getProduits($nombre, $page, $type = "rouge", $prixMin = null, $prixMax = null)
     {
-        $products = $this->fetchProductsPage($type, $page + 1, $nombre);
+        $products = $this->fetchProductsPage($type, $page + 1, $nombre, true, $prixMin, $prixMax);
         if (!$products || !isset($products->items)) {
             return 0;
         }
 
+        $typeFallback = $this->typeParCategorie($type);
         $i = 0;
         foreach ($products->items as $item) {
             if (!$item || !isset($item->sku)) {
@@ -192,7 +247,7 @@ class SaqControleur extends Controleur
             }
 
             $info = $this->productFromGraphQL($item);
-            $retour = $this->ajouteProduit($info);
+            $retour = $this->ajouteProduit($info, $typeFallback);
             if ($retour->succes) {
                 $i++;
             }
@@ -204,19 +259,29 @@ class SaqControleur extends Controleur
     /**
      * Ajouter les bouteilles importées dans la base de donnée
      */
-    private function ajouteProduit($bte)
+    private function normaliserTypeVin($type)
+    {
+        $aliases = [
+            'Vin rose' => 'Vin rosé',
+        ];
+
+        return $aliases[$type] ?? $type;
+    }
+
+    private function ajouteProduit($bte, $typeFallback = null)
     {
         $retour = new stdClass();
         $retour->succes = false;
         $retour->raison = '';
 
-        if (!isset($bte->desc->type)) {
+        $typeNom = $this->normaliserTypeVin($bte->desc->type ?? $typeFallback ?? '');
+        if ($typeNom === '') {
             $retour->raison = self::ERREURDB;
             return $retour;
         }
 
-        $rows = $this->modele->un($bte->desc->type);
-        if (count((array)$rows) != 1) {
+        $rows = $this->modele->un($typeNom);
+        if (!$rows || !isset($rows->id)) {
             $retour->raison = self::ERREURDB;
             return $retour;
         }
@@ -247,8 +312,12 @@ class SaqControleur extends Controleur
             $wineType = $type["admin"];
             $products = $this->fetchProductsPage($wineType, 1, 1, false);
             $nbResults = isset($products->total_count) ? intval($products->total_count) : 0;
+            $tranches = $this->tranchesPrixPourType($wineType);
             $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
-            $this->reponse['corps'] = $nbResults;
+            $this->reponse['corps'] = [
+                'total' => $nbResults,
+                'tranches' => $tranches,
+            ];
         } catch (Throwable $e) {
             $this->reponse['entete_statut'] = 'HTTP/1.1 500 Internal Server Error';
             $this->reponse['corps'] = ['erreur' => $e->getMessage()];

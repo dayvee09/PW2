@@ -18,11 +18,8 @@ import CloseIcon from "@mui/icons-material/Close";
 export default function FrmSaq({
 	frmOuvert,
 	setFrmOuvert,
-	setGo,
+	setSyncActif,
 	setOpenAlertLoading,
-	setNbBouteillesSaq,
-	setCycleImportation,
-	setPrevGo,
 }) {
 	/**
 	 * L‘état d'erreur
@@ -38,48 +35,45 @@ export default function FrmSaq({
 	 * Gère l'action de soumettre
 	 */
 	function gererSoumettre() {
-		setNbBouteillesSaq(0);
-		setCycleImportation(0);
-		setGo("rouge");
-		setPrevGo(false);
 		setOpenAlertLoading(true);
 		setFrmOuvert(false);
+		setSyncActif(true);
 	}
 
 	return (
-	<div>
-		<Dialog className="FrmSaq" open={frmOuvert} onClose={viderFermerFrm}>
-		<DialogContent>
-			<div className="description">
-			<Dialog open={openErr}>
-				<Alert
-				severity="error"
-				action={
-					<IconButton
-					aria-label="close"
-					size="small"
-					onClick={() => {
-						setOpenErr(false);
-					}}
-					>
-					<CloseIcon fontSize="inherit" />
-					</IconButton>
-				}
-				>
-				Invalide!
-				</Alert>
+		<div>
+			<Dialog className="FrmSaq" open={frmOuvert} onClose={viderFermerFrm}>
+				<DialogContent>
+					<div className="description">
+						<Dialog open={openErr}>
+							<Alert
+								severity="error"
+								action={
+									<IconButton
+										aria-label="close"
+										size="small"
+										onClick={() => {
+											setOpenErr(false);
+										}}
+									>
+										<CloseIcon fontSize="inherit" />
+									</IconButton>
+								}
+							>
+								Invalide!
+							</Alert>
+						</Dialog>
+					</div>
+					<div className="maj--confirmation">
+						Vous allez mettre à jour le catalogue de la SAQ. Cette opération
+						pourrait prendre plusieurs minutes.{" "}
+					</div>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={viderFermerFrm}>Annuler</Button>
+					<Button onClick={gererSoumettre}>Soumettre</Button>
+				</DialogActions>
 			</Dialog>
-			</div>
-			<div className="maj--confirmation">
-			Vous allez mettre à jour le catalogue de la SAQ. Cette opération
-			pourrait prendre plusieurs minutes.{" "}
-			</div>
-		</DialogContent>
-		<DialogActions>
-			<Button onClick={viderFermerFrm}>Annuler</Button>
-			<Button onClick={gererSoumettre}>Soumettre</Button>
-		</DialogActions>
-		</Dialog>
-	</div>
+		</div>
 	);
 }
