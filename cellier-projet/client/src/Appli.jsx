@@ -838,6 +838,7 @@ const AppliContent = ({ cognitoUser }) => {
                       fetchAjouterFavoris={fetchAjouterFavoris}
                       fetchSupprimerFavoris={fetchSupprimerFavoris}
                       fetchVinsInventaire={fetchVinsInventaire}
+                      fetchStatsCelliers={fetchStatsCelliers}
                       favorisId={favorisId}
                       setFavorisId={setFavorisId}
                     />
@@ -865,6 +866,7 @@ const AppliContent = ({ cognitoUser }) => {
                       fetchAjouterFavoris={fetchAjouterFavoris}
                       fetchSupprimerFavoris={fetchSupprimerFavoris}
                       fetchVinsInventaire={fetchVinsInventaire}
+                      fetchStatsCelliers={fetchStatsCelliers}
                       favorisId={favorisId}
                       setFavorisId={setFavorisId}
                       cible={cible}
@@ -879,6 +881,7 @@ const AppliContent = ({ cognitoUser }) => {
                       setBouteilles={setBouteilles}
                       fetchVins={fetchVins}
                       fetchVinsInventaire={fetchVinsInventaire}
+                      fetchStatsCelliers={fetchStatsCelliers}
                       fetchCelliers={fetchCelliers}
                       gererBouteilles={gererBouteilles}
                       celliers={celliers}

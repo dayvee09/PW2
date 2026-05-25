@@ -336,6 +336,7 @@ export default function FrmAjoutBouteille(props) {
       .then((data) => {
         props.fetchVins(vinCellier, { force: true });
         props.fetchVinsInventaire?.({ force: true });
+        props.fetchStatsCelliers?.();
         props.setCellier(vinCellier);
         navigate(`/cellier/${vinCellier}/vins`, { replace: true });
       })

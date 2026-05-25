@@ -244,6 +244,7 @@ function ListeBouteilles(props) {
                       fetchUtilisateur={props.sfetchUtilisateur}
                       fetchAjouterFavoris={props.fetchAjouterFavoris}
                       fetchSupprimerFavoris={props.fetchSupprimerFavoris}
+                      fetchStatsCelliers={props.fetchStatsCelliers}
                       favorisId={props.favorisId}
                       setFavorisId={props.setFavorisId}
                     />
@@ -270,6 +271,7 @@ function ListeBouteilles(props) {
                   fetchUtilisateur={props.fetchUtilisateur}
                   fetchAjouterFavoris={props.fetchAjouterFavoris}
                   fetchSupprimerFavoris={props.fetchSupprimerFavoris}
+                  fetchStatsCelliers={props.fetchStatsCelliers}
                   favorisId={props.favorisId}
                   setFavorisId={props.setFavorisId}
                 />

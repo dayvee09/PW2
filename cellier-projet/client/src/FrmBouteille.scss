@@ -177,6 +177,11 @@ body.fiche-zoom-active .MuiDialog-root {
 
   &--zoomed {
     cursor: zoom-out;
+  }
+}
+
+@media only screen and (min-width: 481px) {
+  .fiche-image-zoom-img--zoomed {
     max-height: none;
     max-width: none;
   }

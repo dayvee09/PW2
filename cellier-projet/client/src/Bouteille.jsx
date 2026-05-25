@@ -305,6 +305,7 @@ function Bouteille(props) {
       })
       .then((data) => {
         props.setChangementBouteille(Math.random());
+        props.fetchStatsCelliers?.();
         fetchVinUn();
       })
       .catch((error) => {
@@ -365,6 +366,7 @@ function Bouteille(props) {
         setTimeout(() => {
           props.fetchVins(props.vino__cellier_id, { force: true });
           props.fetchVinsInventaire?.({ force: true });
+          props.fetchStatsCelliers?.();
           viderFermerFrm();
         }, 1000);
       })

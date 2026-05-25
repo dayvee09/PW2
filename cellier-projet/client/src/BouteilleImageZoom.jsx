@@ -4,7 +4,17 @@ import CloseIcon from "@mui/icons-material/Close";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import "./FrmBouteille.scss";
 
-const ZOOM_SCALE = 2.5;
+/** Tap zoom on the fitted image; mobile keeps max-size so scale stays ~2.5× instead of blowing up. */
+const ZOOM_SCALE_MOBILE = 2.5;
+const ZOOM_SCALE_DESKTOP = 2;
+const MOBILE_MAX_WIDTH_MQ = "(max-width: 480px)";
+
+function getZoomScale() {
+  if (typeof window === "undefined") return ZOOM_SCALE_DESKTOP;
+  return window.matchMedia(MOBILE_MAX_WIDTH_MQ).matches
+    ? ZOOM_SCALE_MOBILE
+    : ZOOM_SCALE_DESKTOP;
+}
 
 /**
  * Aperçu cliquable d'une bouteille avec lightbox plein écran (zoom au clic).
@@ -37,7 +47,7 @@ export default function BouteilleImageZoom({
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
     setImageZoomOrigin(`${x}% ${y}%`);
-    setImageZoomLevel(ZOOM_SCALE);
+    setImageZoomLevel(getZoomScale());
   }
 
   React.useEffect(() => {
