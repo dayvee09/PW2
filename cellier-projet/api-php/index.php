@@ -61,25 +61,34 @@ class Routeur
         // echo 'Méthod HTTP : ' . $this->methode;
 
 
-        // Routeur pour le serveur de développement (Ne pas effacer):
-
-        // if (count($partiesRoute) > 5 && trim(urldecode($partiesRoute[5])) != '') {
-        //     $collection = trim(urldecode($partiesRoute[5]));
-        //     $params = [$partiesRoute[3] => trim(urldecode($partiesRoute[4]))];
-        //     //print_r($params);
-        //     if (count($partiesRoute) > 6 && trim(urldecode($partiesRoute[6])) != '') {
-        //         $idEntite = [$partiesRoute[6] => trim(urldecode($partiesRoute[7]))];
-        //     }
-        // }
-
-        // Routeur en localhost:
-
-        if (count($partiesRoute) > 6 && trim(urldecode($partiesRoute[6])) != '') {
+        // Production (…/api-php/index.php/{clé}/{valeur}/{collection}/…)
+        $indexPhp = array_search('index.php', $partiesRoute, true);
+        if ($indexPhp !== false) {
+            $offset = $indexPhp + 1;
+            if (count($partiesRoute) > $offset + 2) {
+                $collection = trim(urldecode($partiesRoute[$offset + 2]));
+                $params = [
+                    trim(urldecode($partiesRoute[$offset])) =>
+                    trim(urldecode($partiesRoute[$offset + 1])),
+                ];
+                if (count($partiesRoute) > $offset + 4) {
+                    $idEntite = [
+                        trim(urldecode($partiesRoute[$offset + 3])) =>
+                        trim(urldecode($partiesRoute[$offset + 4])),
+                    ];
+                }
+            }
+        } elseif (count($partiesRoute) > 6 && trim(urldecode($partiesRoute[6])) != '') {
+            // Développement local (…/api-php/{clé}/{valeur}/{collection}/…)
             $collection = trim(urldecode($partiesRoute[6]));
             $params = [$partiesRoute[4] => trim(urldecode($partiesRoute[5]))];
             if (count($partiesRoute) > 7 && trim(urldecode($partiesRoute[7])) != '') {
                 $idEntite = [$partiesRoute[7] => trim(urldecode($partiesRoute[8]))];
             }
+        }
+
+        if (is_array($this->params) && $this->params !== []) {
+            $params = array_merge($params, $this->params);
         }
 
         $nomControleur = ucfirst($collection) . 'Controleur';

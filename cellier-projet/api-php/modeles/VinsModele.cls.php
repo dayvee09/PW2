@@ -13,6 +13,28 @@ class VinsModele extends AccesBd
     }
 
     /**
+     * Recherche dans le catalogue SAQ (cellier admin #1) pour l'autocomplete.
+     */
+    public function rechercherCatalogueSaq($terme, $limite = 50)
+    {
+        $limite = max(1, min((int) $limite, 100));
+        $like = '%' . $terme . '%';
+
+        return $this->lire(
+            "SELECT vino__bouteille.id, vino__bouteille.nom, `image`, code_saq, pays, `description`, prix_saq, url_saq, url_img, `format`, vino__type_id, vino__type.type, millesime, personnalise
+            FROM vino__bouteille
+            JOIN vino__bouteille_has_vino__cellier ON vino__bouteille.id = vino__bouteille_has_vino__cellier.vino__bouteille_id
+            JOIN vino__type ON vino__bouteille.vino__type_id = vino__type.id
+            WHERE vino__bouteille_has_vino__cellier.vino__cellier_id = 1
+              AND vino__bouteille.personnalise = 0
+              AND (vino__bouteille.nom LIKE :q OR vino__bouteille.code_saq LIKE :q)
+            ORDER BY vino__bouteille.nom ASC
+            LIMIT $limite",
+            ['q' => $like]
+        );
+    }
+
+    /**
      * Récupérer une bouteille spécifié dans un cellier spécifié 
      *
      * @param  array $params Tableau associatif des paramètres de la requête

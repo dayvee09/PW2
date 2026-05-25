@@ -9,8 +9,20 @@ class VinsControleur extends Controleur
      */
     public function tout($params)
     {
-        $groupe = false;
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
+        $cellierId = isset($params['cellier']) ? (int) $params['cellier'] : 0;
+        $recherche = isset($params['q']) ? trim((string) $params['q']) : '';
+
+        // Cellier #1 = catalogue SAQ : ne jamais renvoyer des milliers de bouteilles d'un coup.
+        if ($cellierId === 1) {
+            if ($recherche === '' || strlen($recherche) < 2) {
+                $this->reponse['corps'] = [];
+                return;
+            }
+            $this->reponse['corps'] = $this->modele->rechercherCatalogueSaq($recherche);
+            return;
+        }
+
         $this->reponse['corps'] = $this->modele->tout($params);
     }
     

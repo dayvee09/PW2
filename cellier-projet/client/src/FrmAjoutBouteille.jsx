@@ -61,6 +61,8 @@ export default function FrmAjoutBouteille(props) {
    * État de la liste de bouteille
    */
   const [vinsListe, setVinsListe] = React.useState([]);
+  const [rechercheSaq, setRechercheSaq] = React.useState("");
+  const [chargementSaq, setChargementSaq] = React.useState(false);
   /**
    * État de la valeur choisi du composant 'Autocomplete'
    */
@@ -134,17 +136,48 @@ export default function FrmAjoutBouteille(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(props.URI + "/cellier/1/vins")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        setVinsListe(data);
-      });
-  }, []);
+    if (!props.URI) return;
+
+    const terme = rechercheSaq.trim();
+    if (terme.length < 2) {
+      setVinsListe([]);
+      setChargementSaq(false);
+      return;
+    }
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => {
+      setChargementSaq(true);
+      fetch(
+        `${props.URI}/cellier/1/vins?q=${encodeURIComponent(terme)}`,
+        { signal: controller.signal }
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          setVinsListe(Array.isArray(data) ? data : []);
+        })
+        .catch((err) => {
+          if (err.name !== "AbortError") {
+            console.error("Erreur recherche catalogue SAQ:", err);
+          }
+        })
+        .finally(() => {
+          if (!controller.signal.aborted) {
+            setChargementSaq(false);
+          }
+        });
+    }, 300);
+
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [rechercheSaq, props.URI]);
   /**
    *  Fetch le cellier choisi ayant des bouteilles pour vérifier si la bouteille choisie existe déjà
    */
@@ -175,6 +208,8 @@ export default function FrmAjoutBouteille(props) {
    */
   function clearForm() {
     setValue(null);
+    setRechercheSaq("");
+    setVinsListe([]);
     setMillesime("");
     setVinPays("");
     setVinCellier(resolveCellierId(props.cellier, props.celliers));
@@ -197,7 +232,7 @@ export default function FrmAjoutBouteille(props) {
   function gererAjoutBouteille() {
     if (!btnState) {
       //importer
-      if (value.length !== 0) {
+      if (value != null) {
         let vinIndex = gereAjoutRedondance();
         if (vinIndex < 0) {
           fetchAjouterVin();
@@ -352,12 +387,20 @@ export default function FrmAjoutBouteille(props) {
                 disablePortal
                 id="nom-bouteille-saq"
                 size="small"
-                noOptionsText={"La bouteille n'existe pas"}
+                loading={chargementSaq}
+                filterOptions={(options) => options}
+                noOptionsText={
+                  rechercheSaq.trim().length < 2
+                    ? "Tapez au moins 2 caractères"
+                    : "La bouteille n'existe pas"
+                }
                 isOptionEqualToValue={(option, value) => option.id === value.id}
-                // Gère du boutton clear 'X' , faut nettoyer tous les champs du formulaire
+                inputValue={rechercheSaq}
                 onInputChange={(event, newValue, reason) => {
+                  setRechercheSaq(newValue);
                   if (reason === "clear" || newValue === "") {
                     setValue(null);
+                    setVinsListe([]);
                   }
                 }}
                 // Gère du changement de l'option
