@@ -2,9 +2,12 @@
 
 ## If GitGuardian or GitHub flagged secrets in this repo
 
-### Amplify `#current-cloud-backend` (critical)
+### Amplify generated CloudFormation (critical)
 
-The folder `cellier-projet/client/amplify/#current-cloud-backend/` can contain **OAuth client secrets** (Facebook, Google, Login with Amazon) inside CloudFormation JSON. It must never be committed.
+These folders can contain **OAuth client secrets** (Facebook, Google, Login with Amazon) inside CloudFormation JSON. They must never be committed:
+
+- `cellier-projet/client/amplify/#current-cloud-backend/`
+- `cellier-projet/client/amplify/backend/awscloudformation/`
 
 If it was ever pushed:
 
