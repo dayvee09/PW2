@@ -1,7 +1,7 @@
 // Début des modifications
 
 import React from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { Hub } from "aws-amplify/utils";
 import {
@@ -94,7 +94,14 @@ const AppliContent = ({ cognitoUser }) => {
   const [sessionVersion, setSessionVersion] = useState(0);
   const bootstrapRunning = useRef(false);
 
-  let location = window.location.pathname;
+  const location = useLocation();
+
+  useEffect(() => {
+    const match = location.pathname.match(/\/cellier\/(\d+)\/vins/);
+    if (match) {
+      setCellier(match[1]);
+    }
+  }, [location.pathname]);
 
   function applyUtilisateur(user, userEmail) {
     setUtilisateur(user);
@@ -446,21 +453,27 @@ const AppliContent = ({ cognitoUser }) => {
   // --------------------------------- Gestion des bouteilles ------------------------------------
 
   async function fetchVins(cellier) {
-    if (!URI || !cellier) return;
-    await fetch(URI + "/" + "cellier" + "/" + cellier + "/" + "vins")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        setBouteilles(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        setError(error);
-      });
+    if (!URI || !cellier) return { ok: false };
+    try {
+      const response = await fetch(
+        URI + "/" + "cellier" + "/" + cellier + "/" + "vins"
+      );
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      const data = await response.json();
+      if (data?.erreur) {
+        throw new Error(data.erreur);
+      }
+      const list = Array.isArray(data) ? data : [];
+      setBouteilles(list);
+      return { ok: true, data: list };
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      setError(error);
+      setBouteilles([]);
+      return { ok: false, error };
+    }
   }
   // --------------------------------- Gestion des différentes bouteilles comprises dans tous mes celliers ------------------------------------
 
@@ -631,6 +644,7 @@ const AppliContent = ({ cognitoUser }) => {
                       setBouteilles={setBouteilles}
                       fetchVins={fetchVins}
                       gererBouteilles={gererBouteilles}
+                      gererCellier={gererCellier}
                       cellier={cellier}
                       celliers={celliers}
                       URI={URI}
@@ -655,6 +669,7 @@ const AppliContent = ({ cognitoUser }) => {
                       setBouteilles={setBouteilles}
                       fetchVins={fetchVins}
                       gererBouteilles={gererBouteilles}
+                      gererCellier={gererCellier}
                       cellier={cellier}
                       celliers={celliers}
                       URI={URI}

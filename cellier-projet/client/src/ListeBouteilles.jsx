@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./ListeBouteilles.scss";
 import Bouteille from "./Bouteille";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 
 /**
@@ -13,21 +13,25 @@ import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
  * @returns {*}
  */
 function ListeBouteilles(props) {
+  const { idCellier: idCellierParam, cible: cibleParam } = useParams();
+  const cible = cibleParam || props.cible;
+  const navigate = useNavigate();
+  const cellierId = idCellierParam || props.cellier;
   const bouteilles = Array.isArray(props.bouteilles) ? props.bouteilles : [];
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
   const [changementBouteille, setChangementBouteille] = useState(false);
   const [bouteillesTri, setBouteillesTri] = useState(bouteilles);
+  const [loading, setLoading] = useState(true);
   /**
    *  État des bouteilles au tri
    */
   const [unique, setUnique] = useState(false);
   const [sortType, setSortType] = useState([]);
-  const navigate = useNavigate();
   let indexBouteille = 0;
   if (bouteilles.length > 0) {
     indexBouteille = bouteilles.findIndex((object) => {
-      return object && object.id === props.cible;
+      return object && object.id === cible;
     });
   }
   /**
@@ -107,28 +111,52 @@ function ListeBouteilles(props) {
   }, [sortType, props.bouteilles]);
 
   useEffect(() => {
-    if (!props.cellier) return;
-    props.fetchVins(props.cellier);
-    props.fetchNomCellier(props.cellier);
-    setSortType("tout");
-  }, [props.cellier]);
+    if (!cellierId || !/^\d+$/.test(String(cellierId))) {
+      navigate("/", { replace: true });
+      return;
+    }
+
+    let cancelled = false;
+
+    async function loadCellier() {
+      setLoading(true);
+      if (props.gererCellier) {
+        props.gererCellier(cellierId);
+      }
+      const result = await props.fetchVins(cellierId);
+      if (cancelled) return;
+      if (!result?.ok) {
+        navigate("/", { replace: true });
+        return;
+      }
+      props.fetchNomCellier(cellierId);
+      setSortType("tout");
+      setLoading(false);
+    }
+
+    loadCellier();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [cellierId]);
 
   useEffect(() => {
-    if (changementBouteille !== false) {
-      props.fetchVins(props.cellier);
+    if (changementBouteille !== false && cellierId) {
+      props.fetchVins(cellierId);
     }
   }, [changementBouteille]);
 
   useEffect(() => {
-    if (props.cible) {
+    if (cible) {
       if (document.querySelectorAll("[data-id]").length > 1) {
         if (
-          document.querySelector(`[data-id="${props.cible}"]`) &&
+          document.querySelector(`[data-id="${cible}"]`) &&
           unique === false &&
           changementBouteille === false
         ) {
-          let cible = document.querySelector(`[data-id="${props.cible}"]`);
-          let target = cible.getBoundingClientRect().top + window.scrollY;
+          let cibleElt = document.querySelector(`[data-id="${cible}"]`);
+          let target = cibleElt.getBoundingClientRect().top + window.scrollY;
           window.scrollTo({
             top: target,
             behavior: "smooth",
@@ -141,13 +169,13 @@ function ListeBouteilles(props) {
   }, [props.bouteilles]);
 
   useEffect(() => {
-    if (props.cible && bouteilles.length > 200 && indexBouteille >= 200) {
+    if (cible && bouteilles.length > 200 && indexBouteille >= 200) {
       setDebut(indexBouteille);
     }
   }, [unique]);
 
   useEffect(() => {
-    if (props.cible && bouteilles.length > 200 && indexBouteille >= 200) {
+    if (cible && bouteilles.length > 200 && indexBouteille >= 200) {
       setFin(debut + 1);
     }
   }, [debut]);
@@ -159,8 +187,27 @@ function ListeBouteilles(props) {
       setFin(bouteilles.length);
     }
   }
-  if (props.bouteilles) {
+  if (loading) {
     return (
+      <div>
+        <div className="Appli--entete">
+          <div className="Appli--tri-container">
+            <NavLink to={`/`}>
+              <button className="retour">
+                <img src={rowIcone} alt="icone-row-left" width={15}></img>
+                Retour&nbsp;aux&nbsp;Celliers&nbsp;
+              </button>
+            </NavLink>
+          </div>
+        </div>
+        <div className="Appli--container">
+          <p className="ListeBouteille--chargement">Chargement du cellier…</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
       <div>
         <div className="Appli--entete">
           <div className="Appli--tri-container">
@@ -220,7 +267,7 @@ function ListeBouteilles(props) {
                       gererBouteilles={props.gererBouteilles}
                       bouteilles={props.bouteillesTri}
                       setBouteilles={props.setBouteillesTri}
-                      cellier={props.cellier}
+                      cellier={cellierId}
                       bouteille={bouteille}
                       URI={props.URI}
                       error={props.error}
@@ -243,7 +290,7 @@ function ListeBouteilles(props) {
                   fetchVins={props.fetchVins}
                   fetchVin={props.fetchVin}
                   celliers={props.celliers}
-                  cellier={props.cellier}
+                  cellier={cellierId}
                   setCellier={props.setCellier}
                   emailUtilisateur={props.emailUtilisateur}
                   gererCellier={props.gererCellier}
@@ -296,8 +343,7 @@ function ListeBouteilles(props) {
           </div>
         </div>
       </div>
-    );
-  }
+  );
 }
 
 export default ListeBouteilles;
