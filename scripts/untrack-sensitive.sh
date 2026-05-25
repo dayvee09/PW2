@@ -11,6 +11,7 @@ FILES=(
   cellier-projet/client/amplify/team-provider-info.json
   cellier-projet/client/amplify/.config/local-aws-info.json
   cellier-projet/client/amplify/.config/local-env-info.json
+  .devcontainer/docker-compose.yml
 )
 
 for f in "${FILES[@]}"; do
@@ -21,6 +22,14 @@ for f in "${FILES[@]}"; do
     echo "Not tracked (skip): $f"
   fi
 done
+
+AMPLIFY_BACKEND="cellier-projet/client/amplify/#current-cloud-backend"
+if git ls-files --error-unmatch "$AMPLIFY_BACKEND" &>/dev/null; then
+  git rm -r --cached "$AMPLIFY_BACKEND"
+  echo "Untracked: $AMPLIFY_BACKEND/ (recursive)"
+else
+  echo "Not tracked (skip): $AMPLIFY_BACKEND/"
+fi
 
 echo ""
 echo "Done. Commit the .gitignore update and these removals when ready."

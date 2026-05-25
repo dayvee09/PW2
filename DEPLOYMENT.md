@@ -41,7 +41,9 @@ Cela crée (s’ils manquent) :
 | `.env`, `.env.production`, `.env.*.local` | Variables d’environnement |
 | `src/aws-exports.js` | IDs Cognito / OAuth |
 | `amplify/team-provider-info.json` | Compte AWS, ARNs |
+| `amplify/#current-cloud-backend/` | CloudFormation + secrets OAuth Amplify |
 | `amplify/.config/local-*` | Chemins machine locale |
+| `.devcontainer/docker-compose.yml` | Mots de passe MariaDB locaux |
 | `cellier-projet/database/pw2_le_bon.sql` | Dump SQL personnel (emails, inventaire réel) |
 
 ### Retirer des fichiers déjà suivis par Git
