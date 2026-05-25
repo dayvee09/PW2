@@ -13,10 +13,11 @@ import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
  * @returns {*}
  */
 function ListeBouteilles(props) {
+  const bouteilles = Array.isArray(props.bouteilles) ? props.bouteilles : [];
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
   const [changementBouteille, setChangementBouteille] = useState(false);
-  const [bouteillesTri, setBouteillesTri] = useState(props.bouteilles);
+  const [bouteillesTri, setBouteillesTri] = useState(bouteilles);
   /**
    *  État des bouteilles au tri
    */
@@ -24,9 +25,9 @@ function ListeBouteilles(props) {
   const [sortType, setSortType] = useState([]);
   const navigate = useNavigate();
   let indexBouteille = 0;
-  if (props.bouteilles.length !== undefined) {
-    indexBouteille = props.bouteilles.findIndex((object) => {
-      return object.id === props.cible;
+  if (bouteilles.length > 0) {
+    indexBouteille = bouteilles.findIndex((object) => {
+      return object && object.id === props.cible;
     });
   }
   /**
@@ -36,80 +37,81 @@ function ListeBouteilles(props) {
     let result;
     switch (sortType) {
       case "qt-decroissante": {
-        result = [...props.bouteilles].sort((a, b) => {
+        result = [...bouteilles].sort((a, b) => {
           return parseInt(b.quantite) - parseInt(a.quantite);
         });
         break;
       }
       case "qt-croissante": {
-        result = [...props.bouteilles].sort((a, b) => {
+        result = [...bouteilles].sort((a, b) => {
           return parseInt(a.quantite) - parseInt(b.quantite);
         });
         break;
       }
       case "prix-decroissant": {
-        result = [...props.bouteilles].sort((a, b) => {
+        result = [...bouteilles].sort((a, b) => {
           return parseInt(b.prix_saq) - parseInt(a.prix_saq);
         });
         break;
       }
       case "prix-croissant": {
-        result = [...props.bouteilles].sort((a, b) => {
+        result = [...bouteilles].sort((a, b) => {
           return parseInt(a.prix_saq) - parseInt(b.prix_saq);
         });
         break;
       }
       case "alph-decroissant": {
-        result = [...props.bouteilles].sort((a, b) => {
-          return b.nom.localeCompare(a.nom);
-        });
+        result = [...bouteilles]
+          .filter((b) => b && b.nom)
+          .sort((a, b) => b.nom.localeCompare(a.nom));
         break;
       }
       case "alph-croissant": {
-        result = [...props.bouteilles].sort((a, b) => {
-          return a.nom.localeCompare(b.nom);
-        });
+        result = [...bouteilles]
+          .filter((b) => b && b.nom)
+          .sort((a, b) => a.nom.localeCompare(b.nom));
         break;
       }
       case "vin-rouge": {
         result = [];
-        for (let index = 0; index < props.bouteilles.length; index++) {
-          if (props.bouteilles[index]["type"] === "Vin rouge") {
-            result.push(props.bouteilles[index]);
+        for (let index = 0; index < bouteilles.length; index++) {
+          if (bouteilles[index]?.type === "Vin rouge") {
+            result.push(bouteilles[index]);
           }
         }
         break;
       }
       case "vin-blanc": {
         result = [];
-        for (let index = 0; index < props.bouteilles.length; index++) {
-          if (props.bouteilles[index]["type"] === "Vin blanc") {
-            result.push(props.bouteilles[index]);
+        for (let index = 0; index < bouteilles.length; index++) {
+          if (bouteilles[index]?.type === "Vin blanc") {
+            result.push(bouteilles[index]);
           }
         }
         break;
       }
       case "vin-rose": {
         result = [];
-        for (let index = 0; index < props.bouteilles.length; index++) {
-          if (props.bouteilles[index]["type"] === "Vin rose") {
-            result.push(props.bouteilles[index]);
+        for (let index = 0; index < bouteilles.length; index++) {
+          if (bouteilles[index]?.type === "Vin rose") {
+            result.push(bouteilles[index]);
           }
         }
         break;
       }
       default: {
-        result = props.bouteilles;
+        result = bouteilles;
       }
     }
     setBouteillesTri(result);
   }, [sortType, props.bouteilles]);
 
   useEffect(() => {
+    if (!props.cellier) return;
     props.fetchVins(props.cellier);
     props.fetchNomCellier(props.cellier);
     setSortType("tout");
-  }, [debut, fin]);
+  }, [props.cellier]);
 
   useEffect(() => {
     if (changementBouteille !== false) {
@@ -131,7 +133,7 @@ function ListeBouteilles(props) {
             top: target,
             behavior: "smooth",
           });
-        } else if (props.bouteilles.length > 200) {
+        } else if (bouteilles.length > 200) {
           setUnique(true);
         }
       }
@@ -139,22 +141,22 @@ function ListeBouteilles(props) {
   }, [props.bouteilles]);
 
   useEffect(() => {
-    if (props.cible && props.bouteilles.length > 200 && indexBouteille >= 200) {
+    if (props.cible && bouteilles.length > 200 && indexBouteille >= 200) {
       setDebut(indexBouteille);
     }
   }, [unique]);
 
   useEffect(() => {
-    if (props.cible && props.bouteilles.length > 200 && indexBouteille >= 200) {
+    if (props.cible && bouteilles.length > 200 && indexBouteille >= 200) {
       setFin(debut + 1);
     }
   }, [debut]);
 
   function gererVoirPlus() {
-    if (props.bouteilles.length > fin) {
+    if (bouteilles.length > fin) {
       setFin(fin + 200);
-    } else if (props.bouteilles.length <= fin) {
-      setFin(props.bouteilles.length);
+    } else if (bouteilles.length <= fin) {
+      setFin(bouteilles.length);
     }
   }
   if (props.bouteilles) {
@@ -168,7 +170,7 @@ function ListeBouteilles(props) {
                 Retour&nbsp;aux&nbsp;Celliers&nbsp;
               </button>
             </NavLink>
-            {props.bouteilles.length > 1 && (
+            {bouteilles.length > 1 && (
               <select
                 className="retour"
                 name="tri"
@@ -195,17 +197,17 @@ function ListeBouteilles(props) {
         </div>
         <div className="Appli--container">
           <h1 className="ListeBouteille--cellier-nom">
-            {props.nomCellier.nom}
+            {props.nomCellier?.nom ?? "Cellier"}
           </h1>
           <div
             className={
-              props.bouteilles.length == 1
+              bouteilles.length == 1
                 ? "ListeBouteilles"
                 : "ListeBouteilles--default"
             }
           >
             <div></div>
-            {props.bouteilles.length > 1 && (
+            {bouteilles.length > 1 && (
               <div className="ListeBouteille--grid">
                 {bouteillesTri.slice(debut, fin).map((bouteille, index) => (
                   <div key={index}>
@@ -233,10 +235,10 @@ function ListeBouteilles(props) {
                 ))}
               </div>
             )}
-            {props.bouteilles.length == 1 && (
+            {bouteilles.length == 1 && (
               <div className="Bouteille Bouteille--solo">
                 <Bouteille
-                  {...props.bouteilles[0]}
+                  {...bouteilles[0]}
                   setChangementBouteille={setChangementBouteille}
                   fetchVins={props.fetchVins}
                   fetchVin={props.fetchVin}
@@ -246,7 +248,7 @@ function ListeBouteilles(props) {
                   emailUtilisateur={props.emailUtilisateur}
                   gererCellier={props.gererCellier}
                   gererBouteilles={props.gererBouteilles}
-                  bouteille={props.bouteilles[0]}
+                  bouteille={bouteilles[0]}
                   setBouteilles={props.setBouteilles}
                   URI={props.URI}
                   fetchUtilisateur={props.fetchUtilisateur}
@@ -257,7 +259,7 @@ function ListeBouteilles(props) {
                 />
               </div>
             )}
-            {props.bouteilles.length == undefined && (
+            {bouteilles.length == undefined && (
               <div>
                 <h2 className="aucune-bouteille">
                   Aucune bouteille dans ce cellier.
@@ -269,8 +271,8 @@ function ListeBouteilles(props) {
                 </NavLink>
               </div>
             )}
-            {props.bouteilles.length == 0 &&
-              props.bouteilles.length !== undefined && (
+            {bouteilles.length == 0 &&
+              bouteilles.length !== undefined && (
                 <div>
                   <h2 className="aucune-bouteille">
                     Aucune bouteille dans ce type dans ce cellier.
@@ -282,12 +284,12 @@ function ListeBouteilles(props) {
                   </NavLink>
                 </div>
               )}
-            {props.bouteilles.length > fin ? (
+            {bouteilles.length > fin ? (
               <div className="fin--liste cliquable" onClick={gererVoirPlus}>
                 Voir plus
               </div>
             ) : (
-              props.bouteilles.length > 0 && (
+              bouteilles.length > 0 && (
                 <div className="fin--liste">Fin de la liste</div>
               )
             )}

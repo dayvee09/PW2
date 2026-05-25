@@ -79,7 +79,7 @@ const AppliContent = ({ cognitoUser }) => {
   const [id, setId] = useState("");
   const [cellier, setCellier] = useState("");
   const [cible, setCible] = useState("");
-  const [nomCellier, setNomCellier] = useState("");
+  const [nomCellier, setNomCellier] = useState(null);
   const [username, setUsername] = useState("");
   const [utilisateur, setUtilisateur] = useState(null);
   const [utilisateurs, setUtilisateurs] = useState([]);
@@ -410,7 +410,9 @@ const AppliContent = ({ cognitoUser }) => {
       });
   }
 
-  async function fetchNomCellier() {
+  async function fetchNomCellier(cellierId) {
+    const targetCellier = cellierId ?? cellier;
+    if (!URI || !id || !targetCellier) return;
     await fetch(
       URI +
         "/" +
@@ -422,7 +424,7 @@ const AppliContent = ({ cognitoUser }) => {
         "/" +
         "cellier" +
         "/" +
-        cellier
+        targetCellier
     )
       .then((response) => {
         if (response.ok) {
@@ -431,7 +433,9 @@ const AppliContent = ({ cognitoUser }) => {
         throw response;
       })
       .then((data) => {
-        setNomCellier(data.nom);
+        if (data && data.nom) {
+          setNomCellier(data);
+        }
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);

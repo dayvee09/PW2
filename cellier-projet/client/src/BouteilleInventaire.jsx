@@ -251,7 +251,7 @@ export default function BouteilleInventaire(props) {
               fetchVins={props.fetchVins}
               fetchNomCellier={props.fetchNomCellier}
               gererCellier={props.gererCellier}
-              id={props.id}
+              bouteilleId={props.bouteilleInventaire?.id ?? props.id}
               gererCible={props.gererCible}
             />
           </StyledBox>
