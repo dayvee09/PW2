@@ -6,17 +6,36 @@ import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import BtnGroup from "./ToggleBtn";
-import Grid from "@material-ui/core/Grid";
+import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
-import moment from "moment";
+import MuiDateProvider from "./MuiDateProvider";
+import dayjs from "dayjs";
 import placeholderSaq from "./img/png/placeholder-saq.png";
+import BouteilleImageZoom from "./BouteilleImageZoom";
 import { useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 import Alert from "@mui/material/Alert";
 import { NavLink } from "react-router-dom";
 import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
+
+function resolveCellierId(cellier, celliers) {
+  if (cellier) {
+    const parsed = parseInt(cellier, 10);
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  if (celliers?.[0]?.id != null) {
+    const parsed = parseInt(celliers[0].id, 10);
+    if (Number.isFinite(parsed)) return parsed;
+  }
+  return "";
+}
+
+function parseCellierId(value) {
+  const parsed = parseInt(value, 10);
+  return Number.isFinite(parsed) ? parsed : "";
+}
 
 /**
  * Gestion de l'ajout d'une bouteille importé de la SAQ et l'ajout d'une bouteille 'non listée'
@@ -49,10 +68,12 @@ export default function FrmAjoutBouteille(props) {
    * État de la liste de bouteille
    */
   const [vinsListe, setVinsListe] = React.useState([]);
+  const [rechercheSaq, setRechercheSaq] = React.useState("");
+  const [chargementSaq, setChargementSaq] = React.useState(false);
   /**
    * État de la valeur choisi du composant 'Autocomplete'
    */
-  const [value, setValue] = React.useState([]);
+  const [value, setValue] = React.useState(null);
 
   /**
    * État du type de bouteille
@@ -61,10 +82,8 @@ export default function FrmAjoutBouteille(props) {
   /**
    * État du cellier choisi
    */
-  const [vinCellier, setVinCellier] = React.useState(
-    props.cellier != undefined
-      ? parseInt(props.cellier)
-      : parseInt(props.celliers[0].id)
+  const [vinCellier, setVinCellier] = React.useState(() =>
+    resolveCellierId(props.cellier, props.celliers)
   );
   /**
    * État de la quantité choisie
@@ -74,13 +93,13 @@ export default function FrmAjoutBouteille(props) {
    * État de la date d'achat choisie
    */
   const [vinDateAchat, setVinDateAchat] = React.useState(
-    moment().format("YYYY-MM-DD")
+    dayjs().format("YYYY-MM-DD")
   );
   /**
    * État de la date de garde choisie
    */
   const [vinGarde, setVinGarde] = React.useState(
-    moment().add(1, "years").format("YYYY-MM-DD")
+    dayjs().add(1, "year").format("YYYY-MM-DD")
   );
   /**
    * État de la Note
@@ -124,22 +143,54 @@ export default function FrmAjoutBouteille(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(props.URI + "/cellier/1/vins")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        setVinsListe(data);
-      });
-  }, []);
+    if (!props.URI) return;
+
+    const terme = rechercheSaq.trim();
+    if (terme.length < 2) {
+      setVinsListe([]);
+      setChargementSaq(false);
+      return;
+    }
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => {
+      setChargementSaq(true);
+      fetch(
+        `${props.URI}/cellier/1/vins?q=${encodeURIComponent(terme)}`,
+        { signal: controller.signal }
+      )
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw response;
+        })
+        .then((data) => {
+          setVinsListe(Array.isArray(data) ? data : []);
+        })
+        .catch((err) => {
+          if (err.name !== "AbortError") {
+            console.error("Erreur recherche catalogue SAQ:", err);
+          }
+        })
+        .finally(() => {
+          if (!controller.signal.aborted) {
+            setChargementSaq(false);
+          }
+        });
+    }, 300);
+
+    return () => {
+      clearTimeout(timer);
+      controller.abort();
+    };
+  }, [rechercheSaq, props.URI]);
   /**
    *  Fetch le cellier choisi ayant des bouteilles pour vérifier si la bouteille choisie existe déjà
    */
 
   useEffect(() => {
+    if (!props.URI || vinCellier === "" || !Number.isFinite(vinCellier)) return;
     fetch(props.URI + `/cellier/${vinCellier}/vins`)
       .then((response) => {
         if (response.ok) {
@@ -150,29 +201,35 @@ export default function FrmAjoutBouteille(props) {
       .then((data) => {
         setVinsTest(data);
       });
-  }, [vinCellier]);
+  }, [vinCellier, props.URI]);
+
+  useEffect(() => {
+    if (parseCellierId(vinCellier) !== "") return;
+    const resolved = resolveCellierId(props.cellier, props.celliers);
+    if (resolved !== "") {
+      setVinCellier(resolved);
+    }
+  }, [props.celliers, props.cellier, vinCellier]);
   /**
    * Purifier le formulaire quand on bascule entre le bouton 'importer' et 'créer'
    */
   function clearForm() {
-    setValue((value) => {
-      value = [];
-    });
+    setValue(null);
+    setRechercheSaq("");
+    setVinsListe([]);
     setMillesime("");
     setVinPays("");
-    setVinCellier(
-      props.cellier != undefined ? props.cellier : props.celliers[0].id
-    );
+    setVinCellier(resolveCellierId(props.cellier, props.celliers));
     setVinFormat("");
     setVinPrix(1);
     setVinDescription("");
-    setVinGarde(moment().add(1, "years").format("YYYY-MM-DD"));
+    setVinGarde(dayjs().add(1, "year").format("YYYY-MM-DD"));
     setVinImage("");
     setVinNom(" ");
     setVinNote("");
     setVinQuantite(1);
-    setVinType(1);
-    setVinDateAchat(moment().format("YYYY-MM-DD"));
+    setVinType("1");
+    setVinDateAchat(dayjs().format("YYYY-MM-DD"));
     setErreur([]);
   }
   /**
@@ -182,7 +239,7 @@ export default function FrmAjoutBouteille(props) {
   function gererAjoutBouteille() {
     if (!btnState) {
       //importer
-      if (value.length !== 0) {
+      if (value != null) {
         let vinIndex = gereAjoutRedondance();
         if (vinIndex < 0) {
           fetchAjouterVin();
@@ -277,7 +334,9 @@ export default function FrmAjoutBouteille(props) {
         throw response;
       })
       .then((data) => {
-        props.fetchVins(vinCellier);
+        props.fetchVins(vinCellier, { force: true });
+        props.fetchVinsInventaire?.({ force: true });
+        props.fetchStatsCelliers?.();
         props.setCellier(vinCellier);
         navigate(`/cellier/${vinCellier}/vins`, { replace: true });
       })
@@ -299,7 +358,14 @@ export default function FrmAjoutBouteille(props) {
     }
     return ok;
   };
+
+  const imageSrc = imgUrl();
+  const imageTitre = btnState
+    ? (vinNom?.trim() ? vinNom.trim() : "Bouteille personnalisée")
+    : value?.nom || "Bouteille";
+
   return (
+    <MuiDateProvider>
     <div>
       <div className="Appli--entete">
         <div className="Appli--addBottle-container">
@@ -317,12 +383,15 @@ export default function FrmAjoutBouteille(props) {
         <div className="FrmAjoutBouteille">
           <h1>AJOUTER UNE BOUTEILLE</h1>
           <div className="FrmAjoutNouvelle">
-            <div className="img--wrap">
-              <img src={imgUrl() ? imgUrl() : { placeholderSaq }} alt="" />
-            </div>
+            <BouteilleImageZoom
+              imageSrc={imageSrc}
+              title={imageTitre}
+              alt={imageTitre}
+              buttonClassName="fiche-image-btn fiche-image-btn--ajout"
+            />
             {/* Apparaîte uniquement en important de la bouteille du SAQ */}
             <div className={btnState ? "hidden" : ""}>
-              <label className="formInputNom" for="nom-bouteille-saq">
+              <label className="formInputNom" htmlFor="nom-bouteille-saq">
                 Nom: {value ? value.nom : ""}
               </label>
             </div>
@@ -337,14 +406,20 @@ export default function FrmAjoutBouteille(props) {
                 disablePortal
                 id="nom-bouteille-saq"
                 size="small"
-                noOptionsText={"La bouteille n'existe pas"}
+                loading={chargementSaq}
+                filterOptions={(options) => options}
+                noOptionsText={
+                  rechercheSaq.trim().length < 2
+                    ? "Tapez au moins 2 caractères"
+                    : "La bouteille n'existe pas"
+                }
                 isOptionEqualToValue={(option, value) => option.id === value.id}
-                // Gère du boutton clear 'X' , faut nettoyer tous les champs du formulaire
+                inputValue={rechercheSaq}
                 onInputChange={(event, newValue, reason) => {
+                  setRechercheSaq(newValue);
                   if (reason === "clear" || newValue === "") {
-                    setValue((value) => {
-                      value = [];
-                    });
+                    setValue(null);
+                    setVinsListe([]);
                   }
                 }}
                 // Gère du changement de l'option
@@ -374,7 +449,7 @@ export default function FrmAjoutBouteille(props) {
                 lg={12}
                 className={btnState ? "" : "hidden"}
               >
-                <label className="formInputNom creer" for="nom-bouteille-perso">
+                <label className="formInputNom creer" htmlFor="nom-bouteille-perso">
                   Nom
                 </label>
                 <p className="instruction">Créer une bouteille personnalisée</p>
@@ -403,7 +478,7 @@ export default function FrmAjoutBouteille(props) {
                 lg={3}
                 className={btnState ? "" : "hidden"}
               >
-                <label for="millesime">Millesime</label>
+                <label htmlFor="millesime">Millesime</label>
                 <TextField
                   fullWidth
                   size="small"
@@ -412,7 +487,7 @@ export default function FrmAjoutBouteille(props) {
                   id="millesime"
                   disabled={btnState ? false : true}
                   className={!btnState ? "nonSelect" : ""}
-                  value={value ? value.millesime : vinMillesime}
+                  value={value?.millesime ?? vinMillesime}
                   onChange={(e) => {
                     setMillesime(e.target.value);
                   }}
@@ -425,7 +500,7 @@ export default function FrmAjoutBouteille(props) {
                 md={btnState ? 3 : 6}
                 lg={btnState ? 3 : 6}
               >
-                <label for="pays">Pays</label>
+                <label htmlFor="pays">Pays</label>
                 <TextField
                   fullWidth
                   size="small"
@@ -434,14 +509,14 @@ export default function FrmAjoutBouteille(props) {
                   id="pays"
                   disabled={btnState ? false : true}
                   className={!btnState ? "nonSelect" : ""}
-                  value={value ? value.pays : vinPays}
+                  value={value?.pays ?? vinPays}
                   onChange={(e) => {
                     setVinPays(e.target.value);
                   }}
                 />
               </Grid>
               <Grid item xs={6} sm={6} md={3} lg={3}>
-                <label for="prix">Prix</label>
+                <label htmlFor="prix">Prix</label>
                 <TextField
                   fullWidth
                   size="small"
@@ -450,7 +525,7 @@ export default function FrmAjoutBouteille(props) {
                   name="prix"
                   disabled={btnState ? false : true}
                   className={!btnState ? "nonSelect" : ""}
-                  value={value ? value.prix_saq : vinPrix}
+                  value={value?.prix_saq ?? vinPrix}
                   onChange={(e) => {
                     setVinPrix(e.target.value);
                     e.target.value === ""
@@ -463,7 +538,7 @@ export default function FrmAjoutBouteille(props) {
                 </p>
               </Grid>
               <Grid item xs={6} sm={6} md={3} lg={3}>
-                <label for="format">format(ml)</label>
+                <label htmlFor="format">format(ml)</label>
                 <TextField
                   fullWidth
                   size="small"
@@ -472,14 +547,14 @@ export default function FrmAjoutBouteille(props) {
                   name="format"
                   disabled={btnState ? false : true}
                   className={!btnState ? "nonSelect" : ""}
-                  value={value ? value.format : vinFormat}
+                  value={value?.format ?? vinFormat}
                   onChange={(e) => {
                     setVinFormat(e.target.value);
                   }}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={12}>
-                <label for="description">Description</label>
+                <label htmlFor="description">Description</label>
                 <TextField
                   fullWidth
                   size="small"
@@ -491,17 +566,17 @@ export default function FrmAjoutBouteille(props) {
                   // maxRows={3}
                   disabled={btnState ? false : true}
                   className={!btnState ? "nonSelect" : ""}
-                  value={value ? value.description : vinDescription}
+                  value={value?.description ?? vinDescription}
                   onChange={(e) => {
                     setVinDescription(e.target.value);
                   }}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={4} lg={4}>
-                <label for="type">Type</label>
+                <label htmlFor="type">Type</label>
                 <TextField
                   select
-                  value={value ? value.vino__type_id : vinType}
+                  value={value?.vino__type_id ?? vinType}
                   onChange={(e) => {
                     setVinType(e.target.value);
                   }}
@@ -539,7 +614,7 @@ export default function FrmAjoutBouteille(props) {
               </Grid>
 
               <Grid item xs={6} sm={6} md={6} lg={6}>
-                <label for="quantite">Quantite</label>
+                <label htmlFor="quantite">Quantite</label>
                 <TextField
                   fullWidth
                   size="small"
@@ -567,13 +642,13 @@ export default function FrmAjoutBouteille(props) {
               </Grid>
 
               <Grid item xs={6} sm={6} md={6} lg={6}>
-                <label for="cellier-bouteille">Cellier</label>
+                <label htmlFor="cellier-bouteille">Cellier</label>
                 <TextField
                   select
                   id="cellier-bouteille"
                   value={vinCellier}
                   onChange={(e) => {
-                    setVinCellier(e.target.value);
+                    setVinCellier(parseCellierId(e.target.value));
                   }}
                   SelectProps={{
                     native: true,
@@ -583,7 +658,7 @@ export default function FrmAjoutBouteille(props) {
                   name="cellier"
                 >
                   {props.celliers.map((cellier) => (
-                    <option key={cellier.id} value={cellier.id}>
+                    <option key={cellier.id} value={parseCellierId(cellier.id)}>
                       {cellier.nom}
                     </option>
                   ))}
@@ -594,7 +669,7 @@ export default function FrmAjoutBouteille(props) {
               </Grid>
 
               <Grid item xs={12} sm={12}>
-                <label for="note">Note</label>
+                <label htmlFor="note">Note</label>
                 <TextField
                   fullWidth
                   size="small"
@@ -646,6 +721,7 @@ export default function FrmAjoutBouteille(props) {
         </div>
       </div>
     </div>
+    </MuiDateProvider>
   );
 }
 const types = [

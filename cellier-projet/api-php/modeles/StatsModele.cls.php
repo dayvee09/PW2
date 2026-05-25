@@ -12,6 +12,24 @@ class StatsModele extends AccesBd
     }
 
     /**
+     * Stats pour tous les celliers d'un utilisateur (une requête)
+     */
+    public function toutPourUtilisateur($params)
+    {
+        return $this->lire(
+            "SELECT vino__bouteille_has_vino__cellier.vino__cellier_id AS cellier_id,
+                    count(*) AS compte,
+                    sum(prix_saq * quantite) AS somme
+             FROM vino__bouteille
+             JOIN vino__bouteille_has_vino__cellier ON vino__bouteille.id = vino__bouteille_has_vino__cellier.vino__bouteille_id
+             JOIN vino__cellier ON vino__cellier.id = vino__bouteille_has_vino__cellier.vino__cellier_id
+             WHERE vino__cellier.vino__utilisateur_id = :user_id
+             GROUP BY vino__bouteille_has_vino__cellier.vino__cellier_id",
+            ['user_id' => $params['user_id']]
+        );
+    }
+
+    /**
      * Récupérer l'enregistrement d'une bouteille spécifié dans un cellier spécifié
      *
      * @param  array $params Tableau associatif des paramètres de la requête

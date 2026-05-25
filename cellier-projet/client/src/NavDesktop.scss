@@ -32,13 +32,25 @@
 		}
 	
 		.navDesktop--container-profil {
+			align-items: center;
 			cursor: pointer;
 			display: flex;
+
 			p {
-				padding-top: 10px;
+				margin: 0;
+				padding: 0;
+				color: #152440;
+				font-family: Raleway;
+				font-size: 14px;
+				font-weight: 500;
 			}
+
 			img {
 				margin-right: 15px;
+			}
+
+			&:hover p {
+				color: #cc4240;
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-import { I18n } from "aws-amplify";
+import { I18n } from "aws-amplify/utils";
 
 I18n.setLanguage("fr");
 
@@ -42,17 +42,6 @@ const dict = {
     "Your code is on the way. To log in, enter the code we emailed to":
       "Votre code a été envoyé à votre adresse ",
     "It may take a minute to arrive.": "Cela pourrait prendre quelque minutes",
-    "User does not exist.": "Adresse courriel ou mot de passe incorrecte",
-    "Incorrect username or password.":
-      "Adresse courriel ou mot de passe incorrecte",
-    "Username/client id combination not found.": "Adresse courriel invalide",
-    "Attempt limit exceeded, please try after some time.":
-      "Trop de tentatives, veuillez réessayer plus tard",
-    "Cannot reset password for the user as there is no registered/verified email or phone_number":
-      "Adresse courriel invalide",
-    "Password must have at least 8 characters":
-      "Le mot de passe doit contenir au moins 8 caractère",
-    "Your passwords must match": "Vos mots de passe doivent être identiques",
     "Password must have numbers": "Le mot de passe doit contenir un chiffre",
     "Password must have lower case letters":
       "Le mot de passe doit contenir une lettre minuscule",
@@ -66,20 +55,6 @@ const dict = {
     "Sign In with Amazon": "Connectez-vous avec Amazon",
     "Sign In with Facebook": "Connectez-vous avec Facebook",
     "Sign In with Google": "Connectez-vous avec Google",
-    "An account with the given email already exists.":
-      "Adresse courriel invalide",
-    "Invalid verification code provided, please try again.":
-      "Code invalide, veuillez réessayer",
-    "Username cannot be empty": "Veuillez entrer votre adresse courriel",
-    "Custom auth lambda trigger is not configured for the user pool.":
-      "Adresse courriel ou mot de passe incorrecte",
-    "Password cannot be empty": "Veuillez entrer votre mot de passe",
-    "Creating Account": "Création du compte",
-    Confirm: "Confirmer",
-    "We Emailed You": "Courriel envoyé",
-    "Your code is on the way. To log in, enter the code we emailed to":
-      "Votre code a été envoyé à votre adresse ",
-    "It may take a minute to arrive.": "Cela pourrait prendre quelque minutes",
     "We Sent A Code": "Code Envoyé",
     "Your code is on the way. To log in, enter the code we sent you. It may take a minute to arrive.":
       "Votre code a été envoyé à votre adresse. Cela pourrait prendre quelque minutes",

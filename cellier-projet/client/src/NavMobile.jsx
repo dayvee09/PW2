@@ -1,7 +1,7 @@
 import "./NavMobile.scss";
 import * as React from "react";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
@@ -11,6 +11,22 @@ import { ReactComponent as FavorisIcone } from "./img/svg/icone_favorite_blue_li
 import { ReactComponent as InventaireIcone } from "./img/svg/icone_inventaire_blue_line.svg";
 import { ReactComponent as AddBottleIcone } from "./img/svg/add_bottle_blue_filled.svg";
 
+function bottomNavIndexFromPath(pathname) {
+	if (pathname === "/vinsInventaire") return 5;
+	if (pathname === "/favoris") return 4;
+	if (pathname === "/vins") return 2;
+	if (pathname.startsWith("/profil/") || pathname.startsWith("/admin/")) return 1;
+	if (
+		pathname === "/" ||
+		pathname === "/PW2/cellier-projet" ||
+		pathname.startsWith("/cellier/") ||
+		pathname === "/modifier-cellier"
+	) {
+		return 0;
+	}
+	return 0;
+}
+
 /**
  * Gestion de la navigation en version mobile
  * @date 2022-09-30
@@ -18,35 +34,36 @@ import { ReactComponent as AddBottleIcone } from "./img/svg/add_bottle_blue_fill
  * @returns {*}
  */
 export default function NavMobile({
-	Auth,
+	isAuthenticated,
 	emailUtilisateur,
 	utilisateur,
 	setIndexNav,
 	indexNav,
 	setResetBottomNav,
-	resetBottomNav
+	resetBottomNav,
+	prefetchVinsInventaire,
+	prefetchFavorisId,
 }) {
-  	// état du BottomNavigation
-	const [value, setValue] = useState(indexNav);
+	const location = useLocation();
+	const activeIndex = bottomNavIndexFromPath(location.pathname);
 
-    useEffect(() => {
-	  setIndexNav(value);
-	}, [value]);
+	useEffect(() => {
+		setIndexNav(activeIndex);
+	}, [activeIndex, setIndexNav]);
 
 	// Gestion du reset du BottomNavigation lors de la déconnexion
-	if(Auth.user == null ) {
-		if(resetBottomNav == false) {
+	useEffect(() => {
+		if (!isAuthenticated && resetBottomNav === false) {
 			setResetBottomNav(true);
-			if(value == 1) {
-				setIndexNav(0)
-				setValue(0);
+			if (indexNav === 1) {
+				setIndexNav(0);
 			}
 		}
-	}
+	}, [isAuthenticated, resetBottomNav, indexNav, setResetBottomNav, setIndexNav]);
 
 	return (
 	<div>
-      <div className={Auth.user ? "NavMobile" : "Hidden"}>
+      <div className={isAuthenticated ? "NavMobile" : "Hidden"}>
         <AppBar
           position="fixed"
           color="primary"
@@ -54,10 +71,8 @@ export default function NavMobile({
 		  >
           <BottomNavigation
             className="BottomNav"
-            value={indexNav}
-            onChange={(event, newValue) => {
-				setValue(newValue);
-            }}
+            value={activeIndex}
+            onChange={() => {}}
             showLabels
           >
             <BottomNavigationAction
@@ -71,15 +86,25 @@ export default function NavMobile({
               <BottomNavigationAction
                 label="ADMIN"
                 icon={<ProfilIcone />}
-                component={Link}
-                to={`/admin/${emailUtilisateur}`}
+                component={emailUtilisateur ? Link : "div"}
+                to={
+                  emailUtilisateur
+                    ? `/admin/${encodeURIComponent(emailUtilisateur)}`
+                    : undefined
+                }
+                disabled={!emailUtilisateur}
               />
             ) : (
               <BottomNavigationAction
                 label="PROFIL"
                 icon={<ProfilIcone />}
-                component={Link}
-                to={`/profil/${emailUtilisateur}`}
+                component={emailUtilisateur ? Link : "div"}
+                to={
+                  emailUtilisateur
+                    ? `/profil/${encodeURIComponent(emailUtilisateur)}`
+                    : undefined
+                }
+                disabled={!emailUtilisateur}
               />
             )}
             <BottomNavigationAction
@@ -95,12 +120,16 @@ export default function NavMobile({
               icon={<FavorisIcone />}
               component={Link}
               to="/favoris"
+              onMouseEnter={prefetchFavorisId}
+              onFocus={prefetchFavorisId}
             />
             <BottomNavigationAction
               label="INVENTAIRE"
               icon={<InventaireIcone />}
               component={Link}
               to="/vinsInventaire"
+              onMouseEnter={prefetchVinsInventaire}
+              onFocus={prefetchVinsInventaire}
             />
           </BottomNavigation>
         </AppBar>

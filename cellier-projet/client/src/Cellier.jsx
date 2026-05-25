@@ -13,6 +13,21 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { styled } from "@mui/material/styles";
 
+const Button = styled(MuiButton)(() => ({
+  color: "#152440",
+  border: "1px solid #cc4240",
+  textDecoration: "none",
+  borderRadius: "4px",
+  fontFamily: "Alata",
+  fontSize: "12px",
+  padding: "10px 20px",
+  "&:hover": {
+    backgroundColor: "#f1ab50",
+    border: "1px solid #f1ab50",
+    color: "#152440",
+  },
+}));
+
 /**
  * Gestion du composant 'cellier'
  *
@@ -24,8 +39,10 @@ import { styled } from "@mui/material/styles";
  * @returns {*}
  */
 export default function Cellier(props) {
-  const [cellier, setCellier] = useState([props.id]);
-  const [statsCellier, setStatsCellier] = useState([]);
+  const statsFromProps = props.stats;
+  const [statsCellier, setStatsCellier] = useState(
+    statsFromProps ? [statsFromProps] : []
+  );
   const [selection, setSelection] = useState("fond-normal");
   const [eltAncrage, setEltAncrage] = useState(null);
   const menuContextuelOuvert = Boolean(eltAncrage);
@@ -41,32 +58,11 @@ export default function Cellier(props) {
    * Gestion du changement de fond au clic du cellier
    */
   const handleClickCellier = () => {
-    setCellier(props.id);
-    setTimeout(() => {
-      navigate(`/cellier/${cellier}/vins`, {
-        state: { nom: props.nom },
-        replace: true,
-      });
-    }, 100);
+    props.prefetchVins?.(props.id);
+    navigate(`/cellier/${props.id}/vins`, {
+      state: { nom: props.nom },
+    });
   };
-
-  /**
-   *  État des styles des composants MUI
-   */
-  const Button = styled(MuiButton)((props) => ({
-    color: "#152440",
-    border: "1px solid #cc4240",
-    textDecoration: "none",
-    borderRadius: "4px",
-    fontFamily: "Alata",
-    fontSize: "12px",
-    padding: "10px 20px",
-    "&:hover": {
-      backgroundColor: "#f1ab50",
-      border: "1px solid #f1ab50",
-      color: "#152440",
-    },
-  }));
 
   /**
    * État de l'alerte
@@ -84,12 +80,10 @@ export default function Cellier(props) {
   };
 
   useEffect(() => {
-    props.gererCellier(cellier);
-  }, [cellier]);
-
-  useEffect(() => {
-    fetchStatsCellier();
-  }, []);
+    if (props.stats) {
+      setStatsCellier([props.stats]);
+    }
+  }, [props.stats]);
 
   /**
    * Gestion du menu contextuel d'action d'un cellier
@@ -138,29 +132,11 @@ export default function Cellier(props) {
     });
   }
 
-  // Va chercher les stats d'un cellier
-  async function fetchStatsCellier() {
-    await fetch(props.URI + "/" + "cellier" + "/" + cellier + "/" + "stats")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        setStatsCellier(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        props.setError(error);
-      });
-  }
-
   /**
    * Supprime le cellier
    */
   async function fetchSupprimerCellier() {
-    await fetch(props.URI + `/cellier/${cellier}/celliers`, {
+    await fetch(props.URI + `/cellier/${props.id}/celliers`, {
       method: "DELETE",
     })
       .then((response) => {
@@ -175,6 +151,8 @@ export default function Cellier(props) {
         setOpenAlert(true);
         setTimeout(() => {
           props.fetchCelliers();
+          props.fetchStatsCelliers?.();
+          props.invalidateBouteillesCache?.();
         }, 1000);
       })
       .catch((error) => {
@@ -196,6 +174,10 @@ export default function Cellier(props) {
           <div
             className="cellier--gestion-container"
             onClick={handleClickCellier}
+            onMouseEnter={() => {
+              props.prefetchVins?.(props.id);
+              props.prefetchFavorisId?.();
+            }}
           >
             <p className="cellier--nom">{props.nom}</p>
           </div>

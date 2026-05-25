@@ -16,13 +16,26 @@ import placeholderSaq from "./img/png/placeholder-saq.png";
 import favoriteIconeLine from "./img/svg/icone_favorite_blue_line.svg";
 import favoriteIconeFilled from "./img/svg/icone_favorite_blue_filled.svg";
 
-export default function Bouteille(props) {
-  /**
-   *  API MUI https://mui.com/material-ui/react-snackbar/
-   */
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
+const Button = styled(MuiButton)(() => ({
+  color: "#152440",
+  border: "1px solid #cc4240",
+  textDecoration: "none",
+  borderRadius: "4px",
+  fontFamily: "Alata",
+  fontSize: "12px",
+  padding: "10px 20px",
+  "&:hover": {
+    backgroundColor: "#f1ab50",
+    border: "1px solid #f1ab50",
+    color: "#152440",
+  },
+}));
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+function Bouteille(props) {
   const [eltAncrage, setEltAncrage] = useState(null);
   const [contexteModif, setContexteModif] = useState(false);
   const menuContextuelOuvert = Boolean(eltAncrage);
@@ -33,24 +46,6 @@ export default function Bouteille(props) {
     }
     setOpenAlert(false);
   };
-
-  /**
-   *  État des styles des composants MUI
-   */
-  const Button = styled(MuiButton)((props) => ({
-    color: "#152440",
-    border: "1px solid #cc4240",
-    textDecoration: "none",
-    borderRadius: "4px",
-    fontFamily: "Alata",
-    fontSize: "12px",
-    padding: "10px 20px",
-    "&:hover": {
-      backgroundColor: "#f1ab50",
-      border: "1px solid #f1ab50",
-      color: "#152440",
-    },
-  }));
 
   /**
    *  État de la boite de dialogue de suppression
@@ -310,6 +305,7 @@ export default function Bouteille(props) {
       })
       .then((data) => {
         props.setChangementBouteille(Math.random());
+        props.fetchStatsCelliers?.();
         fetchVinUn();
       })
       .catch((error) => {
@@ -368,7 +364,9 @@ export default function Bouteille(props) {
         setSeverity("success");
         setOpenAlert(true);
         setTimeout(() => {
-          props.fetchVins(props.vino__cellier_id);
+          props.fetchVins(props.vino__cellier_id, { force: true });
+          props.fetchVinsInventaire?.({ force: true });
+          props.fetchStatsCelliers?.();
           viderFermerFrm();
         }, 1000);
       })
@@ -387,6 +385,8 @@ export default function Bouteille(props) {
             </div>
           )}
           <img
+            loading="lazy"
+            decoding="async"
             onClick={gererVoir}
             src={
               props.image && props.image.indexOf("pastille_gout") < 0
@@ -513,3 +513,5 @@ export default function Bouteille(props) {
     </>
   );
 }
+
+export default React.memo(Bouteille);

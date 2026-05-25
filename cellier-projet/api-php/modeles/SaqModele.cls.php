@@ -20,7 +20,10 @@ class SaqModele extends AccesBd
      */
     public function un($bte)
     {
-        if ($bte === "Vin rouge" || $bte === "Vin blanc" || $bte === "Vin rosé") {
+        if ($bte === "Vin rouge" || $bte === "Vin blanc" || $bte === "Vin rosé" || $bte === "Vin rose") {
+            if ($bte === "Vin rose") {
+                $bte = "Vin rosé";
+            }
             return $this->lireUn("select id from vino__type where type = :bte", ['bte' => $bte]);
         } else {
             return $this->lireUn("select id from vino__bouteille where code_saq = :bte", ['bte' => $bte]);

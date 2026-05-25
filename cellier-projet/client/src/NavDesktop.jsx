@@ -14,11 +14,19 @@ import MenuItem from "@mui/material/MenuItem";
  * @returns {*}
  */
 export default function NavDesktop({
-  user,
+  emailUtilisateur,
   gererSignOut,
   utilisateur,
   username,
+  prefetchVinsInventaire,
+  prefetchFavorisId,
 }) {
+  const profilPath = emailUtilisateur
+    ? `/profil/${encodeURIComponent(emailUtilisateur)}`
+    : null;
+  const adminPath = emailUtilisateur
+    ? `/admin/${encodeURIComponent(emailUtilisateur)}`
+    : null;
   const [eltAncrage, setEltAncrage] = useState(null);
   const menuContextuelOuvert = Boolean(eltAncrage);
   const navigate = useNavigate();
@@ -81,20 +89,18 @@ export default function NavDesktop({
           {utilisateur && utilisateur.privilege === "admin" ? (
             <MenuItem
               onClick={gererFermerMenuContextuel}
-              component={Link}
-              to={`/admin/${user.attributes.email}`}
+              component={adminPath ? Link : "div"}
+              to={adminPath || undefined}
+              disabled={!adminPath}
             >
               <span>Menu Admin</span>
             </MenuItem>
           ) : (
             <MenuItem
               onClick={gererFermerMenuContextuel}
-              component={Link}
-              to={
-                user.attributes.email
-                  ? `/profil/${user.attributes.email}`
-                  : `/profil/${user.username}`
-              }
+              component={profilPath ? Link : "div"}
+              to={profilPath || undefined}
+              disabled={!profilPath}
             >
               <span>Mon Profil</span>
             </MenuItem>
@@ -110,6 +116,8 @@ export default function NavDesktop({
             onClick={gererFermerMenuContextuel}
             component={Link}
             to={`/favoris`}
+            onMouseEnter={prefetchFavorisId}
+            onFocus={prefetchFavorisId}
           >
             <span>Mes Favoris</span>
           </MenuItem>
@@ -118,6 +126,8 @@ export default function NavDesktop({
             onClick={gererFermerMenuContextuel}
             component={Link}
             to={`/vinsInventaire`}
+            onMouseEnter={prefetchVinsInventaire}
+            onFocus={prefetchVinsInventaire}
           >
             <span>Mon Inventaire</span>
           </MenuItem>

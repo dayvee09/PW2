@@ -9,7 +9,29 @@ class VinsModele extends AccesBd
      */
     public function tout($params)
     {
-        return $this->lire("SELECT  vino__cellier.vino__utilisateur_id, vino__bouteille.id, vino__bouteille.nom, `image`, code_saq, pays, `description`, prix_saq, url_saq, url_img, `format`, vino__type_id, vino__type.type, millesime,personnalise, vino__cellier_id, quantite, date_achat, garde_jusqua, notes FROM vino__bouteille JOIN vino__bouteille_has_vino__cellier ON vino__bouteille.id=vino__bouteille_has_vino__cellier.vino__bouteille_id JOIN vino__type ON vino__bouteille.vino__type_id=vino__type.id JOIN vino__cellier ON vino__cellier.id =vino__bouteille_has_vino__cellier.vino__cellier_id where vino__bouteille_has_vino__cellier.vino__cellier_id =:cellier ORDER BY vino__bouteille.id ASC", ['cellier' => $params['cellier']]);
+        return $this->lire("SELECT vino__cellier.vino__utilisateur_id, vino__bouteille.id, vino__bouteille.nom, `image`, code_saq, pays, prix_saq, `format`, vino__type_id, vino__type.type, millesime, personnalise, vino__cellier_id, quantite, date_achat, garde_jusqua, notes FROM vino__bouteille JOIN vino__bouteille_has_vino__cellier ON vino__bouteille.id=vino__bouteille_has_vino__cellier.vino__bouteille_id JOIN vino__type ON vino__bouteille.vino__type_id=vino__type.id JOIN vino__cellier ON vino__cellier.id =vino__bouteille_has_vino__cellier.vino__cellier_id WHERE vino__bouteille_has_vino__cellier.vino__cellier_id =:cellier ORDER BY vino__bouteille.id ASC", ['cellier' => $params['cellier']]);
+    }
+
+    /**
+     * Recherche dans le catalogue SAQ (cellier admin #1) pour l'autocomplete.
+     */
+    public function rechercherCatalogueSaq($terme, $limite = 50)
+    {
+        $limite = max(1, min((int) $limite, 100));
+        $like = '%' . $terme . '%';
+
+        return $this->lire(
+            "SELECT vino__bouteille.id, vino__bouteille.nom, `image`, code_saq, pays, `description`, prix_saq, url_saq, url_img, `format`, vino__type_id, vino__type.type, millesime, personnalise
+            FROM vino__bouteille
+            JOIN vino__bouteille_has_vino__cellier ON vino__bouteille.id = vino__bouteille_has_vino__cellier.vino__bouteille_id
+            JOIN vino__type ON vino__bouteille.vino__type_id = vino__type.id
+            WHERE vino__bouteille_has_vino__cellier.vino__cellier_id = 1
+              AND vino__bouteille.personnalise = 0
+              AND (vino__bouteille.nom LIKE :q OR vino__bouteille.code_saq LIKE :q)
+            ORDER BY vino__bouteille.nom ASC
+            LIMIT $limite",
+            ['q' => $like]
+        );
     }
 
     /**

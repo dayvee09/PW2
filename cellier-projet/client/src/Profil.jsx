@@ -15,7 +15,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useNavigate } from "react-router-dom";
 import { TextField } from "@aws-amplify/ui-react";
 import { NavLink } from "react-router-dom";
-import { Auth } from "aws-amplify";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 
 /**
  * Gestion de mon profile
@@ -24,6 +24,10 @@ import { Auth } from "aws-amplify";
  * @returns {*}
  */
 export default function Profil(props) {
+  const { authStatus, route } = useAuthenticator();
+  const isAuthenticated =
+    route === "authenticated" || authStatus === "authenticated";
+
   /**
    *  État des styles des composants MUI
    */
@@ -143,7 +147,7 @@ export default function Profil(props) {
     }, 2000);
     return () => clearTimeout(timer);
   };
-  if (Auth.user) {
+  if (isAuthenticated) {
     return (
       <>
         <div className="Appli--entete">
@@ -177,7 +181,7 @@ export default function Profil(props) {
                   disabled
                 />
               </div>
-              {Auth.user.attributes.email && (
+              {props.emailUtilisateur && (
                 <div className="description-courriel">
                   <div className="infos-modification">
                     <p>Adresse Courriel</p>
@@ -196,7 +200,7 @@ export default function Profil(props) {
                   />
                 </div>
               )}
-              {Auth.user.attributes.email && (
+              {props.emailUtilisateur && (
                 <div className="description-password">
                   <div className="infos-modification">
                     <p>Mot de passe</p>

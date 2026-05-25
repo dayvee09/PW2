@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# Blocks commits that would add known secret or local-only paths.
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+
+BLOCKED_PATTERNS=(
+  'AccesBd\.cls\.php$'
+  'config\.local\.php$'
+  '\.env(\.|$)'
+  'aws-exports\.js$'
+  'team-provider-info\.json$'
+  'amplify/\.config/local-'
+  '\.pem$'
+  '\.key$'
+  'credentials\.json$'
+  'cellier-projet/database/pw2_le_bon\.sql$'
+)
+
+STAGED=$(git diff --cached --name-only --diff-filter=ACM || true)
+if [ -z "$STAGED" ]; then
+  exit 0
+fi
+
+BLOCKED=()
+while IFS= read -r file; do
+  [ -n "$file" ] || continue
+  for pattern in "${BLOCKED_PATTERNS[@]}"; do
+    if echo "$file" | grep -qE "$pattern"; then
+      BLOCKED+=("$file")
+      break
+    fi
+  done
+  # Block personal SQL dumps except the public starter file
+  if echo "$file" | grep -qE '^cellier-projet/database/.*\.sql$' && \
+     ! echo "$file" | grep -qE '^cellier-projet/database/monvino-starter\.sql$'; then
+    BLOCKED+=("$file")
+  fi
+done <<< "$STAGED"
+
+if [ "${#BLOCKED[@]}" -gt 0 ]; then
+  echo "pre-commit: blocked — sensitive or local-only files staged:"
+  printf '  - %s\n' "${BLOCKED[@]}"
+  echo ""
+  echo "Remove them from the index: git reset HEAD -- <file>"
+  echo "Ensure they are listed in .gitignore."
+  exit 1
+fi
+
+# Warn if file content looks like a live DB password in AccesBd-style PHP
+if git diff --cached -G "new PDO\(" -- '*.php' | grep -qE "^\+" && \
+   git diff --cached -G "mysql:host=" -- '*.php' | grep -qE '^\+\s*".*monvino|^\+\s*".*root'; then
+  echo "pre-commit: warning — staged PHP may contain inline database credentials."
+  echo "Use config.local.php instead of hard-coding credentials in tracked files."
+  exit 1
+fi
+
+exit 0

@@ -19,16 +19,16 @@ export default function ListeInventaire(props) {
   const [idCellier, setIdCellier] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
-    if (idCellier > 0) {
+    if (idCellier > 0 && props.bouteilleId) {
       props.gererCellier(idCellier);
-      props.gererCible(props.id);
-      props.fetchVins(idCellier);
+      props.gererCible(props.bouteilleId);
+      props.fetchVins(idCellier, { force: true });
       props.fetchNomCellier(idCellier);
-      navigate(`/cellier/${idCellier}/vins/${props.id}`, {
+      navigate(`/cellier/${idCellier}/vins/${props.bouteilleId}`, {
         replace: true,
       });
     }
-  }, [idCellier]);
+  }, [idCellier, props.bouteilleId]);
   return (
     <List className="ListeInventaire" sx={{ width: "100%" }}>
       {props.listeInventaire.map((chaqueInventaire) => (

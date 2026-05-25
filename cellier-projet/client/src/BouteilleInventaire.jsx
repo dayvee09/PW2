@@ -1,7 +1,5 @@
 import * as React from "react";
 import "./BouteilleInventaire.scss";
-import { useState, useEffect } from "react";
-import MuiButton from "@mui/material/Button";
 import { styled, useTheme } from "@mui/material/styles";
 import placeholderSaq from "./img/png/placeholder-saq.png";
 import { grey } from "@mui/material/colors";
@@ -14,7 +12,6 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { ComponentPropsToStylePropsMap } from "@aws-amplify/ui-react";
 const drawerBleeding = 56;
 
 const Root = styled("div")(({ theme }) => ({
@@ -65,6 +62,9 @@ export default function BouteilleInventaire(props) {
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen) => () => {
+    if (newOpen && listeInventaire.length === 0) {
+      fetchListeInventaire();
+    }
     setOpen(newOpen);
   };
 
@@ -79,31 +79,7 @@ export default function BouteilleInventaire(props) {
   const [listeInventaire, setListeInventaire] = React.useState([]);
 
   /**
-   *  État des styles des composants MUI
-   */
-  const Button = styled(MuiButton)((props) => ({
-    color: "#f3f5eb",
-    backgroundColor: "#152440",
-    textDecoration: "none",
-    borderRadius: "4px",
-    fontFamily: "Alata",
-    fontSize: "12px",
-    padding: "10px 20px",
-    "&:hover": {
-      backgroundColor: "#f1ab50",
-      color: "#152440",
-    },
-  }));
-
-  /**
-   * Fectch la liste
-   */
-  useEffect(() => {
-    fetchListeInventaire();
-  }, []);
-
-  /**
-   * fetch la liste des inventaires d'une bouteille
+   * fetch la liste des inventaires d'une bouteille (à l'ouverture du tiroir)
    */
   async function fetchListeInventaire() {
     await fetch(
@@ -144,6 +120,8 @@ export default function BouteilleInventaire(props) {
             </p>
           </div>
           <img
+            loading="lazy"
+            decoding="async"
             src={
               props.image && props.image.indexOf("pastille_gout") < 0
                 ? props.image
@@ -182,17 +160,8 @@ export default function BouteilleInventaire(props) {
           </div>
         </div>
       </div>
-      {/* Mui composant drawer  */}
+      {open && (
       <Root>
-        {/* <CssBaseline /> */}
-        {/* <Global
-			styles={{
-				".MuiDrawer-root > .MuiPaper-root": {
-				height: `calc(50% - ${drawerBleeding}px)`,
-				overflow: "visible",
-				},
-			}}
-			/> */}
         <SwipeableDrawer
           container={container}
           anchor="left"
@@ -201,9 +170,6 @@ export default function BouteilleInventaire(props) {
           onOpen={toggleDrawer(true)}
           swipeAreaWidth={drawerBleeding}
           disableSwipeToOpen={true}
-          ModalProps={{
-            keepMounted: true,
-          }}
         >
           <StyledBox
             sx={{
@@ -252,13 +218,13 @@ export default function BouteilleInventaire(props) {
               fetchVins={props.fetchVins}
               fetchNomCellier={props.fetchNomCellier}
               gererCellier={props.gererCellier}
-              id={props.id}
+              bouteilleId={props.bouteilleInventaire?.id ?? props.id}
               gererCible={props.gererCible}
             />
           </StyledBox>
         </SwipeableDrawer>
       </Root>
-      {/* Fin composant drawer */}
+      )}
     </>
   );
 }

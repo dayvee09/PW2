@@ -5,7 +5,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
-import { Auth } from "aws-amplify";
 import { useState, useEffect } from "react";
 import "./FrmUsername.scss";
 import MuiButton from "@mui/material/Button";
@@ -128,7 +127,9 @@ export default function FrmEmail({
     );
     let reponseJson = await reponse.json();
     setUsername(NouveauUsername);
-    navigate(`/profil/${emailUtilisateur}`, { replace: true });
+    navigate(`/profil/${encodeURIComponent(emailUtilisateur)}`, {
+      replace: true,
+    });
   }
 
   /**

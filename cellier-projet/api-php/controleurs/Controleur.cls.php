@@ -36,8 +36,9 @@ abstract class Controleur
     private function produireReponse()
     {
         header($this->reponse['entete_statut']);
-        if ($this->reponse['corps']) {
-            echo json_encode($this->reponse['corps']);
+        $corps = $this->reponse['corps'];
+        if ($corps !== false && $corps !== null) {
+            echo json_encode($corps);
         } else {
             echo json_encode(['erreur' => 'Rien trouvé']);
         }

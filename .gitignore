@@ -1,2 +1,65 @@
+<<<<<<< HEAD
 AccesBd.cls.php
 node_modules
+=======
+# --- Secrets & local config (never commit) ---
+AccesBd.cls.php
+**/config.local.php
+.env
+.env.*
+!.env.*.example
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
+**/src/code/config.js
+
+# AWS Amplify / Cognito (generated or machine-specific)
+**/aws-exports.js
+**/awsconfiguration.json
+**/amplifyconfiguration.json
+amplify/.config/local-*
+amplify/#current-cloud-backend
+amplify/team-provider-info.json
+.secret-*
+
+# --- Dependencies & build artifacts ---
+node_modules/
+**/node_modules/
+/build/
+**/build/
+dist/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+
+# --- Dev environment ---
+.devcontainer/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# --- Database dumps (personal / production — never commit) ---
+cellier-projet/database/*
+!cellier-projet/database/monvino-starter.sql
+!cellier-projet/database/README.md
+
+# --- IDE ---
+.idea/
+.vscode/*
+!.vscode/settings.json
+
+# --- Release bundles (generated locally) ---
+monvino-release-*.tar.gz
+dist/
+
+cellier-projet/client/.env.production.example
+cellier-projet/client/amplify/team-provider-info.json
+>>>>>>> master

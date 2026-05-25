@@ -3,17 +3,16 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import { useState, useEffect } from "react";
 import FrmBouteilleInput from "./FrmBouteilleInput";
+import BouteilleImageZoom from "./BouteilleImageZoom";
 import "./FrmBouteille.scss";
 import Alert from "@mui/material/Alert";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Collapse from "@mui/material/Collapse";
 import placeholderSaq from "./img/png/placeholder-saq.png";
 import DateSelecteur from "./DateSelecteur";
 import DateSelecteurAnnee from "./DateSelecteurAnnee";
+import MuiDateProvider from "./MuiDateProvider";
 import TextField from "@mui/material/TextField";
 
 /**
@@ -42,61 +41,15 @@ export default function FrmBouteille({
   setVinNote,
   vinNote,
 }) {
-  /**
-   * L‘état d'erreur
-   */
   const [openErr, setOpenErr] = React.useState(false);
 
-  const ficheStyle = [
-    {
-      backgroundColor: "#d3d7dd78",
-      padding: "20px",
-      height: "100%",
-    },
-    {
-      "& .img-wrap": {
-        backgroundColor: "#d3d7dd",
-        height: "200px",
-        marginBottom: "25px",
-      },
-    },
-    {
-      "& .bouteille--description": {
-        width: "100px",
-        "@media only screen and (min-width: 325px)": {
-          width: "200px",
-        },
-        "@media only screen and (min-width: 400px)": {
-          width: "250px",
-        },
-        "@media only screen and (min-width: 500px)": {
-          width: "400px",
-        },
-      },
-    },
-    {
-      img: {
-        objectFit: "contain",
-        padding: "5px 0 5px 0",
-        height: "100%",
-        mixBlendMode: "multiply",
-        maxHeight: "250px",
-        width: "100%",
-      },
-    },
-  ];
-  /**
-   *  Gère l'action d'annuler
-   */
   function viderFermerFrm() {
     setFrmOuvert(false);
     setTimeout(() => {
       setVoirFiche(false);
     }, 200);
   }
-  /**
-   * Gère l'action de soumettre
-   */
+
   function gererSoumettre() {
     if (quantite >= 0) {
       modifierBouteille(quantite, dateAchat, dateGarde, vinNote);
@@ -105,59 +58,154 @@ export default function FrmBouteille({
       if (quantite < 0) setOpenErr(true);
     }
   }
+
+  const imageSrc =
+    bouteille?.image && bouteille.image.indexOf("pastille_gout") < 0
+      ? bouteille.image
+      : placeholderSaq;
+
+  const description = bouteille?.description?.trim?.()
+    ? bouteille.description.trim()
+    : "";
+
   return (
+    <MuiDateProvider>
     <div className="FormBouteille">
       <Dialog
+        className="FormBouteille-dialog-root"
         open={frmOuvert}
         onClose={viderFermerFrm}
-        PaperProps={{ sx: { backgroundColor: "#f3f5eb" } }}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          className: "FormBouteille-dialog",
+          sx: { backgroundColor: "#f3f5eb", borderRadius: "8px" },
+        }}
       >
-        <DialogContent sx={ficheStyle}>
-          <div className="img-wrap">
-            <img
-              src={
-                bouteille.image && bouteille.image.indexOf("pastille_gout") < 0
-                  ? bouteille.image
-                  : placeholderSaq
-              }
-              alt="bouteille"
-            />
-          </div>
-          <div className="description">
-            <div className="description--entete">
-              <h2 className="nom">{bouteille.nom} </h2>
-              <p className="type">
-                {bouteille_type} - {bouteille.format} - {bouteille.pays}
+        <DialogContent className="FormBouteille-content">
+          <BouteilleImageZoom
+            imageSrc={imageSrc}
+            title={bouteille?.nom || "Bouteille"}
+            alt={bouteille?.nom || "bouteille"}
+          />
+
+          <div className="fiche-body">
+            <header className="fiche-header">
+              <h2 className="fiche-nom">{bouteille?.nom}</h2>
+              <p className="fiche-type">
+                {bouteille_type} - {bouteille?.format} - {bouteille?.pays}
               </p>
-            </div>
-            <hr></hr>
-            <div className="hr"></div>
-            {/* <p className="bouteille--description">
-              Description : {bouteille.description}
-            </p> */}
-            <p className={personnalise == 0 ? "hidden" : ""}>
-              Millesime : {bouteille.millesime}
-            </p>
-            <p className="prix">Prix : {bouteille.prix_saq}$</p>
-            <div
-              className={
-                voirFiche === false || dateGarde == 2023 ? "hidden" : ""
-              }
-            >
-              <p className="quantite">Quantité : {quantite}</p>
-              <p className="date_achat">Date achat : {bouteille.date_achat}</p>
-              <p className="date_achat">
-                Garde jusqu'à : {bouteille.garde_jusqua}
-              </p>
-              <p className="notes">Note : {bouteille.notes}</p>
-              <p className="lien_saq">
-                {bouteille.personnalise === "0" && (
-                  <a href={bouteille.url_saq} target="_blank">
-                    Voir SAQ
-                  </a>
+            </header>
+
+            {description && (
+              <div className="fiche-description-block">
+                <span className="fiche-section-label">Description</span>
+                <p className="fiche-description-text">{description}</p>
+              </div>
+            )}
+
+            {voirFiche && (
+              <div className="fiche-meta">
+                {personnalise != 0 && bouteille?.millesime && (
+                  <div className="fiche-meta-item">
+                    <span className="fiche-label">Millésime</span>
+                    <p className="fiche-value fiche-value--emphasis">
+                      {bouteille.millesime}
+                    </p>
+                  </div>
                 )}
-              </p>
-            </div>
+                <div className="fiche-meta-item">
+                  <span className="fiche-label">Prix</span>
+                  <p className="fiche-value fiche-value--emphasis">
+                    {bouteille?.prix_saq}$
+                  </p>
+                </div>
+                <div className="fiche-meta-item">
+                  <span className="fiche-label">Quantité</span>
+                  <p className="fiche-value fiche-value--emphasis">
+                    {quantite}
+                  </p>
+                </div>
+                <div className="fiche-meta-item">
+                  <span className="fiche-label">Date d&apos;achat</span>
+                  <p className="fiche-value">{bouteille?.date_achat}</p>
+                </div>
+                <div className="fiche-meta-item">
+                  <span className="fiche-label">Garde jusqu&apos;à</span>
+                  <p className="fiche-value">{bouteille?.garde_jusqua}</p>
+                </div>
+                <div className="fiche-meta-item fiche-meta-item--full">
+                  <span className="fiche-label">Note</span>
+                  <p
+                    className={
+                      bouteille?.notes || vinNote
+                        ? "fiche-value"
+                        : "fiche-value fiche-value--empty"
+                    }
+                  >
+                    {bouteille?.notes || vinNote || "Aucune note"}
+                  </p>
+                </div>
+                {bouteille?.personnalise === "0" && bouteille?.url_saq && (
+                  <div className="fiche-lien-saq fiche-meta-item--full">
+                    <a
+                      href={bouteille.url_saq}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Voir sur le site SAQ
+                    </a>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {!voirFiche && description && (
+              <div className="fiche-description-block">
+                <span className="fiche-section-label">Description</span>
+                <p className="fiche-description-text">{description}</p>
+              </div>
+            )}
+
+            {!voirFiche && (
+              <div className="fiche-edit-fields">
+                <label htmlFor="quantite-bouteille">Quantité</label>
+                <FrmBouteilleInput
+                  bouteille={bouteille}
+                  voirFiche={voirFiche}
+                  setQuantite={setQuantite}
+                  quantite={quantite}
+                  setOpenErr={setOpenErr}
+                />
+                <label>Date d&apos;achat</label>
+                <DateSelecteur
+                  voirFiche={voirFiche}
+                  bouteille={bouteille}
+                  dateAchat={dateAchat}
+                  setDateAchat={setDateAchat}
+                />
+                <label>Garde jusqu&apos;à</label>
+                <DateSelecteurAnnee
+                  voirFiche={voirFiche}
+                  bouteille={bouteille}
+                  dateGarde={dateGarde}
+                  setDateGarde={setDateGarde}
+                />
+                <label htmlFor="note">Note</label>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="text"
+                  name="notes"
+                  id="note"
+                  value={vinNote}
+                  onChange={(e) => {
+                    setVinNote(e.target.value);
+                  }}
+                />
+              </div>
+            )}
+
             <Dialog open={openErr}>
               <Alert
                 severity="error"
@@ -177,72 +225,35 @@ export default function FrmBouteille({
               </Alert>
             </Dialog>
           </div>
-          <div className={voirFiche === true ? "hidden" : ""}>
-            <label htmlFor="">Quantité: </label>
-          </div>
-          <FrmBouteilleInput
-            bouteille={bouteille}
-            voirFiche={voirFiche}
-            setQuantite={setQuantite}
-            quantite={quantite}
-            setOpenErr={setOpenErr}
-          />
-          <div className={voirFiche === true ? "hidden" : ""}>
-            <label>Date d'achat: </label>
-          </div>
-          <DateSelecteur
-            voirFiche={voirFiche}
-            bouteille={bouteille}
-            dateAchat={dateAchat}
-            setDateAchat={setDateAchat}
-          />
-          <div className={voirFiche === true ? "hidden" : ""}>
-            <label>Garde jusqu'à: </label>
-          </div>
-          <DateSelecteurAnnee
-            voirFiche={voirFiche}
-            bouteille={bouteille}
-            dateGarde={dateGarde}
-            setDateGarde={setDateGarde}
-          />
-          <div className={voirFiche === true ? "hidden" : ""}>
-            <label for="note">Note</label>
-            <TextField
-              fullWidth
-              size="small"
-              type="text"
-              name="notes"
-              id="note"
-              value={vinNote}
-              onChange={(e) => {
-                setVinNote(e.target.value);
-              }}
-            />
-          </div>
         </DialogContent>
+
         {voirFiche === false ? (
-          <DialogActions>
+          <DialogActions className="FormBouteille-actions">
             <Button
-              className={"FormBouteille--button"}
+              className="FormBouteille--button"
               onClick={viderFermerFrm}
             >
               Annuler
             </Button>
             <Button
-              className={"FormBouteille--button"}
+              className="FormBouteille--button"
               onClick={gererSoumettre}
             >
               Soumettre
             </Button>
           </DialogActions>
         ) : (
-          <DialogActions>
-            <Button className="FormBouteille--button" onClick={viderFermerFrm}>
+          <DialogActions className="FormBouteille-actions">
+            <Button
+              className="FormBouteille--button"
+              onClick={viderFermerFrm}
+            >
               OK
             </Button>
           </DialogActions>
         )}
       </Dialog>
     </div>
+    </MuiDateProvider>
   );
 }

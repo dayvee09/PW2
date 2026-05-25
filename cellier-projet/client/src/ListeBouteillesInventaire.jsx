@@ -1,19 +1,9 @@
 import "./ListeBouteillesInventaire.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { NavLink } from "react-router-dom";
-import rowIcone from "./img/svg/icone_search_bar_white.svg";
 import BouteilleInventaire from "./BouteilleInventaire";
-import _ from "lodash";
-import isEqual from "lodash/isEqual";
-import { TextField } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import usePagination from "./Pagination";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import NativeSelect from "@mui/material/NativeSelect";
-import InputBase from "@mui/material/InputBase";
-import { styled } from "@mui/material/styles";
 
 /**
  * Gestion de la liste de l'inventaire des bouteilles
@@ -28,11 +18,40 @@ import { styled } from "@mui/material/styles";
  * @returns {any}
  */
 function ListeBouteillesInventaire(props) {
-  // const [toSearch, setToSearch] = useState("");
-  const [results, setResults] = useState([]);
+  const inventaire = Array.isArray(props.bouteillesInventaire)
+    ? props.bouteillesInventaire
+    : [];
+  const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(
+    () => !props.hasCachedInventaire?.()
+  );
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
-  let search;
+
+  const results = useMemo(() => {
+    if (!search) return inventaire;
+    const q = search.toLowerCase();
+    return inventaire.filter((b) => b.nom?.toLowerCase().includes(q));
+  }, [inventaire, search]);
+
+  const { quantite_total, prix_total } = useMemo(() => {
+    if (results.length === 0) {
+      return { quantite_total: 0, prix_total: 0 };
+    }
+    return {
+      quantite_total: results.reduce(
+        (prev, cur) =>
+          parseInt(cur.quantite_total || 0, 10) + parseInt(prev || 0, 10),
+        0
+      ),
+      prix_total: results.reduce(
+        (prev, cur) =>
+          parseFloat(cur.prix_total || 0) + parseFloat(prev || 0),
+        0
+      ),
+    };
+  }, [results]);
+
   /**
    * configuration de la pagination
    */
@@ -76,15 +95,20 @@ function ListeBouteillesInventaire(props) {
   //   },
   // }));
 
-  /**
-   * Fectch la liste de tous les bouteilles dans tout différentes celliers
-   */
   useEffect(() => {
-    if (_.isEqual(props.bouteillesInventaire, results) !== true) {
-      props.fetchVinsInventaire();
-      setResults(props.bouteillesInventaire);
+    let cancelled = false;
+    const hasCache = props.hasCachedInventaire?.();
+    if (!hasCache) {
+      setLoading(true);
     }
-  }, [props.bouteillesInventaire]);
+    props.fetchVinsInventaire().then((result) => {
+      if (!cancelled) setLoading(false);
+      return result;
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   function gererVoirPlus() {
     if (results.length > fin) {
@@ -95,29 +119,28 @@ function ListeBouteillesInventaire(props) {
   }
 
   function gererInputRecherche(e) {
-    search = e.target.value;
-    setResults(filtreBouteilles(props.bouteillesInventaire, search));
+    setSearch(e.target.value);
   }
 
-  function filtreBouteilles(array, string) {
-    return array.filter((bouteille) => {
-      return bouteille.nom.toLowerCase().includes(string.toLowerCase());
-    });
-  }
-  if (results.length > 0) {
-    var quantite_total = results.reduce(
-      (prev, cur) =>
-        parseInt(cur.quantite_total ? cur.quantite_total : 0) +
-        parseInt(prev ? prev : 0),
-      0
+  if (loading) {
+    return (
+      <>
+        <div className="Appli--entete">
+          <div className="Appli--search-bar-container">
+            <input
+              className="Appli--search-bar"
+              placeholder="Trouver une bouteille"
+              disabled
+            />
+          </div>
+        </div>
+        <div className="Appli--container">
+          <p className="liste-cellier--etat">Chargement de l&apos;inventaire…</p>
+        </div>
+      </>
     );
-    var prix_total = results.reduce(
-      (prev, cur) =>
-        parseFloat(cur.prix_total ? cur.prix_total : 0) +
-        parseFloat(prev ? prev : 0),
-      0
-    );
   }
+
   if (results.length > 1) {
     return (
       <>
@@ -134,10 +157,15 @@ function ListeBouteillesInventaire(props) {
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
             <div className="liste-inventaire-total">
-              <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p>
               <p>
-                Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2)}
-                &nbsp; $
+                <span className="liste-inventaire-total__label">Quantité totale : </span>
+                <span className="liste-inventaire-total__value">{quantite_total}</span>
+              </p>
+              <p>
+                <span className="liste-inventaire-total__label">Valeur totale : </span>
+                <span className="liste-inventaire-total__value">
+                  {parseFloat(prix_total).toFixed(2)} $
+                </span>
               </p>
             </div>
           </div>
@@ -210,10 +238,15 @@ function ListeBouteillesInventaire(props) {
           <div className="liste-cellier--entete">
             <h1>Mes Bouteilles</h1>
             <div className="liste-inventaire-total">
-              <p>Quantité&nbsp; totale: &nbsp;{quantite_total}&nbsp; </p>
               <p>
-                Valeur&nbsp; totale: &nbsp;{parseFloat(prix_total).toFixed(2)}
-                &nbsp; $
+                <span className="liste-inventaire-total__label">Quantité totale : </span>
+                <span className="liste-inventaire-total__value">{quantite_total}</span>
+              </p>
+              <p>
+                <span className="liste-inventaire-total__label">Valeur totale : </span>
+                <span className="liste-inventaire-total__value">
+                  {parseFloat(prix_total).toFixed(2)} $
+                </span>
               </p>
             </div>
           </div>
