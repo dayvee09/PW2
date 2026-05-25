@@ -9,7 +9,7 @@ class VinsInventaireModele extends AccesBd
      */
     public function tout($params)
     {
-        return $this->lire("SELECT vino__bouteille.id, vino__bouteille.nom, `image`, code_saq, pays, `description`, prix_saq, url_saq, url_img, `format`, vino__type_id, vino__type.type, millesime,personnalise,SumQuantiteParBouteille.quantite_total, SumQuantiteParBouteille.quantite_total*prix_saq as prix_total FROM vino__bouteille
+        return $this->lire("SELECT vino__bouteille.id, vino__bouteille.nom, `image`, code_saq, pays, prix_saq, `format`, vino__type_id, vino__type.type, millesime, personnalise, SumQuantiteParBouteille.quantite_total, SumQuantiteParBouteille.quantite_total * prix_saq AS prix_total FROM vino__bouteille
         JOIN vino__type ON vino__bouteille.vino__type_id=vino__type.id
         JOIN (SELECT  vino__bouteille_has_vino__cellier.vino__bouteille_id as bouteille_id, sum(quantite) as quantite_total from vino__bouteille_has_vino__cellier JOIN vino__cellier ON vino__cellier.id =vino__bouteille_has_vino__cellier.vino__cellier_id JOIN vino__utilisateur ON vino__utilisateur.id = vino__cellier.vino__utilisateur_id where vino__utilisateur.id=:user_id AND vino__cellier.id != 1 GROUP BY bouteille_id HAVING quantite_total > 0) SumQuantiteParBouteille
         ON SumQuantiteParBouteille.bouteille_id = vino__bouteille.id

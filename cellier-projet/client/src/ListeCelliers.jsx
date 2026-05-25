@@ -56,6 +56,7 @@ function ListeCelliers(props) {
               <div key={cellier.id} className="Cellier">
                 <Cellier
                   {...cellier}
+                  stats={props.statsCelliers?.[String(cellier.id)]}
                   bouteilles={props.bouteilles}
                   setBouteilles={props.setBouteilles}
                   fetchVins={props.fetchVins}
@@ -71,6 +72,9 @@ function ListeCelliers(props) {
                   error={props.error}
                   setError={props.setError}
                   fetchCelliers={props.fetchCelliers}
+                  fetchStatsCelliers={props.fetchStatsCelliers}
+                  prefetchVins={props.prefetchVins}
+                  invalidateBouteillesCache={props.invalidateBouteillesCache}
                 />
               </div>
             ))}

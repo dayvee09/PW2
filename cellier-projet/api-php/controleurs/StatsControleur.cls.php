@@ -10,7 +10,11 @@ class StatsControleur extends Controleur
     public function tout($params)
     {
         $this->reponse['entete_statut'] = 'HTTP/1.1 200 OK';
-        $this->reponse['corps'] = $this->modele->tout($params);
+        if (isset($params['user_id'])) {
+            $this->reponse['corps'] = $this->modele->toutPourUtilisateur($params);
+        } else {
+            $this->reponse['corps'] = $this->modele->tout($params);
+        }
     }
     
     /**

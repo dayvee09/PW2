@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import "./ListeBouteilles.scss";
 import Bouteille from "./Bouteille";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams, useLocation } from "react-router-dom";
 import rowIcone from "./img/svg/icone_row_left_white_filled.svg";
 
 /**
@@ -16,12 +16,12 @@ function ListeBouteilles(props) {
   const { idCellier: idCellierParam, cible: cibleParam } = useParams();
   const cible = cibleParam || props.cible;
   const navigate = useNavigate();
+  const location = useLocation();
   const cellierId = idCellierParam || props.cellier;
   const bouteilles = Array.isArray(props.bouteilles) ? props.bouteilles : [];
   const [debut, setDebut] = useState(0);
   const [fin, setFin] = useState(200);
   const [changementBouteille, setChangementBouteille] = useState(false);
-  const [bouteillesTri, setBouteillesTri] = useState(bouteilles);
   const [loading, setLoading] = useState(true);
   /**
    *  État des bouteilles au tri
@@ -34,81 +34,42 @@ function ListeBouteilles(props) {
       return object && object.id === cible;
     });
   }
-  /**
-   *  État des bouteilles au tri
-   */
-  useEffect(() => {
-    let result;
+  const bouteillesTri = useMemo(() => {
     switch (sortType) {
-      case "qt-decroissante": {
-        result = [...bouteilles].sort((a, b) => {
-          return parseInt(b.quantite) - parseInt(a.quantite);
-        });
-        break;
-      }
-      case "qt-croissante": {
-        result = [...bouteilles].sort((a, b) => {
-          return parseInt(a.quantite) - parseInt(b.quantite);
-        });
-        break;
-      }
-      case "prix-decroissant": {
-        result = [...bouteilles].sort((a, b) => {
-          return parseInt(b.prix_saq) - parseInt(a.prix_saq);
-        });
-        break;
-      }
-      case "prix-croissant": {
-        result = [...bouteilles].sort((a, b) => {
-          return parseInt(a.prix_saq) - parseInt(b.prix_saq);
-        });
-        break;
-      }
-      case "alph-decroissant": {
-        result = [...bouteilles]
+      case "qt-decroissante":
+        return [...bouteilles].sort(
+          (a, b) => parseInt(b.quantite) - parseInt(a.quantite)
+        );
+      case "qt-croissante":
+        return [...bouteilles].sort(
+          (a, b) => parseInt(a.quantite) - parseInt(b.quantite)
+        );
+      case "prix-decroissant":
+        return [...bouteilles].sort(
+          (a, b) => parseInt(b.prix_saq) - parseInt(a.prix_saq)
+        );
+      case "prix-croissant":
+        return [...bouteilles].sort(
+          (a, b) => parseInt(a.prix_saq) - parseInt(b.prix_saq)
+        );
+      case "alph-decroissant":
+        return [...bouteilles]
           .filter((b) => b && b.nom)
           .sort((a, b) => b.nom.localeCompare(a.nom));
-        break;
-      }
-      case "alph-croissant": {
-        result = [...bouteilles]
+      case "alph-croissant":
+        return [...bouteilles]
           .filter((b) => b && b.nom)
           .sort((a, b) => a.nom.localeCompare(b.nom));
-        break;
-      }
-      case "vin-rouge": {
-        result = [];
-        for (let index = 0; index < bouteilles.length; index++) {
-          if (bouteilles[index]?.type === "Vin rouge") {
-            result.push(bouteilles[index]);
-          }
-        }
-        break;
-      }
-      case "vin-blanc": {
-        result = [];
-        for (let index = 0; index < bouteilles.length; index++) {
-          if (bouteilles[index]?.type === "Vin blanc") {
-            result.push(bouteilles[index]);
-          }
-        }
-        break;
-      }
-      case "vin-rose": {
-        result = [];
-        for (let index = 0; index < bouteilles.length; index++) {
-          if (bouteilles[index]?.type === "Vin rose") {
-            result.push(bouteilles[index]);
-          }
-        }
-        break;
-      }
-      default: {
-        result = bouteilles;
-      }
+      case "vin-rouge":
+        return bouteilles.filter((b) => b?.type === "Vin rouge");
+      case "vin-blanc":
+        return bouteilles.filter((b) => b?.type === "Vin blanc");
+      case "vin-rose":
+        return bouteilles.filter((b) => b?.type === "Vin rose");
+      default:
+        return bouteilles;
     }
-    setBouteillesTri(result);
-  }, [sortType, props.bouteilles]);
+  }, [sortType, bouteilles]);
 
   useEffect(() => {
     if (!cellierId || !/^\d+$/.test(String(cellierId))) {
@@ -119,9 +80,15 @@ function ListeBouteilles(props) {
     let cancelled = false;
 
     async function loadCellier() {
-      setLoading(true);
       if (props.gererCellier) {
         props.gererCellier(cellierId);
+      }
+      if (location.state?.nom && props.setNomCellier) {
+        props.setNomCellier({ nom: location.state.nom });
+      }
+      const hasCache = props.hasCachedBouteilles?.(cellierId);
+      if (!hasCache) {
+        setLoading(true);
       }
       const result = await props.fetchVins(cellierId);
       if (cancelled) return;
@@ -129,7 +96,9 @@ function ListeBouteilles(props) {
         navigate("/", { replace: true });
         return;
       }
-      props.fetchNomCellier(cellierId);
+      if (!location.state?.nom) {
+        props.fetchNomCellier(cellierId);
+      }
       setSortType("tout");
       setLoading(false);
     }
@@ -143,7 +112,7 @@ function ListeBouteilles(props) {
 
   useEffect(() => {
     if (changementBouteille !== false && cellierId) {
-      props.fetchVins(cellierId);
+      props.fetchVins(cellierId, { force: true });
     }
   }, [changementBouteille]);
 
@@ -256,8 +225,8 @@ function ListeBouteilles(props) {
             <div></div>
             {bouteilles.length > 1 && (
               <div className="ListeBouteille--grid">
-                {bouteillesTri.slice(debut, fin).map((bouteille, index) => (
-                  <div key={index}>
+                {bouteillesTri.slice(debut, fin).map((bouteille) => (
+                  <div key={bouteille.id}>
                     <Bouteille
                       {...bouteille}
                       setChangementBouteille={setChangementBouteille}

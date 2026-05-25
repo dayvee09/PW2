@@ -1,6 +1,6 @@
 // Début des modifications
 
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { Hub } from "aws-amplify/utils";
@@ -16,18 +16,22 @@ import PiedDePage from "./PiedDePage.jsx";
 import ListeBouteilles from "./ListeBouteilles";
 import FrmAjoutCellier from "./FrmAjoutCellier";
 import FrmModifierCellier from "./FrmModifierCellier";
-import Admin from "./Admin";
 import ListeCelliers from "./ListeCelliers";
 import Utilisateur from "./Utilisateur.jsx";
-import Profil from "./Profil.jsx";
 import Favoris from "./Favoris";
-import Aide from "./Aide";
 import { signOut, deleteUser, emailFromCognitoUser } from "./auth";
 import { email } from "./utilisateur.js";
 import Logo from "./img/png/logo-jaune.png";
 import FrmAjoutBouteille from "./FrmAjoutBouteille";
-import { formFields } from "./aws-form-traduction.js";
 import ListeBouteillesInventaire from "./ListeBouteillesInventaire";
+import { formFields } from "./aws-form-traduction.js";
+const Admin = lazy(() => import("./Admin"));
+const Profil = lazy(() => import("./Profil.jsx"));
+const Aide = lazy(() => import("./Aide"));
+
+const RouteFallback = () => (
+  <p className="liste-cellier--etat">Chargement…</p>
+);
 
 function ProfilRedirect({ emailUtilisateur }) {
   if (!emailUtilisateur) {
@@ -90,15 +94,22 @@ const AppliContent = ({ cognitoUser }) => {
     process.env.REACT_APP_API_URI ||
     (process.env.NODE_ENV === "production" ? PROD_API_URI : DEV_API_URI);
   const [favorisId, setFavorisId] = useState([]);
+  const [statsCelliers, setStatsCelliers] = useState({});
   const [userLoadError, setUserLoadError] = useState(null);
   const [sessionVersion, setSessionVersion] = useState(0);
   const bootstrapRunning = useRef(false);
+  const bouteillesCacheRef = useRef({});
+  const vinsFetchInFlightRef = useRef({});
+  const inventaireCacheRef = useRef(null);
+  const inventaireFetchInFlightRef = useRef(null);
+  const cellierActifRef = useRef("");
 
   const location = useLocation();
 
   useEffect(() => {
     const match = location.pathname.match(/\/cellier\/(\d+)\/vins/);
     if (match) {
+      cellierActifRef.current = match[1];
       setCellier(match[1]);
     }
   }, [location.pathname]);
@@ -210,16 +221,24 @@ const AppliContent = ({ cognitoUser }) => {
     fetchFavorisId(id);
   }, [URI, id]);
 
-  useEffect(() => {
-    if (!URI || !cellier) return;
-    fetchVins(cellier);
-  }, [URI, cellier]);
-
   function gererBouteilles(idBouteilles) {
     setBouteilles(idBouteilles);
   }
   function gererCellier(idCellier) {
+    cellierActifRef.current = String(idCellier);
     setCellier(idCellier);
+  }
+
+  function hasCachedBouteilles(cellierId) {
+    return Boolean(bouteillesCacheRef.current[String(cellierId)]);
+  }
+
+  function invalidateBouteillesCache(cellierId) {
+    if (cellierId != null) {
+      delete bouteillesCacheRef.current[String(cellierId)];
+    } else {
+      bouteillesCacheRef.current = {};
+    }
   }
   function gererCible(cible) {
     setCible(cible);
@@ -369,6 +388,7 @@ const AppliContent = ({ cognitoUser }) => {
         setUtilisateur(null);
         setBouteilles("");
         setBouteillesInventaire([]);
+        inventaireCacheRef.current = null;
         setCelliers("");
         setEmailUtilisateur("");
         setUsername("");
@@ -387,6 +407,7 @@ const AppliContent = ({ cognitoUser }) => {
         setUtilisateur(null);
         setBouteilles("");
         setBouteillesInventaire([]);
+        inventaireCacheRef.current = null;
         setCelliers([]);
         setEmailUtilisateur("");
         setUsername("");
@@ -409,12 +430,33 @@ const AppliContent = ({ cognitoUser }) => {
       .then((data) => {
         if (data?.erreur === undefined) {
           setCelliers(Array.isArray(data) ? data : []);
+          fetchStatsCelliers();
         }
       })
       .catch((error) => {
         console.error("Error fetching data: ", error);
         setError(error);
       });
+  }
+
+  async function fetchStatsCelliers() {
+    if (!URI || !id) return;
+    try {
+      const response = await fetch(
+        URI + "/" + "user_id" + "/" + id + "/" + "stats"
+      );
+      if (!response.ok) throw response;
+      const data = await response.json();
+      const map = {};
+      if (Array.isArray(data)) {
+        data.forEach((row) => {
+          map[String(row.cellier_id)] = row;
+        });
+      }
+      setStatsCelliers(map);
+    } catch (error) {
+      console.error("Error fetching cellar stats: ", error);
+    }
   }
 
   async function fetchNomCellier(cellierId) {
@@ -452,87 +494,184 @@ const AppliContent = ({ cognitoUser }) => {
 
   // --------------------------------- Gestion des bouteilles ------------------------------------
 
-  async function fetchVins(cellier) {
-    if (!URI || !cellier) return { ok: false };
-    try {
-      const response = await fetch(
-        URI + "/" + "cellier" + "/" + cellier + "/" + "vins"
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-      const data = await response.json();
-      if (data?.erreur) {
-        throw new Error(data.erreur);
-      }
-      const list = Array.isArray(data) ? data : [];
-      setBouteilles(list);
-      return { ok: true, data: list };
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-      setError(error);
-      setBouteilles([]);
-      return { ok: false, error };
+  async function loadVinsFromApi(cellierId) {
+    const key = String(cellierId);
+    if (vinsFetchInFlightRef.current[key]) {
+      return vinsFetchInFlightRef.current[key];
     }
+    const promise = (async () => {
+      try {
+        const response = await fetch(
+          URI + "/" + "cellier" + "/" + cellierId + "/" + "vins"
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const data = await response.json();
+        if (data?.erreur) {
+          throw new Error(data.erreur);
+        }
+        const list = Array.isArray(data) ? data : [];
+        return { ok: true, data: list };
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+        setError(error);
+        return { ok: false, error };
+      } finally {
+        delete vinsFetchInFlightRef.current[key];
+      }
+    })();
+    vinsFetchInFlightRef.current[key] = promise;
+    return promise;
+  }
+
+  async function fetchVins(cellierId, options = {}) {
+    const { force = false } = options;
+    const key = String(cellierId);
+    if (!URI || !cellierId) return { ok: false };
+
+    const cached = bouteillesCacheRef.current[key];
+    if (cached && !force) {
+      setBouteilles(cached);
+      loadVinsFromApi(cellierId).then((result) => {
+        if (result.ok) {
+          bouteillesCacheRef.current[key] = result.data;
+          if (cellierActifRef.current === key) {
+            setBouteilles(result.data);
+          }
+        }
+      });
+      return { ok: true, data: cached, fromCache: true };
+    }
+
+    const result = await loadVinsFromApi(cellierId);
+    if (result.ok) {
+      bouteillesCacheRef.current[key] = result.data;
+      setBouteilles(result.data);
+    } else {
+      invalidateBouteillesCache(cellierId);
+      setBouteilles([]);
+    }
+    return result;
+  }
+
+  function prefetchVins(cellierId) {
+    const key = String(cellierId);
+    if (!URI || !cellierId || bouteillesCacheRef.current[key]) return;
+    if (vinsFetchInFlightRef.current[key]) return;
+    loadVinsFromApi(cellierId).then((result) => {
+      if (result.ok) {
+        bouteillesCacheRef.current[key] = result.data;
+      }
+    });
   }
   // --------------------------------- Gestion des différentes bouteilles comprises dans tous mes celliers ------------------------------------
 
-  async function fetchVinsInventaire() {
-    if (!URI || !id) return;
-    await fetch(URI + "/" + "user_id" + "/" + id + "/" + "vinsInventaire")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        setBouteillesInventaire(Array.isArray(data) ? data : []);
-      })
-      .catch((error) => {
+  async function loadInventaireFromApi() {
+    if (inventaireFetchInFlightRef.current) {
+      return inventaireFetchInFlightRef.current;
+    }
+    const promise = (async () => {
+      try {
+        const response = await fetch(
+          URI + "/" + "user_id" + "/" + id + "/" + "vinsInventaire"
+        );
+        if (!response.ok) throw response;
+        const data = await response.json();
+        const list = Array.isArray(data) ? data : [];
+        return { ok: true, data: list };
+      } catch (error) {
         console.error("Error fetching data: ", error);
-        setBouteillesInventaire([]);
         setError(error);
+        return { ok: false, error };
+      } finally {
+        inventaireFetchInFlightRef.current = null;
+      }
+    })();
+    inventaireFetchInFlightRef.current = promise;
+    return promise;
+  }
+
+  async function fetchVinsInventaire(options = {}) {
+    const { force = false } = options;
+    if (!URI || !id) return { ok: false };
+
+    const cached = inventaireCacheRef.current;
+    if (cached && !force) {
+      setBouteillesInventaire(cached);
+      loadInventaireFromApi().then((result) => {
+        if (result.ok) {
+          inventaireCacheRef.current = result.data;
+          setBouteillesInventaire(result.data);
+        }
       });
+      return { ok: true, data: cached, fromCache: true };
+    }
+
+    const result = await loadInventaireFromApi();
+    if (result.ok) {
+      inventaireCacheRef.current = result.data;
+      setBouteillesInventaire(result.data);
+    } else {
+      inventaireCacheRef.current = null;
+      setBouteillesInventaire([]);
+    }
+    return result;
+  }
+
+  function hasCachedInventaire() {
+    return inventaireCacheRef.current !== null;
+  }
+
+  function prefetchVinsInventaire() {
+    if (!URI || !id || inventaireCacheRef.current) return;
+    if (inventaireFetchInFlightRef.current) return;
+    loadInventaireFromApi().then((result) => {
+      if (result.ok) {
+        inventaireCacheRef.current = result.data;
+        setBouteillesInventaire(result.data);
+      }
+    });
+  }
+
+  function invalidateInventaireCache() {
+    inventaireCacheRef.current = null;
   }
 
   async function fetchAjouterFavoris(vin) {
-    await fetch(URI + `/favoris/ajouter/favoris`, {
-      method: "POST",
-      body: JSON.stringify(vin),
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        fetchFavorisId(id);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        setError(error);
+    const vinId = vin.vino__bouteille_id;
+    setFavorisId((prev) => [
+      ...prev,
+      { vino__bouteille_id: vinId },
+    ]);
+    try {
+      const response = await fetch(URI + `/favoris/ajouter/favoris`, {
+        method: "POST",
+        body: JSON.stringify(vin),
       });
+      if (!response.ok) throw response;
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      setError(error);
+      fetchFavorisId(id);
+    }
   }
 
   async function fetchSupprimerFavoris(vin) {
-    await fetch(URI + `/utilisateur/${id}/favoris/vin/${vin}`, {
-      method: "DELETE",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        fetchFavorisId(id);
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-        setError(error);
-      });
+    setFavorisId((prev) =>
+      prev.filter((f) => f.vino__bouteille_id !== vin)
+    );
+    try {
+      const response = await fetch(
+        URI + `/utilisateur/${id}/favoris/vin/${vin}`,
+        { method: "DELETE" }
+      );
+      if (!response.ok) throw response;
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+      setError(error);
+      fetchFavorisId(id);
+    }
   }
 
   async function fetchFavorisId(utilisateur) {
@@ -564,6 +703,7 @@ const AppliContent = ({ cognitoUser }) => {
           gererSignOut={gererSignOut}
           utilisateur={utilisateur}
           username={username}
+          prefetchVinsInventaire={prefetchVinsInventaire}
         />
       )}
       <div>
@@ -585,6 +725,7 @@ const AppliContent = ({ cognitoUser }) => {
               />
 
               {/* ------------------------------ Routes --------------------------------*/}
+              <Suspense fallback={<RouteFallback />}>
               <Routes>
                 <Route
                   path="/profil"
@@ -643,6 +784,7 @@ const AppliContent = ({ cognitoUser }) => {
                       bouteilles={bouteilles}
                       setBouteilles={setBouteilles}
                       fetchVins={fetchVins}
+                      hasCachedBouteilles={hasCachedBouteilles}
                       gererBouteilles={gererBouteilles}
                       gererCellier={gererCellier}
                       cellier={cellier}
@@ -653,6 +795,7 @@ const AppliContent = ({ cognitoUser }) => {
                       fetchUtilisateur={fetchUtilisateur}
                       fetchAjouterFavoris={fetchAjouterFavoris}
                       fetchSupprimerFavoris={fetchSupprimerFavoris}
+                      fetchVinsInventaire={fetchVinsInventaire}
                       favorisId={favorisId}
                       setFavorisId={setFavorisId}
                     />
@@ -668,6 +811,7 @@ const AppliContent = ({ cognitoUser }) => {
                       bouteilles={bouteilles}
                       setBouteilles={setBouteilles}
                       fetchVins={fetchVins}
+                      hasCachedBouteilles={hasCachedBouteilles}
                       gererBouteilles={gererBouteilles}
                       gererCellier={gererCellier}
                       cellier={cellier}
@@ -678,6 +822,7 @@ const AppliContent = ({ cognitoUser }) => {
                       fetchUtilisateur={fetchUtilisateur}
                       fetchAjouterFavoris={fetchAjouterFavoris}
                       fetchSupprimerFavoris={fetchSupprimerFavoris}
+                      fetchVinsInventaire={fetchVinsInventaire}
                       favorisId={favorisId}
                       setFavorisId={setFavorisId}
                       cible={cible}
@@ -691,6 +836,7 @@ const AppliContent = ({ cognitoUser }) => {
                       bouteilles={bouteilles}
                       setBouteilles={setBouteilles}
                       fetchVins={fetchVins}
+                      fetchVinsInventaire={fetchVinsInventaire}
                       fetchCelliers={fetchCelliers}
                       gererBouteilles={gererBouteilles}
                       celliers={celliers}
@@ -709,6 +855,7 @@ const AppliContent = ({ cognitoUser }) => {
                       bouteillesInventaire={bouteillesInventaire}
                       setBouteillesInventaire={setBouteillesInventaire}
                       fetchVinsInventaire={fetchVinsInventaire}
+                      hasCachedInventaire={hasCachedInventaire}
                       user_id={id}
                       URI={URI}
                       error={error}
@@ -732,7 +879,11 @@ const AppliContent = ({ cognitoUser }) => {
                       cellier={cellier}
                       setCellier={setCellier}
                       fetchCelliers={fetchCelliers}
+                      fetchStatsCelliers={fetchStatsCelliers}
+                      statsCelliers={statsCelliers}
                       fetchVins={fetchVins}
+                      prefetchVins={prefetchVins}
+                      invalidateBouteillesCache={invalidateBouteillesCache}
                       id={id}
                       emailUtilisateur={emailUtilisateur}
                       utilisateur={utilisateur}
@@ -762,6 +913,10 @@ const AppliContent = ({ cognitoUser }) => {
                       error={error}
                       setError={setError}
                       userLoadError={userLoadError}
+                      fetchStatsCelliers={fetchStatsCelliers}
+                      statsCelliers={statsCelliers}
+                      prefetchVins={prefetchVins}
+                      invalidateBouteillesCache={invalidateBouteillesCache}
                     />
                   }
                 />
@@ -817,6 +972,7 @@ const AppliContent = ({ cognitoUser }) => {
                   element={<Aide URI={URI} error={error} setError={setError} />}
                 />
               </Routes>
+              </Suspense>
         </div>
         <p className={isAuthenticated ? "Hidden" : "Auth-sub-title"}>
           Commencez dès maintenant votre collection de vin !
@@ -829,6 +985,7 @@ const AppliContent = ({ cognitoUser }) => {
           indexNav={indexNav}
           setResetBottomNav={setResetBottomNav}
           resetBottomNav={resetBottomNav}
+          prefetchVinsInventaire={prefetchVinsInventaire}
         />
       </div>
       <PiedDePage />

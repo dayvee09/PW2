@@ -18,6 +18,7 @@ export default function NavDesktop({
   gererSignOut,
   utilisateur,
   username,
+  prefetchVinsInventaire,
 }) {
   const profilPath = emailUtilisateur
     ? `/profil/${encodeURIComponent(emailUtilisateur)}`
@@ -122,6 +123,8 @@ export default function NavDesktop({
             onClick={gererFermerMenuContextuel}
             component={Link}
             to={`/vinsInventaire`}
+            onMouseEnter={prefetchVinsInventaire}
+            onFocus={prefetchVinsInventaire}
           >
             <span>Mon Inventaire</span>
           </MenuItem>

@@ -327,7 +327,8 @@ export default function FrmAjoutBouteille(props) {
         throw response;
       })
       .then((data) => {
-        props.fetchVins(vinCellier);
+        props.fetchVins(vinCellier, { force: true });
+        props.fetchVinsInventaire?.({ force: true });
         props.setCellier(vinCellier);
         navigate(`/cellier/${vinCellier}/vins`, { replace: true });
       })
@@ -368,7 +369,12 @@ export default function FrmAjoutBouteille(props) {
           <h1>AJOUTER UNE BOUTEILLE</h1>
           <div className="FrmAjoutNouvelle">
             <div className="img--wrap">
-              <img src={imgUrl() ? imgUrl() : { placeholderSaq }} alt="" />
+              <img
+                loading="lazy"
+                decoding="async"
+                src={imgUrl() ? imgUrl() : placeholderSaq}
+                alt=""
+              />
             </div>
             {/* Apparaîte uniquement en important de la bouteille du SAQ */}
             <div className={btnState ? "hidden" : ""}>

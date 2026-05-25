@@ -74,9 +74,12 @@ export default function Admin(props) {
 	useEffect(() => {
 	if (nbBouteillesSaq && go !== false) {
 		let nbPages = Math.ceil(nbBouteillesSaq / 96);
+		const typeCourant = go;
+		(async () => {
 		for (let i = 0; i <= nbPages; i++) {
-		fetchSaq(96, i, go);
+			await fetchSaq(96, i, typeCourant);
 		}
+		})();
 		switch (go) {
 		case "rouge": {
 			setGo("blanc");

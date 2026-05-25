@@ -24,7 +24,8 @@ export default function NavMobile({
 	setIndexNav,
 	indexNav,
 	setResetBottomNav,
-	resetBottomNav
+	resetBottomNav,
+	prefetchVinsInventaire,
 }) {
   	// état du BottomNavigation
 	const [value, setValue] = useState(indexNav);
@@ -111,6 +112,8 @@ export default function NavMobile({
               icon={<InventaireIcone />}
               component={Link}
               to="/vinsInventaire"
+              onMouseEnter={prefetchVinsInventaire}
+              onFocus={prefetchVinsInventaire}
             />
           </BottomNavigation>
         </AppBar>
